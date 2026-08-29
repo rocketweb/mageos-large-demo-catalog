@@ -1,0 +1,28 @@
+*
+
+# Repository metadata and local environment definition
+!/.gitignore
+!/.magebox.yaml
+!/docker-compose.mageos.yaml
+!/README.md
+
+# Composer is the source of truth for Mage-OS, Hyva, and Koti packages
+!/composer.json
+!/composer.lock
+
+# Project-owned Magento configuration and future custom code/themes
+!/app
+!/app/*/
+!/app/code/**
+!/app/design/**
+!/app/etc/config.php
+!/app/etc/hyva-themes.json
+
+# Never commit credentials, machine-local overrides, or runtime state
+/auth.json
+/app/etc/env.php
+/.env
+/.env.*
+/.magebox.local.yaml
+/.DS_Store
+**/.DS_Store

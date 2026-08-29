@@ -1,0 +1,52 @@
+name: mageos-latest
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: mageos-latest-mysql
+    environment:
+      MYSQL_DATABASE: mageos_latest
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: magebox
+    ports:
+      - "127.0.0.1:33084:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -pmagebox --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    restart: unless-stopped
+
+  opensearch:
+    image: opensearchproject/opensearch:3.8.0
+    container_name: mageos-latest-opensearch
+    environment:
+      DISABLE_SECURITY_PLUGIN: "true"
+      OPENSEARCH_JAVA_OPTS: "-Xms1g -Xmx1g"
+      cluster.routing.allocation.disk.threshold_enabled: "false"
+      discovery.type: single-node
+    ports:
+      - "127.0.0.1:9202:9200"
+      - "127.0.0.1:9602:9600"
+    volumes:
+      - opensearch_data:/usr/share/opensearch/data
+      - opensearch_plugins:/usr/share/opensearch/plugins
+    command: >-
+      sh -c "(bin/opensearch-plugin list | grep -q analysis-icu || bin/opensearch-plugin install --batch analysis-icu)
+      && (bin/opensearch-plugin list | grep -q analysis-phonetic || bin/opensearch-plugin install --batch analysis-phonetic)
+      && /usr/share/opensearch/opensearch-docker-entrypoint.sh"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9200/_cluster/health >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  opensearch_data:
+  opensearch_plugins:
