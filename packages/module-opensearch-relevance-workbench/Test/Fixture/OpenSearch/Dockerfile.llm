@@ -1,0 +1,12 @@
+FROM opensearchproject/opensearch:3.8.0@sha256:bcc1797519726ceb6d651d4a3e60b7c30da91793914a8dfe75fd441d4f641509
+
+USER root
+
+# Search Relevance 3.8.0.0 packages Reflections but omits its SLF4J API dependency.
+# Copy the exact API jar already shipped with ML Commons into the dependent plugin.
+RUN cp /usr/share/opensearch/plugins/opensearch-ml/slf4j-api-1.7.36.jar \
+        /usr/share/opensearch/plugins/opensearch-search-relevance/slf4j-api-1.7.36.jar \
+    && chown opensearch:opensearch \
+        /usr/share/opensearch/plugins/opensearch-search-relevance/slf4j-api-1.7.36.jar
+
+USER opensearch

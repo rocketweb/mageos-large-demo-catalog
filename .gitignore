@@ -18,6 +18,20 @@
 !/app/etc/config.php
 !/app/etc/hyva-themes.json
 
+# Reproducible lab tooling and the exact Workbench source archive
+!/dev/
+!/dev/tools/
+!/dev/tools/wands_catalog/
+!/dev/tools/wands_catalog/**
+!/packages/
+!/packages/WORKBENCH_SOURCE.md
+!/packages/module-opensearch-relevance-workbench/
+!/packages/module-opensearch-relevance-workbench/**
+
+# Python runtime byproducts never belong in source control
+**/__pycache__/
+*.py[cod]
+
 # Never commit credentials, machine-local overrides, or runtime state
 /auth.json
 /app/etc/env.php

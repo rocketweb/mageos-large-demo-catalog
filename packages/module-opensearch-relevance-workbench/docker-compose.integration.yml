@@ -1,0 +1,96 @@
+name: osrw-integration
+
+services:
+  openai-stub:
+    image: python:3.12-slim-bookworm@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134
+    command:
+      - python
+      - /fixture/server.py
+    ports:
+      - "127.0.0.1:${OSRW_STUB_PORT:-9318}:8000"
+    read_only: true
+    tmpfs:
+      - /tmp
+    volumes:
+      - ./Test/Fixture/OpenAiStub/server.py:/fixture/server.py:ro
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://localhost:8000/health').read()
+      interval: 2s
+      timeout: 2s
+      retries: 20
+      start_period: 2s
+    restart: "no"
+
+  opensearch:
+    image: opensearchproject/opensearch:3.8.0@sha256:bcc1797519726ceb6d651d4a3e60b7c30da91793914a8dfe75fd441d4f641509
+    environment:
+      discovery.type: single-node
+      DISABLE_INSTALL_DEMO_CONFIG: "true"
+      DISABLE_SECURITY_PLUGIN: "true"
+      bootstrap.memory_lock: "true"
+      OPENSEARCH_JAVA_OPTS: "-Xms2g -Xmx2g"
+    ports:
+      - "127.0.0.1:${OSRW_OPENSEARCH_PORT:-9218}:9200"
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail --silent 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s' >/dev/null
+      interval: 5s
+      timeout: 6s
+      retries: 60
+      start_period: 30s
+    restart: "no"
+    depends_on:
+      openai-stub:
+        condition: service_healthy
+
+  opensearch-llm:
+    build:
+      context: .
+      dockerfile: Test/Fixture/OpenSearch/Dockerfile.llm
+    environment:
+      discovery.type: single-node
+      DISABLE_INSTALL_DEMO_CONFIG: "true"
+      DISABLE_SECURITY_PLUGIN: "true"
+      bootstrap.memory_lock: "true"
+      OPENSEARCH_JAVA_OPTS: "-Xms2g -Xmx2g"
+    ports:
+      - "127.0.0.1:${OSRW_LLM_OPENSEARCH_PORT:-9217}:9200"
+    volumes:
+      - opensearch-llm-data:/usr/share/opensearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --fail --silent 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s' >/dev/null
+      interval: 5s
+      timeout: 6s
+      retries: 60
+      start_period: 30s
+    restart: "no"
+    depends_on:
+      openai-stub:
+        condition: service_healthy
+
+volumes:
+  opensearch-data:
+  opensearch-llm-data:

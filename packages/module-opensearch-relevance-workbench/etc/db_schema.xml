@@ -1,0 +1,417 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="osrw_snapshot_schedule" resource="default" engine="innodb"
+           comment="OSRW Approved Snapshot Schedules">
+        <column xsi:type="varchar" name="schedule_uuid" nullable="false" length="36" comment="Schedule UUID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" comment="Store ID"/>
+        <column xsi:type="varchar" name="status" nullable="false" length="16" comment="Schedule Status"/>
+        <column xsi:type="smallint" name="source_window_days" unsigned="true" nullable="false"
+                comment="Source Window Days"/>
+        <column xsi:type="int" name="minimum_popularity" unsigned="true" nullable="false" default="0"
+                comment="Minimum Popularity"/>
+        <column xsi:type="smallint" name="positive_result_limit" unsigned="true" nullable="false"
+                comment="Positive Result Limit"/>
+        <column xsi:type="smallint" name="zero_result_limit" unsigned="true" nullable="false"
+                comment="Zero Result Limit"/>
+        <column xsi:type="smallint" name="maximum_snapshot_size" unsigned="true" nullable="false"
+                comment="Maximum Snapshot Size"/>
+        <column xsi:type="boolean" name="include_redirects" nullable="false" default="false"
+                comment="Include Redirects"/>
+        <column xsi:type="smallint" name="interval_days" unsigned="true" nullable="false"
+                comment="Schedule Interval Days"/>
+        <column xsi:type="smallint" name="retention_days" unsigned="true" nullable="false"
+                comment="Draft Retention Days"/>
+        <column xsi:type="timestamp" name="schedule_anchor_at" nullable="false" comment="Schedule Anchor At"/>
+        <column xsi:type="timestamp" name="next_run_at" nullable="false" comment="Next Run At"/>
+        <column xsi:type="timestamp" name="last_prepared_at" nullable="true" comment="Last Prepared At"/>
+        <column xsi:type="varchar" name="policy_sha256" nullable="false" length="64" comment="Policy SHA-256"/>
+        <column xsi:type="int" name="approved_by" unsigned="true" nullable="false"
+                comment="Approving Admin User ID"/>
+        <column xsi:type="timestamp" name="approved_at" nullable="false" comment="Approved At"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP"
+                on_update="true" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="schedule_uuid"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OSRW_SNAPSHOT_SCHEDULE_STORE_ID_STORE_STORE_ID"
+                    table="osrw_snapshot_schedule" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="OSRW_SNAPSHOT_SCHEDULE_STORE_UNIQUE">
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="OSRW_SNAPSHOT_SCHEDULE_DUE" indexType="btree">
+            <column name="status"/>
+            <column name="next_run_at"/>
+        </index>
+    </table>
+
+    <table name="osrw_query_snapshot" resource="default" engine="innodb" comment="OSRW Query Snapshots">
+        <column xsi:type="varchar" name="snapshot_uuid" nullable="false" length="36" comment="Snapshot UUID"/>
+        <column xsi:type="varchar" name="schedule_uuid" nullable="true" length="36" comment="Source Schedule UUID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" comment="Store ID"/>
+        <column xsi:type="varchar" name="status" nullable="false" length="32" comment="Snapshot Status"/>
+        <column xsi:type="text" name="source_window_json" nullable="false" comment="Source Window JSON"/>
+        <column xsi:type="timestamp" name="high_water_updated_at" nullable="true" comment="High Water Updated At"/>
+        <column xsi:type="int" name="high_water_query_id" unsigned="true" nullable="false" default="0"
+                comment="High Water Query ID"/>
+        <column xsi:type="text" name="sampling_policy_json" nullable="false" comment="Sampling Policy JSON"/>
+        <column xsi:type="text" name="privacy_policy_json" nullable="false" comment="Privacy Policy JSON"/>
+        <column xsi:type="int" name="source_count" unsigned="true" nullable="false" default="0"
+                comment="Source Count"/>
+        <column xsi:type="int" name="selected_count" unsigned="true" nullable="false" default="0"
+                comment="Selected Count"/>
+        <column xsi:type="int" name="excluded_count" unsigned="true" nullable="false" default="0"
+                comment="Excluded Count"/>
+        <column xsi:type="int" name="redacted_count" unsigned="true" nullable="false" default="0"
+                comment="Redacted Count"/>
+        <column xsi:type="varchar" name="canonical_sha256" nullable="false" length="64"
+                comment="Canonical SHA-256"/>
+        <column xsi:type="varchar" name="remote_query_set_id" nullable="true" length="36"
+                comment="Remote Query Set ID"/>
+        <column xsi:type="int" name="approved_by" unsigned="true" nullable="true" comment="Approving Admin User ID"/>
+        <column xsi:type="timestamp" name="approved_at" nullable="true" comment="Approved At"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="snapshot_uuid"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OSRW_QUERY_SNAPSHOT_STORE_ID_STORE_STORE_ID"
+                    table="osrw_query_snapshot" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="OSRW_QUERY_SNAPSHOT_SCHEDULE_UUID"
+                    table="osrw_query_snapshot" column="schedule_uuid" referenceTable="osrw_snapshot_schedule"
+                    referenceColumn="schedule_uuid" onDelete="SET NULL"/>
+        <constraint xsi:type="unique" referenceId="OSRW_QUERY_SNAPSHOT_STORE_HASH_UNIQUE">
+            <column name="store_id"/>
+            <column name="canonical_sha256"/>
+        </constraint>
+        <index referenceId="OSRW_QUERY_SNAPSHOT_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+    </table>
+
+    <table name="osrw_query_snapshot_entry" resource="default" engine="innodb"
+           comment="OSRW Query Snapshot Entries">
+        <column xsi:type="varchar" name="entry_uuid" nullable="false" length="36" comment="Entry UUID"/>
+        <column xsi:type="varchar" name="snapshot_uuid" nullable="false" length="36" comment="Snapshot UUID"/>
+        <column xsi:type="int" name="ordinal" unsigned="true" nullable="false" comment="Stable Ordinal"/>
+        <column xsi:type="text" name="query_text" nullable="false" comment="Approved Query Text"/>
+        <column xsi:type="varchar" name="query_hash" nullable="false" length="64" comment="Query SHA-256"/>
+        <column xsi:type="int" name="source_query_id" unsigned="true" nullable="false" comment="Source Query ID"/>
+        <column xsi:type="int" name="popularity" unsigned="true" nullable="false" default="0"
+                comment="Source Popularity"/>
+        <column xsi:type="int" name="result_count" unsigned="true" nullable="false" default="0"
+                comment="Source Result Count"/>
+        <column xsi:type="timestamp" name="source_updated_at" nullable="false" comment="Source Updated At"/>
+        <column xsi:type="text" name="custom_fields_json" nullable="true" comment="Approved Custom Fields JSON"/>
+        <column xsi:type="smallint" name="is_excluded" unsigned="true" nullable="false" default="0"
+                comment="Exclusion Flag"/>
+        <column xsi:type="smallint" name="is_redacted" unsigned="true" nullable="false" default="0"
+                comment="Redaction Flag"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entry_uuid"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OSRW_QUERY_ENTRY_SNAPSHOT_UUID_SNAPSHOT_UUID"
+                    table="osrw_query_snapshot_entry" column="snapshot_uuid"
+                    referenceTable="osrw_query_snapshot" referenceColumn="snapshot_uuid" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="OSRW_QUERY_ENTRY_SNAPSHOT_ORDINAL_UNIQUE">
+            <column name="snapshot_uuid"/>
+            <column name="ordinal"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="OSRW_QUERY_ENTRY_SNAPSHOT_HASH_UNIQUE">
+            <column name="snapshot_uuid"/>
+            <column name="query_hash"/>
+        </constraint>
+    </table>
+
+    <table name="osrw_index_evidence" resource="default" engine="innodb" comment="OSRW Index Evidence">
+        <column xsi:type="varchar" name="evidence_uuid" nullable="false" length="36" comment="Evidence UUID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" comment="Store ID"/>
+        <column xsi:type="varchar" name="alias_name" nullable="false" length="255" comment="Resolved Alias"/>
+        <column xsi:type="varchar" name="physical_index" nullable="false" length="255" comment="Physical Index"/>
+        <column xsi:type="varchar" name="index_uuid" nullable="false" length="255" comment="OpenSearch Index UUID"/>
+        <column xsi:type="varchar" name="mapping_sha256" nullable="false" length="64" comment="Mapping SHA-256"/>
+        <column xsi:type="varchar" name="settings_sha256" nullable="false" length="64" comment="Settings SHA-256"/>
+        <column xsi:type="text" name="primary_shards_json" nullable="false" comment="Primary Shard Boundaries JSON"/>
+        <column xsi:type="bigint" name="document_count" unsigned="true" nullable="false" default="0"
+                comment="Document Count"/>
+        <column xsi:type="timestamp" name="captured_at" nullable="false" comment="Captured At"/>
+        <column xsi:type="varchar" name="evidence_sha256" nullable="false" length="64" comment="Evidence SHA-256"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="evidence_uuid"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OSRW_INDEX_EVIDENCE_STORE_ID_STORE_STORE_ID"
+                    table="osrw_index_evidence" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="OSRW_INDEX_EVIDENCE_STORE_HASH_UNIQUE">
+            <column name="store_id"/>
+            <column name="evidence_sha256"/>
+        </constraint>
+    </table>
+
+    <table name="osrw_search_configuration" resource="default" engine="innodb"
+           comment="OSRW Search Configurations">
+        <column xsi:type="varchar" name="configuration_uuid" nullable="false" length="36"
+                comment="Configuration UUID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" comment="Store ID"/>
+        <column xsi:type="varchar" name="kind" nullable="false" length="16" comment="Configuration Kind"/>
+        <column xsi:type="varchar" name="parent_baseline_uuid" nullable="true" length="36"
+                comment="Parent Baseline UUID"/>
+        <column xsi:type="text" name="template_json" nullable="false" comment="Canonical Template JSON"/>
+        <column xsi:type="text" name="transformation_json" nullable="false" comment="Transformation JSON"/>
+        <column xsi:type="varchar" name="index_evidence_uuid" nullable="false" length="36"
+                comment="Index Evidence UUID"/>
+        <column xsi:type="varchar" name="pipeline_identity" nullable="false" length="255"
+                comment="Search Pipeline Identity"/>
+        <column xsi:type="text" name="rendered_sample_hashes_json" nullable="false"
+                comment="Rendered Sample Hashes JSON"/>
+        <column xsi:type="varchar" name="validation_state" nullable="false" length="32"
+                comment="Validation State"/>
+        <column xsi:type="varchar" name="canonical_sha256" nullable="false" length="64"
+                comment="Configuration SHA-256"/>
+        <column xsi:type="varchar" name="remote_configuration_id" nullable="true" length="36"
+                comment="Remote Search Configuration ID"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="configuration_uuid"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OSRW_CONFIGURATION_STORE_ID_STORE_STORE_ID"
+                    table="osrw_search_configuration" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="OSRW_CONFIGURATION_PARENT_BASELINE_UUID"
+                    table="osrw_search_configuration" column="parent_baseline_uuid"
+                    referenceTable="osrw_search_configuration" referenceColumn="configuration_uuid"
+                    onDelete="SET NULL"/>
+        <constraint xsi:type="foreign" referenceId="OSRW_CONFIGURATION_INDEX_EVIDENCE_UUID"
+                    table="osrw_search_configuration" column="index_evidence_uuid"
+                    referenceTable="osrw_index_evidence" referenceColumn="evidence_uuid" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="OSRW_CONFIGURATION_STORE_HASH_UNIQUE">
+            <column name="store_id"/>
+            <column name="canonical_sha256"/>
+        </constraint>
+    </table>
+
+    <table name="osrw_human_rating" resource="default" engine="innodb" comment="OSRW Human Ratings">
+        <column xsi:type="varchar" name="rating_uuid" nullable="false" length="36" comment="Rating UUID"/>
+        <column xsi:type="varchar" name="rating_set_uuid" nullable="false" length="36" comment="Rating Set UUID"/>
+        <column xsi:type="varchar" name="query_snapshot_uuid" nullable="false" length="36"
+                comment="Query Snapshot UUID"/>
+        <column xsi:type="varchar" name="query_hash" nullable="false" length="64" comment="Query SHA-256"/>
+        <column xsi:type="varchar" name="document_id" nullable="false" length="255" comment="Document ID"/>
+        <column xsi:type="decimal" name="rating" nullable="false" precision="3" scale="2" comment="Rating"/>
+        <column xsi:type="varchar" name="source" nullable="false" length="24" comment="Rating Source"/>
+        <column xsi:type="int" name="reviewer_id" unsigned="true" nullable="false" comment="Reviewer Admin User ID"/>
+        <column xsi:type="varchar" name="index_evidence_uuid" nullable="false" length="36"
+                comment="Index Evidence UUID"/>
+        <column xsi:type="timestamp" name="rated_at" nullable="false" comment="Rated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="rating_uuid"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OSRW_HUMAN_RATING_SNAPSHOT_UUID"
+                    table="osrw_human_rating" column="query_snapshot_uuid"
+                    referenceTable="osrw_query_snapshot" referenceColumn="snapshot_uuid" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="OSRW_HUMAN_RATING_INDEX_EVIDENCE_UUID"
+                    table="osrw_human_rating" column="index_evidence_uuid"
+                    referenceTable="osrw_index_evidence" referenceColumn="evidence_uuid" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="OSRW_HUMAN_RATING_SET_QUERY_DOCUMENT_UNIQUE">
+            <column name="rating_set_uuid"/>
+            <column name="query_hash"/>
+            <column name="document_id"/>
+        </constraint>
+    </table>
+
+    <table name="osrw_judgment_run" resource="default" engine="innodb" comment="OSRW Judgment Runs">
+        <column xsi:type="varchar" name="judgment_uuid" nullable="false" length="36" comment="Judgment UUID"/>
+        <column xsi:type="varchar" name="source_type" nullable="false" length="32" comment="Judgment Source Type"/>
+        <column xsi:type="varchar" name="state" nullable="false" length="32" comment="Judgment State"/>
+        <column xsi:type="varchar" name="model_id" nullable="true" length="255" comment="Allowlisted Model ID"/>
+        <column xsi:type="text" name="model_metadata_json" nullable="false" comment="Approved Model Metadata JSON"/>
+        <column xsi:type="text" name="prompt_text" nullable="true" comment="Frozen Prompt"/>
+        <column xsi:type="varchar" name="prompt_sha256" nullable="true" length="64" comment="Prompt SHA-256"/>
+        <column xsi:type="varchar" name="rating_type" nullable="false" length="32" comment="Rating Type"/>
+        <column xsi:type="text" name="context_fields_json" nullable="false" comment="Context Field Names JSON"/>
+        <column xsi:type="int" name="token_limit" unsigned="true" nullable="false" default="0" comment="Token Limit"/>
+        <column xsi:type="text" name="cache_policy_json" nullable="false" comment="Cache Policy JSON"/>
+        <column xsi:type="text" name="retry_policy_json" nullable="false" comment="Retry Policy Summary JSON"/>
+        <column xsi:type="text" name="authorization_envelope_json" nullable="false"
+                comment="Authorization Envelope JSON"/>
+        <column xsi:type="varchar" name="remote_judgment_id" nullable="true" length="36"
+                comment="Remote Judgment ID"/>
+        <column xsi:type="int" name="total_count" unsigned="true" nullable="false" default="0" comment="Total Count"/>
+        <column xsi:type="int" name="success_count" unsigned="true" nullable="false" default="0"
+                comment="Success Count"/>
+        <column xsi:type="int" name="failure_count" unsigned="true" nullable="false" default="0"
+                comment="Failure Count"/>
+        <column xsi:type="int" name="unrated_count" unsigned="true" nullable="false" default="0"
+                comment="Unrated Count"/>
+        <column xsi:type="varchar" name="effective_imported_judgment_id" nullable="true" length="36"
+                comment="Effective Imported Judgment ID"/>
+        <column xsi:type="varchar" name="canonical_sha256" nullable="false" length="64"
+                comment="Judgment SHA-256"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP"
+                on_update="true" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="judgment_uuid"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="OSRW_JUDGMENT_CANONICAL_HASH_UNIQUE">
+            <column name="canonical_sha256"/>
+        </constraint>
+        <index referenceId="OSRW_JUDGMENT_STATE" indexType="btree">
+            <column name="state"/>
+        </index>
+    </table>
+
+    <table name="osrw_experiment" resource="default" engine="innodb" comment="OSRW Offline Experiments">
+        <column xsi:type="varchar" name="experiment_uuid" nullable="false" length="36" comment="Experiment UUID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" comment="Store ID"/>
+        <column xsi:type="varchar" name="type" nullable="false" length="32" comment="Experiment Type"/>
+        <column xsi:type="varchar" name="state" nullable="false" length="32" comment="Experiment State"/>
+        <column xsi:type="text" name="input_identities_json" nullable="false" comment="Immutable Input Identities JSON"/>
+        <column xsi:type="varchar" name="input_sha256" nullable="false" length="64" comment="Input SHA-256"/>
+        <column xsi:type="varchar" name="primary_metric" nullable="false" length="32" comment="Primary Metric"/>
+        <column xsi:type="text" name="guardrails_json" nullable="false" comment="Registered Guardrails JSON"/>
+        <column xsi:type="text" name="remote_experiment_ids_json" nullable="false"
+                comment="Remote Experiment IDs JSON"/>
+        <column xsi:type="varchar" name="srw_validation_state" nullable="false" length="32"
+                comment="SRW Validation State"/>
+        <column xsi:type="varchar" name="index_freshness_state" nullable="false" length="32"
+                comment="Index Freshness State"/>
+        <column xsi:type="text" name="aggregate_result_json" nullable="false" comment="Aggregate Result JSON"/>
+        <column xsi:type="mediumtext" name="per_query_result_json" nullable="false"
+                comment="Per Query Result JSON"/>
+        <column xsi:type="varchar" name="eligibility" nullable="false" length="32" comment="Eligibility"/>
+        <column xsi:type="text" name="reason_codes_json" nullable="false" comment="Reason Codes JSON"/>
+        <column xsi:type="int" name="accepted_by" unsigned="true" nullable="true" comment="Accepting Admin User ID"/>
+        <column xsi:type="timestamp" name="accepted_at" nullable="true" comment="Accepted At"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="experiment_uuid"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OSRW_EXPERIMENT_STORE_ID_STORE_STORE_ID"
+                    table="osrw_experiment" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="OSRW_EXPERIMENT_INPUT_HASH_UNIQUE">
+            <column name="input_sha256"/>
+        </constraint>
+        <index referenceId="OSRW_EXPERIMENT_STATE" indexType="btree">
+            <column name="state"/>
+        </index>
+    </table>
+
+    <table name="osrw_proposal" resource="default" engine="innodb" comment="OSRW Review Only Proposals">
+        <column xsi:type="varchar" name="proposal_uuid" nullable="false" length="36" comment="Proposal UUID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" comment="Store ID"/>
+        <column xsi:type="varchar" name="schema_version" nullable="false" length="64" comment="Schema Version"/>
+        <column xsi:type="varchar" name="source_experiment_uuid" nullable="false" length="36"
+                comment="Source Experiment UUID"/>
+        <column xsi:type="varchar" name="target_type" nullable="false" length="32" comment="Target Type"/>
+        <column xsi:type="mediumtext" name="artifact_json" nullable="false" comment="Canonical Artifact JSON"/>
+        <column xsi:type="varchar" name="artifact_sha256" nullable="false" length="64" comment="Artifact SHA-256"/>
+        <column xsi:type="text" name="evidence_json" nullable="false" comment="Evidence JSON"/>
+        <column xsi:type="text" name="warnings_json" nullable="false" comment="Warnings JSON"/>
+        <column xsi:type="int" name="created_by" unsigned="true" nullable="false" comment="Creating Admin User ID"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="proposal_uuid"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OSRW_PROPOSAL_STORE_ID_STORE_STORE_ID"
+                    table="osrw_proposal" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="OSRW_PROPOSAL_EXPERIMENT_UUID"
+                    table="osrw_proposal" column="source_experiment_uuid"
+                    referenceTable="osrw_experiment" referenceColumn="experiment_uuid" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="OSRW_PROPOSAL_ARTIFACT_HASH_UNIQUE">
+            <column name="artifact_sha256"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="OSRW_PROPOSAL_EXPERIMENT_UNIQUE">
+            <column name="source_experiment_uuid"/>
+        </constraint>
+    </table>
+
+    <table name="osrw_live_activation" resource="default" engine="innodb"
+           comment="OSRW Append Only Live Activations">
+        <column xsi:type="varchar" name="activation_uuid" nullable="false" length="36"
+                comment="Activation UUID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" comment="Store ID"/>
+        <column xsi:type="varchar" name="action" nullable="false" length="16" comment="Activation Action"/>
+        <column xsi:type="varchar" name="candidate_uuid" nullable="true" length="36"
+                comment="Active Candidate UUID"/>
+        <column xsi:type="varchar" name="source_experiment_uuid" nullable="true" length="36"
+                comment="Accepted Source Experiment UUID"/>
+        <column xsi:type="varchar" name="previous_activation_uuid" nullable="true" length="36"
+                comment="Previous Live Activation UUID"/>
+        <column xsi:type="text" name="transformation_json" nullable="false"
+                comment="Bounded Live Transformation JSON"/>
+        <column xsi:type="varchar" name="candidate_sha256" nullable="true" length="64"
+                comment="Candidate SHA-256"/>
+        <column xsi:type="varchar" name="index_evidence_sha256" nullable="false" length="64"
+                comment="Pre-Activation Index Evidence SHA-256"/>
+        <column xsi:type="varchar" name="target_alias" nullable="false" length="255"
+                comment="Target Alias"/>
+        <column xsi:type="int" name="actor_id" unsigned="true" nullable="false" comment="Admin User ID"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" comment="Activated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="activation_uuid"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OSRW_LIVE_ACTIVATION_STORE_ID_STORE_STORE_ID"
+                    table="osrw_live_activation" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <index referenceId="OSRW_LIVE_ACTIVATION_STORE_CREATED" indexType="btree">
+            <column name="store_id"/>
+            <column name="created_at"/>
+        </index>
+    </table>
+
+    <table name="osrw_live_state" resource="default" engine="innodb" comment="OSRW Current Live State">
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" comment="Store ID"/>
+        <column xsi:type="varchar" name="current_activation_uuid" nullable="false" length="36"
+                comment="Current Activation UUID"/>
+        <column xsi:type="int" name="version" unsigned="true" nullable="false" default="1"
+                comment="Optimistic State Version"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="store_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OSRW_LIVE_STATE_STORE_ID_STORE_STORE_ID"
+                    table="osrw_live_state" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="OSRW_LIVE_STATE_CURRENT_ACTIVATION_UUID"
+                    table="osrw_live_state" column="current_activation_uuid"
+                    referenceTable="osrw_live_activation" referenceColumn="activation_uuid" onDelete="CASCADE"/>
+    </table>
+
+    <table name="osrw_audit_event" resource="default" engine="innodb" comment="OSRW Append Only Audit Events">
+        <column xsi:type="varchar" name="event_uuid" nullable="false" length="36" comment="Audit Event UUID"/>
+        <column xsi:type="varchar" name="actor_type" nullable="false" length="24" comment="Actor Type"/>
+        <column xsi:type="varchar" name="actor_id" nullable="false" length="64" comment="Actor ID"/>
+        <column xsi:type="varchar" name="action" nullable="false" length="64" comment="Action"/>
+        <column xsi:type="varchar" name="target_type" nullable="false" length="32" comment="Target Type"/>
+        <column xsi:type="varchar" name="target_uuid" nullable="false" length="36" comment="Target UUID"/>
+        <column xsi:type="varchar" name="before_identity_sha256" nullable="true" length="64"
+                comment="Before Identity SHA-256"/>
+        <column xsi:type="varchar" name="after_identity_sha256" nullable="true" length="64"
+                comment="After Identity SHA-256"/>
+        <column xsi:type="varchar" name="result" nullable="false" length="24" comment="Result"/>
+        <column xsi:type="varchar" name="reason_code" nullable="false" length="64" comment="Reason Code"/>
+        <column xsi:type="varchar" name="correlation_id" nullable="false" length="64" comment="Correlation ID"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="event_uuid"/>
+        </constraint>
+        <index referenceId="OSRW_AUDIT_TARGET" indexType="btree">
+            <column name="target_type"/>
+            <column name="target_uuid"/>
+        </index>
+        <index referenceId="OSRW_AUDIT_CREATED_AT" indexType="btree">
+            <column name="created_at"/>
+        </index>
+    </table>
+</schema>

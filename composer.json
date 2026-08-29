@@ -39,6 +39,7 @@
     "hyva-themes/magento2-default-theme": "^1.5",
     "mage-os/composer-dependency-version-audit-plugin": "3.4.0",
     "mage-os/composer-root-update-plugin": "3.4.0",
+    "mage-os/module-opensearch-relevance-workbench": "dev-main",
     "mage-os/product-community-edition": "3.4.0"
   },
   "require-dev": {
@@ -97,6 +98,14 @@
     "magento-force": "override"
   },
   "repositories": [
+    {
+      "name": "osrw",
+      "type": "path",
+      "url": "packages/module-opensearch-relevance-workbench",
+      "options": {
+        "symlink": false
+      }
+    },
     {
       "name": "hyva-themes",
       "type": "composer",

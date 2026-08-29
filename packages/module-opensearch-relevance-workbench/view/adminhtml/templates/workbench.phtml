@@ -1,0 +1,1281 @@
+<?php
+/**
+ * @var \MageOS\OpenSearchRelevanceWorkbench\Block\Adminhtml\Workbench $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$preflight = $block->getPreflightResult();
+$preview = $block->getSnapshotPreview();
+$ratingQueue = $block->getRatingQueue();
+$previewParameters = is_array($preview['parameters'] ?? null) ? $preview['parameters'] : [];
+$liveStates = $block->getLiveStates();
+$activationCandidates = $block->getActivationCandidates();
+$recentLiveActivations = $block->getRecentLiveActivations();
+$recentSnapshots = $block->getRecentSnapshots();
+$recentCandidates = $block->getRecentCandidates();
+$recentExperiments = $block->getRecentExperiments();
+$eligibleExperimentInputs = $block->getEligibleExperimentInputs();
+$ratingQueueCandidates = [];
+
+foreach ($recentCandidates as $candidate) {
+    $candidateSnapshots = $block->getEligibleSnapshots((int)$candidate['store_id']);
+
+    if ($candidateSnapshots !== []) {
+        $ratingQueueCandidates[] = ['candidate' => $candidate, 'snapshots' => $candidateSnapshots];
+    }
+}
+
+$workflowProgress = $block->getWorkflowProgress($preflight, $preview, $liveStates, $activationCandidates);
+$recommendedStep = $workflowProgress['recommended_step'];
+$workflowStates = $workflowProgress['states'];
+$hasActiveCandidate = count(array_filter(
+    $liveStates,
+    static fn (array $state): bool => ($state['transformation']['type'] ?? 'STOCK') !== 'STOCK'
+)) > 0;
+?>
+<!--
+THESIS: Turn search relevance work into one calm, evidence-led operating sequence.
+OWN-WORLD: Magento Admin is the visual world; this surface uses its controls, tables, permissions, and message language.
+STORY: Readiness -> Snapshot -> Tune -> Judge -> Compare -> Activate, with one primary task visible at a time.
+FIRST VIEWPORT: Current storefront state, workflow position, and the next useful action are visible without scrolling.
+FORM: Code-first operator workspace; concept seed f7cde140; restrained Magento-native shell with a persistent workflow rail.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->
+<div class="osrw-workbench"
+     data-osrw-recommended-step="<?= $escaper->escapeHtmlAttr($recommendedStep) ?>"
+     data-mage-init='<?= $escaper->escapeHtmlAttr(json_encode([
+         'MageOS_OpenSearchRelevanceWorkbench/js/workbench' => [],
+     ], JSON_THROW_ON_ERROR)) ?>'>
+    <header class="osrw-command-bar">
+        <div>
+            <h1><?= $escaper->escapeHtml(__('OpenSearch Relevance Workbench')) ?></h1>
+            <p class="osrw-command-summary"><?= $escaper->escapeHtml(
+                __('Build a judged candidate, compare exact evidence, then activate it with a recorded rollback path.')
+            ) ?></p>
+        </div>
+        <div class="osrw-live-summary">
+            <span class="osrw-status-label"><?= $escaper->escapeHtml(__('Live storefront state')) ?></span>
+            <ul>
+                <?php foreach ($liveStates as $state): ?>
+                    <?php $isStock = ($state['transformation']['type'] ?? 'STOCK') === 'STOCK'; ?>
+                    <li class="<?= $isStock ? 'is-stock' : 'is-candidate' ?>">
+                        <span class="osrw-status-dot" aria-hidden="true"></span>
+                        <span><strong><?= $escaper->escapeHtml((string)$state['store_name']) ?></strong>
+                            <small><?= $escaper->escapeHtml(
+                                $isStock ? __('Stock') : __('Candidate active')
+                            ) ?></small></span>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </header>
+
+    <div class="osrw-workspace">
+        <nav class="osrw-workflow" aria-label="<?= $escaper->escapeHtmlAttr(__('Relevance workflow')) ?>"
+             role="tablist" aria-orientation="vertical">
+            <button type="button" class="osrw-workflow-step is-<?= $escaper->escapeHtmlAttr($workflowStates['readiness']) ?>" id="osrw-tab-readiness" role="tab"
+                    aria-selected="false" aria-controls="osrw-panel-readiness" tabindex="-1"
+                    data-osrw-step="readiness">
+                <span class="osrw-step-marker" aria-hidden="true"></span>
+                <span><strong><?= $escaper->escapeHtml(__('Readiness')) ?></strong>
+                    <small><?= $escaper->escapeHtml(__('Confirm the runtime')) ?></small>
+                    <span class="osrw-step-state"><?= $escaper->escapeHtml(ucfirst($workflowStates['readiness'])) ?></span></span>
+            </button>
+            <button type="button" class="osrw-workflow-step is-<?= $escaper->escapeHtmlAttr($workflowStates['snapshot']) ?>" id="osrw-tab-snapshot" role="tab"
+                    aria-selected="false" aria-controls="osrw-panel-snapshot" tabindex="-1"
+                    data-osrw-step="snapshot">
+                <span class="osrw-step-marker" aria-hidden="true"></span>
+                <span><strong><?= $escaper->escapeHtml(__('Snapshot')) ?></strong>
+                    <small><?= $escaper->escapeHtml(__('Freeze query demand')) ?></small>
+                    <span class="osrw-step-state"><?= $escaper->escapeHtml(ucfirst($workflowStates['snapshot'])) ?></span></span>
+            </button>
+            <button type="button" class="osrw-workflow-step is-<?= $escaper->escapeHtmlAttr($workflowStates['tune']) ?>" id="osrw-tab-tune" role="tab"
+                    aria-selected="false" aria-controls="osrw-panel-tune" tabindex="-1"
+                    data-osrw-step="tune">
+                <span class="osrw-step-marker" aria-hidden="true"></span>
+                <span><strong><?= $escaper->escapeHtml(__('Tune')) ?></strong>
+                    <small><?= $escaper->escapeHtml(__('Build one candidate')) ?></small>
+                    <span class="osrw-step-state"><?= $escaper->escapeHtml(ucfirst($workflowStates['tune'])) ?></span></span>
+            </button>
+            <button type="button" class="osrw-workflow-step is-<?= $escaper->escapeHtmlAttr($workflowStates['judge']) ?>" id="osrw-tab-judge" role="tab"
+                    aria-selected="false" aria-controls="osrw-panel-judge" tabindex="-1"
+                    data-osrw-step="judge">
+                <span class="osrw-step-marker" aria-hidden="true"></span>
+                <span><strong><?= $escaper->escapeHtml(__('Judge')) ?></strong>
+                    <small><?= $escaper->escapeHtml(__('Rate real results')) ?></small>
+                    <span class="osrw-step-state"><?= $escaper->escapeHtml(ucfirst($workflowStates['judge'])) ?></span></span>
+            </button>
+            <button type="button" class="osrw-workflow-step is-<?= $escaper->escapeHtmlAttr($workflowStates['compare']) ?>" id="osrw-tab-compare" role="tab"
+                    aria-selected="false" aria-controls="osrw-panel-compare" tabindex="-1"
+                    data-osrw-step="compare">
+                <span class="osrw-step-marker" aria-hidden="true"></span>
+                <span><strong><?= $escaper->escapeHtml(__('Compare')) ?></strong>
+                    <small><?= $escaper->escapeHtml(__('Review exact evidence')) ?></small>
+                    <span class="osrw-step-state"><?= $escaper->escapeHtml(ucfirst($workflowStates['compare'])) ?></span></span>
+            </button>
+            <button type="button" class="osrw-workflow-step is-<?= $escaper->escapeHtmlAttr($workflowStates['activate']) ?>" id="osrw-tab-activate" role="tab"
+                    aria-selected="false" aria-controls="osrw-panel-activate" tabindex="-1"
+                    data-osrw-step="activate">
+                <span class="osrw-step-marker" aria-hidden="true"></span>
+                <span><strong><?= $escaper->escapeHtml(__('Activate')) ?></strong>
+                    <small><?= $escaper->escapeHtml(__('Apply or roll back')) ?></small>
+                    <span class="osrw-step-state"><?= $escaper->escapeHtml(ucfirst($workflowStates['activate'])) ?></span></span>
+            </button>
+        </nav>
+
+        <main class="osrw-stage">
+            <section class="osrw-panel" id="osrw-panel-readiness" role="tabpanel"
+                     aria-labelledby="osrw-tab-readiness" tabindex="0" data-osrw-panel="readiness" hidden>
+                <div class="osrw-panel-intro">
+                    <h2><?= $escaper->escapeHtml(__('Readiness')) ?></h2><p><?= $escaper->escapeHtml(
+                        __('Verify supported services and inspect anything that could block a trustworthy run.')
+                    ) ?></p></div>
+            </section>
+            <section class="osrw-panel" id="osrw-panel-snapshot" role="tabpanel"
+                     aria-labelledby="osrw-tab-snapshot" tabindex="0" data-osrw-panel="snapshot" hidden>
+                <div class="osrw-panel-intro">
+                    <h2><?= $escaper->escapeHtml(__('Snapshot')) ?></h2><p><?= $escaper->escapeHtml(
+                        __('Select and approve the exact query demand that the next comparison will represent.')
+                    ) ?></p></div>
+            </section>
+            <section class="osrw-panel" id="osrw-panel-tune" role="tabpanel"
+                     aria-labelledby="osrw-tab-tune" tabindex="0" data-osrw-panel="tune" hidden>
+                <div class="osrw-panel-intro">
+                    <h2><?= $escaper->escapeHtml(__('Tune')) ?></h2><p><?= $escaper->escapeHtml(
+                        __('Capture the stock query shape and build a bounded field-boost candidate.')
+                    ) ?></p></div>
+            </section>
+            <section class="osrw-panel" id="osrw-panel-judge" role="tabpanel"
+                     aria-labelledby="osrw-tab-judge" tabindex="0" data-osrw-panel="judge" hidden>
+                <div class="osrw-panel-intro">
+                    <h2><?= $escaper->escapeHtml(__('Judge')) ?></h2><p><?= $escaper->escapeHtml(
+                        __('Rate frozen query-product pairs before comparing configurations.')
+                    ) ?></p></div>
+            </section>
+            <section class="osrw-panel" id="osrw-panel-compare" role="tabpanel"
+                     aria-labelledby="osrw-tab-compare" tabindex="0" data-osrw-panel="compare" hidden>
+                <div class="osrw-panel-intro">
+                    <h2><?= $escaper->escapeHtml(__('Compare')) ?></h2><p><?= $escaper->escapeHtml(
+                        __('Run offline experiments, inspect regressions, and accept only evidence you trust.')
+                    ) ?></p></div>
+            </section>
+            <section class="osrw-panel" id="osrw-panel-activate" role="tabpanel"
+                     aria-labelledby="osrw-tab-activate" tabindex="0" data-osrw-panel="activate" hidden>
+                <div class="osrw-panel-intro">
+                    <h2><?= $escaper->escapeHtml(__('Activate')) ?></h2><p><?= $escaper->escapeHtml(
+                        __('Apply an accepted winner to storefront queries or restore the prior live state.')
+                    ) ?></p></div>
+            </section>
+        </main>
+    </div>
+
+    <div class="osrw-source" aria-hidden="true">
+
+<section class="admin__fieldset-wrapper" data-osrw-section="readiness" data-osrw-priority="10">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Preflight')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('osrw/preflight/run')) ?>">
+            <?= $block->getBlockHtml('formkey') ?>
+            <button type="submit" class="action-primary">
+                <span><?= $escaper->escapeHtml(__('Run read-only preflight')) ?></span>
+            </button>
+        </form>
+        <?php if ($preflight !== []): ?>
+            <dl class="admin__page-nav">
+                <dt><?= $escaper->escapeHtml(__('OpenSearch version')) ?></dt>
+                <dd><?= $escaper->escapeHtml((string)($preflight['opensearch_version'] ?? __('Unavailable'))) ?></dd>
+                <dt><?= $escaper->escapeHtml(__('Human workflow')) ?></dt>
+                <dd><?= !empty($preflight['human_workflow_ready'])
+                    ? $escaper->escapeHtml(__('Ready'))
+                    : $escaper->escapeHtml(__('Blocked')) ?></dd>
+                <dt><?= $escaper->escapeHtml(__('LLM workflow')) ?></dt>
+                <dd><?= $escaper->escapeHtml(__('Not qualified on the supported 3.8 artifact')) ?></dd>
+                <dt><?= $escaper->escapeHtml(__('Reason codes')) ?></dt>
+                <dd><?= $escaper->escapeHtml(implode(', ', (array)($preflight['reason_codes'] ?? []))) ?></dd>
+            </dl>
+        <?php endif; ?>
+    </div>
+</section>
+
+<?php if ($block->canPreviewQueryData()): ?>
+    <?php $experimentEvidence = $block->getRecentExperimentEvidence(); ?>
+    <section class="admin__fieldset-wrapper" data-osrw-section="readiness" data-osrw-priority="20">
+        <div class="admin__fieldset-wrapper-title">
+            <strong class="title"><?= $escaper->escapeHtml(__('Regression inbox')) ?></strong>
+        </div>
+        <div class="admin__fieldset-wrapper-content">
+            <?php $regressionCount = 0; ?>
+            <?php foreach ($experimentEvidence as $experimentDetail): ?>
+                <?php foreach ((array)$experimentDetail['regressions'] as $regression): ?>
+                    <?php $regressionCount++; ?>
+                    <div class="message message-error">
+                        <div>
+                            <strong><?= $escaper->escapeHtml((string)$regression['query_text']) ?></strong>
+                            <?= $escaper->escapeHtml(__('regressed by %1 NDCG@10.',
+                                number_format(abs((float)$regression['delta']), 4))) ?>
+                            <?php if (!empty($regression['known_item_regression'])): ?>
+                                <?= $escaper->escapeHtml(__('The best-rated known item also moved down.')) ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+            <?php if ($regressionCount === 0): ?>
+                <p><?= $escaper->escapeHtml(
+                    __('No query-level regressions are present in the recent frozen evidence.')
+                ) ?></p>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <section class="admin__fieldset-wrapper" data-osrw-section="compare" data-osrw-priority="30"
+             data-osrw-secondary="true">
+        <div class="admin__fieldset-wrapper-title">
+            <strong class="title"><?= $escaper->escapeHtml(__('Before and after result movements')) ?></strong>
+        </div>
+        <div class="admin__fieldset-wrapper-content">
+            <?php foreach ($experimentEvidence as $experimentDetail): ?>
+                <h3>
+                    <?= $escaper->escapeHtml(__('Experiment')) ?>
+                    <code><?= $escaper->escapeHtml((string)$experimentDetail['experiment_uuid']) ?></code>
+                </h3>
+                <p>
+                    <?= $escaper->escapeHtml(__('Current index evidence: %1.',
+                        (string)$experimentDetail['index_state'])) ?>
+                    <?= $escaper->escapeHtml(__('Product context: %1.',
+                        (string)$experimentDetail['product_context_state'])) ?>
+                </p>
+                <?php if ((string)$experimentDetail['index_state'] !== 'FRESH'): ?>
+                    <div class="message message-warning">
+                        <div><?= $escaper->escapeHtml(
+                            __('The catalog index changed or is unavailable. Capture a fresh baseline and rebuild the candidate and judgments before rerunning.')
+                        ) ?></div>
+                    </div>
+                <?php endif; ?>
+                <?php if ((array)$experimentDetail['queries'] === []): ?>
+                    <p><?= $escaper->escapeHtml(
+                        __('Detailed rankings were not recorded for this evidence version.')
+                    ) ?></p>
+                <?php endif; ?>
+                <?php foreach ((array)$experimentDetail['queries'] as $queryDetail): ?>
+                    <details>
+                        <summary>
+                            <strong><?= $escaper->escapeHtml((string)$queryDetail['query_text']) ?></strong>
+                            <?= $escaper->escapeHtml(__('Baseline %1, candidate %2, delta %3',
+                                number_format((float)$queryDetail['baseline_ndcg_at_10'], 4),
+                                number_format((float)$queryDetail['candidate_ndcg_at_10'], 4),
+                                number_format((float)$queryDetail['delta'], 4))) ?>
+                        </summary>
+                        <table class="data-grid">
+                            <thead>
+                            <tr>
+                                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Product')) ?></th>
+                                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Baseline rank')) ?></th>
+                                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Candidate rank')) ?></th>
+                                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Movement')) ?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ((array)$queryDetail['products'] as $product): ?>
+                                <tr>
+                                    <td>
+                                        <?= $escaper->escapeHtml((string)$product['name']) ?>
+                                        <?php if ((string)$product['sku'] !== ''): ?>
+                                            <code><?= $escaper->escapeHtml((string)$product['sku']) ?></code>
+                                        <?php endif; ?>
+                                        <small><?= $escaper->escapeHtml((string)$product['document_id']) ?></small>
+                                    </td>
+                                    <td><?= $escaper->escapeHtml(
+                                        $product['baseline_rank'] === null
+                                            ? __('Not ranked')
+                                            : (string)$product['baseline_rank']
+                                    ) ?></td>
+                                    <td><?= $escaper->escapeHtml(
+                                        $product['candidate_rank'] === null
+                                            ? __('Not ranked')
+                                            : (string)$product['candidate_rank']
+                                    ) ?></td>
+                                    <td><?= $escaper->escapeHtml((string)$product['movement']) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </details>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
+    </section>
+<?php endif; ?>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="compare" data-osrw-priority="10">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Human offline experiments')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <p><?= $escaper->escapeHtml(
+            __('Each run materializes owned inputs, validates one pairwise and two pointwise experiments, then computes local NDCG@10 evidence before any activation is allowed.')
+        ) ?></p>
+        <?php if ($eligibleExperimentInputs === []): ?>
+            <div class="osrw-empty-state">
+                <strong><?= $escaper->escapeHtml(__('No exact experiment input set is ready')) ?></strong>
+                <p><?= $escaper->escapeHtml(
+                    __('Complete Judge with a valid candidate, an approved same-store snapshot, and ratings bound to the same index evidence.')
+                ) ?></p>
+            </div>
+        <?php endif; ?>
+        <?php foreach ($eligibleExperimentInputs as $inputs): ?>
+            <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('osrw/experiment/runHuman')) ?>">
+                <?= $block->getBlockHtml('formkey') ?>
+                <?php foreach ($inputs as $field => $value): ?>
+                    <input type="hidden" name="<?= $escaper->escapeHtmlAttr($field) ?>"
+                           value="<?= $escaper->escapeHtmlAttr($value) ?>"/>
+                <?php endforeach; ?>
+                <p>
+                    <?= $escaper->escapeHtml(__('Candidate')) ?>
+                    <code><?= $escaper->escapeHtml($inputs['candidate_uuid']) ?></code>
+                    <?= $escaper->escapeHtml(__('with judgment')) ?>
+                    <code><?= $escaper->escapeHtml($inputs['judgment_uuid']) ?></code>
+                </p>
+                <button type="submit" class="action-secondary">
+                    <span><?= $escaper->escapeHtml(__('Run or resume three offline experiments')) ?></span>
+                </button>
+            </form>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<?php if ($block->canPreviewOwnedResourceCleanup()): ?>
+    <?php $cleanupPreview = $block->getOwnedResourceCleanupPreview(); ?>
+    <section class="admin__fieldset-wrapper" data-osrw-section="readiness" data-osrw-priority="90"
+             data-osrw-secondary="true">
+        <div class="admin__fieldset-wrapper-title">
+            <strong class="title"><?= $escaper->escapeHtml(__('Owned remote resource cleanup preview')) ?></strong>
+        </div>
+        <div class="admin__fieldset-wrapper-content">
+            <div class="message message-warning">
+                <div><?= $escaper->escapeHtml(
+                    __('Preview only. This module exposes no remote delete action. Eligibility requires the exact bound ID, resource type, generated name, and reconstructed content hash.')
+                ) ?></div>
+            </div>
+            <?php if ($cleanupPreview === []): ?>
+                <p><?= $escaper->escapeHtml(__('No bound remote resources are available to preview.')) ?></p>
+            <?php else: ?>
+                <table class="data-grid">
+                    <thead>
+                    <tr>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Resource')) ?></th>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Kind')) ?></th>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Local identity')) ?></th>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Remote identity')) ?></th>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Remote name')) ?></th>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Preview result')) ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($cleanupPreview as $resource): ?>
+                        <tr>
+                            <td><?= $escaper->escapeHtml((string)$resource['resource_type']) ?></td>
+                            <td><?= $escaper->escapeHtml((string)$resource['resource_kind']) ?></td>
+                            <td><code><?= $escaper->escapeHtml((string)$resource['local_uuid']) ?></code></td>
+                            <td><code><?= $escaper->escapeHtml((string)$resource['remote_id']) ?></code></td>
+                            <td><?= $escaper->escapeHtml((string)($resource['remote_name'] ?? __('Unavailable'))) ?></td>
+                            <td>
+                                <?php if ($resource['eligible'] === true): ?>
+                                    <?= $escaper->escapeHtml(__('Exact match')) ?>
+                                <?php else: ?>
+                                    <?= $escaper->escapeHtml(implode(', ', (array)$resource['reason_codes'])) ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
+    </section>
+<?php endif; ?>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="compare" data-osrw-priority="20">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Offline evidence')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <table class="data-grid">
+            <thead>
+            <tr>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Experiment')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('State')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Eligibility')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Baseline NDCG')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Candidate NDCG')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Delta')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Coverage')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Decision')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($block->getRecentExperiments() as $experiment): ?>
+                <?php $aggregate = (array)$experiment['aggregate']; ?>
+                <?php $reasonCodes = (array)$experiment['reason_codes']; ?>
+                <tr>
+                    <td><code><?= $escaper->escapeHtml((string)$experiment['experiment_uuid']) ?></code></td>
+                    <td><?= $escaper->escapeHtml((string)$experiment['state']) ?></td>
+                    <td>
+                        <?= $escaper->escapeHtml((string)$experiment['eligibility']) ?>
+                        <?php if ($reasonCodes !== []): ?>
+                            <br/><?= $escaper->escapeHtml(implode(', ', $reasonCodes)) ?>
+                        <?php endif; ?>
+                    </td>
+                    <td><?= $escaper->escapeHtml(number_format((float)($aggregate['baseline_metric'] ?? 0), 4)) ?></td>
+                    <td><?= $escaper->escapeHtml(number_format((float)($aggregate['candidate_metric'] ?? 0), 4)) ?></td>
+                    <td><?= $escaper->escapeHtml(number_format((float)($aggregate['metric_delta'] ?? 0), 4)) ?></td>
+                    <td><?= $escaper->escapeHtml(number_format((float)($aggregate['judged_coverage'] ?? 0), 2)) ?></td>
+                    <td>
+                        <?php if ((string)$experiment['eligibility'] === 'EXPLORATORY'): ?>
+                            <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('osrw/experiment/accept')) ?>">
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <input type="hidden" name="experiment_uuid"
+                                       value="<?= $escaper->escapeHtmlAttr((string)$experiment['experiment_uuid']) ?>"/>
+                                <button type="submit" class="action-primary">
+                                    <span><?= $escaper->escapeHtml(__('Accept this exact offline evidence')) ?></span>
+                                </button>
+                            </form>
+                        <?php elseif ((string)$experiment['eligibility'] === 'WINNER'): ?>
+                            <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('osrw/proposal/export')) ?>">
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <input type="hidden" name="experiment_uuid"
+                                       value="<?= $escaper->escapeHtmlAttr((string)$experiment['experiment_uuid']) ?>"/>
+                                <button type="submit" class="action-primary">
+                                    <span><?= $escaper->escapeHtml(__('Download evidence package')) ?></span>
+                                </button>
+                            </form>
+                        <?php else: ?>
+                            <?= $escaper->escapeHtml(__('Not eligible for acceptance')) ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="compare" data-osrw-priority="40"
+         data-osrw-secondary="true">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Evidence packages')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <table class="data-grid">
+            <thead>
+            <tr>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Proposal')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Source experiment')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Artifact SHA-256')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Created at')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($block->getRecentProposals() as $proposal): ?>
+                <tr>
+                    <td><code><?= $escaper->escapeHtml((string)$proposal['proposal_uuid']) ?></code></td>
+                    <td><code><?= $escaper->escapeHtml((string)$proposal['source_experiment_uuid']) ?></code></td>
+                    <td><code><?= $escaper->escapeHtml((string)$proposal['artifact_sha256']) ?></code></td>
+                    <td><?= $escaper->escapeHtml((string)$proposal['created_at']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="judge" data-osrw-priority="10">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Human rating queue')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <p><?= $escaper->escapeHtml(
+            __('Build a fresh top-ten union from one validated candidate and a same-store approved snapshot.')
+        ) ?></p>
+        <?php if ($ratingQueueCandidates === []): ?>
+            <div class="osrw-empty-state">
+                <strong><?= $escaper->escapeHtml(__('No candidate and snapshot pair is ready')) ?></strong>
+                <p><?= $escaper->escapeHtml(
+                    __('Create a valid candidate in Tune and approve a snapshot with at least five queries for the same store.')
+                ) ?></p>
+            </div>
+        <?php endif; ?>
+        <?php foreach ($ratingQueueCandidates as $queueCandidate): ?>
+            <?php $candidate = $queueCandidate['candidate']; ?>
+            <?php $candidateSnapshots = $queueCandidate['snapshots']; ?>
+                <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('osrw/judgment/prepareQueue')) ?>">
+                    <?= $block->getBlockHtml('formkey') ?>
+                    <input type="hidden" name="candidate_uuid"
+                           value="<?= $escaper->escapeHtmlAttr((string)$candidate['configuration_uuid']) ?>"/>
+                    <label>
+                        <span><?= $escaper->escapeHtml(__('Candidate %1', $candidate['configuration_uuid'])) ?></span>
+                        <select class="admin__control-select" name="snapshot_uuid" required>
+                            <?php foreach ($candidateSnapshots as $snapshot): ?>
+                                <option value="<?= $escaper->escapeHtmlAttr((string)$snapshot['snapshot_uuid']) ?>">
+                                    <?= $escaper->escapeHtml(
+                                        (string)$snapshot['snapshot_uuid']
+                                        . ' (' . (string)$snapshot['selected_count'] . ' queries)'
+                                    ) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </label>
+                    <button type="submit" class="action-secondary">
+                        <span><?= $escaper->escapeHtml(__('Prepare fresh rating queue')) ?></span>
+                    </button>
+                </form>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<?php if ($ratingQueue !== []): ?>
+    <section class="admin__fieldset-wrapper" data-osrw-section="judge" data-osrw-priority="20">
+        <div class="admin__fieldset-wrapper-title">
+            <strong class="title"><?= $escaper->escapeHtml(__('Review frozen query-product pairs')) ?></strong>
+        </div>
+        <div class="admin__fieldset-wrapper-content">
+            <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('osrw/judgment/saveRatings')) ?>">
+                <?= $block->getBlockHtml('formkey') ?>
+                <input type="hidden" name="candidate_uuid"
+                       value="<?= $escaper->escapeHtmlAttr((string)$ratingQueue['candidate_uuid']) ?>"/>
+                <input type="hidden" name="snapshot_uuid"
+                       value="<?= $escaper->escapeHtmlAttr((string)$ratingQueue['snapshot_uuid']) ?>"/>
+                <table class="data-grid osrw-rating-queue">
+                    <thead>
+                    <tr>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Query')) ?></th>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Product')) ?></th>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Baseline rank')) ?></th>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Candidate rank')) ?></th>
+                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Human rating')) ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ((array)$ratingQueue['items'] as $ordinal => $item): ?>
+                        <tr>
+                            <th scope="row"><?= $escaper->escapeHtml((string)$item['query_text']) ?></th>
+                            <td>
+                                <?= $escaper->escapeHtml((string)$item['name']) ?>
+                                <code><?= $escaper->escapeHtml((string)$item['sku']) ?></code>
+                                <small><?= $escaper->escapeHtml((string)$item['document_id']) ?></small>
+                            </td>
+                            <td><?= $escaper->escapeHtml((string)($item['baseline_rank'] ?? __('Not ranked'))) ?></td>
+                            <td><?= $escaper->escapeHtml((string)($item['candidate_rank'] ?? __('Not ranked'))) ?></td>
+                            <td>
+                                <input type="hidden" name="ratings[<?= (int)$ordinal ?>][query_hash]"
+                                       value="<?= $escaper->escapeHtmlAttr((string)$item['query_hash']) ?>"/>
+                                <input type="hidden" name="ratings[<?= (int)$ordinal ?>][document_id]"
+                                       value="<?= $escaper->escapeHtmlAttr((string)$item['document_id']) ?>"/>
+                                <fieldset class="osrw-rating-fieldset">
+                                    <legend class="osrw-visually-hidden"><?= $escaper->escapeHtml(
+                                        __('Rate %1 for query %2',
+                                            (string)$item['name'], (string)$item['query_text'])
+                                    ) ?></legend>
+                                    <?php foreach ([
+                                        '0.0' => __('Irrelevant 0.0'),
+                                        '0.5' => __('Partially relevant 0.5'),
+                                        '1.0' => __('Highly relevant 1.0'),
+                                    ] as $ratingValue => $ratingLabel): ?>
+                                        <label>
+                                            <input type="radio" name="ratings[<?= (int)$ordinal ?>][rating]"
+                                                   value="<?= $escaper->escapeHtmlAttr($ratingValue) ?>" required/>
+                                            <?= $escaper->escapeHtml($ratingLabel) ?>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </fieldset>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <button type="submit" class="action-primary">
+                    <span><?= $escaper->escapeHtml(__('Save immutable human judgment set')) ?></span>
+                </button>
+            </form>
+        </div>
+    </section>
+<?php endif; ?>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="judge" data-osrw-priority="30"
+         data-osrw-secondary="true">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Human judgment sets')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <table class="data-grid">
+            <thead>
+            <tr>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Judgment')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('State')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Ratings')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Scale')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Created at')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($block->getRecentHumanJudgments() as $judgment): ?>
+                <tr>
+                    <td><code><?= $escaper->escapeHtml((string)$judgment['judgment_uuid']) ?></code></td>
+                    <td><?= $escaper->escapeHtml((string)$judgment['state']) ?></td>
+                    <td><?= $escaper->escapeHtml((string)$judgment['total_count']) ?></td>
+                    <td><?= $escaper->escapeHtml((string)$judgment['rating_type']) ?></td>
+                    <td><?= $escaper->escapeHtml((string)$judgment['created_at']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<?php if ($block->canManageSettings()): ?>
+    <section class="admin__fieldset-wrapper" data-osrw-section="snapshot" data-osrw-priority="90"
+             data-osrw-secondary="true">
+        <div class="admin__fieldset-wrapper-title">
+            <strong class="title"><?= $escaper->escapeHtml(__('Scheduled snapshot drafts')) ?></strong>
+        </div>
+        <div class="admin__fieldset-wrapper-content">
+            <div class="message message-warning">
+                <div><?= $escaper->escapeHtml(
+                    __('An approved schedule may prepare query snapshot drafts only. Cron cannot approve a snapshot, run judgments or experiments, spend money, export evidence, or activate search.')
+                ) ?></div>
+            </div>
+            <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('osrw/schedule/approve')) ?>">
+                <?= $block->getBlockHtml('formkey') ?>
+                <fieldset class="admin__fieldset">
+                    <div class="admin__field">
+                        <label class="admin__field-label" for="osrw-schedule-store-id">
+                            <span><?= $escaper->escapeHtml(__('Store view')) ?></span>
+                        </label>
+                        <div class="admin__field-control">
+                            <select class="admin__control-select" id="osrw-schedule-store-id"
+                                    name="store_id" required>
+                                <?php foreach ($block->getStoreViews() as $store): ?>
+                                    <option value="<?= $escaper->escapeHtmlAttr((string)$store->getId()) ?>">
+                                        <?= $escaper->escapeHtml((string)$store->getName()) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <?php foreach ([
+                        'source_window_days' => [__('Source window days'), 90, 1, 365],
+                        'minimum_popularity' => [__('Minimum popularity'), 5, 0, 1000000],
+                        'positive_result_limit' => [__('Positive-result limit'), 16, 1, 100],
+                        'zero_result_limit' => [__('Zero-result limit'), 4, 1, 100],
+                        'total_limit' => [__('Maximum snapshot size'), 20, 1, 200],
+                        'interval_days' => [__('Interval days'), 30, 7, 90],
+                        'retention_days' => [__('Draft retention days'), 180, 7, 730],
+                    ] as $fieldName => [$label, $defaultValue, $minimum, $maximum]): ?>
+                        <div class="admin__field">
+                            <label class="admin__field-label"
+                                   for="osrw-schedule-<?= $escaper->escapeHtmlAttr($fieldName) ?>">
+                                <span><?= $escaper->escapeHtml($label) ?></span>
+                            </label>
+                            <div class="admin__field-control">
+                                <input class="admin__control-text"
+                                       id="osrw-schedule-<?= $escaper->escapeHtmlAttr($fieldName) ?>"
+                                       type="number" min="<?= (int)$minimum ?>" max="<?= (int)$maximum ?>"
+                                       name="<?= $escaper->escapeHtmlAttr($fieldName) ?>"
+                                       value="<?= (int)$defaultValue ?>" required/>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    <div class="admin__field">
+                        <label class="admin__field-label" for="osrw-schedule-first-run">
+                            <span><?= $escaper->escapeHtml(__('First draft time in UTC')) ?></span>
+                        </label>
+                        <div class="admin__field-control">
+                            <input class="admin__control-text" id="osrw-schedule-first-run"
+                                   type="datetime-local" name="first_run_at"
+                                   value="<?= $escaper->escapeHtmlAttr($block->getDefaultScheduleFirstRun()) ?>"
+                                   required/>
+                        </div>
+                    </div>
+                    <div class="admin__field">
+                        <div class="admin__field-control">
+                            <label>
+                                <input type="checkbox" name="include_redirects" value="1"/>
+                                <?= $escaper->escapeHtml(__('Include redirect terms')) ?>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <button type="submit" class="action-primary">
+                    <span><?= $escaper->escapeHtml(__('Approve these exact draft-only rules')) ?></span>
+                </button>
+            </form>
+
+            <table class="data-grid">
+                <thead>
+                <tr>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Schedule')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Store')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Status')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Next draft')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Policy SHA-256')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Control')) ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($block->getSnapshotSchedules() as $schedule): ?>
+                    <tr>
+                        <td><code><?= $escaper->escapeHtml((string)$schedule['schedule_uuid']) ?></code></td>
+                        <td><?= $escaper->escapeHtml((string)$schedule['store_id']) ?></td>
+                        <td><?= $escaper->escapeHtml((string)$schedule['status']) ?></td>
+                        <td><?= $escaper->escapeHtml((string)$schedule['next_run_at']) ?></td>
+                        <td><code><?= $escaper->escapeHtml((string)$schedule['policy_sha256']) ?></code></td>
+                        <td>
+                            <?php if ((string)$schedule['status'] === 'ACTIVE'): ?>
+                                <form method="post"
+                                      action="<?= $escaper->escapeUrl($block->getUrl('osrw/schedule/pause')) ?>">
+                                    <?= $block->getBlockHtml('formkey') ?>
+                                    <input type="hidden" name="schedule_uuid"
+                                           value="<?= $escaper->escapeHtmlAttr(
+                                               (string)$schedule['schedule_uuid']
+                                           ) ?>"/>
+                                    <button type="submit" class="action-secondary">
+                                        <span><?= $escaper->escapeHtml(__('Pause schedule')) ?></span>
+                                    </button>
+                                </form>
+                            <?php else: ?>
+                                <?= $escaper->escapeHtml(__('Reapprove exact rules to resume')) ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </section>
+<?php endif; ?>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="snapshot" data-osrw-priority="10">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Query snapshot preview')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <p><?= $escaper->escapeHtml(
+            __('Excluded private terms are counted but are not retained in the preview or audit record.')
+        ) ?></p>
+        <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('osrw/snapshot/preview')) ?>">
+            <?= $block->getBlockHtml('formkey') ?>
+            <fieldset class="admin__fieldset">
+                <div class="admin__field">
+                    <label class="admin__field-label" for="osrw-store-id">
+                        <span><?= $escaper->escapeHtml(__('Store view')) ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <select class="admin__control-select" id="osrw-store-id" name="store_id" required>
+                            <?php foreach ($block->getStoreViews() as $store): ?>
+                                <option value="<?= $escaper->escapeHtmlAttr((string)$store->getId()) ?>">
+                                    <?= $escaper->escapeHtml((string)$store->getName()) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="admin__field">
+                    <label class="admin__field-label" for="osrw-window-start">
+                        <span><?= $escaper->escapeHtml(__('Source window start')) ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <input class="admin__control-text" id="osrw-window-start" type="datetime-local"
+                               name="source_window_start" value="<?= $escaper->escapeHtmlAttr($block->getDefaultWindowStart()) ?>"
+                               required/>
+                    </div>
+                </div>
+                <div class="admin__field">
+                    <label class="admin__field-label" for="osrw-window-end">
+                        <span><?= $escaper->escapeHtml(__('Source window end')) ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <input class="admin__control-text" id="osrw-window-end" type="datetime-local"
+                               name="source_window_end" value="<?= $escaper->escapeHtmlAttr($block->getDefaultWindowEnd()) ?>"
+                               required/>
+                    </div>
+                </div>
+                <?php foreach ([
+                    'minimum_popularity' => [__('Minimum popularity'), 5],
+                    'positive_result_limit' => [__('Positive-result limit'), 16],
+                    'zero_result_limit' => [__('Zero-result limit'), 4],
+                    'total_limit' => [__('Total snapshot limit'), 20],
+                ] as $fieldName => [$label, $defaultValue]): ?>
+                    <div class="admin__field">
+                        <label class="admin__field-label" for="osrw-<?= $escaper->escapeHtmlAttr($fieldName) ?>">
+                            <span><?= $escaper->escapeHtml($label) ?></span>
+                        </label>
+                        <div class="admin__field-control">
+                            <input class="admin__control-text"
+                                   id="osrw-<?= $escaper->escapeHtmlAttr($fieldName) ?>"
+                                   type="number" min="<?= $fieldName === 'minimum_popularity' ? '0' : '1' ?>"
+                                   name="<?= $escaper->escapeHtmlAttr($fieldName) ?>"
+                                   value="<?= $escaper->escapeHtmlAttr((string)$defaultValue) ?>" required/>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                <div class="admin__field">
+                    <div class="admin__field-control">
+                        <label>
+                            <input type="checkbox" name="include_redirects" value="1"/>
+                            <?= $escaper->escapeHtml(__('Include redirect terms')) ?>
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            <button type="submit" class="action-primary">
+                <span><?= $escaper->escapeHtml(__('Prepare privacy preview')) ?></span>
+            </button>
+        </form>
+    </div>
+</section>
+
+<?php if ($preview !== []): ?>
+    <section class="admin__fieldset-wrapper" data-osrw-section="snapshot" data-osrw-priority="20">
+        <div class="admin__fieldset-wrapper-title">
+            <strong class="title"><?= $escaper->escapeHtml(__('Exact snapshot approval')) ?></strong>
+        </div>
+        <div class="admin__fieldset-wrapper-content">
+            <p>
+                <?= $escaper->escapeHtml(__('Snapshot SHA-256:')) ?>
+                <code><?= $escaper->escapeHtml((string)$preview['snapshot_hash']) ?></code>
+            </p>
+            <p><?= $escaper->escapeHtml(__('%1 source terms, %2 selected.',
+                (int)$preview['source_count'],
+                (int)$preview['selected_count'])) ?></p>
+            <div class="message message-notice">
+                <div><?= $escaper->escapeHtml(
+                    __('Optional category and brand values must be merchant curated. The module does not infer context from the query. Rebuild the preview after editing so the values and their provenance are included in the displayed hash.')
+                ) ?></div>
+            </div>
+            <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('osrw/snapshot/preview')) ?>">
+                <?= $block->getBlockHtml('formkey') ?>
+                <?php foreach ($previewParameters as $fieldName => $value): ?>
+                    <input type="hidden" name="<?= $escaper->escapeHtmlAttr((string)$fieldName) ?>"
+                           value="<?= $escaper->escapeHtmlAttr((string)$value) ?>"/>
+                <?php endforeach; ?>
+            <table class="data-grid">
+                <thead>
+                <tr>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Query')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Popularity')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Results')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Category ID')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Brand value')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Provenance')) ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ((array)$preview['entries'] as $entry): ?>
+                    <?php $customFields = (array)($entry['custom_fields'] ?? []); ?>
+                    <?php $queryHash = (string)$entry['query_hash']; ?>
+                    <tr>
+                        <td><?= $escaper->escapeHtml((string)$entry['query_text']) ?></td>
+                        <td><?= $escaper->escapeHtml((string)$entry['popularity']) ?></td>
+                        <td><?= $escaper->escapeHtml((string)$entry['result_count']) ?></td>
+                        <td>
+                            <input class="admin__control-text" type="text" inputmode="numeric"
+                                   name="metadata[<?= $escaper->escapeHtmlAttr($queryHash) ?>][category_id]"
+                                   value="<?= $escaper->escapeHtmlAttr(
+                                       (string)($customFields['category_id']['value'] ?? '')
+                                   ) ?>" maxlength="20"/>
+                        </td>
+                        <td>
+                            <input class="admin__control-text" type="text"
+                                   name="metadata[<?= $escaper->escapeHtmlAttr($queryHash) ?>][brand_value]"
+                                   value="<?= $escaper->escapeHtmlAttr(
+                                       (string)($customFields['brand_value']['value'] ?? '')
+                                   ) ?>" maxlength="128"/>
+                        </td>
+                        <td><?= $escaper->escapeHtml(
+                            $customFields === [] ? __('Not set') : __('MERCHANT_CURATED')
+                        ) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+                <button type="submit" class="action-secondary">
+                    <span><?= $escaper->escapeHtml(__('Rebuild exact preview with curated metadata')) ?></span>
+                </button>
+            </form>
+            <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('osrw/snapshot/approve')) ?>">
+                <?= $block->getBlockHtml('formkey') ?>
+                <?php foreach ($previewParameters as $fieldName => $value): ?>
+                    <input type="hidden" name="<?= $escaper->escapeHtmlAttr((string)$fieldName) ?>"
+                           value="<?= $escaper->escapeHtmlAttr((string)$value) ?>"/>
+                <?php endforeach; ?>
+                <?php foreach ((array)$preview['entries'] as $entry): ?>
+                    <?php foreach ((array)($entry['custom_fields'] ?? []) as $fieldName => $metadata): ?>
+                        <input type="hidden"
+                               name="metadata[<?= $escaper->escapeHtmlAttr((string)$entry['query_hash']) ?>][<?=
+                                   $escaper->escapeHtmlAttr((string)$fieldName)
+                               ?>]"
+                               value="<?= $escaper->escapeHtmlAttr((string)($metadata['value'] ?? '')) ?>"/>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+                <input type="hidden" name="snapshot_hash"
+                       value="<?= $escaper->escapeHtmlAttr((string)$preview['snapshot_hash']) ?>"/>
+                <button type="submit" class="action-primary">
+                    <span><?= $escaper->escapeHtml(__('Approve this exact immutable snapshot')) ?></span>
+                </button>
+            </form>
+        </div>
+    </section>
+<?php endif; ?>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="snapshot" data-osrw-priority="30">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Recent query snapshots')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <table class="data-grid">
+            <thead>
+            <tr>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Snapshot')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Store')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Selected')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Status')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Source schedule')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Approved at')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Review or baseline')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($block->getRecentSnapshots() as $snapshot): ?>
+                <tr>
+                    <td><code><?= $escaper->escapeHtml((string)$snapshot['snapshot_uuid']) ?></code></td>
+                    <td><?= $escaper->escapeHtml((string)$snapshot['store_id']) ?></td>
+                    <td><?= $escaper->escapeHtml((string)$snapshot['selected_count']) ?></td>
+                    <td><?= $escaper->escapeHtml((string)$snapshot['status']) ?></td>
+                    <td><code><?= $escaper->escapeHtml((string)($snapshot['schedule_uuid'] ?? '')) ?></code></td>
+                    <td><?= $escaper->escapeHtml((string)$snapshot['approved_at']) ?></td>
+                    <td>
+                        <?php if (
+                            (string)$snapshot['status'] === 'DRAFT'
+                            && $block->canPreviewQueryData()
+                            && $block->canApproveSnapshots()
+                        ): ?>
+                            <details>
+                                <summary><?= $escaper->escapeHtml(__('Review selected draft terms')) ?></summary>
+                                <table class="data-grid">
+                                    <thead>
+                                    <tr>
+                                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Query')) ?></th>
+                                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Popularity')) ?></th>
+                                        <th class="data-grid-th"><?= $escaper->escapeHtml(__('Results')) ?></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach (
+                                        $block->getDraftReviewEntries((string)$snapshot['snapshot_uuid'])
+                                        as $entry
+                                    ): ?>
+                                        <tr>
+                                            <td><?= $escaper->escapeHtml((string)$entry['query_text']) ?></td>
+                                            <td><?= (int)$entry['popularity'] ?></td>
+                                            <td><?= (int)$entry['result_count'] ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </details>
+                            <form method="post"
+                                  action="<?= $escaper->escapeUrl(
+                                      $block->getUrl('osrw/snapshot/approveDraft')
+                                  ) ?>">
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <input type="hidden" name="snapshot_uuid"
+                                       value="<?= $escaper->escapeHtmlAttr(
+                                           (string)$snapshot['snapshot_uuid']
+                                       ) ?>"/>
+                                <input type="hidden" name="snapshot_hash"
+                                       value="<?= $escaper->escapeHtmlAttr(
+                                           (string)$snapshot['canonical_sha256']
+                                       ) ?>"/>
+                                <button type="submit" class="action-primary">
+                                    <span><?= $escaper->escapeHtml(__('Approve this exact scheduled draft')) ?></span>
+                                </button>
+                            </form>
+                        <?php elseif (
+                            (string)$snapshot['status'] === 'APPROVED'
+                            && (int)$snapshot['selected_count'] >= 5
+                        ): ?>
+                            <form method="post"
+                                  action="<?= $escaper->escapeUrl(
+                                      $block->getUrl('osrw/configuration/captureBaseline')
+                                  ) ?>">
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <input type="hidden" name="snapshot_uuid"
+                                       value="<?= $escaper->escapeHtmlAttr(
+                                           (string)$snapshot['snapshot_uuid']
+                                       ) ?>"/>
+                                <button type="submit" class="action-secondary">
+                                    <span><?= $escaper->escapeHtml(__('Capture stock baseline')) ?></span>
+                                </button>
+                            </form>
+                        <?php else: ?>
+                            <?= $escaper->escapeHtml(
+                                (string)$snapshot['status'] === 'DRAFT'
+                                    ? __('Awaiting authorized review')
+                                    : __('Requires at least 5 queries')
+                            ) ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="tune" data-osrw-priority="10">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Locally verified baselines')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <p><?= $escaper->escapeHtml(
+            __('Baseline capture reads the live mapping but does not create a remote search configuration.')
+        ) ?></p>
+        <table class="data-grid">
+            <thead>
+            <tr>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Configuration')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Store')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Captured target')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Physical index')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Validation')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Created at')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Guided candidate')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($block->getRecentBaselines() as $baseline): ?>
+                <?php $eligibleSnapshots = $block->getEligibleSnapshots((int)$baseline['store_id']); ?>
+                <tr>
+                    <td><code><?= $escaper->escapeHtml((string)$baseline['configuration_uuid']) ?></code></td>
+                    <td><?= $escaper->escapeHtml((string)$baseline['store_id']) ?></td>
+                    <td><?= $escaper->escapeHtml((string)$baseline['alias_name']) ?></td>
+                    <td><?= $escaper->escapeHtml((string)$baseline['physical_index']) ?></td>
+                    <td><?= $escaper->escapeHtml((string)$baseline['validation_state']) ?></td>
+                    <td><?= $escaper->escapeHtml((string)$baseline['created_at']) ?></td>
+                    <td>
+                        <?php if ((array)$baseline['candidate_fields'] !== [] && $eligibleSnapshots !== []): ?>
+                            <form method="post"
+                                  action="<?= $escaper->escapeUrl(
+                                      $block->getUrl('osrw/configuration/createCandidate')
+                                  ) ?>">
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <input type="hidden" name="baseline_uuid"
+                                       value="<?= $escaper->escapeHtmlAttr(
+                                           (string)$baseline['configuration_uuid']
+                                       ) ?>"/>
+                                <label>
+                                    <span class="admin__field-label"><?= $escaper->escapeHtml(__('Snapshot')) ?></span>
+                                    <select class="admin__control-select" name="snapshot_uuid" required>
+                                        <?php foreach ($eligibleSnapshots as $snapshot): ?>
+                                            <option value="<?= $escaper->escapeHtmlAttr(
+                                                (string)$snapshot['snapshot_uuid']
+                                            ) ?>">
+                                                <?= $escaper->escapeHtml(
+                                                    (string)$snapshot['snapshot_uuid']
+                                                    . ' (' . (string)$snapshot['selected_count'] . ' queries)'
+                                                ) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span class="admin__field-label"><?= $escaper->escapeHtml(__('Field')) ?></span>
+                                    <select class="admin__control-select" name="field" required>
+                                        <?php foreach ((array)$baseline['candidate_fields'] as $field): ?>
+                                            <option value="<?= $escaper->escapeHtmlAttr((string)$field) ?>">
+                                                <?= $escaper->escapeHtml((string)$field) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span class="admin__field-label"><?= $escaper->escapeHtml(__('Boost')) ?></span>
+                                    <input class="admin__control-text" type="number" name="boost"
+                                           min="0.1" max="20" step="0.1" value="2" required/>
+                                </label>
+                                <button type="submit" class="action-secondary">
+                                    <span><?= $escaper->escapeHtml(__('Build and validate')) ?></span>
+                                </button>
+                            </form>
+                        <?php else: ?>
+                            <?= $escaper->escapeHtml(__('No eligible same-store snapshot or mapped field')) ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="tune" data-osrw-priority="20"
+         data-osrw-secondary="true">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Locally validated candidates')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <p><?= $escaper->escapeHtml(
+            __('Candidates remain inactive until an accepted winning experiment is explicitly activated.')
+        ) ?></p>
+        <table class="data-grid">
+            <thead>
+            <tr>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Candidate')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Parent baseline')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Transformation')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Validation')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Created at')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($block->getRecentCandidates() as $candidate): ?>
+                <tr>
+                    <td><code><?= $escaper->escapeHtml((string)$candidate['configuration_uuid']) ?></code></td>
+                    <td><code><?= $escaper->escapeHtml((string)$candidate['parent_baseline_uuid']) ?></code></td>
+                    <td><code><?= $escaper->escapeHtml((string)$candidate['transformation_json']) ?></code></td>
+                    <td><?= $escaper->escapeHtml((string)$candidate['validation_state']) ?></td>
+                    <td><?= $escaper->escapeHtml((string)$candidate['created_at']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="admin__fieldset-wrapper osrw-activation" data-osrw-section="activate"
+         data-osrw-priority="10">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Current storefront state')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <div class="osrw-state-list">
+            <?php foreach ($liveStates as $state): ?>
+                <?php $isStock = ($state['transformation']['type'] ?? 'STOCK') === 'STOCK'; ?>
+                <article class="osrw-state-row <?= $isStock ? 'is-stock' : 'is-candidate' ?>">
+                    <span class="osrw-status-dot" aria-hidden="true"></span>
+                    <div>
+                        <strong><?= $escaper->escapeHtml((string)$state['store_name']) ?></strong>
+                        <p><?= $escaper->escapeHtml(
+                            $isStock ? __('Stock search query') : __('Workbench field-boost candidate')
+                        ) ?></p>
+                        <?php if (!$isStock): ?>
+                            <code><?= $escaper->escapeHtml((string)$state['candidate_uuid']) ?></code>
+                            <small><?= $escaper->escapeHtml(__('Activated %1 by admin %2',
+                                (string)$state['created_at'], (string)$state['actor_id'])) ?></small>
+                        <?php endif; ?>
+                    </div>
+                    <?php if (!$isStock && $block->canApplyLiveConfiguration()): ?>
+                        <form method="post" action="<?= $escaper->escapeUrl(
+                            $block->getUrl('osrw/activation/rollback')
+                        ) ?>">
+                            <?= $block->getBlockHtml('formkey') ?>
+                            <input type="hidden" name="store_id"
+                                   value="<?= $escaper->escapeHtmlAttr((string)$state['store_id']) ?>"/>
+                            <button type="submit" class="action-secondary">
+                                <span><?= $escaper->escapeHtml(__('Restore previous state')) ?></span>
+                            </button>
+                        </form>
+                    <?php endif; ?>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="activate" data-osrw-priority="20">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Accepted candidates awaiting activation')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <?php if ($activationCandidates === []): ?>
+            <div class="osrw-empty-state">
+                <?php if ($hasActiveCandidate): ?>
+                    <strong><?= $escaper->escapeHtml(__('The accepted winner is active')) ?></strong>
+                    <p><?= $escaper->escapeHtml(
+                        __('No other accepted candidate is awaiting activation. Use Current storefront state to restore the previous state.')
+                    ) ?></p>
+                <?php else: ?>
+                    <strong><?= $escaper->escapeHtml(__('No accepted winner is available')) ?></strong>
+                    <p><?= $escaper->escapeHtml(
+                        __('Complete Compare and explicitly accept winning evidence first.')
+                    ) ?></p>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+        <?php foreach ($activationCandidates as $candidate): ?>
+            <article class="osrw-activation-candidate">
+                <div>
+                    <p><?= $escaper->escapeHtml(__('Store %1 accepted winner',
+                        (string)$candidate['store_id'])) ?></p>
+                    <strong><code><?= $escaper->escapeHtml((string)$candidate['candidate_uuid']) ?></code></strong>
+                    <p><?= $escaper->escapeHtml(__('Transformation: %1', json_encode(
+                        $candidate['transformation'], JSON_THROW_ON_ERROR
+                    ))) ?></p>
+                    <small><?= $escaper->escapeHtml(__('Evidence %1',
+                        (string)$candidate['index_evidence_sha256'])) ?></small>
+                    <p><?= $escaper->escapeHtml(
+                        __('Current index evidence is rechecked when you activate.')
+                    ) ?></p>
+                </div>
+                <?php if ($block->canApplyLiveConfiguration()): ?>
+                    <form method="post" action="<?= $escaper->escapeUrl(
+                        $block->getUrl('osrw/activation/apply')
+                    ) ?>">
+                        <?= $block->getBlockHtml('formkey') ?>
+                        <input type="hidden" name="experiment_uuid"
+                               value="<?= $escaper->escapeHtmlAttr((string)$candidate['experiment_uuid']) ?>"/>
+                        <button type="submit" class="action-primary">
+                            <span><?= $escaper->escapeHtml(__('Recheck and activate exact candidate')) ?></span>
+                        </button>
+                    </form>
+                <?php endif; ?>
+            </article>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<section class="admin__fieldset-wrapper" data-osrw-section="activate" data-osrw-priority="30"
+         data-osrw-secondary="true">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title"><?= $escaper->escapeHtml(__('Activation history')) ?></strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <table class="data-grid">
+            <thead><tr>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Activation')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Store')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Action')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Candidate')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Index evidence')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Actor')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Time')) ?></th>
+            </tr></thead>
+            <tbody>
+            <?php foreach ($recentLiveActivations as $activation): ?>
+                <tr>
+                    <td><code><?= $escaper->escapeHtml((string)$activation['activation_uuid']) ?></code></td>
+                    <td><?= (int)$activation['store_id'] ?></td>
+                    <td><?= $escaper->escapeHtml((string)$activation['action']) ?></td>
+                    <td><code><?= $escaper->escapeHtml((string)($activation['candidate_uuid'] ?? __('Stock'))) ?></code></td>
+                    <td><code><?= $escaper->escapeHtml((string)$activation['index_evidence_sha256']) ?></code></td>
+                    <td><?= (int)$activation['actor_id'] ?></td>
+                    <td><?= $escaper->escapeHtml((string)$activation['created_at']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+    </div>
+</div>

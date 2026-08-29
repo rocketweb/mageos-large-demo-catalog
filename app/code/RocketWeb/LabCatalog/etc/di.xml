@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="rocketweb_lab_catalog_provision" xsi:type="object">RocketWeb\LabCatalog\Console\Command\ProvisionCommand</item>
+                <item name="rocketweb_lab_catalog_import" xsi:type="object">RocketWeb\LabCatalog\Console\Command\ImportProductsCommand</item>
+                <item name="rocketweb_lab_catalog_seed_queries" xsi:type="object">RocketWeb\LabCatalog\Console\Command\SeedQueriesCommand</item>
+                <item name="rocketweb_lab_catalog_curate_navigation" xsi:type="object">RocketWeb\LabCatalog\Console\Command\CurateNavigationCommand</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

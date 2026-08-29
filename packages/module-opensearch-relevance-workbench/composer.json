@@ -1,0 +1,78 @@
+{
+  "name": "mage-os/module-opensearch-relevance-workbench",
+  "description": "Merchant-facing relevance evaluation and proposal tooling for Mage-OS and OpenSearch Search Relevance Workbench.",
+  "type": "magento2-module",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "require": {
+    "php": "~8.3.0||~8.4.0||~8.5.0",
+    "ext-hash": "*",
+    "ext-intl": "*",
+    "ext-json": "*",
+    "mage-os/framework": "3.4.*",
+    "mage-os/module-advanced-search": "3.4.*",
+    "mage-os/module-backend": "3.4.*",
+    "mage-os/module-catalog": "3.4.*",
+    "mage-os/module-catalog-search": "3.4.*",
+    "mage-os/module-open-search": "3.4.*",
+    "mage-os/module-search": "3.4.*",
+    "mage-os/module-store": "3.4.*"
+  },
+  "require-dev": {
+    "mage-os/magento-coding-standard": "3.4.0",
+    "opensearch-project/opensearch-php": "2.5.1",
+    "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "^12.0"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "MageOS\\OpenSearchRelevanceWorkbench\\": ""
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MageOS\\OpenSearchRelevanceWorkbench\\Test\\Unit\\": "Test/Unit/"
+    }
+  },
+  "archive": {
+    "exclude": [
+      "/.git",
+      "/.phpunit.cache",
+      "/vendor",
+      "**/__pycache__"
+    ]
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.mage-os.org/"
+    }
+  ],
+  "scripts": {
+    "analyse": "phpstan analyse --configuration phpstan.neon.dist --debug --no-progress",
+    "fixture:down": "docker compose -f docker-compose.integration.yml down --volumes --remove-orphans",
+    "fixture:security:down": "docker compose -f docker-compose.security.yml down --volumes --remove-orphans",
+    "fixture:security:up": "docker compose -f docker-compose.security.yml up --detach --wait opensearch",
+    "fixture:llm:up": "docker compose -f docker-compose.integration.yml up --detach --wait opensearch-llm",
+    "fixture:mageos:down": "docker compose -f dev/ci/compose.yaml down --volumes --remove-orphans",
+    "fixture:mageos:up": "docker compose -f dev/ci/compose.yaml up --detach --wait",
+    "fixture:up": "docker compose -f docker-compose.integration.yml up --detach --wait opensearch",
+    "lint": "phpcs -n --standard=phpcs.xml.dist",
+    "test:integration": "OSRW_OPENSEARCH_URL=http://127.0.0.1:${OSRW_OPENSEARCH_PORT:-9218} phpunit --configuration phpunit.integration.xml.dist",
+    "test:security": "OSRW_SECURITY_URL=https://127.0.0.1:${OSRW_SECURITY_PORT:-9228} phpunit --configuration phpunit.security.xml.dist",
+    "test:unit": "phpunit --configuration phpunit.xml.dist"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "mage-os/*": true
+    },
+    "process-timeout": 900,
+    "sort-packages": true
+  }
+}

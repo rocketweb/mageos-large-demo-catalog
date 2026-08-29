@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.rocketweb.wands-imagegen</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/matt/code/mageos-latest/.venv-imagegen/bin/python</string>
+        <string>/Users/matt/code/mageos-latest/dev/tools/wands_catalog/generate_images.py</string>
+        <string>--prompts</string>
+        <string>/Users/matt/code/mageos-latest/var/wands/image-prompts.jsonl</string>
+        <string>--output-dir</string>
+        <string>/Users/matt/code/mageos-latest/pub/media/import/wands</string>
+        <string>--model</string>
+        <string>flux2-klein-4b</string>
+        <string>--quantize</string>
+        <string>4</string>
+        <string>--width</string>
+        <string>768</string>
+        <string>--height</string>
+        <string>768</string>
+        <string>--steps</string>
+        <string>4</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/matt/code/mageos-latest</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    <key>ThrottleInterval</key>
+    <integer>60</integer>
+    <key>ProcessType</key>
+    <string>Background</string>
+    <key>LowPriorityIO</key>
+    <true/>
+    <key>LimitLoadToSessionType</key>
+    <string>Aqua</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONUNBUFFERED</key>
+        <string>1</string>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/Users/matt/code/mageos-latest/var/wands/image-generation.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/matt/code/mageos-latest/var/wands/image-generation.err.log</string>
+</dict>
+</plist>

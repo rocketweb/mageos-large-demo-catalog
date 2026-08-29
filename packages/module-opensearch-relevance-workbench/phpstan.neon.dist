@@ -1,0 +1,10 @@
+parameters:
+    level: 7
+    paths:
+        - Api
+        - Block
+        - Controller
+        - Model
+        - Plugin
+    parallel:
+        maximumNumberOfProcesses: 1

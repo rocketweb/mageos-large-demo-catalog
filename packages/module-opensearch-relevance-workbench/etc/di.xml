@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="MageOS\OpenSearchRelevanceWorkbench\Api\SearchRelevanceClientInterface"
+                type="MageOS\OpenSearchRelevanceWorkbench\Model\OpenSearch\SearchRelevanceClient"/>
+    <preference for="MageOS\OpenSearchRelevanceWorkbench\Api\IndexEvidenceCaptureInterface"
+                type="MageOS\OpenSearchRelevanceWorkbench\Model\OpenSearch\IndexEvidenceCapture"/>
+    <type name="Magento\OpenSearch\SearchAdapter\Mapper">
+        <plugin name="mageos_opensearch_relevance_workbench_capture_mapped_query"
+                type="MageOS\OpenSearchRelevanceWorkbench\Plugin\OpenSearch\CaptureMappedQuery"
+                sortOrder="100000"/>
+    </type>
+    <virtualType name="MageOS\OpenSearchRelevanceWorkbench\Model\Configuration\SearchableAttributeCollection"
+                 type="Magento\Catalog\Model\ResourceModel\Product\Attribute\Collection"/>
+    <type name="MageOS\OpenSearchRelevanceWorkbench\Model\Configuration\SearchableAttributeProvider">
+        <arguments>
+            <argument name="attributeCollection" xsi:type="object">MageOS\OpenSearchRelevanceWorkbench\Model\Configuration\SearchableAttributeCollection</argument>
+        </arguments>
+    </type>
+</config>

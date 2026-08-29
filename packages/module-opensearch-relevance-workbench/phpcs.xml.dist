@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="OpenSearch Relevance Workbench">
+    <description>Mage-OS coding standard for the OpenSearch Relevance Workbench module.</description>
+
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+
+    <file>Api</file>
+    <file>Block</file>
+    <file>Controller</file>
+    <file>Model</file>
+    <file>Plugin</file>
+    <file>Test</file>
+    <file>registration.php</file>
+
+    <exclude-pattern>vendor/*</exclude-pattern>
+
+    <rule ref="Magento2"/>
+</ruleset>

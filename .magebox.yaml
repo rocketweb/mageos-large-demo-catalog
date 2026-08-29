@@ -1,37 +1,34 @@
 name: mageos-latest
-
 domains:
   - host: mageos-latest.localhost
     root: pub
     ssl: false
-
+  - host: relevance.comtom.lab
+    root: pub
+    mage_run_code: wands
+    ssl: false
 php: "8.4"
-
 php_ini:
-  memory_limit: "4G"
   max_execution_time: "3600"
+  memory_limit: 4G
   opcache.enable: "0"
-
 services:
   mysql: false
-  opensearch: false
   redis: false
+  opensearch: false
   rabbitmq: false
   mailpit: true
-
-compose_file: docker-compose.mageos.yaml
-
 env:
+  COMPOSER_MEMORY_LIMIT: "-1"
   MAGE_MODE: developer
-  COMPOSER_MEMORY_LIMIT: -1
-
 commands:
-  setup:
-    description: "Run database upgrades and flush caches"
-    run: "php bin/magento setup:upgrade && php bin/magento cache:flush"
-  reindex:
-    description: "Reindex all indexes"
-    run: "php bin/magento indexer:reindex"
   cache:
-    description: "Flush all caches"
-    run: "php bin/magento cache:flush"
+    description: Flush all caches
+    run: php bin/magento cache:flush
+  reindex:
+    description: Reindex all indexes
+    run: php bin/magento indexer:reindex
+  setup:
+    description: Run database upgrades and flush caches
+    run: php bin/magento setup:upgrade && php bin/magento cache:flush
+compose_file: docker-compose.mageos.yaml

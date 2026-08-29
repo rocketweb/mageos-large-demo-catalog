@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: PHP ${{ matrix.php }} quality gates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4', '8.5']
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Configure PHP
+        uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          extensions: intl
+          tools: composer:v2
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Validate package metadata
+        run: composer validate --strict --no-check-publish
+      - name: Run unit tests
+        run: composer test:unit
+      - name: Run coding-standard checks
+        run: composer lint
+      - name: Run static analysis
+        run: composer analyse
+
+  mageos-qualification:
+    name: Mage-OS 3.4 and OpenSearch 3.8 qualification
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Configure PHP 8.4
+        uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          extensions: bcmath, curl, dom, gd, intl, mbstring, pdo_mysql, soap, sockets, xsl, zip
+          tools: composer:v2
+      - name: Start pinned services
+        run: docker compose -f dev/ci/compose.yaml up --detach --wait
+      - name: Install and qualify Mage-OS
+        run: dev/ci/run.sh
+      - name: Stop disposable services
+        if: always()
+        run: docker compose -f dev/ci/compose.yaml down --volumes --remove-orphans
+
+  opensearch-contracts:
+    name: OpenSearch 3.8 contract and security gates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Configure PHP 8.5
+        uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
+        with:
+          php-version: '8.5'
+          coverage: none
+          extensions: intl
+          tools: composer:v2
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Start exact OpenSearch fixture
+        run: composer fixture:up
+      - name: Run live OpenSearch contracts
+        run: composer test:integration
+      - name: Stop exact OpenSearch fixture
+        if: always()
+        run: composer fixture:down
+      - name: Start security fixture
+        run: composer fixture:security:up
+      - name: Run least-privilege contracts
+        run: composer test:security
+      - name: Stop security fixture
+        if: always()
+        run: composer fixture:security:down

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.rocketweb.wands-media-sync</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/matt/code/mageos-latest/dev/tools/wands_catalog/sync_generated_media.py</string>
+        <string>--project</string>
+        <string>/Users/matt/code/mageos-latest</string>
+        <string>--prompts</string>
+        <string>/Users/matt/code/mageos-latest/var/wands/image-prompts.jsonl</string>
+        <string>--image-dir</string>
+        <string>/Users/matt/code/mageos-latest/pub/media/import/wands</string>
+        <string>--state</string>
+        <string>/Users/matt/code/mageos-latest/var/wands/media-sync-state.json</string>
+        <string>--output</string>
+        <string>/Users/matt/code/mageos-latest/var/wands/media-incremental.csv</string>
+        <string>--php</string>
+        <string>/Users/matt/.magebox/bin/php</string>
+        <string>--batch-size</string>
+        <string>500</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/matt/code/mageos-latest</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StartInterval</key>
+    <integer>900</integer>
+    <key>ProcessType</key>
+    <string>Background</string>
+    <key>LowPriorityIO</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/matt/code/mageos-latest/var/wands/media-sync.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/matt/code/mageos-latest/var/wands/media-sync.err.log</string>
+</dict>
+</plist>

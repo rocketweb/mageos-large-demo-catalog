@@ -354,6 +354,7 @@ return [
         'MageOS_AutomaticTranslation' => 1,
         'MageOS_InventoryReservationsGrid' => 1,
         'MageOS_MetaRobotsTag' => 1,
+        'MageOS_OpenSearchRelevanceWorkbench' => 1,
         'MageOS_PageBuilderTemplateImportExport' => 1,
         'MageOS_PageBuilderWidget' => 1,
         'MageOS_RMA' => 1,
@@ -362,6 +363,7 @@ return [
         'Magewirephp_Magewire' => 1,
         'Mollie_Payment' => 1,
         'Mollie_HyvaCompatibility' => 1,
+        'RocketWeb_LabCatalog' => 1,
         'Swissup_Ignition' => 1
     ]
 ];
