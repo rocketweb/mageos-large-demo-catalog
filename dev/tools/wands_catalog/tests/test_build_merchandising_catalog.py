@@ -210,6 +210,11 @@ class BuildMerchandisingCatalogTest(unittest.TestCase):
         self.assertIn(first["parent"]["name"], first["parent"]["description"])
         self.assertIn(second["parent"]["name"], second["variants"][0]["description"])
 
+    def test_configurable_parent_preserves_required_price(self) -> None:
+        family = plan_family(self.source_rows[0], self.prepared_rows[0], one_axis=True)
+
+        self.assertEqual(family["parent"]["price"], self.prepared_rows[0]["price"])
+
     def test_small_plan_is_exact_deterministic_and_excludes_configurable_parents_from_bundles(self) -> None:
         config = PlanConfig(
             group_quotas={

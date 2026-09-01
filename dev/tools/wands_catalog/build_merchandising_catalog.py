@@ -600,7 +600,7 @@ def plan_family(source: dict[str, str], prepared: dict[str, str], one_axis: bool
                 f"{' and '.join(axis['label'].lower() for axis in axes)}."
             )[:255],
             "meta_title": parent_name[:255],
-            "price": "",
+            "price": prepared["price"],
             "weight": "",
             "qty": "0",
             "manage_stock": "0",
