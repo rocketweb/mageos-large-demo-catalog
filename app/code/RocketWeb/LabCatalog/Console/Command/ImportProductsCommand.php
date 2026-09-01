@@ -25,6 +25,12 @@ class ImportProductsCommand extends Command
         $this->setName(self::COMMAND_NAME);
         $this->setDescription('Validate and import a prepared WANDS Magento product CSV.');
         $this->addOption('file', null, InputOption::VALUE_REQUIRED, 'CSV path inside the Mage-OS project root.');
+        $this->addOption(
+            'validate-only',
+            null,
+            InputOption::VALUE_NONE,
+            'Validate the CSV without changing products.'
+        );
         parent::configure();
     }
 
@@ -38,7 +44,7 @@ class ImportProductsCommand extends Command
         }
 
         try {
-            $result = $this->productImporter->execute($sourceFile);
+            $result = $this->productImporter->execute($sourceFile, (bool)$input->getOption('validate-only'));
             $output->writeln(json_encode($result, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
             return Cli::RETURN_SUCCESS;
         } catch (\Throwable $exception) {

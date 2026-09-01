@@ -33,15 +33,16 @@ def main() -> int:
                 missing += 1
                 continue
             relative_path = f"/wands/{prompt['output_file']}"
-            writer.writerow(
-                {
-                    "sku": prompt["sku"],
-                    "base_image": relative_path,
-                    "small_image": relative_path,
-                    "thumbnail": relative_path,
-                }
-            )
-            written += 1
+            for sku in prompt.get("skus", [prompt["sku"]]):
+                writer.writerow(
+                    {
+                        "sku": sku,
+                        "base_image": relative_path,
+                        "small_image": relative_path,
+                        "thumbnail": relative_path,
+                    }
+                )
+                written += 1
     print(json.dumps({"media_rows": written, "missing_images": missing}, indent=2))
     return 0
 

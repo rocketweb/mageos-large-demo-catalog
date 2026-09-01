@@ -11,7 +11,6 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-
 MEDIA_FIELDS = ["sku", "base_image", "small_image", "thumbnail"]
 
 
@@ -48,14 +47,22 @@ def completed_rows(
             if output_file in imported_files or not (image_dir / output_file).is_file():
                 continue
             relative_path = f"/wands/{output_file}"
-            rows.append(
-                {
-                    "sku": str(prompt["sku"]),
-                    "base_image": relative_path,
-                    "small_image": relative_path,
-                    "thumbnail": relative_path,
-                }
-            )
+            skus = [str(sku) for sku in prompt.get("skus", [prompt["sku"]])]
+            if len(skus) > batch_size:
+                raise ValueError(
+                    f"Image {output_file} maps to {len(skus)} products, exceeding batch size {batch_size}."
+                )
+            if rows and len(rows) + len(skus) > batch_size:
+                break
+            for sku in skus:
+                rows.append(
+                    {
+                        "sku": sku,
+                        "base_image": relative_path,
+                        "small_image": relative_path,
+                        "thumbnail": relative_path,
+                    }
+                )
             if len(rows) >= batch_size:
                 break
     return rows

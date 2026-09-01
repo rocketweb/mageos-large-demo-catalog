@@ -20,15 +20,15 @@ class ProductImporter
     ) {
     }
 
-    public function execute(string $sourceFile): array
+    public function execute(string $sourceFile, bool $validateOnly = false): array
     {
         return $this->appState->emulateAreaCode(
             Area::AREA_ADMINHTML,
-            fn(): array => $this->import($sourceFile)
+            fn(): array => $this->import($sourceFile, $validateOnly)
         );
     }
 
-    private function import(string $sourceFile): array
+    private function import(string $sourceFile, bool $validateOnly): array
     {
         $absolutePath = realpath($sourceFile);
 
@@ -50,7 +50,7 @@ class ProductImporter
             Import::FIELD_NAME_VALIDATION_STRATEGY => 'validation-stop-on-errors',
             Import::FIELD_NAME_ALLOWED_ERROR_COUNT => 100,
             Import::FIELD_FIELD_SEPARATOR => ',',
-            Import::FIELD_FIELD_MULTIPLE_VALUE_SEPARATOR => '|',
+            Import::FIELD_FIELD_MULTIPLE_VALUE_SEPARATOR => ',',
             Import::FIELD_EMPTY_ATTRIBUTE_VALUE_CONSTANT => Import::DEFAULT_EMPTY_ATTRIBUTE_VALUE_CONSTANT,
             Import::FIELDS_ENCLOSURE => 1,
             Import::FIELD_NAME_IMG_FILE_DIR => 'pub/media/import',
@@ -65,6 +65,16 @@ class ProductImporter
             throw new \RuntimeException($this->formatErrors($import));
         }
 
+        if ($validateOnly) {
+            return [
+                'validated_only' => true,
+                'processed_rows' => $import->getProcessedRowsCount(),
+                'invalid_rows' => $import->getErrorAggregator()->getInvalidRowsCount(),
+                'errors' => $import->getErrorAggregator()->getErrorsCount(),
+                'error_messages' => $this->errorMessages($import),
+            ];
+        }
+
         if (!$import->importSource() || $import->getErrorAggregator()->getErrorsCount() > 0) {
             throw new \RuntimeException($this->formatErrors($import));
         }
@@ -72,6 +82,7 @@ class ProductImporter
         $import->invalidateIndex();
 
         return [
+            'validated_only' => false,
             'processed_rows' => $import->getProcessedRowsCount(),
             'processed_entities' => $import->getProcessedEntitiesCount(),
             'invalid_rows' => $import->getErrorAggregator()->getInvalidRowsCount(),
@@ -84,7 +95,11 @@ class ProductImporter
     {
         $messages = $this->errorMessages($import);
 
-        return $messages === [] ? 'Product import failed without a detailed validation error.' : implode(PHP_EOL, $messages);
+        if ($messages === []) {
+            return 'Product import failed without a detailed validation error.';
+        }
+
+        return implode(PHP_EOL, $messages);
     }
 
     private function errorMessages(Import $import): array

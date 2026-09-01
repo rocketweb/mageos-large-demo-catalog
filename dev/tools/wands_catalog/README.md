@@ -66,3 +66,145 @@ php bin/magento lab:wands:import --file=var/wands/media.csv
 ```
 
 Re-running both commands is safe. The CSV only contains completed files, and the product import updates existing WANDS SKUs.
+
+## Configurable families and room bundles
+
+The merchandising planner deterministically converts 2,000 existing WANDS products into configurable parents, creates 10,800 hidden simple children, and defines 50 dynamic-price room bundles. It preserves each selected parent's original SKU, URL, categories, and `wands_product_id`. Generated children do not receive a WANDS product ID and are not visible individually.
+
+Run the planner from the Mage-OS project root:
+
+```sh
+python3 dev/tools/wands_catalog/build_merchandising_catalog.py \
+  --source-products /Users/matt/code/rocket-search/data/raw/wands/product.csv \
+  --prepared-products var/wands/products.csv \
+  --output-dir var/wands/merchandising
+```
+
+The reviewed plan is fixed at these totals:
+
+- 600 one-axis configurable parents with four children each;
+- 1,400 two-axis configurable parents with six children each;
+- 10,800 generated simple children;
+- 50 bundles, five each for Living Room, Bedroom, Dining, Home Office, Patio, Bathroom, Nursery & Kids, Entryway, Reading Nook, and Pet Corner;
+- 53,844 total product entities after application;
+- 43,044 storefront-visible products, because children remain individually hidden.
+
+`manifest.json` contains source and output hashes, exact distributions, entity counts, and media counts. `configurable-families.jsonl` is the human-reviewable source of truth. A bounded 25-family and five-bundle pilot is under `batches/pilot`, including only the pilot's children, conversion records, parent rows, and media mappings. The full CSV files are accompanied by 100-family import batches under `batches/configurables` and five-bundle theme batches under `batches/bundles`.
+
+The generated descriptions are original deterministic copy based on the product class, category, and planned options. `description-prompts.jsonl` supports an optional second copy pass through either oMLX or Kimi. The prompt contract forbids invented measurements, materials, certifications, compatibility, warranties, and performance claims.
+
+### Optional oMLX description pass
+
+oMLX must listen only on loopback at port 8000 and expose an authenticated OpenAI-compatible API. Keep the API key in `OMLX_API_KEY`; do not put it in a command, prompt file, or repository.
+
+```sh
+.venv-imagegen/bin/python dev/tools/wands_catalog/generate_descriptions.py \
+  --prompts var/wands/merchandising/description-prompts.jsonl \
+  --output var/wands/merchandising/generated-descriptions.jsonl \
+  --endpoint http://127.0.0.1:8000/v1 \
+  --model YOUR_OMLX_MODEL
+```
+
+The description worker validates the authenticated model list before generation, uses an exclusive output lock, skips successful IDs on restart, and records errors without marking them complete. Apply a complete oMLX or Kimi-compatible JSON Lines result to new CSV copies with:
+
+```sh
+python3 dev/tools/wands_catalog/apply_description_rewrites.py \
+  --descriptions var/wands/merchandising/generated-descriptions.jsonl \
+  --configurable-parents var/wands/merchandising/configurable-parents.csv \
+  --bundles var/wands/merchandising/bundles.csv \
+  --output-dir var/wands/merchandising/rewritten
+```
+
+The apply step fails closed when any of the 2,050 parent or bundle descriptions is missing. `--allow-partial` is available only for a deliberate partial preview.
+
+### Preview application order
+
+Do not apply the 2,000-family plan directly to the live lab. First restore a disposable copy of the current lab database and media, stop cron consumers in that preview, and retain the database backup and generated manifest hashes.
+
+Run `bin/magento setup:upgrade` to add the global select attributes and their centralized options. The data patch reuses the core global `color` attribute without changing existing option sort order. The new axes are searchable, filterable, usable in layered navigation, and available in product listings.
+
+For the first 25-family pilot, use the files under `batches/pilot`. For each reviewed batch, use this order:
+
+1. Validate `children.csv` with `lab:wands:import --validate-only`, then import it.
+2. Run `lab:wands:convert-parents --dry-run` against the batch conversion manifest.
+3. Apply the same bounded conversion manifest. The command uses one transaction per parent and verifies the WANDS product ID and every child SKU before changing the type.
+4. Validate `parents.csv` after conversion, then import it to attach configurable variations and rewrite the parent copy.
+5. Verify parent option combinations, child visibility, prices, stock, images, categories, and storefront behavior before advancing the checkpoint.
+
+Example for the bounded pilot:
+
+```sh
+python3 dev/tools/wands_catalog/build_media_csv.py \
+  --prompts=var/wands/merchandising/batches/pilot/configurables/image-prompts.jsonl \
+  --image-dir=pub/media/import/wands \
+  --output=var/wands/merchandising/batches/pilot/configurables/visual-media.csv
+
+php bin/magento lab:wands:import \
+  --file=var/wands/merchandising/batches/pilot/configurables/children.csv \
+  --validate-only
+
+php bin/magento lab:wands:import \
+  --file=var/wands/merchandising/batches/pilot/configurables/children.csv
+
+php bin/magento lab:wands:convert-parents \
+  --file=var/wands/merchandising/batches/pilot/configurables/parent-type-conversions.jsonl \
+  --limit=25 \
+  --dry-run
+
+php bin/magento lab:wands:convert-parents \
+  --file=var/wands/merchandising/batches/pilot/configurables/parent-type-conversions.jsonl \
+  --limit=25
+
+php bin/magento lab:wands:import \
+  --file=var/wands/merchandising/batches/pilot/configurables/parents.csv \
+  --validate-only
+
+php bin/magento lab:wands:import \
+  --file=var/wands/merchandising/batches/pilot/configurables/parents.csv
+
+php bin/magento lab:wands:import \
+  --file=var/wands/merchandising/batches/pilot/configurables/visual-media.csv \
+  --validate-only
+
+php bin/magento lab:wands:import \
+  --file=var/wands/merchandising/batches/pilot/configurables/visual-media.csv
+
+php bin/magento lab:wands:import \
+  --file=var/wands/merchandising/batches/pilot/configurables/reuse-parent-media.csv \
+  --validate-only
+
+php bin/magento lab:wands:import \
+  --file=var/wands/merchandising/batches/pilot/configurables/reuse-parent-media.csv
+```
+
+Bundle batches use dynamic price, dynamic SKU, dynamic weight, and existing visible simple products as selections. They exclude configurable parents and all generated children. After the configurable pilot passes, validate and import `batches/pilot/bundles.csv`. Then import one five-bundle theme CSV at a time from `batches/bundles`.
+
+### Variant media
+
+Size-only children reuse the existing parent product image through `reuse-parent-media.csv`. Families with a visual color, finish, or material axis use `image-prompts.jsonl`; one generated image is shared by all size combinations with the same visual value.
+
+The existing MFLUX generator accepts the new queue unchanged:
+
+```sh
+.venv-imagegen/bin/python dev/tools/wands_catalog/generate_images.py \
+  --prompts var/wands/merchandising/image-prompts.jsonl \
+  --output-dir pub/media/import/wands \
+  --model flux2-klein-4b \
+  --quantize 4 \
+  --width 768 \
+  --height 768 \
+  --steps 4
+```
+
+`build_media_csv.py` and `sync_generated_media.py` expand each visual image to every matching child SKU while checkpointing only after a successful Magento import.
+
+### Rollback
+
+Before application, retain the database and media backup. To roll back a converted batch without deleting generated audit data:
+
+1. Run `lab:wands:convert-parents` with `--reverse` against that batch manifest. This removes configurable relations and restores the parent type to simple in one transaction per parent.
+2. Import `rollback-parents.csv` to restore the original parent content and inventory fields.
+3. Import `rollback-disable-bundles.csv` to disable and hide all generated bundles.
+4. Reindex and verify the original 42,994 visible WANDS products.
+
+Generated children remain enabled but individually hidden after this reversible rollback. Deleting them is a separate destructive cleanup and requires an exact reviewed SKU list.

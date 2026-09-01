@@ -40,3 +40,30 @@ class SyncGeneratedMediaTest(unittest.TestCase):
                     "thumbnail": "/wands/WANDS-000002.jpg",
                 }
             ])
+
+    def test_expands_one_variant_image_to_each_matching_child_without_splitting_the_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            prompts = root / "prompts.jsonl"
+            images = root / "images"
+            images.mkdir()
+            prompts.write_text(
+                json.dumps(
+                    {
+                        "sku": "CHILD-1",
+                        "skus": ["CHILD-1", "CHILD-2", "CHILD-3"],
+                        "output_file": "NAVY.jpg",
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (images / "NAVY.jpg").touch()
+
+            rows = completed_rows(prompts, images, set(), 3)
+
+            self.assertEqual([row["sku"] for row in rows], ["CHILD-1", "CHILD-2", "CHILD-3"])
+            self.assertTrue(all(row["base_image"] == "/wands/NAVY.jpg" for row in rows))
+
+            with self.assertRaises(ValueError):
+                completed_rows(prompts, images, set(), 2)

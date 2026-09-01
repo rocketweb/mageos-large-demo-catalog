@@ -4,6 +4,10 @@
     <module name="RocketWeb_LabCatalog">
         <sequence>
             <module name="Magento_Catalog"/>
+            <module name="Magento_ConfigurableProduct"/>
+            <module name="Magento_Bundle"/>
+            <module name="Magento_ConfigurableImportExport"/>
+            <module name="Magento_BundleImportExport"/>
             <module name="Magento_ImportExport"/>
             <module name="Magento_Store"/>
             <module name="Magento_Theme"/>
