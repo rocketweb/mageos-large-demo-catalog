@@ -295,6 +295,16 @@ class BuildMerchandisingCatalogTest(unittest.TestCase):
             self.assertEqual(pilot_manifest["families"], 8)
             self.assertEqual(pilot_manifest["children"], 48)
             self.assertTrue((Path(directory) / pilot_manifest["children_csv"]).is_file())
+            self.assertTrue((Path(directory) / pilot_manifest["rollback_parents_csv"]).is_file())
+            self.assertTrue((Path(directory) / pilot_manifest["rollback_disable_bundles_csv"]).is_file())
+            with (Path(directory) / pilot_manifest["rollback_parents_csv"]).open(
+                newline="", encoding="utf-8"
+            ) as stream:
+                self.assertEqual(sum(1 for _ in csv.DictReader(stream)), 8)
+            with (Path(directory) / pilot_manifest["rollback_disable_bundles_csv"]).open(
+                newline="", encoding="utf-8"
+            ) as stream:
+                self.assertEqual(sum(1 for _ in csv.DictReader(stream)), 1)
 
     def test_pilot_selection_prioritizes_two_axis_coverage_and_group_breadth(self) -> None:
         from build_merchandising_catalog import select_pilot_families

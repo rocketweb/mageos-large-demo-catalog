@@ -1122,6 +1122,8 @@ def write_pilot(plan: dict[str, Any], batch_root: Path, output_dir: Path) -> dic
     image_prompts_path = configurable_root / "image-prompts.jsonl"
     reuse_media_path = configurable_root / "reuse-parent-media.csv"
     bundles_path = pilot_root / "bundles.csv"
+    rollback_parents_path = pilot_root / "rollback-parents.csv"
+    rollback_bundles_path = pilot_root / "rollback-disable-bundles.csv"
 
     write_csv(
         children_path,
@@ -1141,6 +1143,31 @@ def write_pilot(plan: dict[str, Any], batch_root: Path, output_dir: Path) -> dic
         parent_image_reuse_rows(pilot_plan),
     )
     write_csv(bundles_path, BUNDLE_CSV_FIELDS, (bundle_csv_row(bundle) for bundle in pilot_bundles))
+    write_csv(
+        rollback_parents_path,
+        CONFIGURABLE_CSV_FIELDS,
+        (
+            {
+                **family["original_parent"],
+                **{attribute: "" for attribute in ATTRIBUTE_LABELS},
+                "configurable_variations": "",
+                "configurable_variation_labels": "",
+            }
+            for family in pilot_families
+        ),
+    )
+    write_csv(
+        rollback_bundles_path,
+        BUNDLE_CSV_FIELDS,
+        (
+            {
+                **bundle_csv_row(bundle),
+                "product_online": "0",
+                "visibility": "Not Visible Individually",
+            }
+            for bundle in pilot_bundles
+        ),
+    )
 
     pilot_manifest = {
         "schema_version": SCHEMA_VERSION,
@@ -1155,6 +1182,8 @@ def write_pilot(plan: dict[str, Any], batch_root: Path, output_dir: Path) -> dic
         ("image_prompts_jsonl", image_prompts_path),
         ("reuse_parent_media_csv", reuse_media_path),
         ("bundles_csv", bundles_path),
+        ("rollback_parents_csv", rollback_parents_path),
+        ("rollback_disable_bundles_csv", rollback_bundles_path),
     ):
         pilot_manifest[key] = str(path.relative_to(output_dir))
         pilot_manifest[f"{key}_sha256"] = sha256(path)

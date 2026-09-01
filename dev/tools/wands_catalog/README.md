@@ -207,4 +207,6 @@ Before application, retain the database and media backup. To roll back a convert
 3. Import `rollback-disable-bundles.csv` to disable and hide all generated bundles.
 4. Reindex and verify the original 42,994 visible WANDS products.
 
+For the bounded pilot, use `batches/pilot/rollback-parents.csv` and `batches/pilot/rollback-disable-bundles.csv`. These contain only the 25 reviewed parents and five pilot bundles.
+
 Generated children remain enabled but individually hidden after this reversible rollback. Deleting them is a separate destructive cleanup and requires an exact reviewed SKU list.
