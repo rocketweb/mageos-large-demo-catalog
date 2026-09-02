@@ -950,6 +950,35 @@ def image_prompts(plan: dict[str, Any]) -> Iterable[dict[str, Any]]:
             }
 
 
+def bundle_image_prompts(plan: dict[str, Any]) -> Iterable[dict[str, Any]]:
+    for bundle in plan["bundles"]:
+        option_names = ", ".join(option["name"].lower() for option in bundle["options"])
+        reference_items = "; ".join(option["selections"][0]["name"] for option in bundle["options"])
+        yield {
+            "kind": "bundle",
+            "sku": bundle["sku"],
+            "title": bundle["name"],
+            "theme": bundle["theme"],
+            "palette": bundle["palette"],
+            "seed": int(stable_fraction(bundle["sku"], f"bundle-image:{PLAN_VERSION}") * (2**31 - 1)),
+            "prompt": (
+                f"Commercial ecommerce lifestyle photography of a coordinated {bundle['theme']} room set named "
+                f"{bundle['name']}. Feature one {option_names}. Palette and styling: {bundle['palette']}. "
+                f"Use these catalog products as visual references for form and scale: {reference_items}. "
+                "Arrange the products as one believable, cohesive room scene with realistic proportions, materials, "
+                "soft natural light, and a clean editorial catalog finish. Square hero composition with the complete "
+                "set clearly visible. No people, no packaging, no collage, and no duplicate furniture. "
+                "No visible text, logos, or watermarks."
+            ),
+            "output_file": f"{bundle['sku']}.jpg",
+        }
+
+
+def all_image_prompts(plan: dict[str, Any]) -> Iterable[dict[str, Any]]:
+    yield from image_prompts(plan)
+    yield from bundle_image_prompts(plan)
+
+
 def parent_image_reuse_rows(plan: dict[str, Any]) -> Iterable[dict[str, str]]:
     visual_attributes = {"color", "wands_finish", "wands_material"}
     for family in plan["families"]:
@@ -1115,11 +1144,13 @@ def write_pilot(plan: dict[str, Any], batch_root: Path, output_dir: Path) -> dic
     pilot_families = select_pilot_families(plan["families"])
     pilot_bundles = plan["bundles"][:5]
     pilot_plan = {"families": pilot_families}
+    pilot_bundle_plan = {"bundles": pilot_bundles}
 
     children_path = configurable_root / "children.csv"
     parents_path = configurable_root / "parents.csv"
     conversions_path = configurable_root / "parent-type-conversions.jsonl"
     image_prompts_path = configurable_root / "image-prompts.jsonl"
+    bundle_image_prompts_path = pilot_root / "bundle-image-prompts.jsonl"
     reuse_media_path = configurable_root / "reuse-parent-media.csv"
     bundles_path = pilot_root / "bundles.csv"
     rollback_parents_path = pilot_root / "rollback-parents.csv"
@@ -1137,6 +1168,7 @@ def write_pilot(plan: dict[str, Any], batch_root: Path, output_dir: Path) -> dic
     )
     write_jsonl(conversions_path, (conversion_record(family) for family in pilot_families))
     write_jsonl(image_prompts_path, image_prompts(pilot_plan))
+    write_jsonl(bundle_image_prompts_path, bundle_image_prompts(pilot_bundle_plan))
     write_csv(
         reuse_media_path,
         ["sku", "base_image", "small_image", "thumbnail"],
@@ -1174,12 +1206,15 @@ def write_pilot(plan: dict[str, Any], batch_root: Path, output_dir: Path) -> dic
         "families": len(pilot_families),
         "children": sum(len(family["variants"]) for family in pilot_families),
         "bundles": len(pilot_bundles),
+        "variant_image_prompts": sum(1 for _ in image_prompts(pilot_plan)),
+        "bundle_image_prompts": sum(1 for _ in bundle_image_prompts(pilot_bundle_plan)),
     }
     for key, path in (
         ("children_csv", children_path),
         ("parents_csv", parents_path),
         ("conversions_jsonl", conversions_path),
         ("image_prompts_jsonl", image_prompts_path),
+        ("bundle_image_prompts_jsonl", bundle_image_prompts_path),
         ("reuse_parent_media_csv", reuse_media_path),
         ("bundles_csv", bundles_path),
         ("rollback_parents_csv", rollback_parents_path),
@@ -1313,7 +1348,7 @@ def write_plan(
     )
     write_csv(parents_path, CONFIGURABLE_CSV_FIELDS, (configurable_parent_row(family) for family in plan["families"]))
     write_csv(bundles_path, BUNDLE_CSV_FIELDS, (bundle_csv_row(bundle) for bundle in plan["bundles"]))
-    write_jsonl(image_prompts_path, image_prompts(plan))
+    write_jsonl(image_prompts_path, all_image_prompts(plan))
     write_jsonl(description_prompts_path, description_prompts(plan))
     write_csv(
         parent_image_reuse_path,
@@ -1350,7 +1385,8 @@ def write_plan(
     group_counts = Counter(family["group"] for family in plan["families"])
     one_axis = sum(family["one_axis"] for family in plan["families"])
     child_count = sum(len(family["variants"]) for family in plan["families"])
-    image_count = sum(1 for _ in image_prompts(plan))
+    variant_image_count = sum(1 for _ in image_prompts(plan))
+    bundle_image_count = sum(1 for _ in bundle_image_prompts(plan))
     parent_image_reuse_count = sum(1 for _ in parent_image_reuse_rows(plan))
     manifest: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
@@ -1362,7 +1398,9 @@ def write_plan(
         "two_axis_parents": len(plan["families"]) - one_axis,
         "simple_children": child_count,
         "bundle_products": len(plan["bundles"]),
-        "variant_image_prompts": image_count,
+        "image_prompts": variant_image_count + bundle_image_count,
+        "variant_image_prompts": variant_image_count,
+        "bundle_image_prompts": bundle_image_count,
         "children_reusing_parent_image": parent_image_reuse_count,
         "visible_products_after_apply": 42994 + len(plan["bundles"]),
         "total_product_entities_after_apply": 42994 + child_count + len(plan["bundles"]),

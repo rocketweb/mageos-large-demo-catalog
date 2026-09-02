@@ -283,10 +283,22 @@ class BuildMerchandisingCatalogTest(unittest.TestCase):
             self.assertEqual(result["configurable_parents"], 8)
             self.assertEqual(result["simple_children"], 48)
             self.assertEqual(result["bundle_products"], 1)
+            self.assertEqual(result["bundle_image_prompts"], 1)
+            self.assertEqual(
+                result["image_prompts"],
+                result["variant_image_prompts"] + result["bundle_image_prompts"],
+            )
             self.assertEqual(result["pilot_families"], 8)
             self.assertEqual(result["pilot_children"], 48)
             self.assertEqual(result["pilot_bundles"], 1)
             self.assertIn("configurable_parents_csv_sha256", result)
+            with (Path(directory) / "image-prompts.jsonl").open(encoding="utf-8") as stream:
+                image_prompts = [json.loads(line) for line in stream]
+            bundle_prompt = next(prompt for prompt in image_prompts if prompt.get("kind") == "bundle")
+            self.assertEqual(bundle_prompt["sku"], "WANDS-BUNDLE-001")
+            self.assertEqual(bundle_prompt["output_file"], "WANDS-BUNDLE-001.jpg")
+            self.assertIn("Living Room", bundle_prompt["prompt"])
+            self.assertIn("No visible text", bundle_prompt["prompt"])
             with (Path(directory) / "configurable-parents.csv").open(newline="", encoding="utf-8") as stream:
                 row = next(csv.DictReader(stream))
             self.assertEqual(list(row), CONFIGURABLE_CSV_FIELDS)
@@ -302,6 +314,14 @@ class BuildMerchandisingCatalogTest(unittest.TestCase):
             self.assertTrue((Path(directory) / pilot_manifest["children_csv"]).is_file())
             self.assertTrue((Path(directory) / pilot_manifest["rollback_parents_csv"]).is_file())
             self.assertTrue((Path(directory) / pilot_manifest["rollback_disable_bundles_csv"]).is_file())
+            with (Path(directory) / pilot_manifest["image_prompts_jsonl"]).open(encoding="utf-8") as stream:
+                self.assertTrue(all(json.loads(line).get("kind") != "bundle" for line in stream))
+            with (Path(directory) / pilot_manifest["bundle_image_prompts_jsonl"]).open(
+                encoding="utf-8"
+            ) as stream:
+                pilot_bundle_prompts = [json.loads(line) for line in stream]
+            self.assertEqual(len(pilot_bundle_prompts), 1)
+            self.assertEqual(pilot_bundle_prompts[0]["kind"], "bundle")
             with (Path(directory) / pilot_manifest["rollback_parents_csv"]).open(
                 newline="", encoding="utf-8"
             ) as stream:

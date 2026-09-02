@@ -179,9 +179,27 @@ php bin/magento lab:wands:import \
 
 Bundle batches use dynamic price, dynamic SKU, dynamic weight, and existing visible simple products as selections. They exclude configurable parents and all generated children. After the configurable pilot passes, validate and import `batches/pilot/bundles.csv`. Then import one five-bundle theme CSV at a time from `batches/bundles`.
 
+The pilot keeps bundle hero prompts separate from configurable media so bundle image rows are not validated before their products exist. After importing the pilot bundles, build and import their media with:
+
+```sh
+python3 dev/tools/wands_catalog/build_media_csv.py \
+  --prompts=var/wands/merchandising/batches/pilot/bundle-image-prompts.jsonl \
+  --image-dir=pub/media/import/wands \
+  --output=var/wands/merchandising/batches/pilot/bundle-media.csv
+
+php bin/magento lab:wands:import \
+  --file=var/wands/merchandising/batches/pilot/bundle-media.csv \
+  --validate-only
+
+php bin/magento lab:wands:import \
+  --file=var/wands/merchandising/batches/pilot/bundle-media.csv
+```
+
 ### Variant media
 
 Size-only children reuse the existing parent product image through `reuse-parent-media.csv`. Families with a visual color, finish, or material axis use `image-prompts.jsonl`; one generated image is shared by all size combinations with the same visual value.
+
+The same queue also contains one room-scene hero image for each bundle. The reviewed full plan contains 3,335 configurable-variant prompts and 50 bundle prompts, for 3,385 images total. Bundle prompts use the theme, palette, option groups, and first catalog selection in each group as visual references. They ask for a cohesive representative room scene, not a claim that every selectable combination is pictured.
 
 The existing MFLUX generator accepts the new queue unchanged:
 
@@ -195,6 +213,22 @@ The existing MFLUX generator accepts the new queue unchanged:
   --height 768 \
   --steps 4
 ```
+
+Check the resumable workload without loading the model:
+
+```sh
+.venv-imagegen/bin/python dev/tools/wands_catalog/generate_images.py \
+  --prompts var/wands/merchandising/image-prompts.jsonl \
+  --output-dir pub/media/import/wands \
+  --model flux2-klein-4b \
+  --quantize 4 \
+  --width 768 \
+  --height 768 \
+  --steps 4 \
+  --dry-run
+```
+
+Stopping the worker is safe. Re-run the generation command without `--overwrite`; completed JPEGs are skipped and only missing outputs are generated. oMLX is used for the optional description pass, not this image queue. MFLUX loads FLUX.2 Klein directly through Metal on the Mac Studio.
 
 `build_media_csv.py` and `sync_generated_media.py` expand each visual image to every matching child SKU while checkpointing only after a successful Magento import.
 

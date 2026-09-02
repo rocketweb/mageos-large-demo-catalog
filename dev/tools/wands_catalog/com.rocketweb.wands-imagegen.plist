@@ -9,7 +9,7 @@
         <string>/Users/matt/code/mageos-latest/.venv-imagegen/bin/python</string>
         <string>/Users/matt/code/mageos-latest/dev/tools/wands_catalog/generate_images.py</string>
         <string>--prompts</string>
-        <string>/Users/matt/code/mageos-latest/var/wands/image-prompts.jsonl</string>
+        <string>/Users/matt/code/mageos-latest/var/wands/merchandising/image-prompts.jsonl</string>
         <string>--output-dir</string>
         <string>/Users/matt/code/mageos-latest/pub/media/import/wands</string>
         <string>--model</string>
@@ -46,8 +46,8 @@
         <string>1</string>
     </dict>
     <key>StandardOutPath</key>
-    <string>/Users/matt/code/mageos-latest/var/wands/image-generation.out.log</string>
+    <string>/Users/matt/code/mageos-latest/var/wands/merchandising/image-generation.out.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/matt/code/mageos-latest/var/wands/image-generation.err.log</string>
+    <string>/Users/matt/code/mageos-latest/var/wands/merchandising/image-generation.err.log</string>
 </dict>
 </plist>
