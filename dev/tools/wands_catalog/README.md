@@ -80,6 +80,14 @@ python3 dev/tools/wands_catalog/build_merchandising_catalog.py \
   --output-dir var/wands/merchandising
 ```
 
+The builder prints one concise completion line by default. Structured start, completion, and failure events are appended to `var/wands/merchandising/build-merchandising.log`, while the full current result remains in `manifest.json`. Watch the log from another terminal with:
+
+```sh
+tail -f var/wands/merchandising/build-merchandising.log
+```
+
+Pass `--json` only when the full manifest JSON is intentionally needed on standard output.
+
 The reviewed plan is fixed at these totals:
 
 - 600 one-axis configurable parents with four children each;

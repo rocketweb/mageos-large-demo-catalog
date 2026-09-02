@@ -11,6 +11,7 @@ import re
 from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -229,6 +230,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", required=True, type=Path, help="Output directory for reviewable manifests.")
     parser.add_argument("--configurable-count", type=int, default=2000)
     parser.add_argument("--bundle-count", type=int, default=50)
+    parser.add_argument("--json", action="store_true", help="Print the full manifest JSON to stdout.")
     return parser.parse_args()
 
 
@@ -1444,14 +1446,69 @@ def read_rows(path: Path, delimiter: str) -> list[dict[str, str]]:
         return list(csv.DictReader(stream, delimiter=delimiter))
 
 
+def append_build_event(log_path: Path, event: dict[str, Any]) -> None:
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    record = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        **event,
+    }
+    with log_path.open("a", encoding="utf-8") as stream:
+        stream.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def emit_build_result(manifest: dict[str, Any], output_dir: Path, json_stdout: bool) -> None:
+    log_path = output_dir / "build-merchandising.log"
+    append_build_event(
+        log_path,
+        {
+            "status": "completed",
+            "configurable_parents": manifest["configurable_parents"],
+            "simple_children": manifest["simple_children"],
+            "bundle_products": manifest["bundle_products"],
+            "image_prompts": manifest["image_prompts"],
+            "manifest": str((output_dir / "manifest.json").resolve()),
+            "manifest_sha256": sha256(output_dir / "manifest.json"),
+        },
+    )
+    if json_stdout:
+        print(json.dumps(manifest, indent=2, ensure_ascii=False, sort_keys=True))
+        return
+    print(
+        f"Built {manifest['configurable_parents']:,} configurable parents, "
+        f"{manifest['simple_children']:,} children, {manifest['bundle_products']:,} bundles, and "
+        f"{manifest['image_prompts']:,} image prompts. Log: {log_path}"
+    )
+
+
 def main() -> int:
     arguments = parse_args()
-    config = scaled_config(arguments.configurable_count, arguments.bundle_count)
-    source_rows = read_rows(arguments.source_products, "\t")
-    prepared_rows = read_rows(arguments.prepared_products, ",")
-    plan = build_plan(source_rows, prepared_rows, config)
-    manifest = write_plan(plan, arguments.output_dir, arguments.source_products, arguments.prepared_products)
-    print(json.dumps(manifest, indent=2, ensure_ascii=False, sort_keys=True))
+    log_path = arguments.output_dir / "build-merchandising.log"
+    append_build_event(
+        log_path,
+        {
+            "status": "started",
+            "source_products": str(arguments.source_products.resolve()),
+            "prepared_products": str(arguments.prepared_products.resolve()),
+            "output_dir": str(arguments.output_dir.resolve()),
+        },
+    )
+    try:
+        config = scaled_config(arguments.configurable_count, arguments.bundle_count)
+        source_rows = read_rows(arguments.source_products, "\t")
+        prepared_rows = read_rows(arguments.prepared_products, ",")
+        plan = build_plan(source_rows, prepared_rows, config)
+        manifest = write_plan(plan, arguments.output_dir, arguments.source_products, arguments.prepared_products)
+    except Exception as exception:
+        append_build_event(
+            log_path,
+            {
+                "status": "failed",
+                "error_type": type(exception).__name__,
+                "error": str(exception),
+            },
+        )
+        raise
+    emit_build_result(manifest, arguments.output_dir, arguments.json)
     return 0
 
 

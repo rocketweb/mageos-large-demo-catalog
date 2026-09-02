@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import csv
+import io
 import json
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -357,6 +359,34 @@ class BuildMerchandisingCatalogTest(unittest.TestCase):
         self.assertEqual(len(selected), 7)
         self.assertEqual({family["group"] for family in selected}, {"rugs", "lighting", "outdoor"})
         self.assertEqual(sum(not family["one_axis"] for family in selected), 4)
+
+    def test_build_result_is_concise_by_default_and_logs_completion(self) -> None:
+        from build_merchandising_catalog import emit_build_result
+
+        manifest = {
+            "configurable_parents": 2000,
+            "simple_children": 10800,
+            "bundle_products": 50,
+            "image_prompts": 3385,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory)
+            (output_dir / "manifest.json").write_text("{}\n", encoding="utf-8")
+            stdout = io.StringIO()
+
+            with redirect_stdout(stdout):
+                emit_build_result(manifest, output_dir, json_stdout=False)
+
+            terminal_output = stdout.getvalue()
+            self.assertEqual(terminal_output.count("\n"), 1)
+            self.assertNotIn("attribute_options", terminal_output)
+            self.assertIn("2,000 configurable parents", terminal_output)
+            events = [
+                json.loads(line)
+                for line in (output_dir / "build-merchandising.log").read_text(encoding="utf-8").splitlines()
+            ]
+            self.assertEqual(events[-1]["status"], "completed")
+            self.assertEqual(events[-1]["image_prompts"], 3385)
 
 
 if __name__ == "__main__":
