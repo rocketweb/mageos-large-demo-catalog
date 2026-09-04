@@ -48,6 +48,15 @@ class AuditReferenceTest(unittest.TestCase):
             self.assertEqual(result["approved_this_run"], 1)
             self.assertEqual(len((root / "audit.jsonl").read_text().splitlines()), 1)
 
+    def test_requests_bounded_json_schema_without_thinking(self):
+        with tempfile.TemporaryDirectory() as directory:
+            _, request = self.run_audit(Path(directory), [response()])
+            payload = json.loads(request.call_args.args[0].data)
+            self.assertEqual(payload.get("chat_template_kwargs"), {"enable_thinking": False})
+            schema = payload["response_format"]["json_schema"]["schema"]
+            self.assertFalse(schema["additionalProperties"])
+            self.assertEqual(set(schema["required"]), {"verdict", "confidence", "observed_product", "issues"})
+
     def test_repeated_truncation_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -56,6 +56,10 @@ evidence. Withheld facts remain in the evidence file, not the storefront copy.
 
 ## Images: audit first
 
+For the repaired reference set and the current resumable bulk runner, use
+[Repaired references and gated bulk generation](REFERENCE_BULK.md). The original
+calibration findings below are retained as evidence, not the current repair state.
+
 The existing local `mflux==0.19.1` runtime supports `Flux2KleinEdit`. It uses the
 Mac GPU directly. It does not use oMLX, ChatGPT quota or a cloud API for image
 generation. oMLX is used only for the optional vision-reference audit.
@@ -173,7 +177,8 @@ Before importing at `relevance.comtom.lab`:
 7. Reindex and verify search, category/PDP rendering, swatches, prices, bundle
    choices and stock behavior. Update media only after visual acceptance.
 
-No commit, push or deployment has been performed for this realism change set.
+The initial realism change set was committed as `d85f8c7`. Subsequent repair and
+bulk tooling is a separate commit. Neither commit implies a push or deployment.
 
 ## Verification
 
@@ -189,5 +194,5 @@ reference hash approvals, path containment and image resume integrity. Audit
 regressions cover truncated/filtered completions, malformed JSON, bounded retry,
 interrupted-log resume, explicit credential loading and quiet secret-safe errors.
 Model-returned fields cannot overwrite the pinned reference path, image hash or
-source evidence. The current suite has 72 passing tests; PHP syntax lint and
+source evidence. The initial suite had 72 passing tests; PHP syntax lint and
 `git diff --check` also pass. These are local checks, not Magento runtime acceptance.
