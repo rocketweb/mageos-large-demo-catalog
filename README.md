@@ -37,3 +37,14 @@ composer install
 ```
 
 Composer authentication for the Hyva private repository must be configured in the local Composer credential store. Do not commit `auth.json` or `app/etc/env.php`.
+
+## Catalog realism proposals
+
+Use the [review-only realism workflow](dev/tools/wands_catalog/REALISM_REVIEW.md)
+to prepare a deterministic 100-product sample and audit the bundle assortments.
+This is a separate review lane, not an automatic live-catalog import.
+
+The [full-catalog workflow](dev/tools/wands_catalog/FULL_REALISM.md) adds complete
+catalog patches, revised bundles, fictional lab collections, inventory scenarios,
+and a reference-audited local image pipeline. Image acceptance and remote import
+remain separate gates.
