@@ -1,5 +1,7 @@
 # WANDS catalog tooling
 
+For the current full-catalog release, start with [publication preparation and the phased deployment checklist](DEPLOYMENT_READINESS.md). It includes quiet validation commands, remote snapshot/diff and review-only rollback tooling, storefront cases, and CPU-only repair drafts. Older setup examples below are not authorization to import into a local or remote store.
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
 
 It creates:
@@ -185,7 +187,7 @@ php bin/magento lab:wands:import \
   --file=var/wands/merchandising/batches/pilot/configurables/reuse-parent-media.csv
 ```
 
-Bundle batches use dynamic price, dynamic SKU, dynamic weight, and existing visible simple products as selections. They exclude configurable parents and all generated children. After the configurable pilot passes, validate and import `batches/pilot/bundles.csv`. Then import one five-bundle theme CSV at a time from `batches/bundles`.
+Bundle batches use dynamic price, dynamic SKU, dynamic weight, and existing visible simple products as selections. They exclude configurable parents and all generated children. Existing bundle assortments must use the atomic reconciliation path so obsolete choices cannot survive add/update. First run `lab:wands:import --validate-only --reconcile-bundles --file=...` and retain the reported exact would-remove counts. After approval, run the same command without `--validate-only`; cleanup and import then share one transaction. Apply this to `batches/pilot/bundles.csv` and each five-bundle theme CSV under `batches/bundles`.
 
 The pilot keeps bundle hero prompts separate from configurable media so bundle image rows are not validated before their products exist. After importing the pilot bundles, build and import their media with:
 

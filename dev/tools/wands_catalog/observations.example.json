@@ -1,0 +1,12 @@
+{
+  "context": {
+    "base_url": null,
+    "store": null,
+    "captured_at": null,
+    "currency": null,
+    "prices_exclude_tax": null,
+    "additional_price_rules": null,
+    "customer_group": null
+  },
+  "cases": []
+}

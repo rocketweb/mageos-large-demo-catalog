@@ -903,7 +903,7 @@ def bundle_csv_row(bundle: dict[str, Any]) -> dict[str, Any]:
         "use_config_min_qty": "1",
         "is_in_stock": "1",
         "manage_stock": "0",
-        "use_config_manage_stock": "1",
+        "use_config_manage_stock": "0",
         "wands_product_id": "",
         "wands_product_class": "Room Bundle",
         "wands_average_rating": "",
