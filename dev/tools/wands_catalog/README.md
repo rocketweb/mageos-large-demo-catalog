@@ -1,8 +1,38 @@
 # WANDS catalog tooling
 
+For the proposed reusable package for Mage-OS Lab, see the [community distribution design](COMMUNITY_DISTRIBUTION.md). Tool screenshots and diagrams belong in Git; product images belong in separately versioned media downloads. The design is local preparation, not a published catalog release.
+
 For the current full-catalog release, start with [publication preparation and the phased deployment checklist](DEPLOYMENT_READINESS.md). It includes quiet validation commands, remote snapshot/diff and review-only rollback tooling, storefront cases, and CPU-only repair drafts. Older setup examples below are not authorization to import into a local or remote store.
 
+For the next local realism phase, see the [catalog depth pilot](CATALOG_DEPTH.md): a 300-root acceptance set, shared Magento specification schema, non-executable gallery briefs, evidence-backed recommendation candidates, and a separate enriched-catalog judgment queue. This work does not change the existing release or frozen search benchmark.
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
+
+## WANDS attribution
+
+This catalog builds on [Wayfair's WANDS dataset](https://github.com/wayfair/WANDS),
+not an independently collected product corpus. WANDS requests the following
+citation when building on or using the dataset:
+
+```bibtex
+@InProceedings{wands,
+  title = {WANDS: Dataset for Product Search Relevance Assessment},
+  author = {Chen, Yan and Liu, Shujian and Liu, Zheng and Sun, Weiyi and Baltrunas, Linas and Schroeder, Benjamin},
+  booktitle = {Proceedings of the 44th European Conference on Information Retrieval},
+  year = {2022},
+  numpages = {12}
+}
+```
+
+Source: [upstream citation](https://github.com/wayfair/WANDS#citation).
+WANDS is [MIT-licensed](https://github.com/wayfair/WANDS/blob/main/LICENSE).
+Redistributions must also retain its copyright and permission notices; the
+paper citation is not a substitute for those notices. Prices, stock scenarios,
+generated images, rewritten copy, configurable variants, bundles and synthetic
+dimensions added by this tool are derived lab content, not original WANDS
+observations or newly validated WANDS relevance judgments.
+
+## Prepared outputs
 
 It creates:
 

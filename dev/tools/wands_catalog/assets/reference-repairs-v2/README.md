@@ -10,8 +10,16 @@ plus the unchanged rug used in the bundle trial, passed the local
 `Qwen3.8-27B-8bit` reference audit on September 4, 2026 using the v3 structured
 response policy. `reference-audit.jsonl` retains the exact model verdicts,
 source facts, image hashes and completion metadata. Machine-local paths in that
-evidence identify the generation/audit inputs; the JPEG hashes also match these
-version-controlled copies.
+evidence identify the generation/audit inputs. The JPEG files are no longer
+tracked in Git. Existing local copies remain intact, and their hashes match
+the retained provenance records. Fresh clones receive this evidence only.
+
+The local generation directory is `var/wands/reference-repairs-v2/`, relative
+to the catalog repository root. A recipient must restore the exact JPEGs and
+matching generation events from a separately supplied media archive, or
+generate new candidates and re-audit them. No public media archive has been
+published by this preparation work. Do not reuse a historic approval unless
+the actual image bytes and all audit-policy inputs still match.
 
 The table was refined after the first candidate's clipped corners were ambiguous.
 The selected candidate clearly shows an eight-sided tabletop. The first candidate

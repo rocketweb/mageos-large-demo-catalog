@@ -28,9 +28,14 @@ Output goes to `generation.log`. Successful files have request/image hashes in
 `generation-events.jsonl`. Existing files are never overwritten. Changed prompts,
 source facts or image hashes require a fresh versioned directory. Regeneration
 is not acceptance: inspect the images and run the vision audit before use.
-The selected repaired JPEGs and generation provenance are also retained in
-`assets/reference-repairs-v2/` beside this document, so they travel with the
-second Git commit. A fresh run can use that directory as `--repair-dir`.
+The selected repaired JPEGs stay in the ignored local output directory
+`var/wands/reference-repairs-v2/`. Only generation provenance, audit results and
+checksums are versioned in `assets/reference-repairs-v2/` beside this document.
+Fresh clones do not contain the JPEGs. Restore the exact hash-matching files
+from a separately supplied media archive before using `--repair-dir`, or run
+the generation command above in a fresh directory and repeat visual acceptance
+and the reference audit. A matching prompt/seed does not guarantee identical
+bytes across runtimes, and does not transfer an old image approval.
 
 Validation completed on September 4, 2026: all four repaired references and the
 unchanged rug passed the structured oMLX audit. A black chair variant preserved
