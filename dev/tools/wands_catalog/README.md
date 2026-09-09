@@ -6,6 +6,10 @@ For the current full-catalog release, start with [publication preparation and th
 
 For the next local realism phase, see the [catalog depth pilot](CATALOG_DEPTH.md): a 300-root acceptance set, shared Magento specification schema, non-executable gallery briefs, evidence-backed recommendation candidates, and a separate enriched-catalog judgment queue. This work does not change the existing release or frozen search benchmark.
 
+For the follow-on implementation, see [catalog corrections and guarded expansion](CATALOG_REPAIRS.md): corrected option and assortment definitions, meaningful parent/child copy, recovered source facets, image-repair drafts and independently verified forward/inverse proposals. The expanded packet is local review work, not a deployed catalog release.
+
+The [remaining-definition resolution batch](DEFINITION_RESOLUTIONS.md) now clears the known 41-family queue and eight overlapping holds using source-supported facts and approved, explicitly synthetic conflict resolutions. It includes a post-correction semantic audit and a reference-impact check of all 50 local bundles.
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
 
 ## WANDS attribution
