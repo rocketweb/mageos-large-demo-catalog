@@ -14,6 +14,8 @@ The follow-on [media reconciliation](MEDIA_RECONCILIATION.md) completes initial 
 
 The [bounded repair pilot](MEDIA_REPAIR_PILOT.md) gives all 12 uncertainties a proposed next action: retain four plausible furniture candidates and prepare clearer views for eight textiles/curtains. The local planner prepares 12 exact pilot cases from 89 repair/clarification candidates, with pinned contracts and pending acceptance checklists. It performs no model calls and produces no executable generation queue.
 
+The separately authorized local pilot has now generated 12 candidates, one attempt each, with no retries or original-media changes. Its initial visual screen finds three passes, two uncertain images and seven failures. The bounded runner rejects over-budget prompts, and the CPU-only review builder binds observations to exact candidate, definition and prompt hashes. A visual pass does not authorize publication, conditioning or bulk expansion. See the [pilot run and review instructions](MEDIA_REPAIR_PILOT.md#completed-local-pilot).
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
 
 ## WANDS attribution
