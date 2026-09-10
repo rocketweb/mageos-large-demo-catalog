@@ -154,9 +154,12 @@ boundary because the historical generator does not enforce that field.
 
 ## Next acceptance boundary
 
-Resolve the 12 uncertain cases against their selected designs. Then prepare
-and approve a separate, bounded hero-repair run with versioned output files and
-visual acceptance before creating derivative views. In particular:
+The [focused review and repair pilot](MEDIA_REPAIR_PILOT.md) now proposes retaining
+four furniture candidates and creating clearer views for eight textile/curtain
+references. These are next-action dispositions, not image approvals or changes
+to the original triage findings. A 12-image local pilot is prepared for separate
+approval, with versioned output proposals and acceptance before derivative views.
+In particular:
 
 - Use actual corrected option values, never historical SKU fragments such as
   `30-IN`, `OAK`, `FULL` or `2-PIECES`.

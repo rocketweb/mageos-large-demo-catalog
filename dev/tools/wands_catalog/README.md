@@ -12,6 +12,8 @@ The [remaining-definition resolution batch](DEFINITION_RESOLUTIONS.md) now clear
 
 The follow-on [media reconciliation](MEDIA_RECONCILIATION.md) completes initial visual triage for all 93 corrected roots without using a local model: 81 confirmed defects and 12 uncertain references. A deterministic completeness gate rejects packets with unreviewed roots. All references remain unapproved for generation or deployment, and 465 planned gallery views stay bound to the corrected definitions and blocked pending acceptance.
 
+The [bounded repair pilot](MEDIA_REPAIR_PILOT.md) gives all 12 uncertainties a proposed next action: retain four plausible furniture candidates and prepare clearer views for eight textiles/curtains. The local planner prepares 12 exact pilot cases from 89 repair/clarification candidates, with pinned contracts and pending acceptance checklists. It performs no model calls and produces no executable generation queue.
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
 
 ## WANDS attribution
