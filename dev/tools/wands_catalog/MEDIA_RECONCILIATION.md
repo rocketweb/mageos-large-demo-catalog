@@ -1,14 +1,15 @@
 # Corrected-definition media reconciliation
 
 The definition checkpoint is committed as `17c436b`, and the initial media
-reconciliation checkpoint as `cc32066`. The follow-on media work is local
+reconciliation checkpoint as `cc32066`, and the priority-one triage as `39590bb`.
+The follow-on media work is local
 preparation, not a generation run, image approval or catalog deployment.
 
-`var/wands/media-reconciliation-v3` consumes the independently verified
+`var/wands/media-reconciliation-v4` consumes the independently verified
 `var/wands/catalog-definitions-v3` packet without editing it or its source images.
-It extends the nine findings in `media-reconciliation-v2` with visual triage of
-all 38 remaining high-priority references from the newly resolved definitions.
-That pass found 33 additional clear mismatches and five uncertain cases.
+It extends the 47 observations in `media-reconciliation-v3` with visual triage of
+the remaining 46 references. This pass found 39 additional clear mismatches and
+seven uncertain cases. Initial triage now covers all 93 corrected roots.
 Historical packets remain intact; their pinned producer versions differ from
 the current tool and should not be represented as current-code rebuilds.
 
@@ -20,9 +21,9 @@ the current tool and should not be represented as current-code rebuilds.
 - **93 hero review briefs:** selected options, explicit geometry, sale units,
   specification provenance and exact component quantities are bound to a
   definition fingerprint. Fifty-four roots have component assortments.
-- **47 visually reviewed roots:** 42 confirmed defects and five uncertain cases.
-  The other 46 references have not yet received visual triage for the corrected
-  definitions. None of the 93 references is accepted for generation.
+- **93 visually reviewed roots:** 81 confirmed defects and 12 uncertain cases.
+  No references remain unreviewed for the corrected definitions. Complete triage
+  is not visual acceptance; none of the 93 references is accepted for generation.
 - **465 dependent gallery views:** the five planned views for each corrected
   root remain blocked pending reconciliation. Unchanged roots in the larger
   357-root packet are outside this media pass.
@@ -44,19 +45,19 @@ the current tool and should not be represented as current-code rebuilds.
 
 These are observations of lab imagery, not manufacturer validation. The six
 initial supplemental observations live in `media_reconciliation_findings.json`.
-The next 38 live in `media_reconciliation_priority1_observations.json`. Neither
-file embeds images or absolute media paths. Every observation is tied to the
+The next 38 live in `media_reconciliation_priority1_observations.json`, and the
+final 46 in `media_reconciliation_priority2_observations.json`. None of these
+files embeds images or absolute media paths. Every observation is tied to the
 exact image SHA-256, selected SKU and corrected-definition fingerprint. A changed
 definition or reference requires reviewing the observation again; the tool fails
 rather than carrying it forward. Sidecars accept failures or uncertainties only
 and cannot grant image approval. Duplicate root observations are rejected,
 including across separate input files.
 
-Priority 0 now contains 42 defects. Priority 1 contains five reviewed-but-uncertain
-references. Priority 2 contains 46 earlier corrected definitions still awaiting
-visual review. All 44 newly resolved definitions have now received initial visual
-triage: 39 failures and five uncertainties. This overlaps the full packet's
-47 reviewed roots, rather than adding another population.
+Priority 0 now contains 81 defects. Priority 1 contains 12 reviewed-but-uncertain
+references. Priority 2 is empty. The 44 newly resolved definitions remain a
+subset of this 93-root packet: 39 failures and five uncertainties. Do not add
+that subset to the full-packet counts.
 
 ### Findings from the 38-reference pass
 
@@ -68,7 +69,7 @@ substituted for rockers, stale finishes, excluded bedding, and nonsensical print
 measurement graphics. Each affected root has its own observation and repair
 direction in the review; these are not blanket class-level failure assignments.
 
-The five uncertainties are:
+The five uncertainties from that pass are:
 
 - Ocean Baby (`WANDS-000056`), Pink Chocolate (`WANDS-003817`), Lewis Penguin
   (`WANDS-030143`) and Dreamit (`WANDS-035175`): folded textiles obscure the
@@ -83,6 +84,28 @@ the JSON status, summary counts, HTML and conditional repair instructions.
 These results describe deliberately selected corrected roots, not a random
 sample or a full-catalog/model error-rate estimate.
 
+### Findings from the final 46-reference pass
+
+Additional mismatches include incorrect selected finishes, two drawers where
+one is sold, extra bistro chairs, missing assortment tables, a two-level bunk
+where three levels are specified, crib photos instead of decor flat lays, and
+included-looking mattresses or linens that the sale unit excludes. One lamp set
+does not distinguish a floor lamp from its two table lamps. Each finding is
+specific to the inspected reference and its pinned corrected design.
+
+Seven additional references remain uncertain:
+
+- Mirefield (`WANDS-004880`), Cornell (`WANDS-015548`) and Colrain
+  (`WANDS-039471`): plausible cabinet identity, but selected finish or corrected
+  proportions need focused review. A photo cannot prove physical measurements.
+- Pineapple fabric (`WANDS-008286`), Blew (`WANDS-011019`) and Hance
+  (`WANDS-019888`): folds obscure the single-item identity or construction.
+- Retro Dots (`WANDS-012070`): the pattern is visible but the two panel
+  boundaries are not clear enough to accept their count.
+
+These candidates are retained for focused review, not assigned automatic
+replacement jobs. The other 39 observations contain targeted repair directions.
+
 ## Quiet rebuild
 
 Use a Python environment with Pillow installed. The existing image-generation
@@ -95,6 +118,8 @@ python3 dev/tools/wands_catalog/reconcile_catalog_media.py \
   --definitions var/wands/catalog-definitions-v3 \
   --findings dev/tools/wands_catalog/media_reconciliation_findings.json \
   --findings dev/tools/wands_catalog/media_reconciliation_priority1_observations.json \
+  --findings dev/tools/wands_catalog/media_reconciliation_priority2_observations.json \
+  --require-complete-visual-triage \
   --output-dir var/wands/media-reconciliation-next
 
 tail -f var/wands/media-reconciliation-next.log
@@ -104,6 +129,13 @@ Use a fresh output directory. Normal results and runtime errors go to the siblin
 log; `--json` explicitly opts into a terminal summary. This does not modify the
 input packet, original media, model configuration or Magento. No credentials or
 network service are used.
+
+`--require-complete-visual-triage` fails before publishing a packet if any
+corrected root lacks a bound observation, or the review is empty. Leave it off
+only for an explicitly partial triage packet. The manifest records both whether
+the gate was required and `visual_triage_complete`. Uncertain observations count
+as reviewed, not as failures or approvals. The gate does not unblock generation,
+gallery dependencies, imports or deployment.
 
 Outputs:
 
@@ -122,8 +154,7 @@ boundary because the historical generator does not enforce that field.
 
 ## Next acceptance boundary
 
-Review the remaining 46 references and resolve the five uncertain cases against
-their selected designs. Then prepare
+Resolve the 12 uncertain cases against their selected designs. Then prepare
 and approve a separate, bounded hero-repair run with versioned output files and
 visual acceptance before creating derivative views. In particular:
 

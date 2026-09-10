@@ -27,7 +27,7 @@ from repair_designs import DISCLOSURE
 from synthetic_dimensions import LABEL
 from verify_catalog_repairs import check, verify_packet
 
-VERSION = 'wands-media-reconciliation-v2'
+VERSION = 'wands-media-reconciliation-v3'
 VIEWS = {'hero', 'angle', 'detail', 'room', 'dimensions'}
 
 
@@ -206,14 +206,19 @@ def prepare_reviews(roots, children, reviews, drafts, supplemental=()):
     return sorted(result, key=lambda r: (r['priority'], r['contract']['root_sku']))
 
 
-def triage_counts(reviews):
+def triage_counts(reviews, require_complete=False):
     states = Counter(r['visual_status'] for r in reviews)
     check(set(states) <= {'known_reference_defect', 'reviewed_uncertain', 'not_reviewed_for_corrected_definition'},
           'Unknown visual status; no implicit approval is allowed')
+    complete = bool(reviews) and states['not_reviewed_for_corrected_definition'] == 0
+    check(not require_complete or complete,
+          f"Incomplete visual triage: {states['not_reviewed_for_corrected_definition']} of {len(reviews)} "
+          'corrected roots still unreviewed (a nonempty review is required)')
     return {'known_reference_defects': states['known_reference_defect'],
             'reviewed_uncertain_references': states['reviewed_uncertain'],
             'visually_reviewed_roots': states['known_reference_defect'] + states['reviewed_uncertain'],
-            'not_visually_reviewed_roots': states['not_reviewed_for_corrected_definition']}
+            'not_visually_reviewed_roots': states['not_reviewed_for_corrected_definition'],
+            'visual_triage_complete': complete}
 
 
 def blocked_views(briefs, reviews):
@@ -238,6 +243,7 @@ def blocked_views(briefs, reviews):
 
 def render_review(reviews, counts):
     esc = lambda value: html.escape(str(value), quote=True)
+    triage_label = 'complete' if counts.get('visual_triage_complete', False) else 'incomplete'
     cards = []
     for row in reviews:
         c = row['contract']; ref = row['reference']
@@ -267,11 +273,12 @@ article img{width:100%;height:260px;object-fit:contain;background:#f8f8f7}p,li,s
 .options{font-weight:650}.alert{background:#fff0e7;border-left:3px solid #a54216;padding:12px}.uncertain{background:#f0f2fb;border-left:3px solid #596898;padding:12px}.technical{font-size:13px;color:#56625d}details{border-top:1px solid #dce1dc;padding-top:12px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,monospace;background:#f5f6f3;padding:12px}ul{padding-left:22px}
 @media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){.grid{grid-template-columns:1fr}header,main,footer{padding:16px}h1{font-size:28px}article{padding:18px}}
 </style></head><body><header><h1>Corrected catalog media review</h1><p>''' + esc(counts['review_roots']) + ' corrected product roots · ' + esc(counts['known_reference_defects']) + ' confirmed defects · ' + esc(counts.get('reviewed_uncertain_references', 0)) + ' reviewed but uncertain · ' + esc(counts.get('not_visually_reviewed_roots', counts['review_roots'] - counts['known_reference_defects'])) + ' not visually reviewed.</p><p>' + esc(counts['technically_valid_references']) + ' decodable references · ' + esc(counts['blocked_gallery_views']) + ''' gallery views held for reconciliation.</p>
+<p>Initial visual triage is ''' + triage_label + '''. This is not image acceptance.</p>
 <p>Review-only, local and CPU-only. No images generated, copied, accepted or uploaded. Existing image approvals are not carried over to changed definitions. Priority 0 covers confirmed defects and invalid files; priority 1 covers uncertain reviews or newly resolved definitions still awaiting review. Uncertainty is not a failure, approval or automatic regeneration instruction.</p>
 <p>Compare the image to the selected options and exact assortment below it. Never infer exact dimensions from pixels. Each card links to the existing reference; the image is not a depiction we have accepted for the corrected design.</p></header><main class="grid">''' + ''.join(cards) + '''</main><footer>Images remain outside Git. These are explicitly synthetic lab designs, not manufacturer-verified products. No Magento import or deployment is included.</footer></body></html>'''
 
 
-def build(definitions, output, findings_paths=()):
+def build(definitions, output, findings_paths=(), *, require_complete_visual_triage=False):
     definitions = definitions.resolve(); output = output.resolve()
     check(not output.exists(), 'Use a fresh media review directory')
     verified = verify_packet(definitions)
@@ -289,6 +296,7 @@ def build(definitions, output, findings_paths=()):
     reviews = prepare_reviews(roots, children, read_jsonl(definitions / 'reference-review.jsonl'),
                               read_jsonl(definitions / 'image-repair-drafts.jsonl'),
                               supplemental)
+    coverage = triage_counts(reviews, require_complete=require_complete_visual_triage)
     views = blocked_views(read_jsonl(definitions / 'gallery-briefs.jsonl'), reviews)
     duplicates = defaultdict(list)
     for row in reviews:
@@ -296,7 +304,7 @@ def build(definitions, output, findings_paths=()):
             duplicates[row['reference']['sha256']].append(row['contract']['root_sku'])
     duplicate_groups = [sorted(skus) for _, skus in sorted(duplicates.items()) if len(skus) > 1]
     counts = {'review_roots': len(reviews), 'technically_valid_references': sum(r['integrity']['status'] == 'valid_image_bytes' for r in reviews),
-              **triage_counts(reviews),
+              **coverage,
               'newly_resolved_definition_roots': sum(bool(r.get('repair', {}).get('source_resolution')) for r in roots),
               'component_assortment_roots': sum(bool(r['contract']['components']) for r in reviews),
               'blocked_gallery_views': len(views), 'duplicate_image_groups': len(duplicate_groups),
@@ -326,6 +334,7 @@ def build(definitions, output, findings_paths=()):
         manifest = {'version': VERSION, 'definition_packet': str(definitions), 'inputs': inputs,
                     'outputs': {p.name: sha256(p) for p in sorted(stage.iterdir())}, 'counts': counts,
                     'pillow_version': PILLOW_VERSION, 'executable': False, 'deployment_ready': False,
+                    'triage_completion_required': require_complete_visual_triage,
                     'existing_visual_approvals_reused': False,
                     'next_gate': 'Review corrected hero identity/options/counts, then approve a separate bounded generation plan.'}
         write_json(stage / 'manifest.json', manifest)
@@ -339,13 +348,16 @@ def main():
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--findings', type=Path, action='append', default=[],
                         help='JSON array of byte- and definition-bound failures or uncertainties; repeat for separate review batches, never approvals')
+    parser.add_argument('--require-complete-visual-triage', action='store_true',
+                        help='Stop without a packet if any corrected root lacks a bound visual observation; does not approve images')
     parser.add_argument('--json', action='store_true', help='Opt in to terminal summary; default output is the sibling log')
     args = parser.parse_args()
     args.output_dir.parent.mkdir(parents=True, exist_ok=True)
     logging.basicConfig(filename=args.output_dir.with_name(args.output_dir.name + '.log'), level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s')
     try:
-        counts = build(args.definitions, args.output_dir, args.findings)
+        counts = build(args.definitions, args.output_dir, args.findings,
+                       require_complete_visual_triage=args.require_complete_visual_triage)
         logging.info('Completed CPU-only media reconciliation: %s', json.dumps(counts, sort_keys=True))
         if args.json:
             print(json.dumps(counts, indent=2, sort_keys=True))

@@ -1,0 +1,462 @@
+[
+  {
+    "root_sku": "WANDS-000885",
+    "selected_sku": "WANDS-000885-63-IN-EAE1-BEIGE-5F10",
+    "reference_sha256": "6f1092c87f271ad77730fc6aaf8426b93a5b188fa304fb274c0c99ec1d61610c",
+    "definition_sha256": "f0f28a05acb6983b1f47551da6aa068c3130fe7aab257c24f130892d10a91439",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows multiple long panels in white and beige, not one selected Beige cafe curtain panel.",
+    "repair_direction": "Show exactly one Beige cafe panel with the selected short-drop proportions. Do not show alternate colorways or a multi-panel purchase; any hanging support is staging, not included merchandise."
+  },
+  {
+    "root_sku": "WANDS-000933",
+    "selected_sku": "WANDS-000933-63-IN-EAE1-BLACK-C6CF",
+    "reference_sha256": "b988932767851e96833b4a180d00c8845dd2dc0ee60010fa4b9cb109e5d844cb",
+    "definition_sha256": "793347df5967701f8e2bf1e7677778336b85a7fe500742375fff86bb6edc242a",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows full-height plain black and navy panels on one rod. It lacks a distinct valance and two short tier panels.",
+    "repair_direction": "Show one valance and two separate short tier panels in the selected Black palette, retaining the Barnyard print identity. Do not substitute full-length plain drapes or add Navy colorways."
+  },
+  {
+    "root_sku": "WANDS-001981",
+    "selected_sku": "WANDS-001981-FULL-008D-NAVY-FB2F",
+    "reference_sha256": "60222465e8acf6b6b616a9ca27d753190247c8fac1ef84b94c48e9ac9a788bcd",
+    "definition_sha256": "b64fcf17f777172baf624ffd41c7aac1b3a171e72b779afafd77176a16024f3a",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "A filled white pillow is shown, not the selected Navy body pillowcase.",
+    "repair_direction": "Show one empty Navy body pillowcase laid flat with the opening visible and the selected 20-by-54-inch synthetic proportions. No insert or sheets."
+  },
+  {
+    "root_sku": "WANDS-002024",
+    "selected_sku": "WANDS-002024-FULL-008D",
+    "reference_sha256": "9339d51942e25285540f2b8a09eaf9cb508ac5f4056f7ee56f85aab4aaa3a8fe",
+    "definition_sha256": "4b2956b68911cb9a215c70c4dfa9ab98a637299a96707d5cd00494f884284da4",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a pillow atop several folded bedding layers, rather than one Sherpa body pillowcase.",
+    "repair_direction": "Show one empty Sherpa-textured body pillowcase using the selected 20-by-52-inch synthetic proportions. Remove the pillow insert and all other bedding."
+  },
+  {
+    "root_sku": "WANDS-002448",
+    "selected_sku": "WANDS-002448-2-PIECES-05E3",
+    "reference_sha256": "228f4b2a193778601f95a6fea0cd5387e3b243683c921efc5e473821fc0b8e25",
+    "definition_sha256": "8af9ab22960d933e80013a4609102a1b64e76c7c0725a774b202ed3f2c83e757",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference has one table and four chairs, but the selected two-piece option contains one table and one chair.",
+    "repair_direction": "Show exactly one bistro table and one matching chair for this selected option. Do not copy the four-chair arrangement from the parent reference."
+  },
+  {
+    "root_sku": "WANDS-004322",
+    "selected_sku": "WANDS-004322-30-IN-5C57",
+    "reference_sha256": "59d7fbe5ae6f03028cba117a45788200c0ea06505a2293a8c5a291018a3f4850",
+    "definition_sha256": "f0f99273a3e51f1dce08b46418c4000e7879d5038c66be6f672d5d152e6dd10e",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The pictured cabinet has two stacked drawer-like fronts, while the corrected product is explicitly a one-drawer nightstand.",
+    "repair_direction": "Render one Walnut nightstand with exactly one unmistakable drawer. Preserve supported wood-grain cues, use the compact synthetic geometry and do not add a second drawer."
+  },
+  {
+    "root_sku": "WANDS-004880",
+    "selected_sku": "WANDS-004880-30-IN-5C57-OAK-CFED",
+    "reference_sha256": "026b2d593e2e7fea67f2c7f5a6ef4b5c46bf483cdea67e3db1fd81b123bfb752",
+    "definition_sha256": "090be680d66c9822aee21275c2bfce707d287ad2cc0cd29b423249df5228282b",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The cylindrical cabinet and two curved drawer fronts look consistent with the named product. The image does not establish the selected Oak finish or the corrected compact geometry.",
+    "repair_direction": "Retain as a candidate for focused finish and proportion review. Do not automatically replace it or infer wood species or exact dimensions from the pixels."
+  },
+  {
+    "root_sku": "WANDS-006005",
+    "selected_sku": "WANDS-006005-2-PIECES-05E3-BROWN-18F2",
+    "reference_sha256": "ad619a5f9154e4631ecb4456683afb6fd2cbbdaa7976af889e66c4a3a524e0c2",
+    "definition_sha256": "e2403293baefd8a8cba63bf99dde134cb34e497f883dfaf3aa9e0ccb2dd61be6",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows one joined sectional and a table-like item with loose pillows, not the selected two armless modules, one corner module and two separate armchairs.",
+    "repair_direction": "Show all six defined furniture assemblies with clear module boundaries and two freestanding armchairs. Preserve the selected Brown palette and omit unlisted loose pillows."
+  },
+  {
+    "root_sku": "WANDS-008286",
+    "selected_sku": "WANDS-008286",
+    "reference_sha256": "a72e2bf50552f997253a4d2895b05f8a19febcd011596754d7930f27f3ba88da",
+    "definition_sha256": "d1b8c47e0a82a32eeab4494a6c256a5f1292c9fd5c7a92e7af40350a584251e8",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The pineapple motif is visible, but the thick folded stack does not establish that the product is one separate precut fabric panel rather than multiple padded items.",
+    "repair_direction": "Review an unfolded single-panel depiction with the cut edges visible. Keep the pineapple motif and explicit 54-by-36-inch lab cut; do not infer quantity or continuous yardage from the stack."
+  },
+  {
+    "root_sku": "WANDS-008809",
+    "selected_sku": "WANDS-008809-30-IN-5C57-BRASS-54FB",
+    "reference_sha256": "f97caf908c2c5f74c07ed71b1d67df3d0698e4177b28a1c753f378b4e0eed342",
+    "definition_sha256": "55e0e40edbb8585dd3cc1ffa31730906698b0b6b6af57094678149c55573c468",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The cabinet has a reddish wood finish rather than the selected Brass finish.",
+    "repair_direction": "Retain one two-drawer nightstand, render the selected Brass finish and use the corrected compact proportions. Do not copy the reddish wood finish."
+  },
+  {
+    "root_sku": "WANDS-009621",
+    "selected_sku": "WANDS-009621-TODDLER-56FF-NATURAL-D6AC",
+    "reference_sha256": "6b4f7415ac85d36cb4d0b3e0ddb61c48a6b660687acff5ea0587f6e7591ca2d5",
+    "definition_sha256": "f9a56f80c0443e95e52daa1decdb28461ab0c2e8a18d94a7a99189082dfaeaa1",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a Blue toddler bed with a white mattress and printed branding, not the selected Natural frame-only product.",
+    "repair_direction": "Show one Natural toddler frame without mattress or brand graphics. Retain only supported structural cues; make no fit, load or child-safety claims."
+  },
+  {
+    "root_sku": "WANDS-010980",
+    "selected_sku": "WANDS-010980-FULL-008D-BEIGE-5F10",
+    "reference_sha256": "643cdcd39443e73ff28739a5cb0aa47b4e99e9c70314875c889e2e5a2dc44aa9",
+    "definition_sha256": "ce6729730aecaa408aed33eaaeaf3597bc0454ba345cfca66988cf9eefcc071d",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The image presents several folded white pillow-like forms rather than one selected Beige body pillowcase.",
+    "repair_direction": "Show one empty Beige body pillowcase with its opening visible and the selected 20-by-54-inch synthetic proportions. No extra folded bedding or insert."
+  },
+  {
+    "root_sku": "WANDS-011019",
+    "selected_sku": "WANDS-011019-FULL-008D-BLUE-EC7D",
+    "reference_sha256": "8d4effe78bc26d0eb562875afe477a074f0bc3348a8a2f9e0d6414e60cf55647",
+    "definition_sha256": "0a1b47a085f874b87582afb2444eb9f8a7e0b1cdaee4dd445b4cac9b7833d07b",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "A folded blue textile is visible, but its folds do not establish that it is one pillowcase rather than a sheet or several pieces.",
+    "repair_direction": "Retain this candidate for focused review of the single pillowcase identity. Show its opening and single continuous body if a replacement is needed; do not infer item count or exact measurements from folded fabric."
+  },
+  {
+    "root_sku": "WANDS-011383",
+    "selected_sku": "WANDS-011383-FULL-008D-NAVY-FB2F",
+    "reference_sha256": "ff89c3ea084584392a4485963ca3344ec66811ab182b251283e2c05d4fb87e1c",
+    "definition_sha256": "81d5ae55d5cac4b3544ed8eba9a5f80723c23c3c13da4e683ad3766693a28029",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a white frame with two adjacent mattress-like padded surfaces, not the selected Navy frame with a clearly stowed trundle; mattresses are excluded.",
+    "repair_direction": "Show one Navy main bed frame and one stowed trundle, without mattresses or bedding. Make the trundle construction legible without implying an unsupported mattress fit."
+  },
+  {
+    "root_sku": "WANDS-011451",
+    "selected_sku": "WANDS-011451-TODDLER-56FF-BLUE-EC7D",
+    "reference_sha256": "97121f56375855b3d9dfd5bd0ca0f3116e0ed02548f28cf98b1eb53550e69344",
+    "definition_sha256": "2f708d6bf572748ae9d39834c9938260d420e7edf4b21d591665a25338d527f4",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a pink character-printed box-like object rather than the selected Blue four-piece bow-print nursery assortment.",
+    "repair_direction": "Show the four specified items separately in a Blue bow-print flat lay: one comforter, one fitted crib sheet, one crib skirt and one wall decoration. Omit character branding, crib, mattress and infant-use staging."
+  },
+  {
+    "root_sku": "WANDS-012070",
+    "selected_sku": "WANDS-012070-108-IN-24EA",
+    "reference_sha256": "f19450d2bbbb950d4196c0e5f827fd340fd51dd50a880b256b46c711dd9034fc",
+    "definition_sha256": "02f9d7d20c86cd716f0e6b93b6fd5b73c4df96b21253478ef866244799b71d3c",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The dots pattern is visible, but overlapping folds do not make the two separate panel boundaries clear. The image alone cannot establish the selected 45-inch length.",
+    "repair_direction": "Retain the candidate for a focused panel-count review. If revised, separate the two matching panels so both outer and inner edges are visible; treat the rod as display hardware, not an included item."
+  },
+  {
+    "root_sku": "WANDS-012132",
+    "selected_sku": "WANDS-012132-63-IN-EAE1-BEIGE-5F10",
+    "reference_sha256": "c290aa0b22ab798cb5a6ac557797a39dd141ba72ce99df6518d33eeff04c9c53",
+    "definition_sha256": "c98b219f65e68fd0ddd17224ce672b98bfeeeacce394e4c3997b8954bf5583a3",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "Two spice-print panels are visible, but their dominant red and black appearance and elongated proportions do not communicate the selected Beige short kitchen-panel design.",
+    "repair_direction": "Keep the spice motif and exactly two panels, with the approved Beige ground and short-panel proportions from the contract. Do not change the selected option to match the original reference."
+  },
+  {
+    "root_sku": "WANDS-015278",
+    "selected_sku": "WANDS-015278-2-PIECES-05E3-GREEN-D486",
+    "reference_sha256": "4d8d6f461d36d5e321150523fd5c990308a2c5f2fe94ee9e19cbb20c7048623c",
+    "definition_sha256": "42cd4018511424c5acc71cfa0725ed6128c4ef7d5e19143a72abacdcd1b502bf",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a three-seat sofa-like arrangement with pale cushions and no coffee table, not the selected Green loveseat-plus-table assortment.",
+    "repair_direction": "Show exactly one Green loveseat and one coffee table as two distinct furniture items. Do not substitute three chair modules or count cushions as furniture."
+  },
+  {
+    "root_sku": "WANDS-015548",
+    "selected_sku": "WANDS-015548-36-IN-F0FF",
+    "reference_sha256": "44e5c2a6878c02d715304bafc24b297e9c2c7f9ec09bead810113c4c19b2c1fd",
+    "definition_sha256": "35cb9ded8bad30a578a9daef78964e6622c7779f593a69df4b921aee2d1e8103",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "One wood-look nightstand is visible and its overall identity is plausible. The image alone does not establish the corrected 20-inch option or the synthetic dimensions.",
+    "repair_direction": "Retain the candidate for focused proportion and design review against the approved specification. Do not infer exact dimensions or wood species from the pixels, and do not regenerate solely because measurement evidence is unavailable."
+  },
+  {
+    "root_sku": "WANDS-017064",
+    "selected_sku": "WANDS-017064-30-IN-5C57-CREAM-D539",
+    "reference_sha256": "fac17abd4332ea5d36e1003b280a42021ebfbfb233eb982aed77c32ce89937b1",
+    "definition_sha256": "cc52d09e8d557f94309f4e04af1075139b77c02f9d0741e262a23ae8e627dbea",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The image has two stacked drawer-like fronts and a natural wood appearance, rather than an unambiguous one-drawer nightstand in the selected Cream finish.",
+    "repair_direction": "Show one clearly defined drawer and the approved Cream finish, retaining the corrected compact proportions. Remove the second drawer-like front."
+  },
+  {
+    "root_sku": "WANDS-017111",
+    "selected_sku": "WANDS-017111-FULL-008D",
+    "reference_sha256": "8b4705867a790eb63490832d8b1c5e9fe5ea4ce891a098904c909b7341b8bd3a",
+    "definition_sha256": "1f43aea2f9bc8778806d34e3bbb34b0f7e7d461cabb324db5e3bcfba1735a736",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "Only two bed levels are visible, with mattresses and bedding, while the approved product is a three-level Twin over Full over Full frame with mattresses excluded.",
+    "repair_direction": "Show all three distinct frame levels in the selected configuration without mattresses, bedding or people. Preserve synthetic geometry without implying certified safety, load capacity or mattress compatibility."
+  },
+  {
+    "root_sku": "WANDS-017166",
+    "selected_sku": "WANDS-017166",
+    "reference_sha256": "e5e4e55ab85459e8a5816829cad1fb7487b4239132221968b0a55a7c0600e5e0",
+    "definition_sha256": "ddc24e3bc9d75540695b8c0a68ff938fd3d6cc7e6eda3e0745297cf898dd0659",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference is dominated by an assembled crib with bedding, not the six specified decor pieces; the two pillowcases and decorative bootie pair are not separately identifiable.",
+    "repair_direction": "Use a flat lay of one duvet cover, one fitted crib sheet, two empty pillowcases, one blanket and one decorative bootie pair. Count the booties as one pair; omit crib, mattress and infant-use staging."
+  },
+  {
+    "root_sku": "WANDS-019888",
+    "selected_sku": "WANDS-019888-FULL-008D-NATURAL-D6AC",
+    "reference_sha256": "a59e70a1e0144a63cbb0f97421a8e2c2b953e5369114e57c44790bd2029c421a",
+    "definition_sha256": "174411ce4cf819a36eb4b6d1a55e560b10c09c5ef3b6ab26f33ada4ff97f794c",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "A folded pale textile is visible, but its layered shape does not establish a single empty pillowcase or clearly show its opening. Lighting also makes the Natural shade inconclusive.",
+    "repair_direction": "Retain for focused item-identity and Natural-color review. If revised, show one empty pillowcase with a visible opening and no insert or extra linen; do not diagnose extra pieces from folds alone."
+  },
+  {
+    "root_sku": "WANDS-020492",
+    "selected_sku": "WANDS-020492-2-PIECES-05E3-BEIGE-5F10",
+    "reference_sha256": "e6ee83f25865da0b9460de3723e619858366a6da8096d4522645b10dbb1eaa21",
+    "definition_sha256": "12e2203cb2c742afcf9cb53ee581260cf56e718e244498b69d815dd09635f597",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The front item is upholstered like an ottoman, not a coffee table, and the joined seating does not expose the specified two loveseats and separate corner module.",
+    "repair_direction": "Show two distinct loveseats, one corner seating module and one hard-top coffee table in the selected Beige arrangement. Make all four furniture items countable."
+  },
+  {
+    "root_sku": "WANDS-020704",
+    "selected_sku": "WANDS-020704-30-IN-5C57-NATURAL-D6AC",
+    "reference_sha256": "387bad49c54125a7dc913990377900326bbe95e7645421aea5a97e4176638985",
+    "definition_sha256": "a6ba4107210f3ba1803b1d05d9ee0e9fd184229062bdf7fe34420d3b5512a658",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The two-drawer nightstand is rendered in opaque white, not the selected Natural finish.",
+    "repair_direction": "Keep two clearly defined drawers and use the approved Natural finish and compact geometry. Do not reinterpret the option as White to preserve the original image."
+  },
+  {
+    "root_sku": "WANDS-020967",
+    "selected_sku": "WANDS-020967-FULL-008D",
+    "reference_sha256": "60139e17cbc57524231663cdb3304ae92e603d4d6386005e19505a628f02b599",
+    "definition_sha256": "30ba8463aa03d4728a5d8124aa5281a8afca998ce7be22f72a2cefaa2a0c63df",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a filled plaid pillow on top of additional folded linens, not one empty elongated body pillowcase.",
+    "repair_direction": "Show one empty plaid flannel body pillowcase in the approved elongated proportions, with its opening visible and no insert, sheets or extra bedding."
+  },
+  {
+    "root_sku": "WANDS-022468",
+    "selected_sku": "WANDS-022468",
+    "reference_sha256": "28b4344f76cd287dc7c3e35ee2e756e753257e8f4a6bbb677e338c02f61ae304",
+    "definition_sha256": "a1c389e6824936e5f7b6d3abbdfa61e698faa5b70b4a5f68c8fb129802a9a1ae",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The triangular wall unit shows only two horizontal shelf surfaces, whereas the corrected definition requires three integral shelves.",
+    "repair_direction": "Show one triangular assembled wall unit with exactly three distinct horizontal shelves. Keep them integral to one unit rather than depicting three separate products."
+  },
+  {
+    "root_sku": "WANDS-025039",
+    "selected_sku": "WANDS-025039-30-IN-5C57-BRASS-54FB",
+    "reference_sha256": "7d2d61f49c04195744f7d21f7c4189e8647ec53deb8a8043baca16e212ae259a",
+    "definition_sha256": "20a37a9cbaf286d40fecce4c4ce65ccaa4ba0ce3078c8584d67fee89c1ea65d5",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference depicts two wood-look drawers instead of one drawer in the selected Brass finish, and contains malformed dimension-like text.",
+    "repair_direction": "Show one Brass-finish nightstand with exactly one drawer and the approved proportions. Remove all generated lettering and dimension annotations from the hero."
+  },
+  {
+    "root_sku": "WANDS-026322",
+    "selected_sku": "WANDS-026322-FULL-008D-GRAY-0D5A",
+    "reference_sha256": "2a2e5f736c3cf7bd2b30cb02fed86bc88d83bac2f9de7f1d26d964524a680a72",
+    "definition_sha256": "2cd7a4f1f279539ba13d1d003f4a0e1a1ef6b90e064a05f2efcf33a9961ef87d",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The image includes a mattress and bedding, while the lower pull-out is shown open like a drawer rather than as the specified stowed trundle.",
+    "repair_direction": "Show one Gray main frame with one clearly constructed stowed trundle and no mattress, bedding or storage-drawer substitution. Use the contract for proportions, not the original padded forms."
+  },
+  {
+    "root_sku": "WANDS-026409",
+    "selected_sku": "WANDS-026409-FULL-008D",
+    "reference_sha256": "e1ca99db171bf959f3380105d74132e972a47dd413cafc35fc18cc72e0e61803",
+    "definition_sha256": "55fe406db88869adf6d7a0d989d9bc7bbd15a928b31b43fbba5830e1321383a6",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The image reads as a conventional bed with a pink mattress, not an unambiguous daybed frame with a visible stowed-trundle structure; mattresses are excluded.",
+    "repair_direction": "Show the approved daybed-frame construction and one stowed trundle without mattress or bedding. Make the daybed identity and trundle face legible."
+  },
+  {
+    "root_sku": "WANDS-026445",
+    "selected_sku": "WANDS-026445-30-IN-5C57-OAK-CFED",
+    "reference_sha256": "a5c916a900eeaff5278ed7185c98650204d028766747a020189b9ae1bdeab119",
+    "definition_sha256": "7a21bb28c2de415c05df4c6463dab99d9ae56753081ce0958c4f8eea0741ffee",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The cabinet body and drawer fronts are opaque white rather than the selected Oak finish.",
+    "repair_direction": "Keep the mid-century nightstand identity and use the approved Oak finish across the specified surfaces. Preserve the corrected compact geometry instead of changing the selected finish to match the reference."
+  },
+  {
+    "root_sku": "WANDS-027042",
+    "selected_sku": "WANDS-027042-36-IN-F0FF",
+    "reference_sha256": "41cc41075d58bb398909074cfeed616fdce6d78a62e858c9d6d15738454d94cd",
+    "definition_sha256": "877b7fd47aa536659f18e8f9c07df08da7196d73c7be1702923bd2cb19ddad8d",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference has two separate drawer fronts with two knobs, while the corrected product is a one-drawer nightstand.",
+    "repair_direction": "Show exactly one drawer and one corresponding drawer-front assembly. Preserve the approved design and compact proportions, with no second drawer."
+  },
+  {
+    "root_sku": "WANDS-030335",
+    "selected_sku": "WANDS-030335-3-PIECES-5B0E",
+    "reference_sha256": "a5f7283464cc6343efbe1d424621dcd6cc52d8e6dafb8b6a800cb3a81786ced8",
+    "definition_sha256": "6dd4539d683cca1eaa6ea565d06ae12c11721760e73bf0d7c3b83c705cb39f74",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a joined sectional and table, not one sofa, two separate lounge chairs and one ottoman; it also shows more than two loose decorative pillows.",
+    "repair_direction": "Show exactly five distinct furniture items: one sofa, two lounge chairs, one ottoman and one coffee table, plus exactly two separately counted decorative pillows."
+  },
+  {
+    "root_sku": "WANDS-032748",
+    "selected_sku": "WANDS-032748-2-PIECES-05E3-CREAM-D539",
+    "reference_sha256": "af72508b4986f491f5bc2a6d3c77ef2c249aa00c2a86356aea4022ef08ea4dd0",
+    "definition_sha256": "20aee1e9db9156c547c4d3cce5add428a61d81e0f484ecc313a12d9f290f593e",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows joined seating without the included storage coffee table; the required two corner and two armless modules are not separately legible.",
+    "repair_direction": "Show exactly two corner modules, two armless modules and one storage coffee table in Cream. Use sufficient separation to count five furniture items and do not add unlisted decorative pillows."
+  },
+  {
+    "root_sku": "WANDS-033594",
+    "selected_sku": "WANDS-033594-2-PIECES-05E3-TERRACOTTA-433D",
+    "reference_sha256": "a30cbcc752c9cd53053815b9c568e9676939a7c9f7210c52ed75d4ebda1f2e5f",
+    "definition_sha256": "f2e5dc2ec2a7d2db27e9271962a5a7e267b37341ecf97ddff029ac3edd1b9a46",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows one table with four chairs instead of the selected two-piece table-and-one-chair assortment, and does not communicate the Terracotta selection.",
+    "repair_direction": "Show exactly one bistro table and one bistro chair in the selected Terracotta treatment. Do not reuse the parent's four-chair arrangement."
+  },
+  {
+    "root_sku": "WANDS-034585",
+    "selected_sku": "WANDS-034585-18-IN-X-30-IN-60FE-BLUE-EC7D",
+    "reference_sha256": "df3b4fbba0c66d639eb2962b1043e67eaacd8c3e4adf9d2294711db4ce74ce2c",
+    "definition_sha256": "fc54c56c431b9e3827dd9a7bbb402eaa1f04fc364d1f82dcc43dc214e9d85c4c",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The liner is rendered white or translucent white, not the selected Blue.",
+    "repair_direction": "Show one Blue vinyl liner with the approved proportions. Any rod or hooks used to display it must remain clearly excluded staging, not additional sale items."
+  },
+  {
+    "root_sku": "WANDS-034811",
+    "selected_sku": "WANDS-034811-TODDLER-56FF-GRAY-0D5A",
+    "reference_sha256": "c11796d1aeb59c93d1f39f379f9bc1faa94c3769c21f3a7c60916f1dd0452cd0",
+    "definition_sha256": "fce0664b3b297186d964134cef2e810e4836196b0bec7e714da32d1d50d6fb7a",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference depicts an assembled crib with bedding rather than the four separately listed nursery decor pieces; the decorative plush is not shown as an identifiable item.",
+    "repair_direction": "Show one quilt, one fitted crib sheet, one crib skirt and one decorative plush in a Gray sheep-themed flat lay. Omit crib, mattress and infant-use staging."
+  },
+  {
+    "root_sku": "WANDS-035295",
+    "selected_sku": "WANDS-035295-BRONZE-D916",
+    "reference_sha256": "c92dec6476aafd244d222fa82637a65de317292e2ea8af388a958b9908cb6071",
+    "definition_sha256": "351d78aa487d0b8d9962d2a3c88835905dcdf1c2de172c8b67ed806a9588a66a",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The three lamps have similar apparent heights on the same ground plane, so the required tall floor lamp and two shorter table lamps are not represented distinctly.",
+    "repair_direction": "Show exactly one tall floor lamp and two matching shorter table lamps in Bronze, with all three bases on the same ground plane and relative proportions taken from their individual component contracts."
+  },
+  {
+    "root_sku": "WANDS-035956",
+    "selected_sku": "WANDS-035956-2-PIECES-05E3",
+    "reference_sha256": "16771e43527c32310fd0cc0cdd3b5ff343f21174ece7ca13b98dc83ed53ce11b",
+    "definition_sha256": "35d8c2abee839f2b69aa9ba3e8ce688f40736eef84045f236ba6b3e0650ffa93",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference includes attached bench seats and does not communicate the standalone folding table specified by the corrected sale unit.",
+    "repair_direction": "Show one compact folding table with leg hinges or folding structure visible and no chairs or benches. Do not imply bench seating is included."
+  },
+  {
+    "root_sku": "WANDS-037955",
+    "selected_sku": "WANDS-037955-FULL-008D-GRAY-0D5A",
+    "reference_sha256": "e2944c1919415b6d5786d65e185d6d3ad4fd19146b0b5733d2f94a50d3c98157",
+    "definition_sha256": "316f75047cf238f6c77c29cff92b98e43a502736ec4b81c8ac5363835d138a4d",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows two filled, relatively square pillow forms, not a clearly empty pair of the selected rectangular pillowcases; the inserts are excluded.",
+    "repair_direction": "Show exactly two empty Gray ticking-striped pillowcases with visible openings and the approved rectangular proportions. Keep the pair count without implying inserts are included."
+  },
+  {
+    "root_sku": "WANDS-039141",
+    "selected_sku": "WANDS-039141-FULL-008D-CREAM-D539",
+    "reference_sha256": "502ec880d05fde5b021a2f326a8538f02913f46963cb2138333e68d2843f07d7",
+    "definition_sha256": "25142fd738e1a7e370022d1fc17b8adcdeea5cc3e5b42e68e015cdb691172bd8",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference combines a filled white pillow with additional folded bedding rather than one Cream elongated body pillowcase.",
+    "repair_direction": "Show one empty Cream body pillowcase with its opening visible and the selected elongated proportions. Omit the insert and all extra linens."
+  },
+  {
+    "root_sku": "WANDS-039471",
+    "selected_sku": "WANDS-039471-30-IN-5C57",
+    "reference_sha256": "5caccd3639b5f8241d241253947996020eb17bfe2e120b5f49f6197f14e544ec",
+    "definition_sha256": "106c7eb88618bf2af58d0c17eb65bdb9b977298d77a608d39b95d02c05dd39eb",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "A silver-colored two-drawer nightstand is visible and the identity is plausible, but the image cannot establish the corrected 16-inch option or exact synthetic geometry.",
+    "repair_direction": "Retain this reference for a focused proportion and design review. Do not change the finish or regenerate merely because a product-only photograph cannot prove physical measurements."
+  },
+  {
+    "root_sku": "WANDS-039871",
+    "selected_sku": "WANDS-039871-30-IN-5C57-CREAM-D539",
+    "reference_sha256": "4f6ddbbb7f34ff7c9fc669feefef0561f6cd1971ef32ae0e9fd17bd2b430b4c2",
+    "definition_sha256": "953122932e81b0c166e239743d5d7e9a85009523cd03c2bc3c7c942185e83c93",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The nightstand is rendered in natural wood rather than Cream, and malformed measurement text surrounds the product.",
+    "repair_direction": "Show one Cream one-drawer nightstand with the approved compact geometry. Remove all generated text and measurement arrows from the hero."
+  },
+  {
+    "root_sku": "WANDS-039965",
+    "selected_sku": "WANDS-039965-2-PIECES-05E3-GREEN-D486",
+    "reference_sha256": "adacb01b817109803524b47e674046d5b1634fd6831fa0c596d9177eb696b9c5",
+    "definition_sha256": "cd10793c073195e4b0da5f2f1a39adf8ae7289657d99dc10593b6a70c709de0b",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The reference shows one table and four pale-cushioned chairs, not the selected Green two-piece table-and-one-chair assortment.",
+    "repair_direction": "Show exactly one bistro table and one cushioned bistro chair in the selected Green treatment. Cushions belong with the chair and do not add furniture pieces; omit extra chairs and tabletop props."
+  },
+  {
+    "root_sku": "WANDS-041691",
+    "selected_sku": "WANDS-041691-30-IN-5C57-BRASS-54FB",
+    "reference_sha256": "8e377859c74d12bf1894a30e9b21f1d5c603b4a8491f28ea415ba45f0064af3b",
+    "definition_sha256": "0fa7c2424956f05f638e3c79c521c4ddc6747192421d865cc66756986afee846",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "Two stacked wood-look drawer fronts are visible instead of one drawer in the selected Brass finish.",
+    "repair_direction": "Show one Brass-finish nightstand with exactly one clearly defined drawer. Keep the approved compact proportions and omit a second drawer-like front."
+  },
+  {
+    "root_sku": "WANDS-042710",
+    "selected_sku": "WANDS-042710-30-IN-5C57-BLACK-C6CF",
+    "reference_sha256": "aae0fee007aabbda738d51ce6de497580ef9db7801143f8aefade2ac6c7b9001",
+    "definition_sha256": "8f6d6a1125f0bcf4358b3edd5c5e2c1a459a14cde1cdee5a1fa30fae0fab37d0",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-10; not manufacturer validation or generation approval.",
+    "finding": "The nightstand has a brown wood-look frame and white drawer fronts, not the selected Black finish.",
+    "repair_direction": "Keep the two-drawer identity and render the approved Black finish on the specified surfaces, using the corrected compact geometry."
+  }
+]

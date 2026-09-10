@@ -5,6 +5,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from PIL import Image
@@ -197,9 +198,61 @@ class ReconcileCatalogMediaTest(unittest.TestCase):
         rows = [{'visual_status': status} for status in
                 ['known_reference_defect', 'reviewed_uncertain', 'not_reviewed_for_corrected_definition']]
         self.assertEqual(triage_counts(rows), {'known_reference_defects': 1, 'reviewed_uncertain_references': 1,
-                                              'visually_reviewed_roots': 2, 'not_visually_reviewed_roots': 1})
+                                              'visually_reviewed_roots': 2, 'not_visually_reviewed_roots': 1,
+                                              'visual_triage_complete': False})
         with self.assertRaisesRegex(ValueError, 'visual status'):
             triage_counts([{'visual_status': 'approved'}])
+
+    def test_complete_triage_gate_accepts_reviewed_uncertainty_without_approving_it(self):
+        from reconcile_catalog_media import triage_counts
+        rows = [{'visual_status': state, 'reference_use_approved': False, 'executable': False}
+                for state in ('known_reference_defect', 'reviewed_uncertain')]
+        before = copy.deepcopy(rows)
+        counts = triage_counts(rows, require_complete=True)
+        self.assertTrue(counts['visual_triage_complete'])
+        self.assertEqual(counts['visually_reviewed_roots'], 2)
+        self.assertEqual(counts['known_reference_defects'], 1)
+        self.assertEqual(counts['reviewed_uncertain_references'], 1)
+        self.assertEqual(rows, before)
+
+    def test_complete_triage_gate_rejects_any_unreviewed_reference(self):
+        from reconcile_catalog_media import triage_counts
+        rows = [{'visual_status': state} for state in
+                ('known_reference_defect', 'not_reviewed_for_corrected_definition')]
+        with self.assertRaisesRegex(ValueError, 'Incomplete visual triage: 1 of 2'):
+            triage_counts(rows, require_complete=True)
+
+    def test_empty_review_is_not_complete_triage(self):
+        from reconcile_catalog_media import triage_counts
+        self.assertFalse(triage_counts([])['visual_triage_complete'])
+        with self.assertRaisesRegex(ValueError, 'Incomplete visual triage'):
+            triage_counts([], require_complete=True)
+
+    def test_build_stops_before_publishing_an_incomplete_required_packet(self):
+        from reconcile_catalog_media import build
+        root, children, review = fixture()
+        with tempfile.TemporaryDirectory() as folder:
+            definitions = Path(folder) / 'definitions'
+            definitions.mkdir()
+            (definitions / 'manifest.json').write_text('{}')
+            target = Path(folder) / 'review'
+            with patch('reconcile_catalog_media.verify_packet', return_value={}), \
+                    patch('reconcile_catalog_media.read_jsonl', side_effect=[[root], children, [review], []]):
+                with self.assertRaisesRegex(ValueError, 'Incomplete visual triage: 1 of 1'):
+                    build(definitions, target, require_complete_visual_triage=True)
+            self.assertFalse(target.exists())
+            self.assertEqual(list(Path(folder).iterdir()), [definitions])
+
+    def test_html_labels_complete_triage_separately_from_acceptance(self):
+        root, children, review = fixture()
+        rows = prepare_reviews([root], children, [review], [])
+        counts = {'review_roots': 1, 'known_reference_defects': 0,
+                  'technically_valid_references': 0, 'blocked_gallery_views': 5}
+        for complete, label in ((True, 'complete'), (False, 'incomplete')):
+            page = render_review(rows, {**counts, 'visual_triage_complete': complete})
+            self.assertIn('Initial visual triage is ' + label + '.', page)
+            self.assertIn('This is not image acceptance.', page)
+            self.assertIn('Not visually accepted', page)
 
     def test_same_root_cannot_receive_conflicting_observations(self):
         root, children, review = fixture()

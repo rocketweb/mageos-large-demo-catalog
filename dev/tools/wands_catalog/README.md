@@ -10,7 +10,7 @@ For the follow-on implementation, see [catalog corrections and guarded expansion
 
 The [remaining-definition resolution batch](DEFINITION_RESOLUTIONS.md) now clears the known 41-family queue and eight overlapping holds using source-supported facts and approved, explicitly synthetic conflict resolutions. It includes a post-correction semantic audit and a reference-impact check of all 50 local bundles.
 
-The follow-on [media reconciliation](MEDIA_RECONCILIATION.md) checks files for 93 corrected roots without using a local model, records 42 confirmed defects and five uncertain visual reviews, and binds 465 planned gallery views to the corrected definitions. Forty-six references still await visual review; all remain unapproved for generation or deployment.
+The follow-on [media reconciliation](MEDIA_RECONCILIATION.md) completes initial visual triage for all 93 corrected roots without using a local model: 81 confirmed defects and 12 uncertain references. A deterministic completeness gate rejects packets with unreviewed roots. All references remain unapproved for generation or deployment, and 465 planned gallery views stay bound to the corrected definitions and blocked pending acceptance.
 
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
 
