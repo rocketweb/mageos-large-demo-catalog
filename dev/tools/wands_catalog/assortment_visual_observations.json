@@ -1,0 +1,22 @@
+{
+  "root_sku": "WANDS-035295",
+  "assortments_sha256": "b9924aa36f9d429a8b5895c1a3203921a6ea135c14d5da1f98fad2a92bdcc0aa",
+  "review_date": "2026-09-10",
+  "review_method": "direct_browser_image_inspection",
+  "desktop_screenshot_sha256": "dadbd9da6e4691583d16c637fe0376c5250ce8404e2cfd7a3eb616867cd9b094",
+  "verdict": "initial_visual_pass",
+  "checks": {
+    "exact_sale_unit_count": "pass",
+    "complete_connected_objects": "pass",
+    "coordinated_finish_and_design": "pass",
+    "consistent_front_view": "pass",
+    "shared_baseline": "pass",
+    "uniform_scaling_without_stretch": "pass",
+    "clearance_and_no_overlap": "pass",
+    "synthetic_disclosure": "pass"
+  },
+  "finding": "Exactly one floor lamp and two identical table-lamp instances are visible. Their bronze metallic shades, straight stems and circular bases form a coherent coordinated assortment. The floor lamp has a stepped base while the table lamps have flat circular bases; they are coordinated, not identical designs. No missing component, visible mask hole, overlapping object or extra item is present.",
+  "scale_limit": "Uniform contain-fit yields 91.63 percent of the nominal floor-lamp slot height and 90.86 percent of each table-lamp slot height. Relative height is consistent, but these images are not dimensionally exact CAD or manufacturer measurements. No independent width-height stretching was used.",
+  "scope": "Local HTML/SVG assembly preview only. The other four assortments remain blocked by unresolved components. No published raster, Magento media assignment or deployment is approved.",
+  "publication_approved": false
+}
