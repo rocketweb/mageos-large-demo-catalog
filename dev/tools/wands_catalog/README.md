@@ -16,6 +16,8 @@ The [bounded repair pilot](MEDIA_REPAIR_PILOT.md) gives all 12 uncertainties a p
 
 The separately authorized local pilot has now generated 12 candidates, one attempt each, with no retries or original-media changes. Its initial visual screen finds three passes, two uncertain images and seven failures. The bounded runner rejects over-budget prompts, and the CPU-only review builder binds observations to exact candidate, definition and prompt hashes. A visual pass does not authorize publication, conditioning or bulk expansion. See the [pilot run and review instructions](MEDIA_REPAIR_PILOT.md#completed-local-pilot).
 
+The next [component layout planner](COMPONENT_LAYOUTS.md) prepares five failed assortments as 68 physical positions across 28 component types, including complete flatware settings and a shared-floor lamp scale. It checks counts, grouping and geometry envelopes, and records construction-specific asset requirements. These are CPU-only planning diagrams, not new catalog images or approved generation references.
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
 
 ## WANDS attribution
