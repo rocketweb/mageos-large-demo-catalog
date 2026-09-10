@@ -1,0 +1,186 @@
+[
+  {
+    "trial_id": "WANDS-003897-round-pans-f8a847bb5555-completion",
+    "case_sha256": "ce04dd40e1f5d32104f48ca157d8575fbce0202371e04e8a5030191f0757aa8d",
+    "image_sha256": "dd5fad3268000918c80519364a7d15fd4f64e361f987356d2e05d86f5442c3dc",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      133,
+      137,
+      640,
+      612
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One empty copper-colored round cake pan with a continuous rim and no lid or handles. The nearly circular outline is approximately 0.94 H/W against 1.00; mild depth is visible but the plan shape remains legible.",
+    "next_direction": "Evaluate a separate mask and compare rim design and finish with the square pan."
+  },
+  {
+    "trial_id": "WANDS-003897-square-pan-abc1ee0c3524-completion",
+    "case_sha256": "d1fe1f4366fa9d7cb8c305162129e83f2eaecef22a37521f985e28b6c91a005f",
+    "image_sha256": "b711d7e2c69a1d213101467476748a40affeffc41979aab572b7e635e62fab57",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      148,
+      134,
+      621,
+      617
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One empty copper-colored square pan with rounded corners and connected sides. The approximately 1.02 H/W outline is close to the synthetic square target; no extra component is visible.",
+    "next_direction": "Evaluate a separate mask and confirm consistent family lighting and finish."
+  },
+  {
+    "trial_id": "WANDS-003897-rectangular-pan-d593e2fd6d0b-completion",
+    "case_sha256": "48b78b0e056733e1c74e02d272dc27aef9a003726fd390042c4c7ea34bad264f",
+    "image_sha256": "04b201faa31581fa17e65e499a411dd7163e7fa3d349ebc80e3da53bc241a8e0",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      138,
+      171,
+      803,
+      470
+    ],
+    "checks": {
+      "appearance_and_view": "fail",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The rectangular pan is shown at an oblique angle rather than the specified top view. Its projected envelope is approximately 0.45 H/W instead of 0.70, so it cannot be treated as a correctly scaled plan-view component.",
+    "next_direction": "Repair the camera angle and depth-to-width relationship before assembly."
+  },
+  {
+    "trial_id": "WANDS-003897-lid-84546534be9a-completion",
+    "case_sha256": "797d5dc1d68be8545463dce4b8c1f6bc60d2535200478f97362fe34254636783",
+    "image_sha256": "775e3844913a73a49d3da1d85c1399094e06af16aecff8176212c9e2b2611666",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      107,
+      147,
+      826,
+      507
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "uncertain",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "This reads as an open shallow tray, not an unambiguous fitted pan lid. Its approximately 0.50 H/W envelope is also below the 0.70 target.",
+    "next_direction": "Clarify the lid lip and fitting geometry, with the same plan dimensions as the corrected rectangular pan."
+  },
+  {
+    "trial_id": "WANDS-003897-loaf-pan-db819a143cd3-completion",
+    "case_sha256": "d8e952928ab610a0c545d722d6d265b160cab75bbdc2e763e0059ee6344f5690",
+    "image_sha256": "758a4ec92ec7bb839008d62568fd18c4e81bf3305b1827ef9837b7cd59cbc684",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      216,
+      144,
+      875,
+      394
+    ],
+    "checks": {
+      "appearance_and_view": "fail",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One copper loaf pan is visible, but the oblique viewpoint compresses its depth. Approximate H/W is 0.38 versus the synthetic 0.50 top-view target.",
+    "next_direction": "Repair to a consistent overhead camera and verify deeper loaf-pan side construction."
+  },
+  {
+    "trial_id": "WANDS-003897-muffin-pan-767520d9f985-completion",
+    "case_sha256": "a692e547838094ef341409001ed522ff46ff8b816f5624e672194bdc6913c95e",
+    "image_sha256": "7c2ba6e4ec28cf2228f19331ea21bf054778445d84ed3e61acd6c1a72428b7d6",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      113,
+      96,
+      783,
+      569
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "fail",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The tray contains nine wells arranged three by three, not the explicitly selected twelve wells in three rows of four. The single tray count is correct but its internal construction is not.",
+    "next_direction": "Repair the well arrangement to exactly three rows of four; do not count wells as sale units."
+  },
+  {
+    "trial_id": "WANDS-003897-rack-691e8b7e9c75-completion",
+    "case_sha256": "9cea6425be38750c866131d7cb94b9ee96f235521a3f31d8d8feb64c0013f79f",
+    "image_sha256": "ae87929148996b439451ab72260e012bed5f0eff9db4f2534f3a0a44d78ea553",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      100,
+      146,
+      798,
+      502
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "uncertain",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One open copper-colored wire rack is visible without a backing tray. The approximately 0.51 H/W envelope is too shallow for the 0.75 target, and wire spacing is irregular.",
+    "next_direction": "Repair the rack proportions and regular connected grid; later mask evaluation must preserve every wire and opening."
+  },
+  {
+    "trial_id": "WANDS-003897-sheets-9f5eb75c739a-completion",
+    "case_sha256": "05959d3bed609e8dc8543c92949a7e4b058c6aab214681de848d4424ff5d664e",
+    "image_sha256": "c66b78c9627e831c17a060c0917d409f0c1f75428e197ea56a910daaf65853ed",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      130,
+      127,
+      768,
+      530
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "uncertain",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One empty shallow-rim copper baking sheet is present with no extra object. Its approximately 0.63 H/W envelope is below the synthetic 0.75 target and needs a proportion check.",
+    "next_direction": "Clarify the sheet depth-to-width ratio before selecting it for assembly."
+  }
+]
