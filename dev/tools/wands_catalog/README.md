@@ -24,6 +24,8 @@ The next [equal-area framing experiment](FRAMING_PILOT.md) compares square and p
 
 The [product-specific framing refinement](FRAMING_REFINEMENT.md) uses the observed silhouette drift to calculate two bounded follow-up canvases. It retains the existing prompts and seeds, limits pixel-area change to 1%, and keeps visual acceptance separate from masking, assembly and publication.
 
+The [current component-readiness inventory](COMPONENT_READINESS.md) consolidates the three review passes across all 28 planned types: three initial visual passes, one uncertainty and 24 unattempted types. It retains failed evidence, identifies missing components per family, and never grants mask or publication approval.
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
 
 ## WANDS attribution
