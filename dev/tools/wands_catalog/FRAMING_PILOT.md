@@ -62,3 +62,35 @@ Even a visually improved portrait candidate is not a finished assortment or an
 approved storefront image. Full-set scale, matching materials, masking and final
 composition must be evaluated independently. No publication approval follows
 from this experiment.
+
+## Recorded first-pass outcome
+
+The four trials completed on 2026-09-10 with zero generation errors and no
+retries. Both square controls reproduce the earlier component images byte for
+byte. All four depict coherent single objects, but all four fail proportions.
+
+| Component | Square silhouette H/W | Portrait silhouette H/W | Synthetic target |
+| --- | --- | --- | --- |
+| Floor lamp | 3.28 | 4.32 | 5.50 |
+| Cake server | 2.91 | 5.25 | 4.17 |
+
+These are approximate hand-inspected envelopes, not measured product sizes.
+The lamp improves but remains too wide. The cake server overshoots and becomes
+too narrow. The portrait also changes construction details, so canvas changes
+are not identity-preserving edits. No original image or definition was changed.
+
+The review is at `var/wands/framing-review-v1/review.html`. It binds all four
+observations to execution cases and image hashes, and includes read-only
+contrast-envelope diagnostics. The review verifies 517 input hashes; all three
+files match a fresh rebuild byte for byte. The Python suite passes 320 tests.
+
+```sh
+python3 dev/tools/wands_catalog/review_catalog_framing_pilot.py \
+  --run-dir var/wands/framing-pilot-v1 \
+  --observations dev/tools/wands_catalog/media_framing_pilot_observations.json \
+  --output-dir var/wands/framing-review-next
+```
+
+The next bounded refinement should use a narrower canvas for the lamp and an
+intermediate canvas for the cake server. Any occupancy-based calculation is a
+new test hypothesis, not evidence that the next generation will match it.
