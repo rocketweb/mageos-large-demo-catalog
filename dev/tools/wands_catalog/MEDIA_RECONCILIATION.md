@@ -1,13 +1,16 @@
 # Corrected-definition media reconciliation
 
-The definition checkpoint is committed as `17c436b`. The follow-on media work is
-local preparation, not a generation run, image approval or catalog deployment.
+The definition checkpoint is committed as `17c436b`, and the initial media
+reconciliation checkpoint as `cc32066`. The follow-on media work is local
+preparation, not a generation run, image approval or catalog deployment.
 
-`var/wands/media-reconciliation-v2` consumes the independently verified
+`var/wands/media-reconciliation-v3` consumes the independently verified
 `var/wands/catalog-definitions-v3` packet without editing it or its source images.
-It supersedes the preliminary `media-reconciliation-v1` review by adding six
-new, visually inspected defects to the three already recorded in the definition
-packet. Historical packets remain intact.
+It extends the nine findings in `media-reconciliation-v2` with visual triage of
+all 38 remaining high-priority references from the newly resolved definitions.
+That pass found 33 additional clear mismatches and five uncertain cases.
+Historical packets remain intact; their pinned producer versions differ from
+the current tool and should not be represented as current-code rebuilds.
 
 ## Current evidence
 
@@ -17,15 +20,15 @@ packet. Historical packets remain intact.
 - **93 hero review briefs:** selected options, explicit geometry, sale units,
   specification provenance and exact component quantities are bound to a
   definition fingerprint. Fifty-four roots have component assortments.
-- **Nine confirmed defects:** three earlier findings and six additional local
-  inspections. The other 84 references have not been visually accepted for the
-  corrected definitions. Do not interpret absence of a finding as a pass.
+- **47 visually reviewed roots:** 42 confirmed defects and five uncertain cases.
+  The other 46 references have not yet received visual triage for the corrected
+  definitions. None of the 93 references is accepted for generation.
 - **465 dependent gallery views:** the five planned views for each corrected
   root remain blocked pending reconciliation. Unchanged roots in the larger
   357-root packet are outside this media pass.
 - **Zero model calls, generated images, accepted references or live writes.**
 
-### Confirmed defects and repair directions
+### Initial nine defects and repair directions
 
 | Root SKU | Observed problem | Required corrected hero |
 | --- | --- | --- |
@@ -39,17 +42,46 @@ packet. Historical packets remain intact.
 | WANDS-038422 | Wrapped box-like object | The twelve separately countable nursery-decor pieces |
 | WANDS-042749 | Rectangular table, six chairs, cushions and vase | One round table and four chairs; no cushions |
 
-These are observations of lab imagery, not manufacturer validation. The six new
-observations live in `media_reconciliation_findings.json`, without embedded
-images or absolute media paths. They are tied to the exact image SHA-256, selected
-SKU and corrected-definition fingerprint. A changed definition or reference
-requires reviewing the finding again; the tool fails rather than carrying it
-forward. The sidecar accepts failures only and cannot grant image approval.
+These are observations of lab imagery, not manufacturer validation. The six
+initial supplemental observations live in `media_reconciliation_findings.json`.
+The next 38 live in `media_reconciliation_priority1_observations.json`. Neither
+file embeds images or absolute media paths. Every observation is tied to the
+exact image SHA-256, selected SKU and corrected-definition fingerprint. A changed
+definition or reference requires reviewing the observation again; the tool fails
+rather than carrying it forward. Sidecars accept failures or uncertainties only
+and cannot grant image approval. Duplicate root observations are rejected,
+including across separate input files.
 
-Priority 0 contains nine defects. Priority 1 contains the other 38 newly resolved
-definitions. Priority 2 contains 46 earlier corrected definitions awaiting
-visual reconciliation. The six new defects are also among the 44 newly resolved
-definitions, so those categories must not be added as independent populations.
+Priority 0 now contains 42 defects. Priority 1 contains five reviewed-but-uncertain
+references. Priority 2 contains 46 earlier corrected definitions still awaiting
+visual review. All 44 newly resolved definitions have now received initial visual
+triage: 39 failures and five uncertainties. This overlaps the full packet's
+47 reviewed roots, rather than adding another population.
+
+### Findings from the 38-reference pass
+
+Many outdoor assortments were depicted as generic joined sectionals instead of
+their named sofas, loveseats, chairs, modules, ottomans and tables. Bistro examples
+had square tops or extra chairs where the approved design specifies round or
+half-round tables and only two chairs. Other defects include stationary chairs
+substituted for rockers, stale finishes, excluded bedding, and nonsensical printed
+measurement graphics. Each affected root has its own observation and repair
+direction in the review; these are not blanket class-level failure assignments.
+
+The five uncertainties are:
+
+- Ocean Baby (`WANDS-000056`), Pink Chocolate (`WANDS-003817`), Lewis Penguin
+  (`WANDS-030143`) and Dreamit (`WANDS-035175`): folded textiles obscure the
+  individual component roles and quantities. Hidden components are not declared
+  absent simply because the photo does not reveal them.
+- Paralimni (`WANDS-027653`): the single end-table identity looks plausible, but
+  the corrected geometry and material/construction details still need focused
+  review. No automatic replacement is proposed for this reference.
+
+Uncertainty remains distinct from a defect, an unreviewed image and approval in
+the JSON status, summary counts, HTML and conditional repair instructions.
+These results describe deliberately selected corrected roots, not a random
+sample or a full-catalog/model error-rate estimate.
 
 ## Quiet rebuild
 
@@ -62,6 +94,7 @@ cd /Users/matt/code/rocket-search/.worktrees/wands-merchandising
 python3 dev/tools/wands_catalog/reconcile_catalog_media.py \
   --definitions var/wands/catalog-definitions-v3 \
   --findings dev/tools/wands_catalog/media_reconciliation_findings.json \
+  --findings dev/tools/wands_catalog/media_reconciliation_priority1_observations.json \
   --output-dir var/wands/media-reconciliation-next
 
 tail -f var/wands/media-reconciliation-next.log
@@ -89,7 +122,8 @@ boundary because the historical generator does not enforce that field.
 
 ## Next acceptance boundary
 
-Review the remaining references against their selected designs. Then prepare
+Review the remaining 46 references and resolve the five uncertain cases against
+their selected designs. Then prepare
 and approve a separate, bounded hero-repair run with versioned output files and
 visual acceptance before creating derivative views. In particular:
 

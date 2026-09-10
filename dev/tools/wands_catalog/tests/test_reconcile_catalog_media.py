@@ -172,6 +172,41 @@ class ReconcileCatalogMediaTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'options'):
             blocked_views(briefs, rows)
 
+    def test_uncertain_observation_is_neither_a_confirmed_defect_nor_approval(self):
+        root, children, review = fixture()
+        note = {'root_sku': root['sku'], 'selected_sku': review['selected_sku'],
+                'reference_sha256': review['reference']['sha256'],
+                'definition_sha256': digest(make_contract(root, children, review)), 'verdict': 'uncertain',
+                'finding': 'Geometry needs closer review.', 'repair_direction': 'Inspect proportions before choosing a repair.',
+                'observation': 'Local visual triage only'}
+        row = prepare_reviews([root], children, [review], [], [note])[0]
+        self.assertEqual(row['visual_status'], 'reviewed_uncertain')
+        self.assertFalse(row['reference_use_approved'])
+        self.assertFalse(row['executable'])
+        self.assertEqual(row['next_action'], 'focused_visual_design_review')
+        self.assertNotIn('Confirmed reference defect', row['draft_prompt'])
+        self.assertIn('not an instruction to regenerate', row['draft_prompt'])
+        page = render_review([row], {'review_roots': 1, 'known_reference_defects': 0,
+                                    'technically_valid_references': 0, 'blocked_gallery_views': 5,
+                                    'reviewed_uncertain_references': 1, 'not_visually_reviewed_roots': 0})
+        self.assertIn('Review uncertainty:', page)
+        self.assertNotIn('Confirmed defect:', page)
+
+    def test_triage_counts_do_not_count_uncertainty_as_failure_or_unreviewed(self):
+        from reconcile_catalog_media import triage_counts
+        rows = [{'visual_status': status} for status in
+                ['known_reference_defect', 'reviewed_uncertain', 'not_reviewed_for_corrected_definition']]
+        self.assertEqual(triage_counts(rows), {'known_reference_defects': 1, 'reviewed_uncertain_references': 1,
+                                              'visually_reviewed_roots': 2, 'not_visually_reviewed_roots': 1})
+        with self.assertRaisesRegex(ValueError, 'visual status'):
+            triage_counts([{'visual_status': 'approved'}])
+
+    def test_same_root_cannot_receive_conflicting_observations(self):
+        root, children, review = fixture()
+        note = {'root_sku': root['sku']}
+        with self.assertRaises(ValueError):
+            prepare_reviews([root], children, [review], [], [note, note])
+
     def test_conflicting_original_resolution_story_stays_out_of_prompt(self):
         root, children, review = fixture()
         root['repair']['rationale'] = 'Historical conflict: a walnut wardrobe with fifty drawers.'

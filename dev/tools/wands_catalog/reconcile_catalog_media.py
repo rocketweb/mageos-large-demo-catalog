@@ -27,7 +27,7 @@ from repair_designs import DISCLOSURE
 from synthetic_dimensions import LABEL
 from verify_catalog_repairs import check, verify_packet
 
-VERSION = 'wands-media-reconciliation-v1'
+VERSION = 'wands-media-reconciliation-v2'
 VIEWS = {'hero', 'angle', 'detail', 'room', 'dimensions'}
 
 
@@ -150,7 +150,12 @@ def draft_prompt(contract, finding):
         lines.append('Explicit design dimensions in cm: ' + json.dumps(contract['dimensions_cm'], sort_keys=True) +
                      '. Scope: ' + contract['dimension_scope'] + '.')
     if finding:
-        lines += ['Confirmed reference defect: ' + finding['finding'], 'Existing reviewed repair direction: ' + finding['prompt']]
+        if finding.get('verdict', 'fail') == 'uncertain':
+            lines += ['Review uncertainty, not a confirmed defect: ' + finding['finding'],
+                      'This is not an instruction to regenerate. First resolve the focused visual review.',
+                      'Conditional review/repair direction: ' + finding['prompt']]
+        else:
+            lines += ['Confirmed reference defect: ' + finding['finding'], 'Existing reviewed repair direction: ' + finding['prompt']]
     lines += contract['constraints']
     lines += ['Do not print dimensions or disclosures onto this hero photograph; retain them in accompanying metadata.',
               contract['required_disclosure']]
@@ -173,7 +178,7 @@ def prepare_reviews(roots, children, reviews, drafts, supplemental=()):
         contract = make_contract(root, groups[sku], review)
         if sku in extra:
             note = extra[sku]
-            check(note['verdict'] == 'fail', 'Supplemental findings cannot grant visual approval')
+            check(note['verdict'] in {'fail', 'uncertain'}, 'Supplemental findings cannot grant visual approval')
             check(note['selected_sku'] == review['selected_sku'] and review['reference'] and
                   note['reference_sha256'] == review['reference']['sha256'] and
                   note['definition_sha256'] == digest(contract), 'Supplemental finding reference or definition changed')
@@ -181,21 +186,34 @@ def prepare_reviews(roots, children, reviews, drafts, supplemental=()):
                   'Supplemental finding lacks evidence or repair direction')
             finding = {key: copy.deepcopy(review[key]) for key in ('root_sku', 'selected_sku', 'reference', 'design')}
             finding.update(finding=note['finding'], prompt=note['repair_direction'], observation=note['observation'],
-                           definition_sha256=note['definition_sha256'], executable=False)
+                           definition_sha256=note['definition_sha256'], verdict=note['verdict'], executable=False)
         if finding:
             check(all(finding[key] == review[key] for key in ('reference', 'selected_sku', 'design')),
                   'Visual finding is stale for this reference or selected design')
             check(finding['executable'] is False, 'Executable visual finding')
         integrity = inspect_reference(review['reference'])
-        priority = 0 if finding or integrity['status'] != 'valid_image_bytes' else 1 if root['repair'].get('source_resolution') else 2
+        failed = finding is not None and finding.get('verdict', 'fail') == 'fail'
+        uncertain = finding is not None and finding.get('verdict') == 'uncertain'
+        priority = 0 if failed or integrity['status'] != 'valid_image_bytes' else 1 if uncertain or root['repair'].get('source_resolution') else 2
         result.append({'brief_id': sku + ':corrected-hero-review', 'priority': priority,
                        'contract': contract, 'definition_sha256': digest(contract),
                        'reference': copy.deepcopy(review['reference']), 'integrity': integrity,
-                       'visual_status': 'known_reference_defect' if finding else 'not_reviewed_for_corrected_definition',
+                       'visual_status': 'known_reference_defect' if failed else 'reviewed_uncertain' if uncertain else 'not_reviewed_for_corrected_definition',
+                       'next_action': 'reference_repair_review' if failed else 'focused_visual_design_review' if uncertain else 'initial_visual_review',
                        'finding': copy.deepcopy(finding), 'draft_prompt': draft_prompt(contract, finding),
                        'status': 'requires_visual_reconciliation', 'executable': False,
                        'reference_use_approved': False, 'images_generated': 0, 'model_calls': 0})
     return sorted(result, key=lambda r: (r['priority'], r['contract']['root_sku']))
+
+
+def triage_counts(reviews):
+    states = Counter(r['visual_status'] for r in reviews)
+    check(set(states) <= {'known_reference_defect', 'reviewed_uncertain', 'not_reviewed_for_corrected_definition'},
+          'Unknown visual status; no implicit approval is allowed')
+    return {'known_reference_defects': states['known_reference_defect'],
+            'reviewed_uncertain_references': states['reviewed_uncertain'],
+            'visually_reviewed_roots': states['known_reference_defect'] + states['reviewed_uncertain'],
+            'not_visually_reviewed_roots': states['not_reviewed_for_corrected_definition']}
 
 
 def blocked_views(briefs, reviews):
@@ -227,7 +245,10 @@ def render_review(reviews, counts):
         image = ('<a href="' + esc(Path(ref['path']).as_uri()) + '"><img loading="lazy" src="' +
                  esc(Path(ref['path']).as_uri()) + '" alt="Unapproved reference for ' + esc(c['product_name']) + '"></a>') if ref else '<p>No reference</p>'
         parts = '<ul>' + ''.join('<li>' + esc(f"{p['quantity']} × {p['label']}") + '</li>' for p in c['components']) + '</ul>' if c['components'] else ''
-        known = '<p class="alert">Confirmed defect: ' + esc(row['finding']['finding']) + '</p>' if row['finding'] else ''
+        known = ''
+        if row['finding']:
+            uncertain = row['visual_status'] == 'reviewed_uncertain'
+            known = '<p class="' + ('uncertain' if uncertain else 'alert') + '">' + ('Review uncertainty: ' if uncertain else 'Confirmed defect: ') + esc(row['finding']['finding']) + '</p>'
         cards.append('<article id="' + esc(c['root_sku']) + '"><p class="eyebrow">Priority ' + str(row['priority']) +
                      ' · ' + esc(c['root_sku']) + '</p><h2>' + esc(c['product_name']) + '</h2>' + image +
                      '<p class="badge">Not visually accepted</p><p class="options">' + esc(options) + '</p><p>' +
@@ -243,14 +264,14 @@ header,main,footer{max-width:1660px;margin:auto;padding:24px}header{padding-top:
 h2{font-size:20px;line-height:1.3;margin:8px 0 18px}h3{font-size:17px}header p{max-width:1000px}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:start}article{padding:22px;background:white;border:1px solid #cdd5cf;border-radius:12px;min-width:0}
 article img{width:100%;height:260px;object-fit:contain;background:#f8f8f7}p,li,summary{overflow-wrap:anywhere}.eyebrow{font-size:13px;color:#50625a;margin:0}.badge{display:inline-block;font-size:13px;color:#784305;background:#fff0ca;padding:4px 9px;border-radius:4px;margin:8px 0}
-.options{font-weight:650}.alert{background:#fff0e7;border-left:3px solid #a54216;padding:12px}.technical{font-size:13px;color:#56625d}details{border-top:1px solid #dce1dc;padding-top:12px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,monospace;background:#f5f6f3;padding:12px}ul{padding-left:22px}
+.options{font-weight:650}.alert{background:#fff0e7;border-left:3px solid #a54216;padding:12px}.uncertain{background:#f0f2fb;border-left:3px solid #596898;padding:12px}.technical{font-size:13px;color:#56625d}details{border-top:1px solid #dce1dc;padding-top:12px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,monospace;background:#f5f6f3;padding:12px}ul{padding-left:22px}
 @media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){.grid{grid-template-columns:1fr}header,main,footer{padding:16px}h1{font-size:28px}article{padding:18px}}
-</style></head><body><header><h1>Corrected catalog media review</h1><p>''' + esc(counts['review_roots']) + ' corrected product roots · ' + esc(counts['known_reference_defects']) + ' confirmed defects · ' + esc(counts['technically_valid_references']) + ' decodable references · ' + esc(counts['blocked_gallery_views']) + ''' gallery views held for reconciliation.</p>
-<p>Review-only, local and CPU-only. No images generated, copied, accepted or uploaded. Existing image approvals are not carried over to changed definitions. Start with priority 0 defects, then priority 1 newly resolved definitions.</p>
+</style></head><body><header><h1>Corrected catalog media review</h1><p>''' + esc(counts['review_roots']) + ' corrected product roots · ' + esc(counts['known_reference_defects']) + ' confirmed defects · ' + esc(counts.get('reviewed_uncertain_references', 0)) + ' reviewed but uncertain · ' + esc(counts.get('not_visually_reviewed_roots', counts['review_roots'] - counts['known_reference_defects'])) + ' not visually reviewed.</p><p>' + esc(counts['technically_valid_references']) + ' decodable references · ' + esc(counts['blocked_gallery_views']) + ''' gallery views held for reconciliation.</p>
+<p>Review-only, local and CPU-only. No images generated, copied, accepted or uploaded. Existing image approvals are not carried over to changed definitions. Priority 0 covers confirmed defects and invalid files; priority 1 covers uncertain reviews or newly resolved definitions still awaiting review. Uncertainty is not a failure, approval or automatic regeneration instruction.</p>
 <p>Compare the image to the selected options and exact assortment below it. Never infer exact dimensions from pixels. Each card links to the existing reference; the image is not a depiction we have accepted for the corrected design.</p></header><main class="grid">''' + ''.join(cards) + '''</main><footer>Images remain outside Git. These are explicitly synthetic lab designs, not manufacturer-verified products. No Magento import or deployment is included.</footer></body></html>'''
 
 
-def build(definitions, output, findings_path=None):
+def build(definitions, output, findings_paths=()):
     definitions = definitions.resolve(); output = output.resolve()
     check(not output.exists(), 'Use a fresh media review directory')
     verified = verify_packet(definitions)
@@ -258,9 +279,16 @@ def build(definitions, output, findings_path=None):
     source = json.loads(manifest_path.read_text())
     roots = read_jsonl(definitions / 'candidate-products.jsonl')
     children = read_jsonl(definitions / 'candidate-children.jsonl')
+    supplemental = []; supplemental_inputs = {}
+    for path in findings_paths:
+        raw = path.read_bytes()
+        notes = json.loads(raw)
+        check(isinstance(notes, list), 'Supplemental observations must be a JSON array')
+        supplemental.extend(notes)
+        supplemental_inputs[str(path.resolve())] = hashlib.sha256(raw).hexdigest()
     reviews = prepare_reviews(roots, children, read_jsonl(definitions / 'reference-review.jsonl'),
                               read_jsonl(definitions / 'image-repair-drafts.jsonl'),
-                              json.loads(findings_path.read_text()) if findings_path else [])
+                              supplemental)
     views = blocked_views(read_jsonl(definitions / 'gallery-briefs.jsonl'), reviews)
     duplicates = defaultdict(list)
     for row in reviews:
@@ -268,7 +296,7 @@ def build(definitions, output, findings_path=None):
             duplicates[row['reference']['sha256']].append(row['contract']['root_sku'])
     duplicate_groups = [sorted(skus) for _, skus in sorted(duplicates.items()) if len(skus) > 1]
     counts = {'review_roots': len(reviews), 'technically_valid_references': sum(r['integrity']['status'] == 'valid_image_bytes' for r in reviews),
-              'known_reference_defects': sum(r['finding'] is not None for r in reviews),
+              **triage_counts(reviews),
               'newly_resolved_definition_roots': sum(bool(r.get('repair', {}).get('source_resolution')) for r in roots),
               'component_assortment_roots': sum(bool(r['contract']['components']) for r in reviews),
               'blocked_gallery_views': len(views), 'duplicate_image_groups': len(duplicate_groups),
@@ -281,8 +309,7 @@ def build(definitions, output, findings_path=None):
               str(Path(__file__).with_name('verify_catalog_repairs.py').resolve()): sha256(Path(__file__).with_name('verify_catalog_repairs.py'))}
     # The source manifest also pins producer dependencies and every original reference.
     inputs.update(source['inputs'])
-    if findings_path:
-        inputs[str(findings_path.resolve())] = sha256(findings_path)
+    inputs.update(supplemental_inputs)
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(dir=output.parent, prefix='.' + output.name + '-') as folder:
         stage = Path(folder)
@@ -310,7 +337,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--definitions', type=Path, required=True)
     parser.add_argument('--output-dir', type=Path, required=True)
-    parser.add_argument('--findings', type=Path, help='Optional JSON array of byte- and definition-bound visual failures; never approvals')
+    parser.add_argument('--findings', type=Path, action='append', default=[],
+                        help='JSON array of byte- and definition-bound failures or uncertainties; repeat for separate review batches, never approvals')
     parser.add_argument('--json', action='store_true', help='Opt in to terminal summary; default output is the sibling log')
     args = parser.parse_args()
     args.output_dir.parent.mkdir(parents=True, exist_ok=True)
