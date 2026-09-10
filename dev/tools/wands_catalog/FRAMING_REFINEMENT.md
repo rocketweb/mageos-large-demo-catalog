@@ -57,3 +57,22 @@ approval. Candidate media and generated review pages remain outside Git.
 If this refinement still fails proportions, stop aspect-only iteration. Further
 work should test explicit geometric conditioning or a render-based approach in
 a separately scoped local prototype, not continue guessing aspect ratios.
+
+## Recorded result
+
+The runner was committed as `f5cf175` before execution. Both candidates generated
+successfully on 2026-09-10 with no retries, using the cached local model. Both
+pass the initial direct visual screen: the floor lamp is about 5.13 high per
+unit width against a synthetic target of 5.50, and the cake server is about
+4.03 against 4.17. These approximate bounds are diagnostic evidence, not an
+automatic tolerance rule or manufacturer measurements.
+
+The findings are bound to exact image and execution-case hashes in
+`media_framing_refinement_observations.json`. The review page is
+`var/wands/framing-refinement-review-v1/review.html`, with actual prompts and
+earlier portraits beside the new candidates. The initial component-pass count
+is now three distinct types: dinner fork, floor lamp and cake server. The table
+lamp remains uncertain; the other 24 planned component types are unattempted.
+
+No masks, composites, complete-set acceptance, original-image replacement,
+Magento import, push or deployment is implied. The Python suite passes 325 tests.

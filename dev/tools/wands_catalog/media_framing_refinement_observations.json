@@ -1,0 +1,22 @@
+[
+  {
+    "trial_id":"WANDS-035295-floor-lamp-61065fe722ea-refined",
+    "case_sha256":"ca42d79c1f679b029b13e773b35e1a0efcbd44ef286e2f9bd64666e729411f68",
+    "image_sha256":"df9effe6d4447ebe96aede58299919fcbcdff216d9bb5aeb2dab8ef9d54e4671",
+    "review_method":"direct_image_inspection", "review_date":"2026-09-10",
+    "estimated_subject_bbox":[23,136,320,1659],
+    "checks":{"single_complete_component":"pass","identity_and_construction":"pass","appearance_and_view":"pass","proportions":"pass","no_text_or_extras":"pass","synthetic_provenance":"pass"},
+    "finding":"One complete Bronze floor lamp has an attached shade, continuous upright stem and stable base. Its slimmer silhouette is plausible against the synthetic design envelope, about 5.13 versus 5.50. The full object is visible with clear margins and no extra items or text. This passes the initial component screen, not a measurement-certification or full-assortment check.",
+    "next_direction":"Retain as a candidate for subsequent mask evaluation and matching with the table lamps. Do not replace the original image or publish a set from this individual pass."
+  },
+  {
+    "trial_id":"WANDS-017842-cake-server-e8b0f8c3de5c-refined",
+    "case_sha256":"818b184c23b58ac887591bf8d2be0cdb5c3c13293eb2d8415370fb6ab790371c",
+    "image_sha256":"06d61bbd19336c071aa3efd1d0a11155132a428d9498b25bd29525acfc97b388",
+    "review_method":"direct_image_inspection", "review_date":"2026-09-10",
+    "estimated_subject_bbox":[68,79,366,1281],
+    "checks":{"single_complete_component":"pass","identity_and_construction":"pass","appearance_and_view":"pass","proportions":"pass","no_text_or_extras":"pass","synthetic_provenance":"pass"},
+    "finding":"One recognizable cake server has a coherent triangular blade and connected handle, with no food, lettering, extra utensils or cropping. Its approximate silhouette ratio of 4.03 is plausible against the synthetic 4.17 envelope and avoids the previous exaggerated narrowness. The initial component screen passes; matching all ten flatware component types remains untested.",
+    "next_direction":"Retain as a candidate for subsequent mask evaluation. Keep the 45-piece assortment blocked until the other component types, common materials and final layout are verified."
+  }
+]
