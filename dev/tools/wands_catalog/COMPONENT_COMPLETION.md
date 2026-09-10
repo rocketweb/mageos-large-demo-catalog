@@ -61,3 +61,12 @@ removal model must be set up and tested before mask execution. White backgrounds
 and contrast-envelope diagnostics are not usable alpha masks; bright metal,
 thin stems and fork tines require particular care. Until then, no component is
 mask-ready and no complete assortment is assembly-ready.
+# Review entry point
+
+Use `completion_review.py` for review, with the same layout, readiness,
+selection, batch and output arguments, plus `--observations` and `--review-dir`.
+The generation runner remains frozen because its hash is part of recorded runs.
+Its original review mode reused a paired-experiment reviewer and raised
+`KeyError: 'arm'` on nonpaired completion cases. The separate reviewer accepts
+the original cases and hashes without inventing an experiment arm or changing
+any generated metadata. The regression test reproduces that failure first.
