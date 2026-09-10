@@ -1,5 +1,9 @@
 # Component readiness after the framing passes
 
+Historical v1 snapshot. The completed five-batch pass supersedes these counts;
+see [COMPONENT_COMPLETION_RESULTS.md](COMPONENT_COMPLETION_RESULTS.md) and
+`var/wands/component-readiness-v2/review.html` for the current local inventory.
+
 This is the current local component-development inventory, not a live catalog
 assignment. It covers five proposed assortment layouts, 28 component types and
 68 physical positions. The original catalog images and Magento records remain
