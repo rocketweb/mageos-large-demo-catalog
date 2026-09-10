@@ -22,6 +22,8 @@ The subsequent [four-component image pilot](COMPONENT_IMAGE_PILOT.md) generated 
 
 The next [equal-area framing experiment](FRAMING_PILOT.md) compares square and portrait canvases for the failed floor lamp and cake server, preserving prompts, seeds, pixel count and the local model. Every pass retains its original evidence and stays separate from live catalog media.
 
+The [product-specific framing refinement](FRAMING_REFINEMENT.md) uses the observed silhouette drift to calculate two bounded follow-up canvases. It retains the existing prompts and seeds, limits pixel-area change to 1%, and keeps visual acceptance separate from masking, assembly and publication.
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
 
 ## WANDS attribution
