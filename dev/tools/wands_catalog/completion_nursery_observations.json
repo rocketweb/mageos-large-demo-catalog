@@ -1,0 +1,71 @@
+[
+  {
+    "trial_id": "WANDS-000056-quilt-076f7a7d7fc5-completion",
+    "case_sha256": "d5b4d0445ad6a9ccc8af99bb06f928b09c6d116cbe21178ae29ac93e3e20da6d",
+    "image_sha256": "ed2bfa8858691e16836274e52da52ed4fa29ca10017717eaf48119232715b9cf",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      81,
+      79,
+      626,
+      756
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One rectangular quilt with a bound edge, visible stitching and pale-blue ocean motifs. Approximate H/W is 1.24 against the synthetic 1.29 target. No infant, crib or in-use bedding arrangement is shown.",
+    "next_direction": "Evaluate a separate mask; retain synthetic-pattern disclosure and check color consistency across the nursery set."
+  },
+  {
+    "trial_id": "WANDS-000056-sheets-9663ae29eb99-completion",
+    "case_sha256": "110501d78ea7e8cfaa168783fc72f8fcd565763fe4fbf557f98640783ce3119c",
+    "image_sha256": "d9fae51ddfb82518761927501c72411746d2b67e650b160f224cdd8b2ac605c5",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      115,
+      65,
+      492,
+      892
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "uncertain",
+      "no_text_or_extras": "pass",
+      "proportions": "uncertain",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The elastic gathering is visible, but the taut padded-looking silhouette does not establish an empty fitted sheet without a mattress. Approximate H/W is 2.19 versus the synthetic 1.87 target.",
+    "next_direction": "Clarify an empty fabric-only fitted-sheet construction and proportions, without adding an infant or in-use crib scene."
+  },
+  {
+    "trial_id": "WANDS-000056-skirt-3c9f27991ca2-completion",
+    "case_sha256": "410d518ef79e56a1a16a191652e27907a4e17707af6b888c28d42a3fa71aad10",
+    "image_sha256": "b54d5322c825648d0dbf6b4c6420e6098ba427bd963fcf356adc8b17d8acbca0",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      20,
+      173,
+      588,
+      724
+    ],
+    "checks": {
+      "appearance_and_view": "fail",
+      "identity_and_construction": "fail",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The model generated a wearable skirt with a waistband and belt-loop-like tabs, not crib bedding with a mattress-deck panel and attached drop panels. The silhouette ratio is not a valid measurement of the intended crib skirt.",
+    "next_direction": "Replace the ambiguous garment interpretation with explicit bedding deck-panel and drop-panel geometry in a later repair."
+  }
+]
