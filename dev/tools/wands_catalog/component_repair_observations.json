@@ -1,0 +1,416 @@
+[
+  {
+    "trial_id": "WANDS-000056-sheets-9663ae29eb99-repair-v1",
+    "image_sha256": "8e10a9d7f3987e287a3b4f24c7774e3bbe7cff91ef39127f02f7131b37850dcb",
+    "case_sha256": "c657be2d4222e4dea0fca43f08ae0f57a8e0e0726e66db6aba5847e25a3cc001",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      143,
+      63,
+      562,
+      782
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "fail",
+      "no_text_or_extras": "pass",
+      "proportions": "uncertain",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The candidate still reads as a taut mattress-shaped padded object, not an empty fitted sheet with visible elastic opening. Its outline is closer to target, but the required fabric-only construction is not established.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-000056-skirt-3c9f27991ca2-repair-v1",
+    "image_sha256": "5573cda1af63134f7c1afb2104789aacb67d7c70f1710969230ef103a44e70be",
+    "case_sha256": "1a40b4d4bb5c3bfa2af7f7c28af3a47de23a988cd4af1966254244a713493fa8",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      120,
+      62,
+      590,
+      791
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "uncertain",
+      "no_text_or_extras": "pass",
+      "proportions": "uncertain",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The garment interpretation is gone: this is now a rectangular bedding valance with a central panel and gathered borders. The central panel is too broad relative to its length, and the folded-under drop-panel arrangement is not clear enough to approve.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-003897-lid-84546534be9a-repair-v1",
+    "image_sha256": "0ecda845974fc059522595882daf907b443339711ed3a1f19e70250309392343",
+    "case_sha256": "5fa5cc7a136c01839e8895721e40496e12e41b2f42fdd2e4d527289fb15911d2",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      155,
+      108,
+      675,
+      597
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "fail",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The cover remains an open tray with raised walls instead of a closed pan lid. Its nearly square footprint also disagrees with the corrected rectangular-pan dimensions.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-003897-loaf-pan-db819a143cd3-repair-v1",
+    "image_sha256": "86ded8fff1fc2176f8400fdfcb35541d12e4a635588b2202ea76408bd7c11f4b",
+    "case_sha256": "71f5c82ba68fdec8cff7978e18279be8dd70d04748958457a7dc46c200acabe7",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      171,
+      80,
+      752,
+      533
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The overhead camera is improved, but the loaf tin is much too broad front-to-back: approximately 0.78 H/W instead of 0.50.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-003897-muffin-pan-767520d9f985-repair-v1",
+    "image_sha256": "7816fa906b7d96e21ef9be0da4339afb46bbb32d55e242ca8ffe795c99d62f77",
+    "case_sha256": "0dfd2533798c9a1feb47c5519761f0f683bbbb3238acbbd1866f0912cbe57833",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      105,
+      75,
+      729,
+      632
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "fail",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The middle pair of wells in every row is merged into an elongated cavity. Twelve separate circular wells have not been achieved, and the outer footprint is too square.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-003897-rack-691e8b7e9c75-repair-v1",
+    "image_sha256": "c6219c9bc50a4a0757c2907dde925e730365b3f5ae2f7126247d0389a049151c",
+    "case_sha256": "470dff4e0c4cb5bbd83a7617cb0dc93c111e9757959b3a6eefb1bd2f05e7eaed",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      84,
+      98,
+      752,
+      616
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "uncertain",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The rack footprint is now close to the 4:3 target and the open-wire structure is clear. Wire spacing is irregular and several crossings still need construction review; keep as an improved but uncertain candidate.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-003897-rectangular-pan-d593e2fd6d0b-repair-v1",
+    "image_sha256": "471dbdfc79faaf852866c92c56329e398dd4b3400bd8b4de5adab95536f03840",
+    "case_sha256": "f339b1fcbf240294ba7034ff44c30d8d5a1e4be5726b780ab44143084eca13e1",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      212,
+      82,
+      619,
+      602
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The pan has rotated into a vertical orientation and its outline does not match the specified horizontal 33 by 23 cm footprint. Camera angle alone is improved.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-003897-sheets-9f5eb75c739a-repair-v1",
+    "image_sha256": "ed5d6259234c2106bb11c74cc878c712b6dd270dabe7394bcea248f649058798",
+    "case_sha256": "d249ae236aa7c4d09c46dd8068a0b94104f94fffd2c2a0eb4e6a23d2ddae38a8",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      73,
+      56,
+      764,
+      641
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "uncertain",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One coherent shallow baking sheet is visible from overhead, but the outline remains too square for the 40 by 30 cm definition. It is not approved merely because its rim is plausible.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-017842-dinner-knives-d2f6272695ec-repair-v1",
+    "image_sha256": "4f7b93b17892e259ba8b1f6e0a447d27f33787e81f557f96fbef230ab98d2a2f",
+    "case_sha256": "6ea65d746610fff32d92e8c1f92e4e0836e165f5cc9fe7b9daf04444f43a16e1",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      54,
+      106,
+      201,
+      2238
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "uncertain",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The knife is now excessively narrow and has a pointed rather than rounded dining tip. The requested narrow dining blade was not achieved with the correct proportions.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-017842-salad-forks-4c1bde1e4a09-repair-v1",
+    "image_sha256": "1330ccb69d3d7ba23a21a284a282bb5d4939dd2dd1b1f6446c66df0dccc05380",
+    "case_sha256": "dca10d13260f801b337699eccbdd32033652d08415c680da208c0a2b7bddb6a7",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      139,
+      98,
+      312,
+      1269
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One four-tine salad fork is present, but the product silhouette remains too tall and slender. The broad shadow must not be counted as part of the fork width.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-017842-serving-fork-45215d80adb8-repair-v1",
+    "image_sha256": "d4be04c31e9e96afe08bb558a303d244e376148c410310c8bc3cdac7ce30137f",
+    "case_sha256": "70fd861a39ab253b068edfb6088e1f149c0a942938fe362b6c26cadc06d73b69",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      125,
+      70,
+      313,
+      1309
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "fail",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "A ghosted central third prong remains between the two outer prongs. The intended two-prong serving fork has not been achieved.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-017842-slotted-spoon-3268a9df493a-repair-v1",
+    "image_sha256": "b2d65792cf404948f11a687af8ea56f8d8f051918c6e2f38e9181801c20b1995",
+    "case_sha256": "d06df8a12e7e8bd2f2917550b72d7e5fc2f1ceb1d51002c00aa30be580af0d63",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      49,
+      54,
+      354,
+      1435
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "fail",
+      "no_text_or_extras": "pass",
+      "proportions": "uncertain",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The spoon bowl has no slots. The model instead introduced a long opening into the handle, changing the wrong part of the utensil.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-017842-spreader-d094435f7e98-repair-v1",
+    "image_sha256": "032e277b079d3ec40e4ab9530f5394b25fe567ef38f39973791a1dafaf254c31",
+    "case_sha256": "2b593b0fdf638c18e91322a894d13798d32f0f5d267b0297b59f5040070c1200",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      48,
+      126,
+      228,
+      2047
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The spreader blade is narrower, but the total silhouette is now too slender for the nine-to-one definition. Its long narrow handle also differs from the selected family handle profiles.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-030335-chairs-b065305eb79c-repair-v1",
+    "image_sha256": "47cc18a90cdd12dd40616f2d58c0775b305dca329c06d480b5ef37713f601676",
+    "case_sha256": "a9a8771c94ecb987dec5f7a94058f9502c860eaae6b4c7dd082e1636ecd36785",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      161,
+      110,
+      615,
+      663
+    ],
+    "checks": {
+      "appearance_and_view": "fail",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The chaise error is repaired and this is now a compact upright armchair. However, it is shown from an elevated frontal camera rather than the required overhead plan view.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-030335-ottoman-6be1012461a9-repair-v1",
+    "image_sha256": "98460b510c7990dcee3d4ec3d2e7737b4be6b5acae6c999bfa513d1013624fa2",
+    "case_sha256": "13c3dd70ae65d3c5ccb651434b009776220448063f00fc5b76738d4e2233c721",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      231,
+      79,
+      667,
+      568
+    ],
+    "checks": {
+      "appearance_and_view": "uncertain",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "A coherent backless ottoman is present, but it remains taller than wide in the image, with visible external sides, instead of the horizontal 65 by 55 cm plan footprint.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-030335-sofa-204b2c92b912-recovery-v1",
+    "image_sha256": "3408eefd0503b31f16c74f1d6373d1bf4bc8c135b654afd5f5a02d8396fb4535",
+    "case_sha256": "7b87dbc657d1e1a85b3f7d248d428763ac604e9d77639820ddd571712eeb869b",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      348,
+      42,
+      1073,
+      385
+    ],
+    "checks": {
+      "appearance_and_view": "fail",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The sofa width and connected construction are improved, but the camera is frontal rather than overhead. Its apparent frontal ratio cannot validate the required plan footprint.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-030335-table-a2ca892e8cd3-recovery-v1",
+    "image_sha256": "4726b4a6f94560520006f2ac6407dffb70a8df4ebc4e7227f0ca9e2ea78b0f2d",
+    "case_sha256": "ceb68b6b257631bc45d910dd070c5085280ef4121ebc299a29907f426c43c316",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      208,
+      52,
+      748,
+      560
+    ],
+    "checks": {
+      "appearance_and_view": "fail",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The table is vertical in the image and shown at an oblique angle, not the horizontal 105 by 58 cm top-view footprint.",
+    "next_direction": "Preserve this attempt; use a better-controlled repair method before accepting the component."
+  },
+  {
+    "trial_id": "WANDS-035295-table-lamps-5825459d6d4d-recovery-v1",
+    "image_sha256": "3108f84f8788937a6e53fada81d1397714ab2d8dc2034a04c803a8aeedb909b1",
+    "case_sha256": "75c810f04012ae1d219f9f30825a3cd30afbab196610da65acbc39dc193b8498",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      270,
+      43,
+      637,
+      626
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One complete bronze table lamp with a broad tapered shade, connected straight stem and circular base. The approximate 1.59 H/W silhouette is within about nine percent of the corrected 1.73 target. The prompt used proportionally equivalent 60.5/35 dimensions rather than the actual synthetic 52/30 cm definition; no real-world scale is established by the image, and assembly must use the unchanged 52/30 cm definition. Initial component visual pass only.",
+    "next_direction": "Evaluate its cutout, then compare both lamp designs at the corrected synthetic scale."
+  }
+]
