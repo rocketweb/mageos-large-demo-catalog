@@ -1,0 +1,186 @@
+[
+  {
+    "trial_id": "WANDS-017842-teaspoons-6be6fe422fbc-completion",
+    "case_sha256": "edcfc53d127721a1d6de1088c056a8398fdd3f84e0a6f34c931e38d357064a5a",
+    "image_sha256": "a1f82c090077847691cd1e02e54cc4a9577a990056cdb6221ebcb78d1eb46829",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      110,
+      181,
+      325,
+      1207
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One continuous silver teaspoon with an oval bowl, head up and handle down. Its approximate 4.77 silhouette ratio is close to the synthetic 4.67 target; no extra utensil or text is visible.",
+    "next_direction": "Evaluate a separate mask, then match handle design and finish across the set."
+  },
+  {
+    "trial_id": "WANDS-017842-dinner-knives-d2f6272695ec-completion",
+    "case_sha256": "adc50c705260206b672b9029fdbc424ace66a0571ce35da485914323105ca7d7",
+    "image_sha256": "4b63db0ded1ff489ed51072002645b1fd08457afb8a8b8cad07a8a3d536ac301",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      43,
+      130,
+      243,
+      1870
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "uncertain",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The blade is broad and nearly symmetric, reading more like a spreader than a narrow dinner knife. The approximate 8.70 ratio is well below the 11.50 target.",
+    "next_direction": "Repair the dinner-knife blade identity and width before cutout work."
+  },
+  {
+    "trial_id": "WANDS-017842-salad-forks-4c1bde1e4a09-completion",
+    "case_sha256": "8ffaf878225f7ae77f2bd623e89e27e55d6148da34cc21bdd6bb8746c6829a69",
+    "image_sha256": "20865d1aaac997b171958d7df2bb1fc1033fb8900ce713a5a2e9b728cc6d81f9",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      105,
+      119,
+      280,
+      1425
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "Four coherent tines and one connected handle are present, but the salad fork is too slender: approximately 7.46 H/W versus the synthetic 5.67 target.",
+    "next_direction": "Repair silhouette proportions without stretching the candidate image."
+  },
+  {
+    "trial_id": "WANDS-017842-tablespoons-bd0a34658746-completion",
+    "case_sha256": "d00b2bca88005ce1e0d2fcfc2e1f5a750e9e43b4bbee3144ff6241fb649e8a09",
+    "image_sha256": "2339128cf8fdf730365055b81a8c9070c7555c0b1fb06f159705a7699b58422a",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      99,
+      156,
+      335,
+      1238
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One connected silver tablespoon with a clear oval bowl and no extra objects. Approximate H/W is 4.58 against the synthetic 5.00 target; this is an initial visual pass, not a dimensional measurement.",
+    "next_direction": "Evaluate a separate mask and compare its handle profile with the other flatware."
+  },
+  {
+    "trial_id": "WANDS-017842-slotted-spoon-3268a9df493a-completion",
+    "case_sha256": "b4f4e7a62044fa06cf0dfbcb8e6b72e3bf2ddecd725fa3c98caa2e7b788d1d00",
+    "image_sha256": "f48d95fe484b27c8915d4a0b8805a4b7bb5ec759fd92ae352038dcc2aa576887",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      85,
+      96,
+      350,
+      1281
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "uncertain",
+      "no_text_or_extras": "pass",
+      "proportions": "uncertain",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One slotted spoon is visible, but reflections obscure the center slot boundary. Approximate H/W is 4.47 against the synthetic 5.00 target; both the slot opening and broad bowl need clarification.",
+    "next_direction": "Clarify continuous slot openings and narrow the silhouette in a future repair."
+  },
+  {
+    "trial_id": "WANDS-017842-spreader-d094435f7e98-completion",
+    "case_sha256": "400a49423896a2698bf3140ad16d9ed215002366b9ea730915639e18460ea12a",
+    "image_sha256": "1430077f0ba956ac6887ab9c230a8323b67d6e125db46c2079257de5bd85d4ec",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      21,
+      61,
+      300,
+      1765
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One blunt spreader is present, but its blade is too broad. Approximate H/W is 6.11 against the synthetic 9.00 target.",
+    "next_direction": "Repair the blade width while retaining a short blunt spreader identity."
+  },
+  {
+    "trial_id": "WANDS-017842-serving-fork-45215d80adb8-completion",
+    "case_sha256": "5d6a15e498bbc4373f71880c672aab0c2deee115aae546cd59946912aba870f0",
+    "image_sha256": "d399cd52ed53b315384f100793087aee98f1b9f89ebe82e6cf6e545268319ead",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      109,
+      164,
+      280,
+      1405
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "fail",
+      "no_text_or_extras": "pass",
+      "proportions": "uncertain",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "The model produced four tines instead of the explicitly selected two-tine serving fork. The approximately 7.26 silhouette ratio also exceeds the synthetic 6.25 target.",
+    "next_direction": "Generate a clearly two-tine serving fork in a later bounded repair, not another dinner-fork form."
+  },
+  {
+    "trial_id": "WANDS-017842-serving-spoon-fde646bec6b4-completion",
+    "case_sha256": "e423626ed5eafc1cd91ec4921695b5a958aa79c5eea9f9d3855fc00e66fe900a",
+    "image_sha256": "f683702de9e7c08d63030681185bdfa386670f405fe6e702ef6113ca628b22d5",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      98,
+      118,
+      345,
+      1238
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One continuous silver serving spoon with a broad oval bowl and no additional objects. Approximate H/W is 4.53 against the synthetic 5.00 target; family-level styling is still unverified.",
+    "next_direction": "Evaluate a separate mask and compare finish, relative scale and handle design across the set."
+  }
+]
