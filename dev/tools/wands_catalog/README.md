@@ -18,6 +18,8 @@ The separately authorized local pilot has now generated 12 candidates, one attem
 
 The next [component layout planner](COMPONENT_LAYOUTS.md) prepares five failed assortments as 68 physical positions across 28 component types, including complete flatware settings and a shared-floor lamp scale. It checks counts, grouping and geometry envelopes, and records construction-specific asset requirements. These are CPU-only planning diagrams, not new catalog images or approved generation references.
 
+The subsequent [four-component image pilot](COMPONENT_IMAGE_PILOT.md) generated one floor lamp, one table lamp, one dinner fork and one cake server, with one local attempt each. All four are recognizable single objects; the initial visual screen records one pass, one uncertainty and two proportion failures. No masks or composites exist, and neither complete assortment is approved for publication.
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
 
 ## WANDS attribution

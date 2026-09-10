@@ -1,0 +1,102 @@
+[
+  {
+    "asset_requirement_id": "WANDS-035295-floor-lamp-61065fe722ea",
+    "image_sha256": "f3ce5a68a6ea32580d2f52470e405878b19fc3f5d09c02316b5926bd9e617b05",
+    "brief_sha256": "6640e572502b109c5fcbfa79758fb6a88fd55e16c0e0ee933e9342d6cbbf339e",
+    "runtime_prompt_sha256": "e5a357588e1bc5991c951a63c8cd89054c0dc106ce2709d785813d0d1a57b4b0",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      281,
+      52,
+      489,
+      734
+    ],
+    "bbox_note": "Approximate visual bounds in 768 x 768 pixels, excluding obvious cast shadow. Diagnostic only, not a segmentation mask or a physical measurement.",
+    "checks": {
+      "single_complete_component": "pass",
+      "identity_and_construction": "pass",
+      "appearance_and_view": "pass",
+      "proportions": "fail",
+      "no_text_or_extras": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One coherent Bronze floor lamp is present, with its base, stem and shade connected and no text. Its wide shade makes the visible height-to-width ratio about 3.28 instead of the synthetic target 5.50.",
+    "next_direction": "Keep the construction improvement, but do not use this candidate at the planned envelope. Closer silhouette/proportion control is needed; do not stretch pixels or alter catalog dimensions to make it fit."
+  },
+  {
+    "asset_requirement_id": "WANDS-035295-table-lamps-5825459d6d4d",
+    "image_sha256": "a2a4400b9042dd34321faa3975df2daa3f6c92d3c04fe867def5d27115d13ce7",
+    "brief_sha256": "102ad9fe1bd5c85dff64fcdd34ba056b49743d587eba835a8da4eefbc75fd6f7",
+    "runtime_prompt_sha256": "7557f709a7c5f053c72dd2d07d9b658c2499f2ef5b5ee55c27e724a80e6cfd1f",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      213,
+      40,
+      556,
+      736
+    ],
+    "bbox_note": "Approximate visual bounds in 768 x 768 pixels, excluding obvious cast shadow. Diagnostic only, not a segmentation mask or a physical measurement.",
+    "checks": {
+      "single_complete_component": "pass",
+      "identity_and_construction": "pass",
+      "appearance_and_view": "pass",
+      "proportions": "uncertain",
+      "no_text_or_extras": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One complete Bronze table lamp replaces the previous incomplete tray-like forms. Its silhouette is plausible, but the estimated ratio of about 2.03 is taller/narrower than the synthetic target 1.73.",
+    "next_direction": "Hold for proportion review. Matching the floor lamp, extracting a clean mask and checking a composed set are still pending."
+  },
+  {
+    "asset_requirement_id": "WANDS-017842-dinner-forks-ef5e27011fc0",
+    "image_sha256": "ec1f71ecdb39b873e2d5b125e1c4f7d94513bb4b2de7a94d5cbefe8f960c4128",
+    "brief_sha256": "c991783c0a0275cba7fa017655a6440f6e4e3696f318f4dea488cd4edf554158",
+    "runtime_prompt_sha256": "9f6bf4966f1acfadc5fe0c76b774617b8a78f3d72146925d4bf6a7de7cd47f29",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      340,
+      58,
+      430,
+      709
+    ],
+    "bbox_note": "Approximate visual bounds in 768 x 768 pixels, excluding obvious cast shadow. Diagnostic only, not a segmentation mask or a physical measurement.",
+    "checks": {
+      "single_complete_component": "pass",
+      "identity_and_construction": "pass",
+      "appearance_and_view": "pass",
+      "proportions": "pass",
+      "no_text_or_extras": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One recognizable dinner fork has four separated tines, a continuous handle and no lettering or extra objects. Its slim silhouette is plausible against the synthetic design; the estimated ratio is about 7.23 versus 6.67.",
+    "next_direction": "Passes the initial single-component visual screen only. Masking and matching the remaining utensil types are not tested; the full 45-piece set remains incomplete."
+  },
+  {
+    "asset_requirement_id": "WANDS-017842-cake-server-e8b0f8c3de5c",
+    "image_sha256": "c85d7cf164b8bfba8ce5bfc9b5bc7659c5c88fe31cc28f5ea97fa472d3b33a90",
+    "brief_sha256": "9f51e601a2cdf087079e0e1ec85ddf9963601e1fec32b674807751c8ecbe81d6",
+    "runtime_prompt_sha256": "f9da116130ccb771544dd78e6ace405cb19f64202cf64021b0ea1356e55f2bab",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      264,
+      40,
+      504,
+      738
+    ],
+    "bbox_note": "Approximate visual bounds in 768 x 768 pixels, excluding obvious cast shadow. Diagnostic only, not a segmentation mask or a physical measurement.",
+    "checks": {
+      "single_complete_component": "pass",
+      "identity_and_construction": "pass",
+      "appearance_and_view": "pass",
+      "proportions": "fail",
+      "no_text_or_extras": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One recognizable cake server has a coherent broad blade and handle, with no food or text. The blade is too wide for the corrected synthetic envelope: estimated ratio about 2.91 instead of 4.17.",
+    "next_direction": "Do not use in the planned composition. Constrain the narrower blade silhouette in a separately scoped follow-up; do not scale width and height independently."
+  }
+]
