@@ -20,6 +20,8 @@ The next [component layout planner](COMPONENT_LAYOUTS.md) prepares five failed a
 
 The subsequent [four-component image pilot](COMPONENT_IMAGE_PILOT.md) generated one floor lamp, one table lamp, one dinner fork and one cake server, with one local attempt each. All four are recognizable single objects; the initial visual screen records one pass, one uncertainty and two proportion failures. No masks or composites exist, and neither complete assortment is approved for publication.
 
+The next [equal-area framing experiment](FRAMING_PILOT.md) compares square and portrait canvases for the failed floor lamp and cake server, preserving prompts, seeds, pixel count and the local model. Every pass retains its original evidence and stays separate from live catalog media.
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
 
 ## WANDS attribution
