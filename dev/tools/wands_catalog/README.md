@@ -1,5 +1,10 @@
 # WANDS catalog tooling
 
+The [native browser component checkpoint](BROWSER_COMPONENT_CHECKPOINT.md) passes
+24 desktop/mobile scenarios, including exact child selection and visible price
+updates. All 21 unsaved-cart checks still pass, and the captured-theme fixture is
+fully restored. Full storefront, native media import and deployment remain open.
+
 The [approved remote theme capture](REMOTE_THEME_CAPTURE_CHECKPOINT.md) refreshes
 the unchanged 17-product scope and actual Hyva assignment. All ten MariaDB recovery
 scenarios pass against the new capture; no live catalog records were changed.

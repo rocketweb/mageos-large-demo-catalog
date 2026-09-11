@@ -142,7 +142,9 @@ def verify(args):
     paths['verifier']=Path(__file__).resolve();args.output_dir.mkdir(parents=True)
     write_json(args.output_dir/'result.json',{'native_template_verified':True,'database_unchanged':True,'parents':summaries,
         'shared_attribute_unchanged':True,'source_generated_code_excluded':True,'browser_verified':False,
-        'rollback_verified':True,'restored_baseline_tables':len(old['after_table_hashes']),'retained_synthetic_metadata_tables':sorted(metadata),
+        'rollback_verified':True,'restored_baseline_tables':len(old['after_table_hashes']),
+        'retained_synthetic_metadata_tables':sorted(metadata-set(old['after_table_hashes'])),
+        'captured_theme_verified':candidate.get('captured_theme_verified',False),
         'module_deployment_verified':False,'media_verified':False,'live_writes':False,'publication_approved':False,
         'inputs':{str(path):sha256(path) for path in paths.values()}})
 
