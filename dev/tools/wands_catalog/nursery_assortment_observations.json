@@ -1,0 +1,37 @@
+{
+  "root_sku": "WANDS-000056",
+  "review_date": "2026-09-11",
+  "review_method": "direct_browser_image_inspection",
+  "assortment_path": "var/wands/nursery-assortment-v1/assortment.json",
+  "assortment_sha256": "25d102c621d498793dec650f27a3f78dd1599ac1903d354a503420fadabb0761",
+  "review_html_sha256": "de08398b999159a48f26a2dc983bd73e7b35becf78bd4bd5ea18563918d2186b",
+  "verdict": "initial_visual_pass",
+  "checks": {
+    "exact_sale_unit_count": "pass",
+    "complete_connected_objects": "pass",
+    "four_attached_valance_panels": "pass",
+    "coordinated_finish_and_design": "pass",
+    "consistent_overhead_view": "pass",
+    "uniform_scaling_without_stretch": "pass",
+    "clearance_and_no_overlap": "pass",
+    "synthetic_disclosure": "pass",
+    "no_crib_mattress_infant_or_sleep_arrangement": "pass"
+  },
+  "finding": "Exactly three separate textiles: one quilt, one empty elasticized fitted sheet and one valance with its central deck and four attached drop panels unfolded outward. All silhouettes are complete and separate. Pale-blue marine patterns coordinate across the three assets, but motifs are not identical. The quilt is shown face-up, the empty fitted sheet shows its elasticized reverse, and the valance is unfolded; these are inclusion-proof views, not a uniform in-use bedding scene. No background holes, missing panels, extra bedding, crib, mattress or infant are visible.",
+  "presentation_change": "The valance alone uses a derived 193 by 131 cm unfolded envelope from its unchanged 133 by 71 cm deck and four 30 cm drops. Original definitions, prior layouts and prior evidence are preserved. A common 3 pixels per synthetic centimeter defines the new layout slots; each source is uniformly contained, never independently stretched.",
+  "browser_checks": {
+    "desktop_viewport": [1920,1700],
+    "mobile_viewport": [390,844],
+    "rendered_instances": ["quilt-01","sheets-01","skirt-01"],
+    "loaded_images": 3,
+    "horizontal_overflow": false,
+    "reported_page_errors": 0,
+    "desktop_screenshot_path": "var/wands/valance-visual-evidence-v1/assortment-desktop.png",
+    "desktop_screenshot_sha256": "268d095551efd5db3551082ea4ff592136d6235d95ad99733b665cdaed89d976",
+    "mobile_screenshot_path": "var/wands/valance-visual-evidence-v1/assortment-mobile-full.png",
+    "mobile_screenshot_sha256": "b4a331f560eabde08848e725c6e3c9fd6b05149b747e51938f32cb85445637aa",
+    "mobile_screenshot_mode": "Full-page capture at 390px width so the complete synthetic disclosure is visible; initial viewport-only capture clipped the final text and is not used as full-article evidence."
+  },
+  "scope": "Supplemental acceptance of this exact local HTML/SVG inclusion proof. Does not mutate the immutable packet's pending state, approve a raster hero, establish physical measurements or authorize Magento media assignment.",
+  "publication_approved": false
+}
