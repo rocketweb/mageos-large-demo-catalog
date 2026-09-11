@@ -12,10 +12,14 @@ function isRuntimeSupportTable(string $name): bool
         || in_array($name,['inventory_source','inventory_source_item','inventory_source_stock_link','inventory_source_carrier_link','inventory_stock','inventory_stock_sales_channel','inventory_reservation','inventory_low_stock_notification_configuration'],true)
         || (bool)preg_match('/^inventory_stock_[0-9]+$/',$name);
 }
+function isGuestPricingRow(string $table,array $row):bool
+{
+    return $table==='tax_class' || (in_array($table,['customer_group','customer_group_excluded_website'],true) && (string)($row['customer_group_id']??'')==='0');
+}
 if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') !== __FILE__) { return; }
 
 // Catalog-only SELECT/SHOW CREATE snapshot. Does not bootstrap Magento or export credentials.
-$a = getopt('', ['root:', 'plan:', 'output:', 'application-metadata']);
+$a = getopt('', ['root:', 'plan:', 'output:', 'application-metadata','guest-pricing']);
 try {
     $plan = json_decode(file_get_contents($a['plan']), true, 512, JSON_THROW_ON_ERROR);
     if ($plan['environment'] !== 'isolated_rehearsal_only' || count($plan['approved_products']) !== 17) {
@@ -29,6 +33,10 @@ try {
         return '`' . $name . '`';
     };
     $schemaOnly = isset($a['application-metadata']) ? ['core_config_data','setup_module','patch_list','cache','cache_tag','flag','indexer_state','mview_state','customer_group','tax_class'] : [];
+    if(isset($a['guest-pricing'])){
+        if(!isset($a['application-metadata'])){throw new RuntimeException('Guest pricing requires application metadata');}
+        array_push($schemaOnly,'customer_group_excluded_website','weee_tax','directory_country');
+    }
     $allowed = static function (string $name) use ($schemaOnly): void {
         if (!isCatalogRehearsalTable($name) && !in_array($name,$schemaOnly,true)) {
             throw new RuntimeException('Non-catalog dependency refused');
@@ -90,6 +98,16 @@ try {
         foreach ($schemaOnly as $table) {
             if ($query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=? AND TABLE_NAME=?',[$c['dbname'],$table])) { $ensure($table); }
         }
+        if(isset($a['guest-pricing'])){
+            foreach(['customer_group','customer_group_excluded_website','tax_class'] as $table){
+                $filter=$table==='tax_class'?'':' WHERE customer_group_id=0';
+                foreach($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table).$filter) as $row){
+                    if(!isGuestPricingRow($table,$row)){throw new RuntimeException('Pricing metadata escaped guest scope');}
+                    $add($table,$row);
+                }
+            }
+            foreach($query('SELECT * FROM '.$quote($c['dbname']).'.weee_tax WHERE entity_id IN ('.implode(',',array_fill(0,count($ids),'?')).')',$ids) as $row){$add('weee_tax',$row);}
+        }
         // Capture supporting catalog/inventory structure up front. The frontend-action
         // table can reference customers and is deliberately not part of this fixture.
         foreach ($query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=? AND TABLE_TYPE=?',[$c['dbname'],'BASE TABLE']) as $entry) {
@@ -133,7 +151,7 @@ try {
     if ($changed) { throw new RuntimeException('Closure did not converge'); }
     $version = $pdo->query('SELECT VERSION()')->fetchColumn(); $pdo->rollBack();
     $result = ['version'=>1,'host'=>'relevance.comtom.lab','captured_at'=>gmdate('c'),'consistent_read_only'=>true,'engine'=>$version,
-        'plan_sha256'=>hash_file('sha256',$a['plan']),'collector_sha256'=>hash_file('sha256',__FILE__),'application_metadata'=>isset($a['application-metadata']),'ddl'=>$ddl,'foreign_keys'=>$keys,'rows'=>$data,
+        'plan_sha256'=>hash_file('sha256',$a['plan']),'collector_sha256'=>hash_file('sha256',__FILE__),'application_metadata'=>isset($a['application-metadata']),'guest_pricing_metadata'=>isset($a['guest-pricing']),'ddl'=>$ddl,'foreign_keys'=>$keys,'rows'=>$data,
         'exclusions'=>['No customers, orders, carts, credentials or non-catalog configuration','Triggers, routines and Magento runtime are not copied']];
     $f = fopen($a['output'],'x'); if (!$f) { throw new RuntimeException('Choose fresh output'); } chmod($a['output'],0600);
     fwrite($f,json_encode($result,JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR).PHP_EOL); fclose($f);
