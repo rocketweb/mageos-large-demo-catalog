@@ -36,17 +36,17 @@ def build(args):
         check(job['sku'] not in images, 'Duplicate image SKU')
         images[job['sku']] = {'file': path.name, 'sha256': digest, 'bytes': path.stat().st_size}
         sources[job['sku']] = path
-    if args.repairs:
-        repairs = read_jsonl(args.repairs.with_suffix('.jsonl'))
-        events = {r['output_file']:r for r in read_jsonl(args.repairs/'generation-events.jsonl')}
+    for repair_dir in args.repairs or []:
+        repairs = read_jsonl(repair_dir.with_suffix('.jsonl'))
+        events = {r['output_file']:r for r in read_jsonl(repair_dir/'generation-events.jsonl')}
         seen = set()
         for job in repairs:
             sku = job['sku']
             check(sku in images and sku not in seen, 'Unknown or duplicate repair SKU')
             seen.add(sku)
             check(images[sku]['file'] == job['original_file'], 'Repair source mismatch')
-            path = args.repairs/job['output_file']
-            check(path.parent == args.repairs and path.suffix == '.jpg', 'Unsafe repair path')
+            path = repair_dir/job['output_file']
+            check(path.parent == repair_dir and path.suffix == '.jpg', 'Unsafe repair path')
             event = events.get(path.name,{})
             check(event.get('status') == 'generated' and event.get('sku') == sku and event.get('seed') == job['seed'], 'Repair incomplete or mismatched')
             with Image.open(path) as image:
@@ -74,6 +74,12 @@ def build(args):
         shutil.copyfile(source,target)
         check(sha256(target) == images[sku]['sha256'], 'Media copy changed')
     write_csv(args.output_dir/'media-updates.csv', rows)
+    if args.delta_from:
+        previous=json.loads(args.delta_from.read_text())
+        changed={sku for sku,image_sku in assignments.items()
+                 if previous['images'].get(previous['assignments'].get(sku),{}).get('sha256') != images[image_sku]['sha256']}
+        check(bool(changed),'No changed media to import')
+        write_csv(args.output_dir/'media-delta.csv',[row for row in rows if row['sku'] in changed])
     cards = []
     for parent in parents:
         sku = parent['default_child_sku']
@@ -86,7 +92,7 @@ def build(args):
               'technical_validation': 'all decoded and matched generation or reviewed-source hashes',
               'visual_validation': 'batch review required; technical validity is not visual accuracy',
               'packet_sha256': sha256(args.packet/'manifest.json'),
-              'repair_jobs_sha256': sha256(args.repairs.with_suffix('.jsonl')) if args.repairs else None,
+              'repair_jobs_sha256': {str(p):sha256(p.with_suffix('.jsonl')) for p in args.repairs or []},
               'csv_sha256': sha256(args.output_dir/'media-updates.csv')}
     (args.output_dir/'manifest.json').write_text(json.dumps(result, indent=2)+'\n')
 
@@ -95,7 +101,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('packet', 'run-dir', 'snapshot', 'output-dir'):
         parser.add_argument('--'+name, type=Path, required=True)
-    parser.add_argument('--repairs', type=Path)
+    parser.add_argument('--repairs', type=Path, action='append')
+    parser.add_argument('--delta-from', type=Path)
     args = parser.parse_args()
     logging.basicConfig(filename=args.output_dir.with_suffix('.log'), level=logging.INFO)
     try:

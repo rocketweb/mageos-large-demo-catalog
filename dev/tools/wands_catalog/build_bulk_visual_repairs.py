@@ -13,6 +13,8 @@ def repair_prompt(job):
     options = ', '.join(str(v) for k,v in c['selected_options'].items() if k not in {'wands_piece_count','wands_size'})
     start = 'High quality photorealistic unbranded product photograph on white seamless background. '
     end = ' Soft studio lighting, complete objects visible, no text, no logos, no people, no extra props.'
+    if c['root_sku'] == 'WANDS-035956':
+        return start+'One standalone folding camping table with a plain rectangular pale wood top and silver folding metal legs, shown at three-quarter angle. Table only. Empty tabletop. Completely clean white background. No chairs, benches, seating, arrows, measurement lines, diagrams, lettering, dimensions, rulers, labels or numbers.'+end
     if c['root_sku'] == 'WANDS-022642':
         return start+'Exactly two empty kitchen appliances side by side: LEFT a round metal hamburger patty mold with a solid pressing lid and black handle; RIGHT a rectangular manual potato cutter with a metal square blade grid and hinged lever handle. Both are tools made of metal and plastic, completely empty. Absolutely no food, hamburgers, buns or potatoes.'+end
     if 'nursery' in name:
@@ -35,9 +37,12 @@ if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--packet',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--only-root')
     args=parser.parse_args()
     rows=[]
     for job in read_jsonl(args.packet/'image-jobs.jsonl'):
+        if args.only_root and job['root_sku'] != args.only_root:
+            continue
         prompt=repair_prompt(job)
         if prompt:
             digest=hashlib.sha256(prompt.encode()).hexdigest()
