@@ -1,5 +1,9 @@
 # WANDS catalog tooling
 
+The [bulk completion run](BULK_COMPLETION.md) supersedes per-product pilot gating:
+667 existing SKUs, 93 corrected media families and 419 new images, with the five
+finished assortments reused. This is authorized bulk test-data work for the demo.
+
 The [native media rehearsal stage](NATIVE_MEDIA_STAGE_CHECKPOINT.md) now packages
 the five reviewed JPEGs and exact media-only CSV for a disposable importer test.
 Native validation is not read-only; no validation or media import ran on the demo.
