@@ -2,10 +2,15 @@ from pathlib import Path
 import sys
 import unittest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from plan_pilot_media_assignment import choose_target
+from plan_pilot_media_assignment import choose_target, snapshot_attributes
 
 
 class MappingTest(unittest.TestCase):
+    def test_snapshot_request_includes_option_and_media_attributes(self):
+        attrs=snapshot_attributes({'WANDS-X':['wands_finish','wands_piece_count']})
+        self.assertTrue({'image','image_label','small_image','small_image_label','thumbnail','thumbnail_label','name','description','lab_sale_unit','wands_finish','wands_piece_count'}<=set(attrs))
+        self.assertEqual(attrs,sorted(set(attrs)))
+
     def test_variant_uses_options_not_historical_sku_words(self):
         product={'sku':'WANDS-030335','kind':'configurable','gallery_target':{'sku':'WANDS-030335-3-PIECES-5B0E','options':{'wands_piece_count':'5 Pieces'}},
                  'child_summary':[{'sku':'WANDS-030335-3-PIECES-5B0E','options':{'wands_piece_count':'5 Pieces'}}]}

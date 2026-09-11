@@ -15,6 +15,11 @@ from run_catalog_media_pilot import verify_pins
 from verify_catalog_repairs import check
 
 
+def snapshot_attributes(axes):
+    return sorted({'image','image_label','small_image','small_image_label','thumbnail','thumbnail_label',
+                   'name','description','lab_sale_unit'} | {code for codes in axes.values() for code in codes})
+
+
 def choose_target(product,options):
     target=product['gallery_target']
     check(target['options']==options,'Selected image options differ from catalog')
@@ -72,7 +77,8 @@ def build(a):
         with (stage/'media.review.csv').open('w',newline='') as f:
             writer=csv.DictWriter(f,fieldnames=list(assignments[0]['fields']));writer.writeheader();writer.writerows(r['fields'] for r in assignments)
         request={'version':1,'expected_host':'relevance.comtom.lab','packet_sha256':sha256(stage/'assignments.json'),
-                 'skus':sorted(context),'intended_types':context,'bundle_skus':[],'configurable_links':links,'configurable_axes':axes,'variant_options':variants}
+                 'skus':sorted(context),'intended_types':context,'bundle_skus':[],'configurable_links':links,'configurable_axes':axes,'variant_options':variants,
+                 'attributes':snapshot_attributes(axes)}
         write_json(stage/'snapshot-request.json',request)
         write_json(stage/'scope.json',{'target_products':5,'image_role_assignments':15,'label_assignments':15,'import_files':5,
                    'import_bytes':sum(r['image']['bytes'] for r in assignments),'snapshot_context_products':len(context),
