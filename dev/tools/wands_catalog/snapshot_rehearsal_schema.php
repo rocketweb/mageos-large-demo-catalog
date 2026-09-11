@@ -16,10 +16,19 @@ function isGuestPricingRow(string $table,array $row):bool
 {
     return $table==='tax_class' || (in_array($table,['customer_group','customer_group_excluded_website'],true) && (string)($row['customer_group_id']??'')==='0');
 }
+function isStorefrontMetadataRow(string $table,array $row):bool
+{
+    if($table==='theme'){return true;}
+    if($table==='design_change'){return in_array((string)($row['store_id']??''),['0','2'],true);}
+    if($table==='directory_currency_rate'){return ($row['currency_from']??null)==='USD' && ($row['currency_to']??null)==='USD';}
+    return $table==='core_config_data' && ($row['path']??null)==='design/theme/theme_id'
+        && in_array(($row['scope']??'').':'.($row['scope_id']??''),['default:0','websites:2','stores:2'],true)
+        && (bool)preg_match('/^[0-9]+$/',(string)($row['value']??''));
+}
 if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') !== __FILE__) { return; }
 
 // Catalog-only SELECT/SHOW CREATE snapshot. Does not bootstrap Magento or export credentials.
-$a = getopt('', ['root:', 'plan:', 'output:', 'application-metadata','guest-pricing']);
+$a = getopt('', ['root:', 'plan:', 'output:', 'application-metadata','guest-pricing','storefront-metadata']);
 try {
     $plan = json_decode(file_get_contents($a['plan']), true, 512, JSON_THROW_ON_ERROR);
     if ($plan['environment'] !== 'isolated_rehearsal_only' || count($plan['approved_products']) !== 17) {
@@ -36,6 +45,10 @@ try {
     if(isset($a['guest-pricing'])){
         if(!isset($a['application-metadata'])){throw new RuntimeException('Guest pricing requires application metadata');}
         array_push($schemaOnly,'customer_group_excluded_website','weee_tax','directory_country');
+    }
+    if(isset($a['storefront-metadata'])){
+        if(!isset($a['application-metadata'])){throw new RuntimeException('Storefront metadata requires application metadata');}
+        array_push($schemaOnly,'theme','theme_file','design_change','directory_currency_rate');
     }
     $allowed = static function (string $name) use ($schemaOnly): void {
         if (!isCatalogRehearsalTable($name) && !in_array($name,$schemaOnly,true)) {
@@ -108,6 +121,17 @@ try {
             }
             foreach($query('SELECT * FROM '.$quote($c['dbname']).'.weee_tax WHERE entity_id IN ('.implode(',',array_fill(0,count($ids),'?')).')',$ids) as $row){$add('weee_tax',$row);}
         }
+        if(isset($a['storefront-metadata'])){
+            $filters=['theme'=>'','design_change'=>' WHERE store_id IN (0,2)',
+                'directory_currency_rate'=>" WHERE currency_from='USD' AND currency_to='USD'",
+                'core_config_data'=>" WHERE path='design/theme/theme_id' AND ((scope='default' AND scope_id=0) OR (scope IN ('websites','stores') AND scope_id=2))"];
+            foreach($filters as $table=>$filter){
+                foreach($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table).$filter) as $row){
+                    if(!isStorefrontMetadataRow($table,$row)){throw new RuntimeException('Storefront metadata scope escaped');}
+                    $add($table,$row);
+                }
+            }
+        }
         // Capture supporting catalog/inventory structure up front. The frontend-action
         // table can reference customers and is deliberately not part of this fixture.
         foreach ($query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=? AND TABLE_TYPE=?',[$c['dbname'],'BASE TABLE']) as $entry) {
@@ -152,7 +176,8 @@ try {
     $version = $pdo->query('SELECT VERSION()')->fetchColumn(); $pdo->rollBack();
     $result = ['version'=>1,'host'=>'relevance.comtom.lab','captured_at'=>gmdate('c'),'consistent_read_only'=>true,'engine'=>$version,
         'plan_sha256'=>hash_file('sha256',$a['plan']),'collector_sha256'=>hash_file('sha256',__FILE__),'application_metadata'=>isset($a['application-metadata']),'guest_pricing_metadata'=>isset($a['guest-pricing']),'ddl'=>$ddl,'foreign_keys'=>$keys,'rows'=>$data,
-        'exclusions'=>['No customers, orders, carts, credentials or non-catalog configuration','Triggers, routines and Magento runtime are not copied']];
+        'storefront_metadata'=>isset($a['storefront-metadata']),
+        'exclusions'=>['No customers, orders, carts, credentials or non-catalog configuration except scoped numeric theme assignments','Theme file contents, triggers, routines and Magento runtime are not copied']];
     $f = fopen($a['output'],'x'); if (!$f) { throw new RuntimeException('Choose fresh output'); } chmod($a['output'],0600);
     fwrite($f,json_encode($result,JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR).PHP_EOL); fclose($f);
     file_put_contents($a['output'].'.log',gmdate('c')." Read-only schema and catalog closure captured\n");

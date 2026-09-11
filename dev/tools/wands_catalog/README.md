@@ -1,5 +1,9 @@
 # WANDS catalog tooling
 
+The [approved remote theme capture](REMOTE_THEME_CAPTURE_CHECKPOINT.md) refreshes
+the unchanged 17-product scope and actual Hyva assignment. All ten MariaDB recovery
+scenarios pass against the new capture; no live catalog records were changed.
+
 The [ordered Hyva options checkpoint](ORDERED_OPTIONS_CHECKPOINT.md) verifies
 consistent family labels, ascending furniture-piece choices, eight exact option/price
 bindings, isolated generated code and full local rollback. Browser, media and
