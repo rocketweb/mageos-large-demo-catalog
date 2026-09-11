@@ -1,0 +1,33 @@
+[
+  {
+    "asset_requirement_id": "WANDS-000056-skirt-3c9f27991ca2",
+    "attempt": 5,
+    "generator": "built-in image_gen",
+    "model_version": null,
+    "seed": null,
+    "prompt": "Use case: sketch-to-render.\nAsset: one synthetic internal catalog crib valance, laid completely flat with all four attached drop panels unfolded outward.\nImage 1 is a GEOMETRY REFERENCE, not a product photograph. Preserve its exact five-rectangle construction, relative proportions, cross-shaped outline, straight orthographic camera and framing. Replace flat colors with photorealistic thin polyester cloth and delicate stitched joining seams. Do not change the layout or relative sizes.\nThe pale central deck is 133 units horizontally and 71 vertically. The top and bottom attached panels are each 133 by 30; the left and right attached panels are each 30 by 71. All FOUR panel depths must be identical at 30 units. Overall unfolded outline is 193 by 131. Preserve the four empty square background corners. The seams at all four edges of the central deck must be visible, confirming one connected finished textile.\nCentral deck: plain pale powder blue. Four outer panels: coordinated pale blue cloth with fine medium-blue line drawings of small ocean fish, turtles, seaweed and starfish, sparse repeat print. Thin hem at outer edges. Soft realistic textile weave and very slight surface ripples; no large folds, gathering or padded quilt construction. No asymmetric foreshortening.\nWhite seamless background, soft upper-left studio light, minimal shadow, complete silhouette visible with margins. No text, dimensions, labels, logos, crib, mattress, infant, other bedding or extra items. This is not a wearable garment. Dimensions are explicitly synthetic design ratios only. Output a photorealistic product image, not a diagram.",
+    "reference_role": "geometry_reference",
+    "native_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/valance-built-in-v1/WANDS-000056-skirt-geometry-v1.png",
+    "native_sha256": "554bad6a88feee58e9e199867e8b73fd9b66fd1b0efdb3b80a9d3c01496be43c",
+    "reference_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/valance-reference-assets-v1/reference.png",
+    "reference_sha256": "fe14d3fd1f92390ba9618bff259368e242e69428d6b5856781dbfd36d79b6fdf",
+    "review_date": "2026-09-11",
+    "review_method": "direct_image_inspection",
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One connected thin textile with plain pale-blue rectangular deck, four visibly stitched attached ocean-print panels, and four empty background corners. Orthographic overhead view. Approximate deck width/height 1.88 versus synthetic 133/71=1.87; four visible panel depths are approximately 192-201 pixels, within about 5 percent of each other. No missing panels, large folds, text, crib, mattress or infant. Pattern coordinates with the accepted quilt rather than reproducing its exact motifs. Initial visual pass applies to the unfolded cross presentation, not the old folded-under slot.",
+    "presentation": "unfolded_cross",
+    "derived_envelope_cm": [
+      193,
+      131
+    ],
+    "geometry_reference_manifest": "var/wands/valance-geometry-v1/manifest.json",
+    "publication_approved": false
+  }
+]
