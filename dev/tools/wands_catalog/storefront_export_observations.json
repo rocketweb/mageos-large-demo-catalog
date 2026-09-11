@@ -1,0 +1,262 @@
+{
+  "exports_sha256": "2e952bbf58f6f9649ee54f7d64fff280cd9b2301cb3ab09cbd4d276ddddadd0d",
+  "families": [
+    {
+      "root_sku": "WANDS-000056",
+      "files": [
+        {
+          "bytes": 1627170,
+          "file": "WANDS-000056-master-0ed5831984f6.png",
+          "format": "PNG",
+          "role": "master",
+          "sha256": "0ed5831984f6a5dbd2b57f0983cd8737b636011b1cb6b4dc8b87a91fb7df69e1",
+          "size": [
+            2000,
+            2000
+          ]
+        },
+        {
+          "bytes": 397017,
+          "file": "WANDS-000056-import-86f6d8df5991.jpg",
+          "format": "JPEG",
+          "role": "import",
+          "sha256": "86f6d8df599141c1205e1dfd480da92a6057b407276db628e77875847ec190a4",
+          "size": [
+            2000,
+            2000
+          ]
+        },
+        {
+          "bytes": 62580,
+          "file": "WANDS-000056-web-5849450328ec.webp",
+          "format": "WEBP",
+          "role": "web",
+          "sha256": "5849450328ec1565346cc242652e212b46f6d4314f7e4711b3f456dab4142b3c",
+          "size": [
+            1200,
+            1200
+          ]
+        },
+        {
+          "bytes": 13490,
+          "file": "WANDS-000056-thumbnail-9f17ffd05efb.webp",
+          "format": "WEBP",
+          "role": "thumbnail",
+          "sha256": "9f17ffd05efbcd894416507a07e575e21d80ab6ea6e1aeb0a2ae783b596316e5",
+          "size": [
+            400,
+            400
+          ]
+        }
+      ],
+      "verdict": "initial_visual_pass",
+      "finding": "2000px JPEG and 400px WebP directly inspected against the reviewed composition. Same complete assortment, no missing item, clipping, obvious fringe or extra object. Thumbnail identifies the sale unit; it is not sufficient for fine construction checks. PNG master and 1200px WebP are same-composition technical derivatives, not separately adjudicated new designs."
+    },
+    {
+      "root_sku": "WANDS-003897",
+      "files": [
+        {
+          "bytes": 679794,
+          "file": "WANDS-003897-master-317f0555dcc7.png",
+          "format": "PNG",
+          "role": "master",
+          "sha256": "317f0555dcc783a28cf398e161f9ade5fd9b6afd2f63e427388f9f948f73c331",
+          "size": [
+            2000,
+            2000
+          ]
+        },
+        {
+          "bytes": 266980,
+          "file": "WANDS-003897-import-b467a8e13d76.jpg",
+          "format": "JPEG",
+          "role": "import",
+          "sha256": "b467a8e13d76504e810631a2aba6cb53cbc031f906a8be3fa8cc18b0f47cef4d",
+          "size": [
+            2000,
+            2000
+          ]
+        },
+        {
+          "bytes": 31678,
+          "file": "WANDS-003897-web-a22cca615fa9.webp",
+          "format": "WEBP",
+          "role": "web",
+          "sha256": "a22cca615fa94d4f6d7fa65f67d2597ea0b9588b7cb239e71594536935054867",
+          "size": [
+            1200,
+            1200
+          ]
+        },
+        {
+          "bytes": 7148,
+          "file": "WANDS-003897-thumbnail-2e1c29c5b4cf.webp",
+          "format": "WEBP",
+          "role": "thumbnail",
+          "sha256": "2e1c29c5b4cf95cf4463628ec18eb276305941bb50dc95076ca3b3235071a8b8",
+          "size": [
+            400,
+            400
+          ]
+        }
+      ],
+      "verdict": "initial_visual_pass",
+      "finding": "2000px JPEG and 400px WebP directly inspected against the reviewed composition. Same complete assortment, no missing item, clipping, obvious fringe or extra object. Thumbnail identifies the sale unit; it is not sufficient for fine construction checks. PNG master and 1200px WebP are same-composition technical derivatives, not separately adjudicated new designs."
+    },
+    {
+      "root_sku": "WANDS-017842",
+      "files": [
+        {
+          "bytes": 279250,
+          "file": "WANDS-017842-master-2543b38fecdb.png",
+          "format": "PNG",
+          "role": "master",
+          "sha256": "2543b38fecdbb6355673efd1183b6b7e3776f938627e86e8f7cd9f64d551ef26",
+          "size": [
+            2000,
+            2000
+          ]
+        },
+        {
+          "bytes": 163088,
+          "file": "WANDS-017842-import-679eeaf8e15e.jpg",
+          "format": "JPEG",
+          "role": "import",
+          "sha256": "679eeaf8e15ea3c10e57f881d817a2875cfb338aa2eb78c43a382a8319e4f4ee",
+          "size": [
+            2000,
+            2000
+          ]
+        },
+        {
+          "bytes": 25390,
+          "file": "WANDS-017842-web-225fbe99071e.webp",
+          "format": "WEBP",
+          "role": "web",
+          "sha256": "225fbe99071e7d8a3dff99f1d0557dcdcd6e2c9382023dcbb9f987fd6741df1a",
+          "size": [
+            1200,
+            1200
+          ]
+        },
+        {
+          "bytes": 7824,
+          "file": "WANDS-017842-thumbnail-ce49b56c2012.webp",
+          "format": "WEBP",
+          "role": "thumbnail",
+          "sha256": "ce49b56c20129dc0fbe00edaac62162aecdf0ecfb9e06afc372b75b6818e3ffc",
+          "size": [
+            400,
+            400
+          ]
+        }
+      ],
+      "verdict": "initial_visual_pass",
+      "finding": "2000px JPEG and 400px WebP directly inspected against the reviewed composition. Same complete assortment, no missing item, clipping, obvious fringe or extra object. Thumbnail identifies the sale unit; it is not sufficient for fine construction checks. PNG master and 1200px WebP are same-composition technical derivatives, not separately adjudicated new designs."
+    },
+    {
+      "root_sku": "WANDS-030335",
+      "files": [
+        {
+          "bytes": 669400,
+          "file": "WANDS-030335-master-5260d16c5805.png",
+          "format": "PNG",
+          "role": "master",
+          "sha256": "5260d16c580520db52a13969ec639324c37c02ccf81e663fd88215fdce78e4f5",
+          "size": [
+            2000,
+            2000
+          ]
+        },
+        {
+          "bytes": 195946,
+          "file": "WANDS-030335-import-5a9c1640b3be.jpg",
+          "format": "JPEG",
+          "role": "import",
+          "sha256": "5a9c1640b3bee9e3439c9d2ee8b526d0bfb0396ee1097ef9533358f75ecfbcfc",
+          "size": [
+            2000,
+            2000
+          ]
+        },
+        {
+          "bytes": 27412,
+          "file": "WANDS-030335-web-c3ba8feaa0ca.webp",
+          "format": "WEBP",
+          "role": "web",
+          "sha256": "c3ba8feaa0cac80b031bdeae8cfcfb0690ec7f6609eadc3b9068209c0eb11445",
+          "size": [
+            1200,
+            1200
+          ]
+        },
+        {
+          "bytes": 4280,
+          "file": "WANDS-030335-thumbnail-27e68ffa17b7.webp",
+          "format": "WEBP",
+          "role": "thumbnail",
+          "sha256": "27e68ffa17b707040f97217ff4ee495a9cf8fd16dcfdaf293ad1c1f0906cb56b",
+          "size": [
+            400,
+            400
+          ]
+        }
+      ],
+      "verdict": "initial_visual_pass",
+      "finding": "2000px JPEG and 400px WebP directly inspected against the reviewed composition. Same complete assortment, no missing item, clipping, obvious fringe or extra object. Thumbnail identifies the sale unit; it is not sufficient for fine construction checks. PNG master and 1200px WebP are same-composition technical derivatives, not separately adjudicated new designs."
+    },
+    {
+      "root_sku": "WANDS-035295",
+      "files": [
+        {
+          "bytes": 231400,
+          "file": "WANDS-035295-master-c8676c177c49.png",
+          "format": "PNG",
+          "role": "master",
+          "sha256": "c8676c177c49e6e3355a9caf67a5f5aa101d257a7a53561208338d2f115a408c",
+          "size": [
+            2000,
+            2000
+          ]
+        },
+        {
+          "bytes": 117380,
+          "file": "WANDS-035295-import-17cc9b7d53e0.jpg",
+          "format": "JPEG",
+          "role": "import",
+          "sha256": "17cc9b7d53e04e410d790e69b215293f4ee0361db08323c894096b6da27a3a07",
+          "size": [
+            2000,
+            2000
+          ]
+        },
+        {
+          "bytes": 13500,
+          "file": "WANDS-035295-web-bee283d6aa97.webp",
+          "format": "WEBP",
+          "role": "web",
+          "sha256": "bee283d6aa97bb193361873f31444a1783cba4f420960fde19d30aa283c6e628",
+          "size": [
+            1200,
+            1200
+          ]
+        },
+        {
+          "bytes": 3838,
+          "file": "WANDS-035295-thumbnail-30b82ec25b65.webp",
+          "format": "WEBP",
+          "role": "thumbnail",
+          "sha256": "30b82ec25b651ab202a594212d9a717380ae8790037893d2d92545681167a88a",
+          "size": [
+            400,
+            400
+          ]
+        }
+      ],
+      "verdict": "initial_visual_pass",
+      "finding": "2000px JPEG and 400px WebP directly inspected against the reviewed composition. Same complete assortment, no missing item, clipping, obvious fringe or extra object. Thumbnail identifies the sale unit; it is not sufficient for fine construction checks. PNG master and 1200px WebP are same-composition technical derivatives, not separately adjudicated new designs."
+    }
+  ],
+  "review_method": "direct_raster_image_inspection",
+  "publication_approved": false
+}
