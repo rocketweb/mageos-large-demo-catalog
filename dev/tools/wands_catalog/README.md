@@ -1,5 +1,9 @@
 # WANDS catalog tooling
 
+The [native media rehearsal stage](NATIVE_MEDIA_STAGE_CHECKPOINT.md) now packages
+the five reviewed JPEGs and exact media-only CSV for a disposable importer test.
+Native validation is not read-only; no validation or media import ran on the demo.
+
 The [native browser component checkpoint](BROWSER_COMPONENT_CHECKPOINT.md) passes
 24 desktop/mobile scenarios, including exact child selection and visible price
 updates. All 21 unsaved-cart checks still pass, and the captured-theme fixture is
