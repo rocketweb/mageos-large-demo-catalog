@@ -3,12 +3,19 @@ declare(strict_types=1);
 
 function isCatalogRehearsalTable(string $name): bool
 {
-    return (bool)preg_match('/^(catalog_|cataloginventory_|eav_|inventory_|store$|store_group$|store_website$|url_rewrite$)/', $name);
+    return (bool)preg_match('/^(catalog_|cataloginventory_|catalogrule_|catalogrule$|eav_|inventory_|store$|store_group$|store_website$|url_rewrite$)/', $name);
+}
+function isRuntimeSupportTable(string $name): bool
+{
+    return (str_starts_with($name,'catalog_product_') && $name!=='catalog_product_frontend_action')
+        || str_starts_with($name,'catalogrule_') || $name==='catalogrule'
+        || in_array($name,['inventory_source','inventory_source_item','inventory_source_stock_link','inventory_stock','inventory_stock_sales_channel','inventory_reservation','inventory_low_stock_notification_configuration'],true)
+        || (bool)preg_match('/^inventory_stock_[0-9]+$/',$name);
 }
 if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') !== __FILE__) { return; }
 
 // Catalog-only SELECT/SHOW CREATE snapshot. Does not bootstrap Magento or export credentials.
-$a = getopt('', ['root:', 'plan:', 'output:']);
+$a = getopt('', ['root:', 'plan:', 'output:', 'application-metadata']);
 try {
     $plan = json_decode(file_get_contents($a['plan']), true, 512, JSON_THROW_ON_ERROR);
     if ($plan['environment'] !== 'isolated_rehearsal_only' || count($plan['approved_products']) !== 17) {
@@ -21,8 +28,9 @@ try {
         if (!preg_match('/^[a-zA-Z0-9_]+$/', $name)) { throw new RuntimeException('Invalid identifier'); }
         return '`' . $name . '`';
     };
-    $allowed = static function (string $name): void {
-        if (!isCatalogRehearsalTable($name)) {
+    $schemaOnly = isset($a['application-metadata']) ? ['core_config_data','setup_module','patch_list','cache','cache_tag','flag','indexer_state','mview_state','customer_group','tax_class'] : [];
+    $allowed = static function (string $name) use ($schemaOnly): void {
+        if (!isCatalogRehearsalTable($name) && !in_array($name,$schemaOnly,true)) {
             throw new RuntimeException('Non-catalog dependency refused');
         }
     };
@@ -66,6 +74,37 @@ try {
         if ($normalize($rows) !== $normalize($g['rows'])) { throw new RuntimeException('Guard drift'); }
         foreach ($rows as $row) { $add($g['table'],$row); }
     }
+    if (isset($a['application-metadata'])) {
+        // EAV/store definitions only. No customer entities or configuration values.
+        foreach (['eav_attribute_set','eav_attribute_group','eav_entity_attribute','eav_attribute_label','catalog_eav_attribute','store','store_group','store_website'] as $table) {
+            $ensure($table);
+            foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table)) as $row) { $add($table,$row); }
+        }
+        $table='cataloginventory_stock_status';$ensure($table);
+        $ids=array_column($data['catalog_product_entity'],'entity_id');
+        foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table).' WHERE product_id IN ('.implode(',',array_fill(0,count($ids),'?')).')',$ids) as $row) { $add($table,$row); }
+        // Product resource loading reads the complete custom-option table family,
+        // even when these seventeen products have no custom options.
+        foreach (['catalog_product_option','catalog_product_option_price','catalog_product_option_title','catalog_product_option_type_value','catalog_product_option_type_price','catalog_product_option_type_title'] as $table) { $ensure($table); }
+        if ($query('SELECT option_id FROM '.$quote($c['dbname']).'.catalog_product_option WHERE product_id IN ('.implode(',',array_fill(0,count($ids),'?')).')',$ids)) { throw new RuntimeException('Custom options require expanded scope'); }
+        foreach ($schemaOnly as $table) {
+            if ($query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=? AND TABLE_NAME=?',[$c['dbname'],$table])) { $ensure($table); }
+        }
+        // Capture supporting catalog/inventory structure up front. The frontend-action
+        // table can reference customers and is deliberately not part of this fixture.
+        foreach ($query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=? AND TABLE_TYPE=?',[$c['dbname'],'BASE TABLE']) as $entry) {
+            $table=$entry['TABLE_NAME'];
+            if (isRuntimeSupportTable($table)) { $ensure($table); }
+        }
+        $mediaIds=array_column($data['catalog_product_entity_media_gallery'],'value_id');
+        if ($mediaIds) {
+            foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.catalog_product_entity_media_gallery_value_video WHERE value_id IN ('.implode(',',array_fill(0,count($mediaIds),'?')).')',$mediaIds) as $row) { $add('catalog_product_entity_media_gallery_value_video',$row); }
+        }
+        foreach (['inventory_stock','inventory_source_stock_link','inventory_stock_sales_channel'] as $table) {
+            foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table)) as $row) { $add($table,$row); }
+        }
+        foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.catalogrule_product_price WHERE product_id IN ('.implode(',',array_fill(0,count($ids),'?')).')',$ids) as $row) { $add('catalogrule_product_price',$row); }
+    }
     for ($pass = 0; $pass < 30; $pass++) {
         $changed = false;
         foreach (array_keys($ddl) as $table) {
@@ -84,13 +123,13 @@ try {
                 }
             }
         }
-        if (array_sum(array_map('count',$data)) > 10000 || count($ddl) > 100) { throw new RuntimeException('Closure budget exceeded'); }
+        if (array_sum(array_map('count',$data)) > 10000 || count($ddl) > 200) { throw new RuntimeException('Closure budget exceeded'); }
         if (!$changed) { break; }
     }
     if ($changed) { throw new RuntimeException('Closure did not converge'); }
     $version = $pdo->query('SELECT VERSION()')->fetchColumn(); $pdo->rollBack();
     $result = ['version'=>1,'host'=>'relevance.comtom.lab','captured_at'=>gmdate('c'),'consistent_read_only'=>true,'engine'=>$version,
-        'plan_sha256'=>hash_file('sha256',$a['plan']),'collector_sha256'=>hash_file('sha256',__FILE__),'ddl'=>$ddl,'foreign_keys'=>$keys,'rows'=>$data,
+        'plan_sha256'=>hash_file('sha256',$a['plan']),'collector_sha256'=>hash_file('sha256',__FILE__),'application_metadata'=>isset($a['application-metadata']),'ddl'=>$ddl,'foreign_keys'=>$keys,'rows'=>$data,
         'exclusions'=>['No customers, orders, carts, credentials or non-catalog configuration','Triggers, routines and Magento runtime are not copied']];
     $f = fopen($a['output'],'x'); if (!$f) { throw new RuntimeException('Choose fresh output'); } chmod($a['output'],0600);
     fwrite($f,json_encode($result,JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR).PHP_EOL); fclose($f);
