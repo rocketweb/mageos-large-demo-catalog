@@ -9,11 +9,26 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from build_bulk_completion import image_case
 from generate_reference_images import fingerprint
 from prepare_catalog import sha256
+from prepare_bulk_import import preserve_urls
 from run_bulk_completion_images import CONFIG, pending
 from test_reconcile_catalog_media import fixture
 
 
 class BulkCompletionTest(unittest.TestCase):
+    def test_native_updates_preserve_existing_urls_and_reject_missing_keys(self):
+        with tempfile.TemporaryDirectory() as directory:
+            snapshot = Path(directory)
+            (snapshot/'eav_attribute.jsonl').write_text(json.dumps({'attribute_id': 12, 'attribute_code': 'url_key'})+'\n')
+            (snapshot/'catalog_product_entity.jsonl').write_text(json.dumps({'sku': 'WANDS-000001', 'entity_id': 1})+'\n')
+            value = {'entity_id': 1, 'attribute_id': 12, 'store_id': 0, 'value': 'original-product-url'}
+            (snapshot/'catalog_product_entity_varchar.jsonl').write_text(json.dumps(value)+'\n')
+            rows = preserve_urls([{'sku': 'WANDS-000001', 'name': 'New synthetic name'}], snapshot)
+            self.assertEqual(rows[0]['url_key'], 'original-product-url')
+            value['store_id'] = 2
+            (snapshot/'catalog_product_entity_varchar.jsonl').write_text(json.dumps(value)+'\n')
+            with self.assertRaisesRegex(ValueError, 'URL key missing'):
+                preserve_urls([{'sku': 'WANDS-000001'}], snapshot)
+
     def test_every_variant_gets_its_current_definition_not_historical_sku_options(self):
         root, children, _ = fixture()
         original = copy.deepcopy(root)

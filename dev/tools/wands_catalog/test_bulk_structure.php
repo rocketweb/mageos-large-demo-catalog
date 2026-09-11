@@ -50,4 +50,15 @@ try {
     $blocked = str_contains($error->getMessage(), 'bundle');
 }
 assert($blocked);
-echo "Structure inspect, apply, exact inverse and bundle guard passed\n";
+$pdo->exec('DELETE FROM catalog_product_bundle_selection; ALTER TABLE catalog_product_super_attribute ADD position INT DEFAULT 0; ALTER TABLE catalog_product_super_attribute_label ADD use_default INT DEFAULT 1; INSERT INTO eav_attribute VALUES(101,4,"wands_length","int")');
+$axisStructure = ['parent_axes' => ['WANDS-000001' => ['wands_size','wands_length']]];
+$beforeAxes = $state();
+$axisManager = new BulkCatalogStructure($pdo);
+$pdo->beginTransaction();
+$axisJournal = $axisManager->reconcileAxes($axisStructure, ['WANDS-000001' => ['wands_size' => 'Size', 'wands_length' => 'Width']]);
+assert((int)$pdo->query('SELECT product_super_attribute_id FROM catalog_product_super_attribute WHERE attribute_id=100')->fetchColumn() === 1);
+assert((int)$pdo->query('SELECT COUNT(*) FROM catalog_product_super_attribute')->fetchColumn() === 2);
+$axisManager->rollback($axisJournal);
+assert($state() === $beforeAxes);
+$pdo->commit();
+echo "Structure inspect, apply, exact inverse, bundle guard and ID-preserving axis reconciliation passed\n";

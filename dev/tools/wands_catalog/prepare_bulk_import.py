@@ -51,6 +51,21 @@ def write_csv(path, rows):
         writer.writerows(rows)
 
 
+def preserve_urls(rows, snapshot):
+    attributes = read_jsonl(snapshot/'eav_attribute.jsonl')
+    attribute_id = str(next(r['attribute_id'] for r in attributes if r['attribute_code'] == 'url_key'))
+    entities = {r['sku']: str(r['entity_id']) for r in read_jsonl(snapshot/'catalog_product_entity.jsonl')}
+    urls = {str(r['entity_id']): r['value'] for r in read_jsonl(snapshot/'catalog_product_entity_varchar.jsonl')
+            if str(r['attribute_id']) == attribute_id and str(r['store_id']) == '0'}
+    result = []
+    for row in rows:
+        value = urls.get(entities[row['sku']])
+        check(isinstance(value, str) and bool(value.strip()), 'Existing URL key missing: '+row['sku'])
+        result.append({**row, 'url_key': value})
+    check(len({row['url_key'] for row in result}) == len(result), 'Existing URL keys are not unique')
+    return result
+
+
 def build(args):
     check(not args.output_dir.exists(), 'Choose fresh import directory')
     manifest = json.loads((args.packet/'manifest.json').read_text())
@@ -63,6 +78,9 @@ def build(args):
     simple = [native_row(r, children) for r in records if r['kind'] == 'simple']
     parents = [native_row(r, children) for r in records if r['kind'] == 'configurable']
     disable = [{'sku': r['sku'], 'store_view_code': '', 'product_online': '2'} for r in retired]
+    simple = preserve_urls(simple, args.snapshot)
+    parents = preserve_urls(parents, args.snapshot)
+    disable = preserve_urls(disable, args.snapshot)
     by_sku = {r['sku']: r for r in records}
     conversions = sorted({r['before']['parent_sku'] for r in retired
                           if by_sku.get(r['before']['parent_sku'], {}).get('kind') == 'simple'})
@@ -79,6 +97,8 @@ def build(args):
     args.output_dir.mkdir(parents=True)
     write_csv(args.output_dir/'simple-updates.csv', simple)
     write_csv(args.output_dir/'parent-updates.csv', parents)
+    write_csv(args.output_dir/'parent-content-only.csv', [
+        {k: v for k, v in row.items() if k not in {'configurable_variations','configurable_variation_labels'}} for row in parents])
     write_csv(args.output_dir/'disable-children.csv', disable)
     write_json(args.output_dir/'structure.json', structure)
     request = {'version': 1, 'expected_host': 'relevance.comtom.lab', 'skus': structure['all_skus'], 'bundle_skus': [],
@@ -88,14 +108,18 @@ def build(args):
     write_json(args.output_dir/'summary.json', {'simple_updates': len(simple), 'parent_updates': len(parents),
                'disabled_children': len(disable), 'conversions': conversions, 'affected_skus': len(structure['all_skus']),
                'scope': 'Existing WANDS test catalog only; no customer/order changes', 'images_in_git': False})
+    snapshot_manifest = json.loads((args.snapshot/'manifest.json').read_text())
+    for table, metadata in snapshot_manifest['tables'].items():
+        check(sha256(args.snapshot/(table+'.jsonl')) == metadata['sha256'], 'Source snapshot changed')
     write_json(args.output_dir/'manifest.json', {'version': 'wands-bulk-native-import-v1',
-        'inputs': {str((args.packet/'manifest.json').resolve()): sha256(args.packet/'manifest.json'), str(Path(__file__).resolve()): sha256(Path(__file__))},
+        'inputs': {str((args.packet/'manifest.json').resolve()): sha256(args.packet/'manifest.json'),
+                   str((args.snapshot/'manifest.json').resolve()): sha256(args.snapshot/'manifest.json'), str(Path(__file__).resolve()): sha256(Path(__file__))},
         'outputs': {p.name: sha256(p) for p in args.output_dir.iterdir() if p.is_file()}})
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ('packet', 'output-dir'):
+    for name in ('packet', 'snapshot', 'output-dir'):
         parser.add_argument('--'+name, type=Path, required=True)
     args = parser.parse_args()
     args.output_dir.parent.mkdir(parents=True, exist_ok=True)

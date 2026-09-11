@@ -169,4 +169,34 @@ class BulkCatalogStructure
             $this->change($operation['table'], $operation['selector'], $operation['after'], $operation['before']);
         }
     }
+
+    public function reconcileAxes(array $structure, array $labels): array
+    {
+        foreach ($structure['parent_axes'] as $sku => $codes) {
+            $product = $this->select('catalog_product_entity', ['sku' => $sku])[0];
+            if ($product['type_id'] !== 'configurable') {
+                throw new RuntimeException('Axis target is not configurable');
+            }
+            foreach ($codes as $position => $code) {
+                $attribute = $this->select('eav_attribute', ['attribute_code' => $code]);
+                if (count($attribute) !== 1 || !isset($labels[$sku][$code])) {
+                    throw new RuntimeException('Ambiguous axis or missing label');
+                }
+                $selector = ['product_id' => $product['entity_id'], 'attribute_id' => $attribute[0]['attribute_id']];
+                $existing = $this->select('catalog_product_super_attribute', $selector)[0] ?? null;
+                $after = array_replace($existing ?? $selector, ['position' => $position]);
+                if ($this->canonical($existing) !== $this->canonical($after)) {
+                    $this->change('catalog_product_super_attribute', $selector, $existing, $after);
+                }
+                $axis = $this->select('catalog_product_super_attribute', $selector)[0];
+                $key = ['product_super_attribute_id' => $axis['product_super_attribute_id'], 'store_id' => 0];
+                $before = $this->select('catalog_product_super_attribute_label', $key)[0] ?? null;
+                $after = array_replace($before ?? $key, ['value' => $labels[$sku][$code], 'use_default' => 0]);
+                if ($this->canonical($before) !== $this->canonical($after)) {
+                    $this->change('catalog_product_super_attribute_label', $key, $before, $after);
+                }
+            }
+        }
+        return $this->journal;
+    }
 }
