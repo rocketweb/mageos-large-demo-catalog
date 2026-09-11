@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Accept native template output without claiming browser or deployment acceptance."""
 import argparse
+import copy
 import hashlib
 from html.parser import HTMLParser
 import json
@@ -111,7 +112,14 @@ def verify(args):
         new_label='Furniture pieces' if sku=='WANDS-030335' else 'Finish'
         verify_product(base[sku],old_label,labels,price_index)
         order=verify_product(changed[sku],new_label,labels,price_index)
-        check(base[sku]['config']==changed[sku]['config'],'Caption fix changed JSON prices, options or media references')
+        expected_config=copy.deepcopy(base[sku]['config'])
+        if sku=='WANDS-030335':
+            attribute=next(iter(expected_config['attributes'].values()))
+            attribute['label']='Furniture pieces'
+            attribute['options'].sort(key=lambda option:int(option['label'].split()[0]))
+            check(order==labels,'Outdoor options are not in ascending count order')
+            check(next(iter(changed[sku]['config']['attributes'].values()))['label']==new_label,'JSON label differs from visible family label')
+        check(expected_config==changed[sku]['config'],'Display fix changed unrelated JSON prices, mappings or media references')
         summaries.append({'sku':sku,'old_label':old_label,'new_label':new_label,'option_order':order,'exact_selection_prices_verified':True})
     restored=data['restored'];old=data['rollback_baseline'];receipt=data['receipt']
     check(restored['database']==candidate['database'] and restored['versions']==old['versions']==VERSIONS,'Wrong rollback runtime')

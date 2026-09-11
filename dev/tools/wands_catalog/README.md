@@ -1,10 +1,11 @@
 # WANDS catalog tooling
 
-The [native Hyva options checkpoint](HYVA_OPTIONS_CHECKPOINT.md) verifies the
-outdoor family caption, eight exact option/price bindings, corrected generated-code
-isolation and full local rollback. Browser, media and deployment gates stay open.
+The [ordered Hyva options checkpoint](ORDERED_OPTIONS_CHECKPOINT.md) verifies
+consistent family labels, ascending furniture-piece choices, eight exact option/price
+bindings, isolated generated code and full local rollback. Browser, media and
+deployment gates stay open.
 
-For the latest five-family pilot state, see the [unsaved guest-cart checkpoint](CART_MODEL_CHECKPOINT.md): native stock/price indexing, 21 cart-model cases and indexed-baseline rollback are verified. The tests use the observed Mage-OS 3.5.0 runtime. Rendered storefront, persisted cart/checkout, media import and live deployment remain separate gates.
+The preceding [unsaved guest-cart checkpoint](CART_MODEL_CHECKPOINT.md) covers native stock/price indexing, 21 cart-model cases and indexed-baseline rollback. Those cart cases pass again with the current display fix. The tests use the observed Mage-OS 3.5.0 runtime. Full browser storefront, persisted cart/checkout, media import and live deployment remain separate gates.
 
 For the proposed reusable package for Mage-OS Lab, see the [community distribution design](COMMUNITY_DISTRIBUTION.md). Tool screenshots and diagrams belong in Git; product images belong in separately versioned media downloads. The design is local preparation, not a published catalog release.
 
