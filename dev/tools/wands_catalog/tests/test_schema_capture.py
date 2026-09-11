@@ -19,8 +19,8 @@ class CatalogSchemaScopeTest(unittest.TestCase):
     @unittest.skipUnless(PHP.is_file(),'Local PHP runtime unavailable')
     def test_runtime_support_excludes_order_and_quote_inventory_tables(self):
         script=Path(__file__).resolve().parents[1]/'snapshot_rehearsal_schema.php'
-        names=['catalog_product_option','catalog_product_entity_media_gallery_value_video','inventory_stock_sales_channel','inventory_stock_1',
+        names=['catalog_product_option','catalog_product_entity_media_gallery_value_video','inventory_stock_sales_channel','inventory_stock_1','inventory_source_carrier_link',
                'inventory_shipment_source','inventory_pickup_location_order','inventory_order_notification','inventory_pickup_location_quote_address','catalog_product_frontend_action']
         code='require '+json.dumps(str(script))+'; echo json_encode(array_map("isRuntimeSupportTable",json_decode('+json.dumps(json.dumps(names))+',true)));'
         result=subprocess.run([str(PHP),'-r',code],check=True,capture_output=True,text=True)
-        self.assertEqual(json.loads(result.stdout),[True]*4+[False]*5)
+        self.assertEqual(json.loads(result.stdout),[True]*5+[False]*5)

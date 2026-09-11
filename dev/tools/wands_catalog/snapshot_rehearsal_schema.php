@@ -9,7 +9,7 @@ function isRuntimeSupportTable(string $name): bool
 {
     return (str_starts_with($name,'catalog_product_') && $name!=='catalog_product_frontend_action')
         || str_starts_with($name,'catalogrule_') || $name==='catalogrule'
-        || in_array($name,['inventory_source','inventory_source_item','inventory_source_stock_link','inventory_stock','inventory_stock_sales_channel','inventory_reservation','inventory_low_stock_notification_configuration'],true)
+        || in_array($name,['inventory_source','inventory_source_item','inventory_source_stock_link','inventory_source_carrier_link','inventory_stock','inventory_stock_sales_channel','inventory_reservation','inventory_low_stock_notification_configuration'],true)
         || (bool)preg_match('/^inventory_stock_[0-9]+$/',$name);
 }
 if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') !== __FILE__) { return; }
@@ -102,6 +102,10 @@ try {
         }
         foreach (['inventory_stock','inventory_source_stock_link','inventory_stock_sales_channel'] as $table) {
             foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table)) as $row) { $add($table,$row); }
+        }
+        $sourceCodes=array_column($data['inventory_source_item'],'source_code');
+        if($sourceCodes){
+            foreach($query('SELECT * FROM '.$quote($c['dbname']).'.inventory_source_carrier_link WHERE source_code IN ('.implode(',',array_fill(0,count($sourceCodes),'?')).')',$sourceCodes) as $row){$add('inventory_source_carrier_link',$row);}
         }
         foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.catalogrule_product_price WHERE product_id IN ('.implode(',',array_fill(0,count($ids),'?')).')',$ids) as $row) { $add('catalogrule_product_price',$row); }
     }
