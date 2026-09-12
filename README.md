@@ -234,7 +234,7 @@ for the observed behavior and limits.
 ## Data and licensing
 
 - **Tooling, catalog module and authored catalog additions:**
-  [MIT](dev/tools/wands_catalog/LICENSE.txt).
+  [MIT](LICENSE). See [license scope and third-party notices](NOTICE.md).
 - **Original WANDS material:** its [MIT notice](dev/tools/wands_catalog/distribution/WANDS-LICENSE.txt)
   and requested citation are retained.
 - **Generated catalog images:** [CC0 1.0](dev/tools/wands_catalog/distribution/CC0-1.0.txt)
@@ -276,6 +276,10 @@ If using WANDS in research, retain the upstream citation:
 | Products or images are missing | Check all four import logs, file ownership, indexing and the media destination in the installation guide. |
 
 ## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and test
+commands, [SECURITY.md](SECURITY.md) for private vulnerability reports, and
+[SHARING.md](SHARING.md) for the recipient handoff and public-launch checklist.
 
 Work on the portable module and tooling, not the original development store's
 Composer stack:
