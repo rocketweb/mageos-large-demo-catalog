@@ -1,7 +1,15 @@
 # Sharing the catalog with Mage-OS Lab
 
-Local design proposal, September 9, 2026. No public artifact, bucket, package,
-release tag or installation command has been published by this work.
+Original design, September 9, 2026. The September 11 implementation is in
+[distribution/README.md](distribution/README.md): deterministic private candidate
+archives and an offline verifier. Starter/full acceptance on Mage-OS 3.5.0 is
+recorded in [the acceptance result](LAB35_ACCEPTANCE.md). A source-only
+[resumable downloader](distribution/DOWNLOADS.md) followed on September 12.
+Resumable import, hosting and publication remain open; 3.4 was not tested.
+The sections below retain the
+original design requirements and historical packet counts, not current acceptance.
+Matt approved MIT for authored tooling/data and CC0 for generated images where
+rights are held on September 11; see [current terms](distribution/TERMS.md).
 
 ## Recommended boundary
 

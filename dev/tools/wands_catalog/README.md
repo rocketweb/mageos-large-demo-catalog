@@ -1,5 +1,9 @@
 # WANDS catalog tooling
 
+For Mage-OS Lab recipients, use the [portable candidate guide](distribution/README.md).
+The checkpoint entries below are historical and retain their original scope and
+status; the bulk completion record supersedes their older deployment statements.
+
 The [bulk completion run](BULK_COMPLETION.md) supersedes per-product pilot gating:
 667 existing SKUs, 93 corrected media families and 419 new images, with the five
 finished assortments reused. This is authorized bulk test-data work for the demo.

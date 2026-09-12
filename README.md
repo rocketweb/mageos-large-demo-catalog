@@ -1,4 +1,26 @@
-# Mage-OS Hyva development store
+# Mage-OS large demo catalog
+
+For the portable Mage-OS Lab candidate, start with the
+[distribution guide](dev/tools/wands_catalog/distribution/README.md).
+It separates the catalog module, data and images from this development store.
+Product images are distributed as separate archives, not through Git or Git LFS.
+The [offline handoff record](dev/tools/wands_catalog/LAB_HANDOFF_READY.md) identifies
+the current private recipient package and verification results.
+
+The private candidate passed fresh-install testing on Mage-OS 3.5.0 with both
+starter and full profiles. See the [acceptance result](dev/tools/wands_catalog/LAB35_ACCEPTANCE.md).
+Mage-OS 3.4 was not tested, and publication remains separate. MIT for code/authored data and
+CC0 for generated images where rights are held were approved September 11, 2026.
+Do not clone this
+entire project as a community sample-data installer: its root Composer files and
+environment configuration describe the original private development store.
+
+## Historical development environment
+
+The following setup notes describe the original environment, not the current
+portable release or current demo counts. See the
+[bulk completion record](dev/tools/wands_catalog/BULK_COMPLETION.md) for the
+September 11 demo update.
 
 Local Mage-OS development environment with the Hyva default theme, the original Koti sample-data storefront, and an isolated WANDS relevance-lab storefront.
 

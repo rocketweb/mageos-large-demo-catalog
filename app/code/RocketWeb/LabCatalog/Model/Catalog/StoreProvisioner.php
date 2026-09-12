@@ -19,7 +19,6 @@ class StoreProvisioner
     public const STORE_GROUP_NAME = 'WANDS Catalog Store';
     public const STORE_CODE = 'wands';
     public const ROOT_CATEGORY_NAME = 'WANDS Catalog';
-    public const THEME_PATH = 'frontend/Hyva/default';
 
     public function __construct(
         private readonly \Magento\Catalog\Model\CategoryFactory $categoryFactory,
@@ -39,9 +38,20 @@ class StoreProvisioner
     ) {
     }
 
-    public function provision(string $baseUrl): array
+    public function provision(string $baseUrl, ?string $themePath = null): array
     {
+        $parts = parse_url($baseUrl);
+        if (!is_array($parts)
+            || !in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true)
+            || empty($parts['host'])
+            || isset($parts['user']) || isset($parts['pass'])
+            || isset($parts['query']) || isset($parts['fragment'])
+            || preg_match('/\s/', $baseUrl)
+        ) {
+            throw new \InvalidArgumentException('An explicit HTTP(S) base URL without credentials, query or fragment is required.');
+        }
         $baseUrl = rtrim($baseUrl, '/') . '/';
+        $themeId = $themePath === null ? null : $this->getThemeId($themePath);
         $connection = $this->resourceConnection->getConnection();
         $connection->beginTransaction();
 
@@ -51,8 +61,6 @@ class StoreProvisioner
             $group = $this->getOrCreateGroup($website, $rootCategory);
             $store = $this->getOrCreateStore($website, $group);
             $this->completeHierarchy($website, $group, $store);
-            $themeId = $this->getHyvaThemeId();
-            $this->saveCatalogConfiguration();
             $this->saveWebsiteConfiguration((int)$website->getId());
             $this->saveStoreConfiguration((int)$store->getId(), $baseUrl, $themeId);
             $connection->commit();
@@ -175,18 +183,21 @@ class StoreProvisioner
         }
     }
 
-    private function getHyvaThemeId(): int
+    private function getThemeId(string $themePath): int
     {
-        $theme = $this->themeCollectionFactory->create()->getThemeByFullPath(self::THEME_PATH);
+        if (!str_starts_with($themePath, 'frontend/')) {
+            throw new \InvalidArgumentException('Select a registered frontend theme path.');
+        }
+        $theme = $this->themeCollectionFactory->create()->getThemeByFullPath($themePath);
 
         if (!$theme->getId()) {
-            throw new \RuntimeException('The Hyva/default frontend theme is not registered.');
+            throw new \RuntimeException('The requested frontend theme is not registered.');
         }
 
         return (int)$theme->getId();
     }
 
-    private function saveStoreConfiguration(int $storeId, string $baseUrl, int $themeId): void
+    private function saveStoreConfiguration(int $storeId, string $baseUrl, ?int $themeId): void
     {
         $usesHttps = str_starts_with(strtolower($baseUrl), 'https://');
         $configuration = [
@@ -194,10 +205,12 @@ class StoreProvisioner
             'web/secure/base_url' => $baseUrl,
             'web/secure/use_in_frontend' => $usesHttps ? '1' : '0',
             'web/url/use_store' => '0',
-            'design/theme/theme_id' => (string)$themeId,
             'design/head/default_title' => 'WANDS Product Relevance Lab',
             'general/store_information/name' => 'WANDS Product Relevance Lab',
         ];
+        if ($themeId !== null) {
+            $configuration['design/theme/theme_id'] = (string)$themeId;
+        }
 
         foreach ($configuration as $path => $value) {
             $this->configResource->saveConfig($path, $value, 'stores', $storeId);
@@ -217,8 +230,4 @@ class StoreProvisioner
         }
     }
 
-    private function saveCatalogConfiguration(): void
-    {
-        $this->configResource->saveConfig('catalog/price/scope', '1', 'default', 0);
-    }
 }

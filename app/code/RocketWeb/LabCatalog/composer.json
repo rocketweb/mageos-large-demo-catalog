@@ -1,0 +1,22 @@
+{
+    "name": "rocketweb/module-lab-catalog",
+    "description": "Portable synthetic WANDS catalog importer for dedicated Mage-OS labs",
+    "type": "magento2-module",
+    "license": "MIT",
+    "require": {
+        "php": "~8.4.0",
+        "mage-os/framework": "~3.4.0 || ~3.5.0",
+        "mage-os/module-catalog": "~3.4.0 || ~3.5.0",
+        "mage-os/module-store": "~3.4.0 || ~3.5.0",
+        "mage-os/module-import-export": "~3.4.0 || ~3.5.0",
+        "mage-os/module-configurable-product": "~3.4.0 || ~3.5.0",
+        "mage-os/module-configurable-import-export": "~3.4.0 || ~3.5.0",
+        "mage-os/module-bundle": "~3.4.0 || ~3.5.0",
+        "mage-os/module-bundle-import-export": "~3.4.0 || ~3.5.0",
+        "mage-os/module-theme": "~3.4.0 || ~3.5.0"
+    },
+    "autoload": {
+        "files": ["registration.php"],
+        "psr-4": {"RocketWeb\\LabCatalog\\": ""}
+    }
+}

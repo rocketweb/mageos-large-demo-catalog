@@ -23,21 +23,24 @@ class ProvisionCommand extends Command
     protected function configure(): void
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Create or update the isolated WANDS website, store, root category, and Hyva theme.');
+        $this->setDescription('Create or update the WANDS website, store and root category. Theme selection is optional.');
         $this->addOption(
             'base-url',
             null,
             InputOption::VALUE_REQUIRED,
-            'Base URL for the WANDS store view.',
-            'http://relevance.comtom.lab:8080/'
+            'Required explicit base URL for the WANDS store view.'
         );
+        $this->addOption('theme', null, InputOption::VALUE_REQUIRED, 'Optional registered frontend theme path; otherwise preserve the inherited theme.');
         parent::configure();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $result = $this->storeProvisioner->provision((string)$input->getOption('base-url'));
+            $result = $this->storeProvisioner->provision(
+                (string)$input->getOption('base-url'),
+                $input->getOption('theme')
+            );
             $output->writeln(json_encode($result, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES));
             return Cli::RETURN_SUCCESS;
         } catch (\Throwable $exception) {
