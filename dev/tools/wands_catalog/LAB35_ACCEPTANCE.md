@@ -1,5 +1,10 @@
 # Mage-OS 3.5 acceptance result
 
+This records the original Luma acceptance run. The same full-profile instance
+subsequently received Hyvä Default 1.5.2; see the
+[Hyvä storefront verification](distribution/HYVA_ACCEPTANCE.md) for its current
+theme, screenshot provenance and scoped search-layout correction.
+
 The private catalog candidate passed fresh-install testing on Mage-OS 3.5.0.
 Matt selected 3.5 instead of the originally proposed 3.4 target. No Mage-OS 3.4
 compatibility result is implied.

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="search_result_list">
+            <arguments>
+                <!-- Initialize search sorting before collection preparation can cache category defaults. -->
+                <argument name="default_sort_by" xsi:type="string">relevance</argument>
+                <argument name="sort_by" xsi:type="string">relevance</argument>
+                <argument name="default_direction" xsi:type="string">desc</argument>
+                <argument name="available_orders" xsi:type="array">
+                    <item name="name" xsi:type="string" translate="true">Product Name</item>
+                    <item name="price" xsi:type="string" translate="true">Price</item>
+                    <item name="relevance" xsi:type="string" translate="true">Relevance</item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="product_list_toolbar">
+            <action method="setAvailableOrders">
+                <argument name="orders" xsi:type="array">
+                    <item name="name" xsi:type="string" translate="true">Product Name</item>
+                    <item name="price" xsi:type="string" translate="true">Price</item>
+                    <item name="relevance" xsi:type="string" translate="true">Relevance</item>
+                </argument>
+            </action>
+            <action method="setDefaultOrder">
+                <argument name="field" xsi:type="string">relevance</argument>
+            </action>
+            <action method="setDefaultDirection">
+                <argument name="dir" xsi:type="string">desc</argument>
+            </action>
+            <action method="unsetData">
+                <argument name="key" xsi:type="string">_current_grid_order</argument>
+            </action>
+            <action method="unsetData">
+                <argument name="key" xsi:type="string">_current_grid_direction</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

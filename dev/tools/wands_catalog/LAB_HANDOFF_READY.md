@@ -1,5 +1,9 @@
 # Mage-OS Lab offline handoff
 
+Subsequent distribution: the same rc2 profiles are now available through
+[private GitHub release assets](GITHUB_RELEASE_PUBLISHED.md). The offline package
+and historical preparation record below remain unchanged.
+
 Prepared September 12, 2026. The private `2026.09.12-handoff-v3` package wraps the
 unchanged starter and full rc2 profiles tested on Mage-OS 3.5.0. It adds the current
 standalone tools and recipient instructions. This is a local handoff candidate,
