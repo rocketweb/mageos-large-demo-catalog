@@ -1,0 +1,382 @@
+[
+  {
+    "root_sku": "WANDS-000056",
+    "selected_sku": "WANDS-000056",
+    "reference_sha256": "0866f06827815ee1dd55c225f873d1f768c3cc171cf9bd6708fdbb196c5b3cc1",
+    "definition_sha256": "49e7965504341c8ac3d5413b6833ed6f58fb5c18b04f041e7e72d56e5444101e",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "Folded pastel textiles obscure the component boundaries. I cannot distinguish a separate quilt, fitted sheet and skirt or verify the three-item assortment from this view.",
+    "repair_direction": "Prepare an unfolded, countable layout showing the quilt, fitted crib sheet and skirt separately. Do not infer missing hems, pocket construction or exact dimensions from the folded stack."
+  },
+  {
+    "root_sku": "WANDS-001200",
+    "selected_sku": "WANDS-001200-2-PIECES-05E3-NATURAL-D6AC",
+    "reference_sha256": "17bbbb6634d124518322ffb95be7e175bb10c6972d47fe674eb5ff698719ce63",
+    "definition_sha256": "9aca42ddbe4664d36935474a336ad8f94a432be22ebff61b956e2fa4d7a25617",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a joined L-shaped sectional, loose pillows and a padded ottoman-like item. It does not show the selected six seating modules and hard-surface coffee table as seven countable assemblies.",
+    "repair_direction": "Show four armless and two corner seating modules plus one coffee table. Make the module boundaries visible, omit loose pillows and do not substitute a cushioned ottoman for the table."
+  },
+  {
+    "root_sku": "WANDS-001731",
+    "selected_sku": "WANDS-001731-30-IN-5C57-BRUSHED-NICKEL-F567",
+    "reference_sha256": "51b6d6f664799b5209d6bc6952093fa06d6da907a136e6518b35eeb5bbefd4fd",
+    "definition_sha256": "a659eab43cf97b756163d14322669f56d6090b86d02e373430d25fea5d2f3eb0",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The table is brown wood-toned rather than the selected Brushed Nickel finish, and the image contains malformed dimension labels and guide lines.",
+    "repair_direction": "Keep one square end table with its visible storage form, change to the selected Brushed Nickel finish and use the explicit synthetic 16-inch footprint. Remove all text, dimension arrows and invented measurement labels."
+  },
+  {
+    "root_sku": "WANDS-002739",
+    "selected_sku": "WANDS-002739-FULL-008D-NAVY-FB2F",
+    "reference_sha256": "2a18008dbf82111efa5717267c1249890125af197b3cc515876843adc41ea8c2",
+    "definition_sha256": "5da2272b603980232a2eb120d7ca0d220a99ab9839aecf88bb05a875da131f24",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference shows three folded solid-color textile layers in burgundy, tan and navy rather than one Navy plaid sham.",
+    "repair_direction": "Show one empty Navy plaid pillow sham laid flat, with its opening and pattern visible. No extra colorways, sheets or inserts."
+  },
+  {
+    "root_sku": "WANDS-003695",
+    "selected_sku": "WANDS-003695-2-PIECES-05E3-BROWN-18F2",
+    "reference_sha256": "fad6df10f5f57b2328829a846e3ca899baa53556d1f7e918fe91389162732acf",
+    "definition_sha256": "b323efac1b908c1ece6d68cdcf6cc859e32076b5f03a5abfd4008f6a05c9fc4a",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The image shows a sectional seating arrangement and one padded ottoman-like item, not four standalone chairs, two loveseats and two coffee tables.",
+    "repair_direction": "Arrange all eight defined furniture assemblies separately enough to count. Show two actual coffee tables, no ottoman substitution, and preserve the selected Brown option."
+  },
+  {
+    "root_sku": "WANDS-003817",
+    "selected_sku": "WANDS-003817-TODDLER-56FF-BROWN-18F2",
+    "reference_sha256": "068a8692fed407d63b829be5d2fe09fe0a080e2cc1d766bdb7b59ebc980bbd17",
+    "definition_sha256": "f9469c884e4dfc59be055d91b3950f38f436488c5282a8ec4a2e1e7c0e093ea9",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The image shows three plump folded textile forms in pink and brown. The quilt, rail cover, fitted sheet and skirt cannot be individually identified or counted.",
+    "repair_direction": "Show the four named nursery-decor components laid out separately in the selected Brown palette. Make the rail cover distinct from the quilt and do not render the set as a stack of pillows."
+  },
+  {
+    "root_sku": "WANDS-007609",
+    "selected_sku": "WANDS-007609-2-PIECES-05E3-CREAM-D539",
+    "reference_sha256": "2ff113eefb516462e4b90c001f47a0cd008b077243d1bfe1b4de8d5ddd5e07d8",
+    "definition_sha256": "cec4079e0f9b55d05c8ab0c016003dcc82ffa1e38c4bc5cb3d9df383b20a0ff2",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The seating is a joined corner arrangement instead of two separate lounge chairs and one loveseat.",
+    "repair_direction": "Show one freestanding loveseat, two individual lounge chairs and one coffee table. Keep the selected Cream cushions and separate all four assemblies."
+  },
+  {
+    "root_sku": "WANDS-008443",
+    "selected_sku": "WANDS-008443-2-PIECES-05E3-NATURAL-D6AC",
+    "reference_sha256": "f8df501243ef4963d1422ed98f9f3940868d31df076a24d89da9c34ba3e196e6",
+    "definition_sha256": "5edc881570b6d26bbc9b909e423f703885c21df15eb07edb2d0365a74d796235",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference has a square tabletop, but the corrected design specifies a round table.",
+    "repair_direction": "Retain two folding bistro chairs in the selected Natural color, replace the square table with the defined round table and show the circular top clearly. No extra chairs or cushions."
+  },
+  {
+    "root_sku": "WANDS-008500",
+    "selected_sku": "WANDS-008500-2-PIECES-05E3-BEIGE-5F10",
+    "reference_sha256": "37acd1848f2c6c5a06e444916c957994b37411a0c15e98bcf467c301d46abd0b",
+    "definition_sha256": "b440e8d04001cb12c4ffc7043a73cedb08d8c066f26ab05518928ec9b12d8a8a",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "A joined corner sectional and padded ottoman are shown without a separate coffee table or the two listed decorative pillows.",
+    "repair_direction": "Show one armless module, two corner modules, one ottoman and one coffee table as five furniture assemblies, plus exactly two decorative pillows. Do not merge the table into the ottoman."
+  },
+  {
+    "root_sku": "WANDS-011422",
+    "selected_sku": "WANDS-011422-2-PIECES-05E3-BLUE-EC7D",
+    "reference_sha256": "598dca2773a3cc02a3c06167170b5332b368e8923e17f61b9c7e5cb7d19bb1df",
+    "definition_sha256": "1a4426123385ef7dd2f96ea42783fcf9e251862959de890ccc0195a485c5a0f9",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference shows stationary cushioned chairs with straight legs in neutral colors, not the selected Blue rocking chairs. The sale unit excludes loose cushions.",
+    "repair_direction": "Show two Blue rocking chairs with clearly visible rocker runners and one rectangular table. Omit loose cushions and do not copy the stationary chair bases."
+  },
+  {
+    "root_sku": "WANDS-013613",
+    "selected_sku": "WANDS-013613-TODDLER-56FF-BLUE-EC7D",
+    "reference_sha256": "416d85566c9db39067c3888f829596cdee3db7187e740dbeb0c4acb38acd3a31",
+    "definition_sha256": "d049b07056e91ca17ff4774c03a02d06439abb3135447fe43490ae5c7c0e6d50",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference is a made bed with a headboard and bedding, not the eight separately displayed nursery-decor components.",
+    "repair_direction": "Remove the bed, headboard and mattress. Lay out the eight named components in the selected Blue palette, including two separate fitted sheets, the diaper stacker and changing-pad cover."
+  },
+  {
+    "root_sku": "WANDS-014542",
+    "selected_sku": "WANDS-014542-2-PIECES-05E3-BEIGE-5F10",
+    "reference_sha256": "9c44d71c352a6485d0b13c3ca99704091f8bcdef863f7de68573ba09b758964c",
+    "definition_sha256": "1394c4e131db683f5e70b7e2ddb565dc63676e3b607a3af3024bed84176b63af",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The image shows an L-shaped sectional and coffee table rather than a sofa, separate lounge chair and ottoman; the two listed decorative pillows are not shown.",
+    "repair_direction": "Show one sofa, one separate lounge chair, one ottoman and one coffee table, plus two decorative pillows in the selected Beige palette. Do not substitute sectional modules for the sofa and chair."
+  },
+  {
+    "root_sku": "WANDS-014655",
+    "selected_sku": "WANDS-014655-2-PIECES-05E3",
+    "reference_sha256": "1ccb6f634ada7da79b786d583f4650257eb36c39b577bc0e5a17bad30dfcb81b",
+    "definition_sha256": "5e85e099aba3e4390a3659ce17464a0aaed4896c81dd2ceb9efb74f468d5cd9c",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The image shows one compact L-shaped seating arrangement and a table, with loose pillows. It does not represent nine countable assemblies or the two standalone club chairs.",
+    "repair_direction": "Show two club chairs, two right-arm modules, two left-arm modules, two armless modules and one coffee table. Separate the modules enough to count and omit unlisted loose pillows."
+  },
+  {
+    "root_sku": "WANDS-014666",
+    "selected_sku": "WANDS-014666-2-PIECES-05E3-IVORY-F3AD",
+    "reference_sha256": "c26a72b6c4c3c100d95ef8db4328689ffc90937fe73a965a8b7b494aa67305b2",
+    "definition_sha256": "57f253b5ecb84f50e5aa71ab2484ad2ad82243032a0dfd672b071ad972f24abf",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "Only a joined corner seating arrangement is shown. The coffee table and two separate lounge chairs in the four-piece definition are not present as distinct objects.",
+    "repair_direction": "Show one freestanding loveseat, two individual Ivory-cushioned lounge chairs and one coffee table; no corner-sectional substitution."
+  },
+  {
+    "root_sku": "WANDS-014683",
+    "selected_sku": "WANDS-014683-2-PIECES-05E3-BEIGE-5F10",
+    "reference_sha256": "98042b3830a06272670669f600f3fd23d446cb6d3315d017697af773336a5409",
+    "definition_sha256": "b4346c4ebbf8ac51123ef8645f9a2878b4f374f196fa90afe41f921af573f0c2",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference has a square table and four chairs, whereas the chosen definition requires a half-round table and two chairs.",
+    "repair_direction": "Show one half-round table with its straight back edge and curved front edge clearly visible, plus exactly two Beige bistro chairs. Omit extra chairs."
+  },
+  {
+    "root_sku": "WANDS-015293",
+    "selected_sku": "WANDS-015293-2-PIECES-05E3-GREEN-D486",
+    "reference_sha256": "446ac0e2d14f54f0502b4e4228dbe1e767ee41681cdc5456737b670236455a19",
+    "definition_sha256": "93a3f1deea3fa4140b369a290d577d76d7c00e2228e0c97b65a85738082c3ca1",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference is a sectional sofa and one coffee table, with loose pillows. It lacks four separate lounge chairs and both side tables.",
+    "repair_direction": "Replace the sectional with four separate Green-cushioned lounge chairs. Include one coffee table and two side tables for seven furniture assemblies; no unlisted loose pillows."
+  },
+  {
+    "root_sku": "WANDS-015421",
+    "selected_sku": "WANDS-015421-2-PIECES-05E3-RED-BA19",
+    "reference_sha256": "9dcdef3fe4f61bbfd924816cabdace1a2b70f2031e883556a00eed484e5d5940",
+    "definition_sha256": "8b5b2b5d8c292e8a3cf7f3c36ca8c019aa29588c071aefd6e6d93f08204960f6",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The photo shows neutral stationary chairs, additional rear seating and a table. It lacks visible rocker runners and does not show the selected Red three-piece rocking set.",
+    "repair_direction": "Show exactly two Red rocking chairs with fitted seat cushions and visible rocker runners, plus one rectangular table. Remove extra rear seating and do not reuse straight-legged stationary bases."
+  },
+  {
+    "root_sku": "WANDS-017413",
+    "selected_sku": "WANDS-017413",
+    "reference_sha256": "8d7e74311d1081a5097e1860d98886275ffe1c3db4d5f1860c01d7e5f1615cbb",
+    "definition_sha256": "18537ee648607fa8202f7623d6eac16b2a74fec78be29cadad1041353f6338fd",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference is dominated by a crib with attached textiles. It does not display the ten-item nursery-decor assortment, mobile or three wall hangings separately.",
+    "repair_direction": "Remove the crib and mattress. Lay out the exact ten components, including two sheets, one valance, one mobile and three separate wall hangings. No mounted or in-use sleeping setup."
+  },
+  {
+    "root_sku": "WANDS-018889",
+    "selected_sku": "WANDS-018889-TODDLER-56FF-BLACK-C6CF",
+    "reference_sha256": "c33b8fbb4863941169302968b976bae820b76ccd21d6fa0c43869fb41360fa17",
+    "definition_sha256": "0fb10591a644e49a2c799317e348f4da996688b082de3d59701ae5de30f7fc1a",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a natural-wood bed with mattress, pillow and bedding, rather than the selected Black frame-only product.",
+    "repair_direction": "Show the Black toddler bed-frame assembly alone using the explicit synthetic proportions. Remove mattress, pillow and bedding; do not infer load rating, child safety or mattress fit from the image."
+  },
+  {
+    "root_sku": "WANDS-020322",
+    "selected_sku": "WANDS-020322-30-IN-5C57-BRONZE-D916",
+    "reference_sha256": "4141783d947591e84b56340c89911699c9ed2b93fbe3d2838e0aca9b253fc7b9",
+    "definition_sha256": "c7e787b38245412e9c48d54eb17e25a59b0768f23dac62a4889d3f01288c709a",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference has a square glass top, natural-wood tripod legs and malformed measurement graphics, rather than the selected Bronze round glass-top table.",
+    "repair_direction": "Show one round glass-top end table with the selected Bronze finish and explicit compact proportions. Remove all arrows and measurement text. Do not carry over the square tabletop or natural-wood finish."
+  },
+  {
+    "root_sku": "WANDS-020551",
+    "selected_sku": "WANDS-020551-36-IN-F0FF",
+    "reference_sha256": "2c644c6c4b1859bb61010447b1d185ecd6955bad08d29e3007b9e4e589008017",
+    "definition_sha256": "5838f2925d71fd9d4ed21c2ebf3abb66d015a9e9393e20f6765dddf2982b8276",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference depicts a square, box-like table with a rectangular opening and printed measurement arrows, not the defined round end table.",
+    "repair_direction": "Render the approved round-table identity and circular footprint. Use the explicit 20-inch synthetic diameter and omit measurement text and arrows from the hero."
+  },
+  {
+    "root_sku": "WANDS-020998",
+    "selected_sku": "WANDS-020998-TODDLER-56FF-BROWN-18F2",
+    "reference_sha256": "adacd653266c8de79d2a64748e4ace12210082573194d07783a38c8662472838",
+    "definition_sha256": "a5fa38820d3b818b12c946013a6b2c8beccbc74179face425af63f0bfe728a7b",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference is a cream-and-pink floral folded stack rather than the selected Brown palette. Five individual nursery-decor roles are not visible.",
+    "repair_direction": "Use the selected Brown base palette with a coherent floral print. Separately display the blanket, fitted sheet, skirt, rail cover and diaper stacker; do not hide them in a folded stack."
+  },
+  {
+    "root_sku": "WANDS-021006",
+    "selected_sku": "WANDS-021006-TODDLER-56FF-TERRACOTTA-433D",
+    "reference_sha256": "48cb07051ddeae0664cfc4555deb4a1141863213deb80cba60f911a261c59632",
+    "definition_sha256": "584b4a4354936a53f4d9c1123f7ad81d9e3e32ab6d00f3d9a5dd2df58d5d5b84",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference shows plain white-and-pink folded textiles rather than the selected Terracotta ruched-diamond design. The five component roles are obscured.",
+    "repair_direction": "Show all five named nursery-decor components separately in a Terracotta palette with the defined ruched-diamond identity. Avoid generic white/pink pillow-like stacks."
+  },
+  {
+    "root_sku": "WANDS-021081",
+    "selected_sku": "WANDS-021081-TODDLER-56FF-GRAY-0D5A",
+    "reference_sha256": "92e2a4c3bdeaf4c3ed9b9a8533385bb506e120edc93d94ff17d6bd2b2c63d62a",
+    "definition_sha256": "8dbfb339d18e434d44f907d821ef24e1fedab12a90da083996d071c9789b1f32",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The image shows a small stack of multicolored textiles, not an eleven-item nursery-decor arrangement. Wall hangings, valances and bags are not separately visible.",
+    "repair_direction": "Show the eleven named components in the selected Gray palette, with three separate wall hangings, two valances, toy bag and diaper stacker clearly distinguished. No folded-stack substitute."
+  },
+  {
+    "root_sku": "WANDS-022104",
+    "selected_sku": "WANDS-022104-2-PIECES-05E3",
+    "reference_sha256": "1db3ab724c262b82bd96020c6fb61f9e424c8a99a2549a7a8827deb8fad72fc9",
+    "definition_sha256": "afbba850f7c6addcfa0c479937a0a7429e23b62fd8d583efbc92935fa8472f40",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a square table and four folding chairs, not the specified round table and two chairs.",
+    "repair_direction": "Show one round folding steel bistro table and exactly two chairs. Preserve the supported catalog color; remove extra chairs and do not copy the square top."
+  },
+  {
+    "root_sku": "WANDS-026191",
+    "selected_sku": "WANDS-026191-2-PIECES-05E3",
+    "reference_sha256": "3494e7ba4026341fa507573fce2ddf179f4a36c1f21012caa46c9db94aec414e",
+    "definition_sha256": "7a129823de79598cd8b0144d3ff68c0c0c60aad7d94279abd2b775f6e80d644e",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "Only a long sofa with three seat cushions is pictured. Neither the two separate lounge chairs nor the coffee table are shown.",
+    "repair_direction": "Show the defined loveseat, two individual lounge chairs and one coffee table as four distinct objects. Do not represent the complete set with one sofa."
+  },
+  {
+    "root_sku": "WANDS-027653",
+    "selected_sku": "WANDS-027653-30-IN-5C57",
+    "reference_sha256": "afe782ae42ae9dbe9e9f6176782f3c8a23c6bf1d08832489701023ea2c19135f",
+    "definition_sha256": "41b877386eeffa19e144ee04aed290087b702a0f7bfac7eed53159ac4445b81c",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "A single open-sided end table is clearly visible and no definite identity or assortment mismatch is evident. The image alone cannot establish the newly assigned compact dimensions or hidden construction.",
+    "repair_direction": "Retain this as a candidate reference for a focused geometry/material review. Do not automatically regenerate it or assert physical measurements from pixels; compare visible proportions against the explicit design before acceptance."
+  },
+  {
+    "root_sku": "WANDS-029757",
+    "selected_sku": "WANDS-029757-2-PIECES-05E3-GREEN-D486",
+    "reference_sha256": "72db562c86708fb24474a5ee01c713decbdaf1a2ffb9c9f68bcf424322f9660e",
+    "definition_sha256": "b7024067064df100d062c6c1fc57ec4dedf11a67fbeb3f8400259ebfa3ad1092",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference is a neutral-colored sectional plus one ottoman, not the selected Green sofa, two separate chairs and two ottomans. Only one loose pillow is clearly visible.",
+    "repair_direction": "Show one sofa, two lounge chairs and two ottomans, plus exactly two decorative pillows, in the selected Green palette. No coffee table or sectional substitution."
+  },
+  {
+    "root_sku": "WANDS-030143",
+    "selected_sku": "WANDS-030143",
+    "reference_sha256": "b51674075a55c56597493365b0773058fed15da816f2452dc4c46697b8870371",
+    "definition_sha256": "97bbae3e2e7e24505e5bdb3854d473d1da7fb65da4a8e94031c266d878da5a8a",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "Two folded penguin-patterned textile forms are visible, but the quilt, valance, fitted sheet, decorative pillow and skirt cannot be separated or counted from this view.",
+    "repair_direction": "Show all five named nursery-decor components in an unfolded arrangement with the penguin pattern retained. Do not infer concealed component roles from the folded layers."
+  },
+  {
+    "root_sku": "WANDS-030336",
+    "selected_sku": "WANDS-030336-2-PIECES-05E3-BLUE-EC7D",
+    "reference_sha256": "49b8aaa17f126f12eb7ea50946775d89e38bb62d82249a9f6e67c288ec4577a6",
+    "definition_sha256": "4b703bc723ac1079f61612804fc24e388c37a60eb25c77ae707ae0515ba99e0f",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The image shows only a neutral corner seating unit; the required ottoman and coffee table are absent, and the selected Blue palette is not represented.",
+    "repair_direction": "Show two corner modules, two armless modules, one ottoman and one separate coffee table. Make all six assemblies countable and use the selected Blue palette."
+  },
+  {
+    "root_sku": "WANDS-030675",
+    "selected_sku": "WANDS-030675-2-PIECES-05E3-GREEN-D486",
+    "reference_sha256": "42ea53c40df3ceb2c9d2e460033188bae21a6382ba6f4d40c86c3dfce4857f7d",
+    "definition_sha256": "38cbdff322a23b6d5b7a7065c9f13f51f25b49c7f44bdefe03a7c2a7f96ec82e",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference contains a larger neutral sectional with a padded chaise-like projection and loose pillows, but no coffee table. It does not depict the selected Green three-assembly set.",
+    "repair_direction": "Show one two-seat corner module, one armless seating module and one coffee table. Use the selected Green palette, omit loose pillows and do not add a chaise or ottoman."
+  },
+  {
+    "root_sku": "WANDS-033289",
+    "selected_sku": "WANDS-033289-FULL-008D-RED-BA19",
+    "reference_sha256": "43d6b8bddb0c828f81ed4a4fdf3e8d0ff4643d304895aa9efda9eeddd4685edc",
+    "definition_sha256": "e1e0f70379bc50615bf41df98d697509d5288f07e7287fe074dad29dca1dc634",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "A single filled white pillow is shown instead of two empty Red pillowcases.",
+    "repair_direction": "Show exactly two empty Red pillowcases laid flat, with openings visible and the selected 20-by-30-inch synthetic proportions. No inserts, white substitute or sheets."
+  },
+  {
+    "root_sku": "WANDS-035175",
+    "selected_sku": "WANDS-035175",
+    "reference_sha256": "1b91708d1f7c41bbe895933b87b74883aec10dc3b9e9548bb33c368da8b6f8bd",
+    "definition_sha256": "87ea1366a59d09df38a307e72157c452ef451e70fe086ab9f43022f3f5763429",
+    "verdict": "uncertain",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference shows two folded green textile forms. A blanket, fitted sheet and skirt cannot be identified separately, so the three-component assortment is not verifiable from this view.",
+    "repair_direction": "Prepare a separate layout of the blanket, fitted crib sheet and skirt. Retain only supported pattern/material cues and do not infer hidden components or manufacturer fit from the folded stack."
+  },
+  {
+    "root_sku": "WANDS-038841",
+    "selected_sku": "WANDS-038841-2-PIECES-05E3-IVORY-F3AD",
+    "reference_sha256": "57a7842cf51ea90390b945c37cb01e3c33279b377096a5af8f3743a31185db4a",
+    "definition_sha256": "e63125e9535aea6d2144ab9227b5fa1f4a1d649fdb2adb825e41baec8fdcc0c2",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference is a single U-shaped sectional arrangement, not ten countable furniture assemblies. Both tables, two standalone club chairs and two separate ottomans are not shown.",
+    "repair_direction": "Display the exact ten-piece manifest, separating left-arm, right-arm and armless modules, chaise ottoman, two club chairs, two ottomans, coffee table and accent table. Use the selected Ivory palette and omit unlisted loose pillows."
+  },
+  {
+    "root_sku": "WANDS-040234",
+    "selected_sku": "WANDS-040234-2-PIECES-05E3-GRAY-0D5A",
+    "reference_sha256": "b57b5eb229b2c07e8032555993485737532b4f7e985d9fce01a9d9b79f038a42",
+    "definition_sha256": "c89edc0e5c46611a7a48c6f1bf25b1af46a129179b8a9dfcedea93f61a497a6a",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a square table and four cushioned chairs, not a round table and two chairs.",
+    "repair_direction": "Show one round bistro table and exactly two Gray cushioned bistro chairs. Keep fitted seat cushions and remove the extra chairs."
+  },
+  {
+    "root_sku": "WANDS-040330",
+    "selected_sku": "WANDS-040330-2-PIECES-05E3-BEIGE-5F10",
+    "reference_sha256": "d88fd38a61adbe505ed6f5da3fcb8fa2386cfa342c9075e118dcf894b334d1b8",
+    "definition_sha256": "1cf691c74fbe2cabc6bb984473edd5bf6845651f29227b9e610fb9a6e63bdc6e",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference depicts a compact sectional with an integrated or tightly nested table-like projection and loose pillows, not a freestanding sofa, two separate chairs and one coffee table.",
+    "repair_direction": "Show one sofa, two individual lounge chairs and one distinct coffee table in the selected Beige palette. Do not merge furniture silhouettes or add unlisted loose pillows."
+  },
+  {
+    "root_sku": "WANDS-041115",
+    "selected_sku": "WANDS-041115-2-PIECES-05E3-RED-BA19",
+    "reference_sha256": "ea56e03725578d033041ca1a34418aaf4312eae642f193f1722404586df22e57",
+    "definition_sha256": "9808fdb24e7877491eade325863e07bfd0510999441822e47f19b1c9193afe50",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference shows a neutral sectional and table rather than the selected Red pair of separate lounge chairs. It also includes loose pillows outside the sale unit.",
+    "repair_direction": "Show exactly two separate Red lounge chairs with fitted seat cushions and one rectangular table. No corner sectional or loose decorative pillows."
+  },
+  {
+    "root_sku": "WANDS-042337",
+    "selected_sku": "WANDS-042337-30-IN-5C57",
+    "reference_sha256": "1aa0592be89f8340ed5cc07b7df3380c87ef0f5fbea608429e6ef71e90a39450",
+    "definition_sha256": "898680d39026617943013212b15565bb264499c6036588c1598094bdc3248dcd",
+    "verdict": "fail",
+    "observation": "Local visual triage of the original 768-pixel reference on 2026-09-09; not manufacturer validation or generation approval.",
+    "finding": "The reference is a straight-footed box cabinet without the named cross-leg construction and contains malformed dimension labels and arrows.",
+    "repair_direction": "Show one cross-leg end table with the approved storage identity and explicit compact geometry. Remove all measurement graphics; do not copy the straight-footed cabinet silhouette."
+  }
+]

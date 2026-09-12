@@ -1,6 +1,86 @@
 # WANDS catalog tooling
 
+For Mage-OS Lab recipients, use the [portable candidate guide](distribution/README.md).
+The checkpoint entries below are historical and retain their original scope and
+status; the bulk completion record supersedes their older deployment statements.
+
+The [bulk completion run](BULK_COMPLETION.md) supersedes per-product pilot gating:
+667 existing SKUs, 93 corrected media families and 419 new images, with the five
+finished assortments reused. This is authorized bulk test-data work for the demo.
+
+The [native media rehearsal stage](NATIVE_MEDIA_STAGE_CHECKPOINT.md) now packages
+the five reviewed JPEGs and exact media-only CSV for a disposable importer test.
+Native validation is not read-only; no validation or media import ran on the demo.
+
+The [native browser component checkpoint](BROWSER_COMPONENT_CHECKPOINT.md) passes
+24 desktop/mobile scenarios, including exact child selection and visible price
+updates. All 21 unsaved-cart checks still pass, and the captured-theme fixture is
+fully restored. Full storefront, native media import and deployment remain open.
+
+The [approved remote theme capture](REMOTE_THEME_CAPTURE_CHECKPOINT.md) refreshes
+the unchanged 17-product scope and actual Hyva assignment. All ten MariaDB recovery
+scenarios pass against the new capture; no live catalog records were changed.
+
+The [ordered Hyva options checkpoint](ORDERED_OPTIONS_CHECKPOINT.md) verifies
+consistent family labels, ascending furniture-piece choices, eight exact option/price
+bindings, isolated generated code and full local rollback. Browser, media and
+deployment gates stay open.
+
+The preceding [unsaved guest-cart checkpoint](CART_MODEL_CHECKPOINT.md) covers native stock/price indexing, 21 cart-model cases and indexed-baseline rollback. Those cart cases pass again with the current display fix. The tests use the observed Mage-OS 3.5.0 runtime. Full browser storefront, persisted cart/checkout, media import and live deployment remain separate gates.
+
+For the proposed reusable package for Mage-OS Lab, see the [community distribution design](COMMUNITY_DISTRIBUTION.md). Tool screenshots and diagrams belong in Git; product images belong in separately versioned media downloads. The design is local preparation, not a published catalog release.
+
+For the current full-catalog release, start with [publication preparation and the phased deployment checklist](DEPLOYMENT_READINESS.md). It includes quiet validation commands, remote snapshot/diff and review-only rollback tooling, storefront cases, and CPU-only repair drafts. Older setup examples below are not authorization to import into a local or remote store.
+
+For the next local realism phase, see the [catalog depth pilot](CATALOG_DEPTH.md): a 300-root acceptance set, shared Magento specification schema, non-executable gallery briefs, evidence-backed recommendation candidates, and a separate enriched-catalog judgment queue. This work does not change the existing release or frozen search benchmark.
+
+For the follow-on implementation, see [catalog corrections and guarded expansion](CATALOG_REPAIRS.md): corrected option and assortment definitions, meaningful parent/child copy, recovered source facets, image-repair drafts and independently verified forward/inverse proposals. The expanded packet is local review work, not a deployed catalog release.
+
+The [remaining-definition resolution batch](DEFINITION_RESOLUTIONS.md) now clears the known 41-family queue and eight overlapping holds using source-supported facts and approved, explicitly synthetic conflict resolutions. It includes a post-correction semantic audit and a reference-impact check of all 50 local bundles.
+
+The follow-on [media reconciliation](MEDIA_RECONCILIATION.md) completes initial visual triage for all 93 corrected roots without using a local model: 81 confirmed defects and 12 uncertain references. A deterministic completeness gate rejects packets with unreviewed roots. All references remain unapproved for generation or deployment, and 465 planned gallery views stay bound to the corrected definitions and blocked pending acceptance.
+
+The [bounded repair pilot](MEDIA_REPAIR_PILOT.md) gives all 12 uncertainties a proposed next action: retain four plausible furniture candidates and prepare clearer views for eight textiles/curtains. The local planner prepares 12 exact pilot cases from 89 repair/clarification candidates, with pinned contracts and pending acceptance checklists. It performs no model calls and produces no executable generation queue.
+
+The separately authorized local pilot has now generated 12 candidates, one attempt each, with no retries or original-media changes. Its initial visual screen finds three passes, two uncertain images and seven failures. The bounded runner rejects over-budget prompts, and the CPU-only review builder binds observations to exact candidate, definition and prompt hashes. A visual pass does not authorize publication, conditioning or bulk expansion. See the [pilot run and review instructions](MEDIA_REPAIR_PILOT.md#completed-local-pilot).
+
+The next [component layout planner](COMPONENT_LAYOUTS.md) prepares five failed assortments as 68 physical positions across 28 component types, including complete flatware settings and a shared-floor lamp scale. It checks counts, grouping and geometry envelopes, and records construction-specific asset requirements. These are CPU-only planning diagrams, not new catalog images or approved generation references.
+
+The subsequent [four-component image pilot](COMPONENT_IMAGE_PILOT.md) generated one floor lamp, one table lamp, one dinner fork and one cake server, with one local attempt each. All four are recognizable single objects; the initial visual screen records one pass, one uncertainty and two proportion failures. No masks or composites exist, and neither complete assortment is approved for publication.
+
+The next [equal-area framing experiment](FRAMING_PILOT.md) compares square and portrait canvases for the failed floor lamp and cake server, preserving prompts, seeds, pixel count and the local model. Every pass retains its original evidence and stays separate from live catalog media.
+
+The [product-specific framing refinement](FRAMING_REFINEMENT.md) uses the observed silhouette drift to calculate two bounded follow-up canvases. It retains the existing prompts and seeds, limits pixel-area change to 1%, and keeps visual acceptance separate from masking, assembly and publication.
+
+The [current component-readiness inventory](COMPONENT_READINESS.md) consolidates the three review passes across all 28 planned types: three initial visual passes, one uncertainty and 24 unattempted types. It retains failed evidence, identifies missing components per family, and never grants mask or publication approval.
+
 This tooling prepares the pinned Wayfair WANDS product corpus for the isolated `wands` Mage-OS website.
+
+## WANDS attribution
+
+This catalog builds on [Wayfair's WANDS dataset](https://github.com/wayfair/WANDS),
+not an independently collected product corpus. WANDS requests the following
+citation when building on or using the dataset:
+
+```bibtex
+@InProceedings{wands,
+  title = {WANDS: Dataset for Product Search Relevance Assessment},
+  author = {Chen, Yan and Liu, Shujian and Liu, Zheng and Sun, Weiyi and Baltrunas, Linas and Schroeder, Benjamin},
+  booktitle = {Proceedings of the 44th European Conference on Information Retrieval},
+  year = {2022},
+  numpages = {12}
+}
+```
+
+Source: [upstream citation](https://github.com/wayfair/WANDS#citation).
+WANDS is [MIT-licensed](https://github.com/wayfair/WANDS/blob/main/LICENSE).
+Redistributions must also retain its copyright and permission notices; the
+paper citation is not a substitute for those notices. Prices, stock scenarios,
+generated images, rewritten copy, configurable variants, bundles and synthetic
+dimensions added by this tool are derived lab content, not original WANDS
+observations or newly validated WANDS relevance judgments.
+
+## Prepared outputs
 
 It creates:
 
@@ -185,7 +265,7 @@ php bin/magento lab:wands:import \
   --file=var/wands/merchandising/batches/pilot/configurables/reuse-parent-media.csv
 ```
 
-Bundle batches use dynamic price, dynamic SKU, dynamic weight, and existing visible simple products as selections. They exclude configurable parents and all generated children. After the configurable pilot passes, validate and import `batches/pilot/bundles.csv`. Then import one five-bundle theme CSV at a time from `batches/bundles`.
+Bundle batches use dynamic price, dynamic SKU, dynamic weight, and existing visible simple products as selections. They exclude configurable parents and all generated children. Existing bundle assortments must use the atomic reconciliation path so obsolete choices cannot survive add/update. First run `lab:wands:import --validate-only --reconcile-bundles --file=...` and retain the reported exact would-remove counts. After approval, run the same command without `--validate-only`; cleanup and import then share one transaction. Apply this to `batches/pilot/bundles.csv` and each five-bundle theme CSV under `batches/bundles`.
 
 The pilot keeps bundle hero prompts separate from configurable media so bundle image rows are not validated before their products exist. After importing the pilot bundles, build and import their media with:
 

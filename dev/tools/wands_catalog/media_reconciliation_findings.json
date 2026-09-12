@@ -1,0 +1,62 @@
+[
+  {
+    "root_sku": "WANDS-003897",
+    "selected_sku": "WANDS-003897",
+    "reference_sha256": "d02874bee0a6cf06566d1b60f949b29cf1874ef89b4102ac619583847c04692e",
+    "definition_sha256": "bd5e1ed70fa8d6878980f0857fe243a2f9e9b000c7559088cee13d1b137d688f",
+    "verdict": "fail",
+    "observation": "Local visual inspection of the original 768-pixel reference on 2026-09-09; not manufacturer validation.",
+    "finding": "The image shows two nested round handled pans, not the ten-piece bakeware assortment. The square pan, rectangular pan and lid, loaf pan, muffin pan, rack and baking sheets are not shown.",
+    "repair_direction": "Create a countable flat lay of the exact ten-piece component manifest. Separate the rectangular pan and its lid. Show two round cake pans, one square cake pan, one rectangular cake pan, its one lid, one loaf pan, one muffin pan, one rack and two baking sheets. Do not use a nested pair of handled frying pans as the whole assortment. Copper is a finish description here, not a verified construction or performance claim."
+  },
+  {
+    "root_sku": "WANDS-017842",
+    "selected_sku": "WANDS-017842",
+    "reference_sha256": "55db97c6466593eca161cf2e8075f8da5338328b8c1dfe8cfda488c558a938d6",
+    "definition_sha256": "69a1bdfa969248d58f58a20f07cb735ac71e8b9e293d5d54ce08193dd54df152",
+    "verdict": "fail",
+    "observation": "Local visual inspection of the original 768-pixel reference on 2026-09-09; not manufacturer validation.",
+    "finding": "The reference has only a few spoon/fork forms with detached or incomplete handles and malformed fork heads. It does not show 45 complete utensils or the defined serving assortment.",
+    "repair_direction": "Arrange eight separate five-piece place settings in an overhead grid: one teaspoon, one dinner fork, one dinner knife, one salad fork and one tablespoon in each setting. Add a separate row containing one slotted serving spoon, one spreader, one serving fork, one cake server and one serving spoon. All 45 utensils must be individually countable with continuous handles and plausible distinct heads. Do not treat a representative handful as a complete-set hero image."
+  },
+  {
+    "root_sku": "WANDS-022607",
+    "selected_sku": "WANDS-022607-30-IN-5C57-OAK-CFED",
+    "reference_sha256": "515777effa9ada58630bfde01e067ac8a0c8eb20b4de39694aae40d5a1779394",
+    "definition_sha256": "d25c399ddfd50a9071689925d18fc29077fa369230cb438782092a98cd985ab4",
+    "verdict": "fail",
+    "observation": "Local visual inspection of the original 768-pixel reference on 2026-09-09; not manufacturer validation.",
+    "finding": "The reference depicts a translucent purple-tinted plastic nightstand, not the selected Black finish. Its exact physical dimensions cannot be established from this photo.",
+    "repair_direction": "Retain the single plastic nightstand identity and visible open storage form, but render the selected Black finish and the explicit synthetic design proportions. Do not add wood grain or derive an Oak finish or 30-inch width from the retained SKU. The candidate option is Black and 18 inches wide."
+  },
+  {
+    "root_sku": "WANDS-022642",
+    "selected_sku": "WANDS-022642",
+    "reference_sha256": "8717402d9816c528cab27b7592cdc0a6ebe184bf4efde78858d03e6ec2e4325a",
+    "definition_sha256": "fb552b497e98811a424df4f3e1f9fb98e5834335fa73f0cafe6d90099b03a100",
+    "verdict": "fail",
+    "observation": "Local visual inspection of the original 768-pixel reference on 2026-09-09; not manufacturer validation.",
+    "finding": "The image shows a cooked burger enclosed by one appliance-like form, with loose fries and printed branding. It does not show a separate assembled fry cutter alongside a burger press.",
+    "repair_direction": "Show two distinct assembled kitchen tools side by side: one burger press for forming patties and one fry cutter. Keep their silhouettes separate and follow their individual component dimensions. No burger, bun, cooked food, loose fries, brand text or invented cooking appliance. Internal mechanisms are not extra sale pieces."
+  },
+  {
+    "root_sku": "WANDS-034345",
+    "selected_sku": "WANDS-034345-FULL-008D",
+    "reference_sha256": "edaf00ca3a6118f89b0d0919599acc183dd39d5dbacbe192db064d4a22aeb383",
+    "definition_sha256": "ba697254caaeb4c7315d6919cbcd8553bf0f3cafb013636db047d717b50317a9",
+    "verdict": "fail",
+    "observation": "Local visual inspection of the original 768-pixel reference on 2026-09-09; not manufacturer validation.",
+    "finding": "The image presents a filled pillow on several folded bedding layers. It does not unambiguously show the one unfilled pillowcase being sold, and the additional bedding is excluded from the corrected sale unit.",
+    "repair_direction": "Show exactly one empty pillowcase laid flat with its opening and hem visible. No pillow insert, folded sheets, mattress or other bedding. Use the selected 20-by-28-inch synthetic cover proportions; the historical Full token in the SKU is not a mattress-size instruction."
+  },
+  {
+    "root_sku": "WANDS-042749",
+    "selected_sku": "WANDS-042749-2-PIECES-05E3-GRAY-0D5A",
+    "reference_sha256": "13d22a7988cae0e377ec34d0631660f54bfc82acc2a80a9d74290c3bf5a266fb",
+    "definition_sha256": "8000269fe60b9be59201c4473963e1e05fa2bf6ff52bebbed864571f135ec0b8",
+    "verdict": "fail",
+    "observation": "Local visual inspection of the original 768-pixel reference on 2026-09-09; not manufacturer validation.",
+    "finding": "The reference shows a rectangular table with six visible chairs, seat cushions and a vase. The approved synthetic definition instead specifies one round table and four chairs, with cushions excluded.",
+    "repair_direction": "Show one round outdoor dining table and exactly four separate chairs in the selected Gray color. Make the circular tabletop visible. Omit cushions, vase and extra chairs. Use the explicit component geometry; neither the historical 2-PIECES SKU token nor the old six-chair photograph defines this assortment."
+  }
+]

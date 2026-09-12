@@ -1,0 +1,25 @@
+[
+  {
+    "trial_id": "WANDS-035295-table-lamps-5825459d6d4d-completion",
+    "case_sha256": "1818161375fbfcb9ba6250f23141a790b98ffe36b22d3734b9121f810fe98a45",
+    "image_sha256": "e69501524fd2a5896f1ae5da54776f257e4629b145966321e9872f82ed843378",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      267,
+      60,
+      579,
+      658
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "uncertain",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One complete bronze table lamp with a connected shade, stem and round base, without text or additional objects. The silhouette remains tall: approximately 1.92 H/W against the synthetic 1.73 target. A wider canvas improves the previous estimate but does not establish the desired proportions. The separate floor lamp also needs a family-level finish and design match.",
+    "next_direction": "Retain as an uncertain candidate. Resolve the shade-width-to-height relationship and matched-set styling before mask or assembly acceptance."
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "asset_requirement_id": "WANDS-003897-round-pans-f8a847bb5555",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/completion-bakeware-v1/WANDS-003897-round-pans-f8a847bb5555-completion-2a2f74aa782a.webp",
+    "image_sha256": "dd5fad3268000918c80519364a7d15fd4f64e361f987356d2e05d86f5442c3dc",
+    "initial_visual_pass": true
+  },
+  {
+    "asset_requirement_id": "WANDS-003897-square-pan-abc1ee0c3524",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/completion-bakeware-v1/WANDS-003897-square-pan-abc1ee0c3524-completion-ba1ffecdb323.webp",
+    "image_sha256": "b711d7e2c69a1d213101467476748a40affeffc41979aab572b7e635e62fab57",
+    "initial_visual_pass": true
+  },
+  {
+    "asset_requirement_id": "WANDS-017842-cake-server-e8b0f8c3de5c",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/framing-refinement-v1/WANDS-017842-cake-server-e8b0f8c3de5c-refined-9b5bd2fcca62.webp",
+    "image_sha256": "06d61bbd19336c071aa3efd1d0a11155132a428d9498b25bd29525acfc97b388",
+    "initial_visual_pass": true
+  },
+  {
+    "asset_requirement_id": "WANDS-017842-serving-spoon-fde646bec6b4",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/completion-flatware-v1/WANDS-017842-serving-spoon-fde646bec6b4-completion-08839a354b44.webp",
+    "image_sha256": "f683702de9e7c08d63030681185bdfa386670f405fe6e702ef6113ca628b22d5",
+    "initial_visual_pass": true
+  },
+  {
+    "asset_requirement_id": "WANDS-017842-tablespoons-bd0a34658746",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/completion-flatware-v1/WANDS-017842-tablespoons-bd0a34658746-completion-780a2351d9c7.webp",
+    "image_sha256": "2339128cf8fdf730365055b81a8c9070c7555c0b1fb06f159705a7699b58422a",
+    "initial_visual_pass": true
+  },
+  {
+    "asset_requirement_id": "WANDS-017842-teaspoons-6be6fe422fbc",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/completion-flatware-v1/WANDS-017842-teaspoons-6be6fe422fbc-completion-07e2d77adfdb.webp",
+    "image_sha256": "a1f82c090077847691cd1e02e54cc4a9577a990056cdb6221ebcb78d1eb46829",
+    "initial_visual_pass": true
+  },
+  {
+    "asset_requirement_id": "WANDS-030335-pillows-f005445103c2",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/completion-outdoor-v1/WANDS-030335-pillows-f005445103c2-completion-8bcb6ca18269.webp",
+    "image_sha256": "dc9477b04a30b5fae01377cb58e087e5ce4f2716777352ca7701953866d5018e",
+    "initial_visual_pass": true
+  },
+  {
+    "asset_requirement_id": "WANDS-035295-table-lamps-5825459d6d4d",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/repair-recovery-table-lamps-v1/WANDS-035295-table-lamps-5825459d6d4d-recovery-v1-98f4f89f1f44.webp",
+    "image_sha256": "3108f84f8788937a6e53fada81d1397714ab2d8dc2034a04c803a8aeedb909b1",
+    "initial_visual_pass": true
+  }
+]

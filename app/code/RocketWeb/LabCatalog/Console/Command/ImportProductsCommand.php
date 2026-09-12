@@ -31,6 +31,12 @@ class ImportProductsCommand extends Command
             InputOption::VALUE_NONE,
             'Validate the CSV without changing products.'
         );
+        $this->addOption(
+            'reconcile-bundles',
+            null,
+            InputOption::VALUE_NONE,
+            'Atomically remove existing options for a bounded WANDS bundle CSV before importing its exact assortment.'
+        );
         parent::configure();
     }
 
@@ -44,7 +50,11 @@ class ImportProductsCommand extends Command
         }
 
         try {
-            $result = $this->productImporter->execute($sourceFile, (bool)$input->getOption('validate-only'));
+            $result = $this->productImporter->execute(
+                $sourceFile,
+                (bool)$input->getOption('validate-only'),
+                (bool)$input->getOption('reconcile-bundles')
+            );
             $output->writeln(json_encode($result, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
             return Cli::RETURN_SUCCESS;
         } catch (\Throwable $exception) {

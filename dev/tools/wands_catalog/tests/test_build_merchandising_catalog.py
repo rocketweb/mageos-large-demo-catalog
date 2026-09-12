@@ -21,6 +21,23 @@ from build_merchandising_catalog import (
 
 
 class BuildMerchandisingCatalogTest(unittest.TestCase):
+    def test_bundle_stock_management_is_explicit(self):
+        from build_merchandising_catalog import bundle_csv_row
+
+        result = bundle_csv_row({
+            "sku": "WANDS-BUNDLE-001",
+            "theme": "Living Room",
+            "name": "Living Room Essentials",
+            "description": "<p>Living room set.</p>",
+            "short_description": "Living room set.",
+            "url_key": "living-room-essentials",
+            "options": [{"name": "Chair", "type": "dropdown", "required": True,
+                         "selections": [{"sku": "WANDS-000001"}]}],
+        })
+
+        self.assertEqual(result["manage_stock"], "0")
+        self.assertEqual(result["use_config_manage_stock"], "0")
+
     def setUp(self) -> None:
         self.source_rows = [
             self.source_row(index, product_class)

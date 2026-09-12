@@ -1,0 +1,188 @@
+<?php
+declare(strict_types=1);
+
+function isCatalogRehearsalTable(string $name): bool
+{
+    return (bool)preg_match('/^(catalog_|cataloginventory_|catalogrule_|catalogrule$|eav_|inventory_|store$|store_group$|store_website$|url_rewrite$)/', $name);
+}
+function isRuntimeSupportTable(string $name): bool
+{
+    return (str_starts_with($name,'catalog_product_') && $name!=='catalog_product_frontend_action')
+        || str_starts_with($name,'catalogrule_') || $name==='catalogrule'
+        || in_array($name,['inventory_source','inventory_source_item','inventory_source_stock_link','inventory_source_carrier_link','inventory_stock','inventory_stock_sales_channel','inventory_reservation','inventory_low_stock_notification_configuration'],true)
+        || (bool)preg_match('/^inventory_stock_[0-9]+$/',$name);
+}
+function isGuestPricingRow(string $table,array $row):bool
+{
+    return $table==='tax_class' || (in_array($table,['customer_group','customer_group_excluded_website'],true) && (string)($row['customer_group_id']??'')==='0');
+}
+function isStorefrontMetadataRow(string $table,array $row):bool
+{
+    if($table==='theme'){return true;}
+    if($table==='design_change'){return in_array((string)($row['store_id']??''),['0','2'],true);}
+    if($table==='directory_currency_rate'){return ($row['currency_from']??null)==='USD' && ($row['currency_to']??null)==='USD';}
+    return $table==='core_config_data' && ($row['path']??null)==='design/theme/theme_id'
+        && in_array(($row['scope']??'').':'.($row['scope_id']??''),['default:0','websites:2','stores:2'],true)
+        && (bool)preg_match('/^[0-9]+$/',(string)($row['value']??''));
+}
+if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') !== __FILE__) { return; }
+
+// Catalog-only SELECT/SHOW CREATE snapshot. Does not bootstrap Magento or export credentials.
+$a = getopt('', ['root:', 'plan:', 'output:', 'application-metadata','guest-pricing','storefront-metadata']);
+try {
+    $plan = json_decode(file_get_contents($a['plan']), true, 512, JSON_THROW_ON_ERROR);
+    if ($plan['environment'] !== 'isolated_rehearsal_only' || count($plan['approved_products']) !== 17) {
+        throw new RuntimeException('Wrong scope');
+    }
+    $env = require $a['root'] . '/app/etc/env.php'; $c = $env['db']['connection']['default'];
+    $prefix = $env['db']['table_prefix'] ?? '';
+    if ($prefix !== '') { throw new RuntimeException('Prefixed schema requires explicit adaptation'); }
+    $quote = static function (string $name): string {
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $name)) { throw new RuntimeException('Invalid identifier'); }
+        return '`' . $name . '`';
+    };
+    $schemaOnly = isset($a['application-metadata']) ? ['core_config_data','setup_module','patch_list','cache','cache_tag','flag','indexer_state','mview_state','customer_group','tax_class'] : [];
+    if(isset($a['guest-pricing'])){
+        if(!isset($a['application-metadata'])){throw new RuntimeException('Guest pricing requires application metadata');}
+        array_push($schemaOnly,'customer_group_excluded_website','weee_tax','directory_country');
+    }
+    if(isset($a['storefront-metadata'])){
+        if(!isset($a['application-metadata'])){throw new RuntimeException('Storefront metadata requires application metadata');}
+        array_push($schemaOnly,'theme','theme_file','design_change','directory_currency_rate');
+    }
+    $allowed = static function (string $name) use ($schemaOnly): void {
+        if (!isCatalogRehearsalTable($name) && !in_array($name,$schemaOnly,true)) {
+            throw new RuntimeException('Non-catalog dependency refused');
+        }
+    };
+    $dsn = 'mysql:host=' . $c['host'] . ';dbname=' . $c['dbname'] . ';charset=utf8mb4';
+    if (!empty($c['port'])) { $dsn .= ';port=' . (int)$c['port']; }
+    $pdo = new PDO($dsn, $c['username'], $c['password'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    if ($pdo->query('SELECT DATABASE()')->fetchColumn() !== $c['dbname']) { throw new RuntimeException('Wrong database'); }
+    $query = static function (string $sql, array $params = []) use ($pdo): array {
+        $s = $pdo->prepare($sql); $s->execute($params); return $s->fetchAll(PDO::FETCH_ASSOC);
+    };
+    $pdo->exec('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ'); $pdo->exec('SET TRANSACTION READ ONLY'); $pdo->beginTransaction();
+    $urls = $query('SELECT value FROM ' . $quote($c['dbname']) . '.core_config_data WHERE path IN (?,?)', ['web/secure/base_url','web/unsecure/base_url']);
+    if (!in_array('relevance.comtom.lab', array_map(static fn($r) => parse_url($r['value'], PHP_URL_HOST), $urls), true)) { throw new RuntimeException('Wrong destination'); }
+    $data = []; $ddl = []; $keys = []; $seen = [];
+    $ensure = static function (string $table) use (&$ddl, &$keys, &$data, $allowed, $quote, $query, $c): void {
+        $allowed($table);
+        if (isset($ddl[$table])) { return; }
+        $schema = $query('SHOW CREATE TABLE ' . $quote($c['dbname']) . '.' . $quote($table));
+        $ddl[$table] = $schema[0]['Create Table']; $data[$table] = [];
+        $keys[$table] = $query('SELECT CONSTRAINT_NAME,COLUMN_NAME,REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA=? AND TABLE_NAME=? AND REFERENCED_TABLE_NAME IS NOT NULL ORDER BY CONSTRAINT_NAME,ORDINAL_POSITION', [$c['dbname'],$table]);
+    };
+    $add = static function (string $table, array $row) use (&$data, &$seen, $plan): bool {
+        if ($table === 'catalog_product_entity' && !in_array($row['sku'], $plan['approved_products'], true)) { throw new RuntimeException('Closure escaped seventeen products'); }
+        $hash = hash('sha256', json_encode($row, JSON_THROW_ON_ERROR));
+        if (isset($seen[$table][$hash])) { return false; }
+        $seen[$table][$hash] = true; $data[$table][] = $row; return true;
+    };
+    $normalize = static function (array $rows): array {
+        $out = []; foreach ($rows as $r) { ksort($r); $out[] = json_encode(array_map(static fn($v) => $v === null ? null : (string)$v, $r), JSON_THROW_ON_ERROR); } sort($out); return $out;
+    };
+    foreach ($plan['guards'] as $g) {
+        $ensure($g['table']); $parts = []; $params = [];
+        foreach ($g['clauses'] as $clause) {
+            $and = []; foreach ($clause as $column => $values) {
+                if (!$values) { throw new RuntimeException('Empty selector'); }
+                $and[] = $quote($column) . ' IN (' . implode(',', array_fill(0,count($values),'?')) . ')'; array_push($params,...$values);
+            }
+            $parts[] = '(' . implode(' AND ', $and) . ')';
+        }
+        $rows = $query('SELECT * FROM ' . $quote($c['dbname']) . '.' . $quote($g['table']) . ' WHERE ' . implode(' OR ', $parts), $params);
+        if ($normalize($rows) !== $normalize($g['rows'])) { throw new RuntimeException('Guard drift'); }
+        foreach ($rows as $row) { $add($g['table'],$row); }
+    }
+    if (isset($a['application-metadata'])) {
+        // EAV/store definitions only. No customer entities or configuration values.
+        foreach (['eav_attribute_set','eav_attribute_group','eav_entity_attribute','eav_attribute_label','catalog_eav_attribute','store','store_group','store_website'] as $table) {
+            $ensure($table);
+            foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table)) as $row) { $add($table,$row); }
+        }
+        $table='cataloginventory_stock_status';$ensure($table);
+        $ids=array_column($data['catalog_product_entity'],'entity_id');
+        foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table).' WHERE product_id IN ('.implode(',',array_fill(0,count($ids),'?')).')',$ids) as $row) { $add($table,$row); }
+        // Product resource loading reads the complete custom-option table family,
+        // even when these seventeen products have no custom options.
+        foreach (['catalog_product_option','catalog_product_option_price','catalog_product_option_title','catalog_product_option_type_value','catalog_product_option_type_price','catalog_product_option_type_title'] as $table) { $ensure($table); }
+        if ($query('SELECT option_id FROM '.$quote($c['dbname']).'.catalog_product_option WHERE product_id IN ('.implode(',',array_fill(0,count($ids),'?')).')',$ids)) { throw new RuntimeException('Custom options require expanded scope'); }
+        foreach ($schemaOnly as $table) {
+            if ($query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=? AND TABLE_NAME=?',[$c['dbname'],$table])) { $ensure($table); }
+        }
+        if(isset($a['guest-pricing'])){
+            foreach(['customer_group','customer_group_excluded_website','tax_class'] as $table){
+                $filter=$table==='tax_class'?'':' WHERE customer_group_id=0';
+                foreach($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table).$filter) as $row){
+                    if(!isGuestPricingRow($table,$row)){throw new RuntimeException('Pricing metadata escaped guest scope');}
+                    $add($table,$row);
+                }
+            }
+            foreach($query('SELECT * FROM '.$quote($c['dbname']).'.weee_tax WHERE entity_id IN ('.implode(',',array_fill(0,count($ids),'?')).')',$ids) as $row){$add('weee_tax',$row);}
+        }
+        if(isset($a['storefront-metadata'])){
+            $filters=['theme'=>'','design_change'=>' WHERE store_id IN (0,2)',
+                'directory_currency_rate'=>" WHERE currency_from='USD' AND currency_to='USD'",
+                'core_config_data'=>" WHERE path='design/theme/theme_id' AND ((scope='default' AND scope_id=0) OR (scope IN ('websites','stores') AND scope_id=2))"];
+            foreach($filters as $table=>$filter){
+                foreach($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table).$filter) as $row){
+                    if(!isStorefrontMetadataRow($table,$row)){throw new RuntimeException('Storefront metadata scope escaped');}
+                    $add($table,$row);
+                }
+            }
+        }
+        // Capture supporting catalog/inventory structure up front. The frontend-action
+        // table can reference customers and is deliberately not part of this fixture.
+        foreach ($query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=? AND TABLE_TYPE=?',[$c['dbname'],'BASE TABLE']) as $entry) {
+            $table=$entry['TABLE_NAME'];
+            if (isRuntimeSupportTable($table)) { $ensure($table); }
+        }
+        $mediaIds=array_column($data['catalog_product_entity_media_gallery'],'value_id');
+        if ($mediaIds) {
+            foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.catalog_product_entity_media_gallery_value_video WHERE value_id IN ('.implode(',',array_fill(0,count($mediaIds),'?')).')',$mediaIds) as $row) { $add('catalog_product_entity_media_gallery_value_video',$row); }
+        }
+        foreach (['inventory_stock','inventory_source_stock_link','inventory_stock_sales_channel'] as $table) {
+            foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.'.$quote($table)) as $row) { $add($table,$row); }
+        }
+        $sourceCodes=array_column($data['inventory_source_item'],'source_code');
+        if($sourceCodes){
+            foreach($query('SELECT * FROM '.$quote($c['dbname']).'.inventory_source_carrier_link WHERE source_code IN ('.implode(',',array_fill(0,count($sourceCodes),'?')).')',$sourceCodes) as $row){$add('inventory_source_carrier_link',$row);}
+        }
+        foreach ($query('SELECT * FROM '.$quote($c['dbname']).'.catalogrule_product_price WHERE product_id IN ('.implode(',',array_fill(0,count($ids),'?')).')',$ids) as $row) { $add('catalogrule_product_price',$row); }
+    }
+    for ($pass = 0; $pass < 30; $pass++) {
+        $changed = false;
+        foreach (array_keys($ddl) as $table) {
+            $grouped = [];
+            foreach ($keys[$table] as $key) { $grouped[$key['CONSTRAINT_NAME']][] = $key; $ensure($key['REFERENCED_TABLE_NAME']); }
+            foreach ($data[$table] as $row) {
+                foreach ($grouped as $foreign) {
+                    $parts = []; $values = []; $parent = $foreign[0]['REFERENCED_TABLE_NAME'];
+                    foreach ($foreign as $key) {
+                        if ($row[$key['COLUMN_NAME']] === null) { continue 2; }
+                        $parts[] = $quote($key['REFERENCED_COLUMN_NAME']) . '=?'; $values[] = $row[$key['COLUMN_NAME']];
+                    }
+                    foreach ($query('SELECT * FROM ' . $quote($c['dbname']) . '.' . $quote($parent) . ' WHERE ' . implode(' AND ',$parts), $values) as $parentRow) {
+                        $changed = $add($parent,$parentRow) || $changed;
+                    }
+                }
+            }
+        }
+        if (array_sum(array_map('count',$data)) > 10000 || count($ddl) > 200) { throw new RuntimeException('Closure budget exceeded'); }
+        if (!$changed) { break; }
+    }
+    if ($changed) { throw new RuntimeException('Closure did not converge'); }
+    $version = $pdo->query('SELECT VERSION()')->fetchColumn(); $pdo->rollBack();
+    $result = ['version'=>1,'host'=>'relevance.comtom.lab','captured_at'=>gmdate('c'),'consistent_read_only'=>true,'engine'=>$version,
+        'plan_sha256'=>hash_file('sha256',$a['plan']),'collector_sha256'=>hash_file('sha256',__FILE__),'application_metadata'=>isset($a['application-metadata']),'guest_pricing_metadata'=>isset($a['guest-pricing']),'ddl'=>$ddl,'foreign_keys'=>$keys,'rows'=>$data,
+        'storefront_metadata'=>isset($a['storefront-metadata']),
+        'exclusions'=>['No customers, orders, carts, credentials or non-catalog configuration except scoped numeric theme assignments','Theme file contents, triggers, routines and Magento runtime are not copied']];
+    $f = fopen($a['output'],'x'); if (!$f) { throw new RuntimeException('Choose fresh output'); } chmod($a['output'],0600);
+    fwrite($f,json_encode($result,JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR).PHP_EOL); fclose($f);
+    file_put_contents($a['output'].'.log',gmdate('c')." Read-only schema and catalog closure captured\n");
+} catch (Throwable $e) {
+    if (isset($pdo) && $pdo->inTransaction()) { $pdo->rollBack(); }
+    $reason = get_class($e) === RuntimeException::class ? $e->getMessage() : get_class($e);
+    file_put_contents(($a['output'] ?? sys_get_temp_dir().'/wands-schema').'.log',gmdate('c').' Failed: '.$reason."; no catalog writes\n",FILE_APPEND); exit(1);
+}

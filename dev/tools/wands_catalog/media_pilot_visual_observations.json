@@ -1,0 +1,242 @@
+[
+  {
+    "root_sku": "WANDS-000056",
+    "image_sha256": "4b0e41f4398f9a1f8d0751b0bc7d4d3969913da8326a8695548370edc216ee72",
+    "definition_sha256": "49e7965504341c8ac3d5413b6833ed6f58fb5c18b04f041e7e72d56e5444101e",
+    "runtime_prompt_sha256": "7c58fcbcf8f635ac758d639b2a4c02318b774b3b62c389482ddf52a7a866c91b",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "fail",
+      "selected_options": "pass",
+      "exact_sale_unit_and_component_count": "fail",
+      "no_excluded_items": "pass",
+      "coherent_geometry_and_anatomy": "fail",
+      "no_text_or_branding": "pass",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "Three textile-like objects are separated, but the lower item resembles a wearable flared skirt rather than a rectangular crib skirt. The upper-right folded square does not expose fitted-sheet construction.",
+    "next_direction": "Do not accept. Define a rectangular platform-and-drop crib skirt and show the fitted sheet's elasticized corners; avoid clothing terminology without construction detail."
+  },
+  {
+    "root_sku": "WANDS-003897",
+    "image_sha256": "76122b5905653dbe30f878a2fc6ee3c91a3b290fb9d478b4aa0e640560a84ab9",
+    "definition_sha256": "bd5e1ed70fa8d6878980f0857fe243a2f9e9b000c7559088cee13d1b137d688f",
+    "runtime_prompt_sha256": "8affb88c2a1f10c4919224b57e7d7d80a42e3211977fb0c3762f53008464fdec",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "pass",
+      "selected_options": "pass",
+      "exact_sale_unit_and_component_count": "fail",
+      "no_excluded_items": "fail",
+      "coherent_geometry_and_anatomy": "pass",
+      "no_text_or_branding": "fail",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "Only a small subset of the ten-piece manifest is depicted; the second round pan, muffin pan and two distinct baking sheets are not represented. The image adds cake and nonsensical labels.",
+    "next_direction": "Do not accept. Use a count-controlled composition or individual component assets before assembling a verified ten-piece hero; do not expand one-shot assortment generation."
+  },
+  {
+    "root_sku": "WANDS-008286",
+    "image_sha256": "7ee9bc05a4daee0cb043da5623c6431dc6a5bb4e92cfb899aad404c86f83fab6",
+    "definition_sha256": "d1b8c47e0a82a32eeab4494a6c256a5f1292c9fd5c7a92e7af40350a584251e8",
+    "runtime_prompt_sha256": "d7c48f13b2937230789ba68a8c1caa49afdfa1a08b314fa14980dadee3373e4d",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "pass",
+      "selected_options": "pass",
+      "exact_sale_unit_and_component_count": "pass",
+      "no_excluded_items": "pass",
+      "coherent_geometry_and_anatomy": "pass",
+      "no_text_or_branding": "pass",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "One flat, continuous fabric panel is clearly shown with cut edges and a pineapple/floral print. No pillow filling, extra cuts or text is visible; the rectangular proportions are plausible.",
+    "next_direction": "Passes this local synthetic-design visual screen. Retain full dimensions and provenance in metadata; this does not prove physical measurements or authorize publication."
+  },
+  {
+    "root_sku": "WANDS-012133",
+    "image_sha256": "55ae53e52d4b85759c176294e4ffe9f12c4c9520fa9563695e309ba413acf8b0",
+    "definition_sha256": "734e9ed3ff1cf55df409513202a5b1f9f64dafd596302de2beea57341f868dc2",
+    "runtime_prompt_sha256": "b5ea72124b6928d7230db975818f06d840a78fb89bd5cd5d05ee7ff26f5ff330",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "pass",
+      "selected_options": "uncertain",
+      "exact_sale_unit_and_component_count": "pass",
+      "no_excluded_items": "pass",
+      "coherent_geometry_and_anatomy": "uncertain",
+      "no_text_or_branding": "pass",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "The product is now two Black fabric panels with a spoon print, rather than loose spoons. The tall, narrow gathered presentation leaves the corrected short kitchen-panel proportions unresolved.",
+    "next_direction": "Hold for a short, broad-panel composition review. Pair count, color and product identity improve, but this image does not establish the selected length or physical dimensions."
+  },
+  {
+    "root_sku": "WANDS-017111",
+    "image_sha256": "584700a20948d9f74b492f2331bdd859177abb9e3c110dee4dc287de57c6622b",
+    "definition_sha256": "1f43aea2f9bc8778806d34e3bbb34b0f7e7d461cabb324db5e3bcfba1735a736",
+    "runtime_prompt_sha256": "eb671f2b769dc3df91ca4947dc5097b02576886cf528de6ef5afbf56437c3831",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "fail",
+      "selected_options": "fail",
+      "exact_sale_unit_and_component_count": "fail",
+      "no_excluded_items": "fail",
+      "coherent_geometry_and_anatomy": "pass",
+      "no_text_or_branding": "fail",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "The candidate still has only two bed levels instead of three, includes two mattresses and prints malformed dimension annotations.",
+    "next_direction": "Do not accept or expand this challenge. A controlled three-level frame layout is needed; omit mattresses and all dimension graphics."
+  },
+  {
+    "root_sku": "WANDS-017842",
+    "image_sha256": "c90e47b53bd5424873b06a162161df195248567a5d784023da5827fe439e8898",
+    "definition_sha256": "69a1bdfa969248d58f58a20f07cb735ac71e8b9e293d5d54ce08193dd54df152",
+    "runtime_prompt_sha256": "3a0d33408c029722cdafa245409b7cbcabd336e251b40bd850f04dc7ed6545c0",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "pass",
+      "selected_options": "pass",
+      "exact_sale_unit_and_component_count": "fail",
+      "no_excluded_items": "pass",
+      "coherent_geometry_and_anatomy": "pass",
+      "no_text_or_branding": "fail",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "Twenty utensils are visible in two rows rather than the required 45; the eight complete place settings and five named serving utensils are not present. The image also prints malformed labels.",
+    "next_direction": "Do not accept. Build and verify individual utensil types, then use deterministic placement/counting for eight settings plus five servers; do not scale this one-shot assortment approach."
+  },
+  {
+    "root_sku": "WANDS-022607",
+    "image_sha256": "ffd0c13b28efdb919b9d9bb5ab1eb89dd691479b623b82e94e70f9c20e2efa73",
+    "definition_sha256": "d25c399ddfd50a9071689925d18fc29077fa369230cb438782092a98cd985ab4",
+    "runtime_prompt_sha256": "a1e5db65e8ccbb29fe72b8f4bd9af96145192a3c82f56a308f747871bc21a72e",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "pass",
+      "selected_options": "pass",
+      "exact_sale_unit_and_component_count": "pass",
+      "no_excluded_items": "pass",
+      "coherent_geometry_and_anatomy": "pass",
+      "no_text_or_branding": "pass",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "One Black nightstand is shown with smooth molded-plastic-like surfaces, no wood grain, no extra products or lettering, and plausible compact proportions.",
+    "next_direction": "Passes the initial synthetic-design visual screen. This is not manufacturer-design verification or proof of exact physical dimensions."
+  },
+  {
+    "root_sku": "WANDS-025039",
+    "image_sha256": "d97334905ed99b1fa72af2365cedf157c46b18d14d67bc5abd05d8506da3f52c",
+    "definition_sha256": "20a37a9cbaf286d40fecce4c4ce65ccaa4ba0ce3078c8584d67fee89c1ea65d5",
+    "runtime_prompt_sha256": "ee7819c2c7826d8e45d9de0a5a25d91dc90595d840876aa72fb943d9548328a6",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "uncertain",
+      "selected_options": "pass",
+      "exact_sale_unit_and_component_count": "pass",
+      "no_excluded_items": "pass",
+      "coherent_geometry_and_anatomy": "uncertain",
+      "no_text_or_branding": "pass",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "One Brass-colored bedside cabinet is depicted without extras or text. Its tall front face could read as a cupboard door rather than the required single drawer; drawer construction is not clear.",
+    "next_direction": "Hold until a clearly recognizable drawer box and slide/opening geometry are shown. Do not assume a closed cabinet face proves the specified drawer construction."
+  },
+  {
+    "root_sku": "WANDS-030335",
+    "image_sha256": "30e6ea61c8339a1d91b96fd597a90641f0beab146a85d60c7620ab5a979b1478",
+    "definition_sha256": "6dd4539d683cca1eaa6ea565d06ae12c11721760e73bf0d7c3b83c705cb39f74",
+    "runtime_prompt_sha256": "e3169a26beac0e9fe1c0057fd582b461ff5fe49c4aca53b607ed6dc22b0e90d2",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "pass",
+      "selected_options": "pass",
+      "exact_sale_unit_and_component_count": "fail",
+      "no_excluded_items": "fail",
+      "coherent_geometry_and_anatomy": "pass",
+      "no_text_or_branding": "pass",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "The image contains one sofa, only one lounge chair, two ottomans and one coffee table, with three decorative pillows. The approved unit requires two chairs, one ottoman and two pillows.",
+    "next_direction": "Do not accept. Lock the furniture layout and exact per-type quantities before generating or assembling another hero."
+  },
+  {
+    "root_sku": "WANDS-034345",
+    "image_sha256": "537464421aa8f735b95383e27b0bf2a0ed6cda03d8271a4ecda000f86fa5687c",
+    "definition_sha256": "ba697254caaeb4c7315d6919cbcd8553bf0f3cafb013636db047d717b50317a9",
+    "runtime_prompt_sha256": "69f684d6d75bb5b9848b1021f65b25412dcbfaef07d461b0200e7dc81532e655",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "pass",
+      "selected_options": "pass",
+      "exact_sale_unit_and_component_count": "fail",
+      "no_excluded_items": "fail",
+      "coherent_geometry_and_anatomy": "pass",
+      "no_text_or_branding": "pass",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "The pillowcase is shown filled and standing like a complete pillow, with no visible empty opening. This contradicts the insert-free sale unit and empty-case framing.",
+    "next_direction": "Do not accept. Show a flat, unfilled fabric envelope with an unmistakable open end and no pillow insert."
+  },
+  {
+    "root_sku": "WANDS-035295",
+    "image_sha256": "70b2f3edfbf7c3df89e98fef23425a084b607f408ff9d7c69a7a415774f0d660",
+    "definition_sha256": "351d78aa487d0b8d9962d2a3c88835905dcdf1c2de172c8b67ed806a9588a66a",
+    "runtime_prompt_sha256": "80d4ce126f876632e64b37b47cd774d19943e66ce538cb275804f4305061e730",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "fail",
+      "selected_options": "pass",
+      "exact_sale_unit_and_component_count": "fail",
+      "no_excluded_items": "pass",
+      "coherent_geometry_and_anatomy": "fail",
+      "no_text_or_branding": "pass",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "The tall floor lamp is recognizable, but one short object is a bare tray-like pedestal and the other has an implausibly seated shade. This is not two complete, coherent table lamps.",
+    "next_direction": "Do not accept. Specify and control complete base, stem, socket and shade assemblies for all three lamps; keep a shared floor plane and clear height hierarchy."
+  },
+  {
+    "root_sku": "WANDS-042749",
+    "image_sha256": "f39dfa9c77714562852e5b6576a5cbcf5646c190298488470a5bc12e226a28c3",
+    "definition_sha256": "8000269fe60b9be59201c4473963e1e05fa2bf6ff52bebbed864571f135ec0b8",
+    "runtime_prompt_sha256": "c537c9005645eff4473f89e4ce4034e572b67b9a17bf5ed1781f04c96d8beb2d",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "checks": {
+      "identity_and_shape": "pass",
+      "selected_options": "pass",
+      "exact_sale_unit_and_component_count": "pass",
+      "no_excluded_items": "pass",
+      "coherent_geometry_and_anatomy": "pass",
+      "no_text_or_branding": "pass",
+      "no_unsupported_claims_or_unsafe_staging": "pass",
+      "synthetic_provenance_in_metadata": "pass"
+    },
+    "finding": "One round Gray table and four separately recognizable matching chairs are visible. No cushions, extra furniture, lettering or obvious structural defects are visible.",
+    "next_direction": "Passes the initial synthetic-design visual screen for identity, finish and assortment. Pixel review does not certify dimensions, materials, strength or manufacturer equivalence."
+  }
+]

@@ -17,18 +17,20 @@ class ProductImporter
         private readonly \Magento\ImportExport\Model\Import\Source\CsvFactory $csvFactory,
         private readonly \Magento\Framework\Filesystem $filesystem,
         private readonly State $appState,
+        private readonly \Magento\Framework\App\ResourceConnection $resourceConnection,
+        private readonly BundleAssortmentReconciler $bundleAssortmentReconciler,
     ) {
     }
 
-    public function execute(string $sourceFile, bool $validateOnly = false): array
+    public function execute(string $sourceFile, bool $validateOnly = false, bool $reconcileBundles = false): array
     {
         return $this->appState->emulateAreaCode(
             Area::AREA_ADMINHTML,
-            fn(): array => $this->import($sourceFile, $validateOnly)
+            fn(): array => $this->import($sourceFile, $validateOnly, $reconcileBundles)
         );
     }
 
-    private function import(string $sourceFile, bool $validateOnly): array
+    private function import(string $sourceFile, bool $validateOnly, bool $reconcileBundles): array
     {
         $absolutePath = realpath($sourceFile);
 
@@ -72,11 +74,32 @@ class ProductImporter
                 'invalid_rows' => $import->getErrorAggregator()->getInvalidRowsCount(),
                 'errors' => $import->getErrorAggregator()->getErrorsCount(),
                 'error_messages' => $this->errorMessages($import),
+                'bundle_reconciliation' => $reconcileBundles
+                    ? $this->bundleAssortmentReconciler->inspectExisting($sourceFile)
+                    : null,
             ];
         }
 
-        if (!$import->importSource() || $import->getErrorAggregator()->getErrorsCount() > 0) {
-            throw new \RuntimeException($this->formatErrors($import));
+        $connection = $this->resourceConnection->getConnection();
+        $reconciliation = null;
+        if ($reconcileBundles) {
+            $connection->beginTransaction();
+        }
+        try {
+            if ($reconcileBundles) {
+                $reconciliation = $this->bundleAssortmentReconciler->deleteExisting($sourceFile);
+            }
+            if (!$import->importSource() || $import->getErrorAggregator()->getErrorsCount() > 0) {
+                throw new \RuntimeException($this->formatErrors($import));
+            }
+            if ($reconcileBundles) {
+                $connection->commit();
+            }
+        } catch (\Throwable $exception) {
+            if ($reconcileBundles && $connection->getTransactionLevel() > 0) {
+                $connection->rollBack();
+            }
+            throw $exception;
         }
 
         $import->invalidateIndex();
@@ -88,6 +111,7 @@ class ProductImporter
             'invalid_rows' => $import->getErrorAggregator()->getInvalidRowsCount(),
             'errors' => $import->getErrorAggregator()->getErrorsCount(),
             'error_messages' => $this->errorMessages($import),
+            'bundle_reconciliation' => $reconciliation,
         ];
     }
 

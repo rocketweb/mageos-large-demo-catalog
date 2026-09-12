@@ -32,6 +32,27 @@
 **/__pycache__/
 *.py[cod]
 
+# Catalog media is distributed separately; tool screenshots/diagrams stay eligible.
+# SKU-named product images remain excluded even if copied beside tooling source.
+/pub/media/
+/var/
+WANDS-[0-9]*.[jJ][pP][gG]
+WANDS-[0-9]*.[jJ][pP][eE][gG]
+WANDS-[0-9]*.[pP][nN][gG]
+WANDS-[0-9]*.[wW][eE][bB][pP]
+WANDS-[0-9]*.[gG][iI][fF]
+WANDS-[0-9]*.[aA][vV][iI][fF]
+WANDS-[0-9]*.[tT][iI][fF]
+WANDS-[0-9]*.[tT][iI][fF][fF]
+WANDS-BUNDLE-[0-9]*.[jJ][pP][gG]
+WANDS-BUNDLE-[0-9]*.[jJ][pP][eE][gG]
+WANDS-BUNDLE-[0-9]*.[pP][nN][gG]
+WANDS-BUNDLE-[0-9]*.[wW][eE][bB][pP]
+WANDS-BUNDLE-[0-9]*.[gG][iI][fF]
+WANDS-BUNDLE-[0-9]*.[aA][vV][iI][fF]
+WANDS-BUNDLE-[0-9]*.[tT][iI][fF]
+WANDS-BUNDLE-[0-9]*.[tT][iI][fF][fF]
+
 # Never commit credentials, machine-local overrides, or runtime state
 /auth.json
 /app/etc/env.php

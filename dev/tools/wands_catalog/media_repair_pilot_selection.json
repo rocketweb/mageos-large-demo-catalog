@@ -1,0 +1,62 @@
+[
+  {
+    "root_sku": "WANDS-000056",
+    "challenge": "Nursery component clarity",
+    "framing": "Flat lay with three distinct roles: quilt, fitted sheet and skirt; no crib or mattress."
+  },
+  {
+    "root_sku": "WANDS-003897",
+    "challenge": "Ten-piece bakeware count",
+    "framing": "Separate every named pan and the lid so all ten components can be counted; no nesting that hides pieces."
+  },
+  {
+    "root_sku": "WANDS-008286",
+    "challenge": "Single fabric cut clarity",
+    "framing": "One unfolded continuous fabric panel with visible cut edges; no padded folds."
+  },
+  {
+    "root_sku": "WANDS-012133",
+    "challenge": "Printed-object identity",
+    "framing": "Two actual curtain panels with the spice-spoon print; no loose kitchen utensils."
+  },
+  {
+    "root_sku": "WANDS-017111",
+    "challenge": "Three-level bed construction",
+    "framing": "All three frame levels clearly visible, without mattresses or bedding."
+  },
+  {
+    "root_sku": "WANDS-017842",
+    "challenge": "45-piece utensil count and anatomy",
+    "framing": "Eight separated five-piece place settings plus a separate row of five named serving utensils; no overlapping or cropped pieces."
+  },
+  {
+    "root_sku": "WANDS-022607",
+    "challenge": "Plastic finish correction",
+    "framing": "One Black plastic nightstand; no retained wood finishes or purple transparency."
+  },
+  {
+    "root_sku": "WANDS-025039",
+    "challenge": "Drawer count and finish",
+    "framing": "One Brass-finish nightstand with one drawer and no measurement-like text."
+  },
+  {
+    "root_sku": "WANDS-030335",
+    "challenge": "Furniture versus cushion count",
+    "framing": "One sofa, two lounge chairs, one ottoman and one coffee table, plus two decorative pillows; separate furniture enough to count."
+  },
+  {
+    "root_sku": "WANDS-034345",
+    "challenge": "Empty pillowcase identity",
+    "framing": "One empty pillowcase with its opening visible; no insert or extra bedding."
+  },
+  {
+    "root_sku": "WANDS-035295",
+    "challenge": "Mixed lamp heights",
+    "framing": "One tall floor lamp and two shorter matching table lamps on the same ground plane."
+  },
+  {
+    "root_sku": "WANDS-042749",
+    "challenge": "Dining shape and quantity",
+    "framing": "One round table and four chairs; no extra chairs, cushions, vase or place settings."
+  }
+]

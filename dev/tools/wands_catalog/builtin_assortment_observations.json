@@ -1,0 +1,110 @@
+{
+  "version": "wands-builtin-assortment-observations-v1",
+  "review_date": "2026-09-11",
+  "assortments_path": "var/wands/assortment-preview-v2/assortments.json",
+  "assortments_sha256": "32fc5a3dd9579dbdf9c6a491f1160b163ffb0aeede2f1cea29bd1f9a2ae0d454",
+  "review_html_sha256": "09b4a711de4c0505b381411354485472f1a4076bc57e1ebdf4cbac47375abda8",
+  "review_method": "direct_browser_image_inspection",
+  "scope": "Initial local HTML/SVG assortment review only. This supplemental record does not mutate the immutable preview packet or approve publication. Counts describe physical instances, not unique generated images. Synthetic dimensions are design guides, not verified physical measurements.",
+  "browser_checks": {
+    "desktop_viewport": [1920, 1600],
+    "mobile_viewport": [390, 844],
+    "rendered_instances": 65,
+    "successfully_loaded_image_references": 65,
+    "horizontal_overflow": false,
+    "reported_page_errors": 0,
+    "mobile_limit": "All items fit, but flatware details are too small for construction review on mobile; acceptance uses desktop and the separate full-size component and mask reviews.",
+    "screenshot_note": "Element-scoped captures in assortment-preview-v2 were blank or cropped and are not acceptance evidence. The screenshots below are focused viewport captures, each directly inspected after capture."
+  },
+  "families": [
+    {
+      "root_sku": "WANDS-000056",
+      "verdict": "blocked",
+      "required_instances": 3,
+      "rendered_instances": 0,
+      "finding": "The crib valance still has inconsistent drop-panel proportions. No complete nursery assortment was assembled. The accepted quilt and fitted sheet do not establish a complete sale unit."
+    },
+    {
+      "root_sku": "WANDS-003897",
+      "verdict": "initial_visual_pass",
+      "required_instances": 10,
+      "rendered_instances": 10,
+      "desktop_screenshot_path": "var/wands/builtin-assortment-review/bakeware-desktop.png",
+      "desktop_screenshot_sha256": "804feab68498368a1b253a73a54730316ba452367dc7e9dcb8ed7c5e9076f013",
+      "mobile_screenshot_path": "var/wands/builtin-assortment-review/bakeware-mobile.png",
+      "mobile_screenshot_sha256": "a9f860b632770797fece598c363f81b19801774f5e2f7976d742ef5536e49421",
+      "checks": {
+        "exact_sale_unit_count": "pass",
+        "complete_connected_objects": "pass",
+        "coordinated_finish_and_design": "pass",
+        "consistent_overhead_view": "pass",
+        "uniform_scaling_without_stretch": "pass",
+        "clearance_and_no_overlap": "pass",
+        "synthetic_disclosure": "pass"
+      },
+      "finding": "Ten separated pieces: two round pans, square pan, rectangular pan, its closed lid, loaf pan, twelve-well muffin pan, open wire rack, and two baking-sheet instances. All are visible without overlap or a missing perimeter. The copper finish is coordinated; the older square pan is shinier and pinker than the newer pans, so this is not an identical-finish claim. The grid verifies inclusion rather than showing an assembled lifestyle scene."
+    },
+    {
+      "root_sku": "WANDS-017842",
+      "verdict": "initial_visual_pass",
+      "required_instances": 45,
+      "rendered_instances": 45,
+      "desktop_screenshot_path": "var/wands/builtin-assortment-review/flatware-desktop.png",
+      "desktop_screenshot_sha256": "601bb6595bbdc11d807e018668ba1a31217b10348d93b0a6c931d19b5636d0c9",
+      "mobile_screenshot_path": "var/wands/builtin-assortment-review/flatware-mobile.png",
+      "mobile_screenshot_sha256": "68a1dfcc89dad7ad1b0eb7749ee0836820662fd0f6b997860ed9e2083d683a44",
+      "checks": {
+        "exact_sale_unit_count": "pass",
+        "complete_connected_objects": "pass",
+        "coordinated_finish_and_design": "pass",
+        "consistent_overhead_view": "pass",
+        "uniform_scaling_without_stretch": "pass",
+        "clearance_and_no_overlap": "pass",
+        "synthetic_disclosure": "pass"
+      },
+      "finding": "Eight five-piece place settings plus five serving utensils are visible: slotted spoon, spreader, two-prong serving fork, pie server and serving spoon. Repeated place settings reuse the same accepted component assets. Handles remain intact; real fork gaps and spoon slots remain open. Smooth silver rounded handles form a coordinated set with differing reflections, not pixel-identical finish or CAD-verified proportions."
+    },
+    {
+      "root_sku": "WANDS-030335",
+      "verdict": "initial_visual_pass",
+      "required_instances": 7,
+      "rendered_instances": 7,
+      "desktop_screenshot_path": "var/wands/builtin-assortment-review/outdoor-desktop.png",
+      "desktop_screenshot_sha256": "1e42cdce156fa17e859c0694c3b7aa4b694a194520952765c56047a02bbf4976",
+      "mobile_screenshot_path": "var/wands/builtin-assortment-review/outdoor-mobile.png",
+      "mobile_screenshot_sha256": "ab9ae8fc29015d122454c7666c1809546af56459badcc76ea88f14f09877af74",
+      "checks": {
+        "exact_sale_unit_count": "pass",
+        "complete_connected_objects": "pass",
+        "coordinated_finish_and_design": "pass",
+        "consistent_overhead_view": "pass",
+        "uniform_scaling_without_stretch": "pass",
+        "clearance_and_no_overlap": "pass",
+        "synthetic_disclosure": "pass"
+      },
+      "finding": "One sofa, two chair instances, one ottoman, one coffee table and two separate decorative pillow instances are visible. Sofa and chair frames include both arms and back rails; the table retains its complete woven border. Gray cushions and dark woven frames are coordinated. Cushions attached to furniture are not counted as extra sale-unit pieces. This is a separated inclusion grid, not an outdoor room composition."
+    },
+    {
+      "root_sku": "WANDS-035295",
+      "verdict": "initial_visual_pass",
+      "required_instances": 3,
+      "rendered_instances": 3,
+      "desktop_screenshot_path": "var/wands/builtin-assortment-review/lamps-desktop.png",
+      "desktop_screenshot_sha256": "a9c2ebba2b7413f4c8a03c6d2c5e7ba8d438e23aa0308e98b646a477d90199c3",
+      "mobile_screenshot_path": "var/wands/builtin-assortment-review/lamps-mobile.png",
+      "mobile_screenshot_sha256": "607f72586f37e845179fe25bf36805fb5f860c6bf849d2e4887f32b4499dc294",
+      "checks": {
+        "exact_sale_unit_count": "pass",
+        "complete_connected_objects": "pass",
+        "coordinated_finish_and_design": "pass",
+        "consistent_front_view": "pass",
+        "shared_baseline": "pass",
+        "uniform_scaling_without_stretch": "pass",
+        "clearance_and_no_overlap": "pass",
+        "synthetic_disclosure": "pass"
+      },
+      "finding": "Exactly one floor lamp and two identical table-lamp instances, aligned at their bases. Bronze shades, straight stems and circular bases coordinate; the stepped floor-lamp base differs from the flat table-lamp bases. This rechecks the unchanged accepted lamp assets within the new packet. The previous table-lamp prompt proportion discrepancy remains documented in REPAIR_AND_CUTOUT_CHECKPOINT.md."
+    }
+  ],
+  "publication_approved": false
+}

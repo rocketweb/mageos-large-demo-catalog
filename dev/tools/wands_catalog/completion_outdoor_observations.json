@@ -1,0 +1,117 @@
+[
+  {
+    "trial_id": "WANDS-030335-sofa-204b2c92b912-completion",
+    "case_sha256": "cebf336836b1c5349e6b2aeaecd58051972fb8973f6ab831664ee56b6cd07798",
+    "image_sha256": "b850fa95326344483af9fe8b84f3f538c5bf5f506b290905701e1b91cc1c1e73",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      327,
+      83,
+      842,
+      423
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One connected dark-woven sofa with gray fitted seating and back cushions is shown from above, without loose pillows. Its approximately 0.66 depth-to-width envelope is too deep for the synthetic 0.46 target.",
+    "next_direction": "Repair the sofa footprint and compare its frame and cushion construction with the companion chairs."
+  },
+  {
+    "trial_id": "WANDS-030335-chairs-b065305eb79c-completion",
+    "case_sha256": "4adf20fce130083f9b12d9ea1de747988b682269ba261f319ae692a906590a9f",
+    "image_sha256": "ecf5d719d8b68ec4405d3299626c67e7258dc4498e42871ba105f8418b34921e",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      204,
+      80,
+      533,
+      716
+    ],
+    "checks": {
+      "appearance_and_view": "uncertain",
+      "identity_and_construction": "fail",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "This is an elongated chaise-like chair with a headrest cushion rather than the selected compact lounge chair. Approximate H/W is 1.93 versus the synthetic 1.11 target; the viewpoint is also elevated rather than a consistent plan view.",
+    "next_direction": "Repair to a compact chair footprint with no added headrest or loose pillow, using the family's shared overhead view."
+  },
+  {
+    "trial_id": "WANDS-030335-ottoman-6be1012461a9-completion",
+    "case_sha256": "c5b8d54f6c41b70874e164fa109960ed94577657d138242207966880c5a77629",
+    "image_sha256": "ccffe408f6ac1b743735c81e0026b634c9b0816970d8eef24420dec8e3b7db88",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      207,
+      78,
+      620,
+      618
+    ],
+    "checks": {
+      "appearance_and_view": "uncertain",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "fail",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One backless gray-upholstered woven ottoman is visible, but its long axis runs vertically despite the specified wider-than-deep footprint. Approximate H/W is 1.31 versus the synthetic 0.85 target, with a visible front face.",
+    "next_direction": "Repair the width/depth orientation and overhead camera; do not distort this image to fit the layout."
+  },
+  {
+    "trial_id": "WANDS-030335-table-a2ca892e8cd3-completion",
+    "case_sha256": "a87e689c66ab728fff33e17f20d828d352732bcdf43077fc887e7384a3e1f301",
+    "image_sha256": "dc21a590b0eec198fd692cb89e166421b7c4c90d35845fc401c113bd38d3d650",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      185,
+      107,
+      852,
+      438
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "uncertain",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One dark woven rectangular table with an empty inset top is shown from above. Approximate H/W is 0.50 against the synthetic 0.55 target, leaving a modest but unresolved depth mismatch.",
+    "next_direction": "Confirm table proportions and compatible weave, lighting and scale with the other outdoor components before mask selection."
+  },
+  {
+    "trial_id": "WANDS-030335-pillows-f005445103c2-completion",
+    "case_sha256": "0eb4338d4513b499fd3559b63b0d8ade3e9d6d2e3926bf5e231e93c7f4c69c09",
+    "image_sha256": "dc9477b04a30b5fae01377cb58e087e5ce4f2716777352ca7701953866d5018e",
+    "review_method": "direct_image_inspection",
+    "review_date": "2026-09-10",
+    "estimated_subject_bbox": [
+      101,
+      89,
+      671,
+      668
+    ],
+    "checks": {
+      "appearance_and_view": "pass",
+      "identity_and_construction": "pass",
+      "no_text_or_extras": "pass",
+      "proportions": "pass",
+      "single_complete_component": "pass",
+      "synthetic_provenance": "pass"
+    },
+    "finding": "One complete square gray decorative pillow with visible edge seams and no text or extra object. Approximate H/W is 1.02 against the synthetic 1.00 target.",
+    "next_direction": "Evaluate a separate mask and compare upholstery tone and lighting with the outdoor family."
+  }
+]

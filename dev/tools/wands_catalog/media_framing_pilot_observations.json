@@ -1,0 +1,42 @@
+[
+  {
+    "trial_id": "WANDS-035295-floor-lamp-61065fe722ea-square",
+    "image_sha256": "f3ce5a68a6ea32580d2f52470e405878b19fc3f5d09c02316b5926bd9e617b05",
+    "case_sha256": "443897b4f37d88b48225332d5ac1e7d340a30deff3bba3bd322e988d2595f85d",
+    "review_method": "direct_image_inspection", "review_date": "2026-09-10",
+    "estimated_subject_bbox": [281, 52, 489, 734],
+    "checks": {"single_complete_component":"pass","identity_and_construction":"pass","appearance_and_view":"pass","proportions":"fail","no_text_or_extras":"pass","synthetic_provenance":"pass"},
+    "finding": "The square control retains the complete Bronze lamp, but its shade is too wide relative to the full height. It reproduces the earlier failed silhouette.",
+    "next_direction": "Retain as the repeatability control; do not change the synthetic dimensions or stretch the image."
+  },
+  {
+    "trial_id": "WANDS-035295-floor-lamp-61065fe722ea-portrait",
+    "image_sha256": "25cbacd89c8df14c38d530c71263bc3248c4843ab1a6a55f88ff5f4bfe933019",
+    "case_sha256": "16c8dd4e98cc4bb2af7f56e692ec6bbb3358c1ed4c1ae90154e5eea84a2f0f05",
+    "review_method": "direct_image_inspection", "review_date": "2026-09-10",
+    "estimated_subject_bbox": [39, 99, 353, 1454],
+    "checks": {"single_complete_component":"pass","identity_and_construction":"pass","appearance_and_view":"pass","proportions":"fail","no_text_or_extras":"pass","synthetic_provenance":"pass"},
+    "finding": "The portrait has a coherent base, supported tall stem and attached shade, with no clipping or extra objects. Its silhouette is slimmer, but about 4.32 high per unit width still falls short of the 5.50 synthetic target. The base and shade design also change, so this is not an identity-preserving transformation.",
+    "next_direction": "Test a narrower canvas as a new candidate. Keep this proportion failure out of any mask or assembly queue."
+  },
+  {
+    "trial_id": "WANDS-017842-cake-server-e8b0f8c3de5c-square",
+    "image_sha256": "c85d7cf164b8bfba8ce5bfc9b5bc7659c5c88fe31cc28f5ea97fa472d3b33a90",
+    "case_sha256": "7b90c9e1fdc1c234e3f5a9ea7e5c29fe29f6ab86852694895980c05832a9ecc1",
+    "review_method": "direct_image_inspection", "review_date": "2026-09-10",
+    "estimated_subject_bbox": [264, 40, 504, 738],
+    "checks": {"single_complete_component":"pass","identity_and_construction":"pass","appearance_and_view":"pass","proportions":"fail","no_text_or_extras":"pass","synthetic_provenance":"pass"},
+    "finding": "The square control retains one connected triangular cake server with no food or text. Its broad blade is too wide against the overall synthetic envelope.",
+    "next_direction": "Retain as the repeatability control; do not use its geometry for final assembly."
+  },
+  {
+    "trial_id": "WANDS-017842-cake-server-e8b0f8c3de5c-portrait",
+    "image_sha256": "3953176c54b15eff1ca55a873fc79807d0223f41b195205c42cf501df335ba5c",
+    "case_sha256": "6e6e24eadc5be212eedb59daae3df6b47f8e8d9e59e1539ead4eab5977b01f75",
+    "review_method": "direct_image_inspection", "review_date": "2026-09-10",
+    "estimated_subject_bbox": [61, 79, 320, 1438],
+    "checks": {"single_complete_component":"pass","identity_and_construction":"pass","appearance_and_view":"pass","proportions":"fail","no_text_or_extras":"pass","synthetic_provenance":"pass"},
+    "finding": "The portrait remains a recognizable one-piece cake server with a connected handle and no extras. The blade becomes elongated: its roughly 5.25 silhouette ratio overshoots the synthetic target of 4.17. A tall canvas is not a universal fix.",
+    "next_direction": "Test an intermediate canvas shape between the square and this portrait. Keep the full-set and mask work on hold until geometry passes."
+  }
+]

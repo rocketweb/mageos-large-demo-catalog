@@ -1,0 +1,20 @@
+[
+  {
+    "asset_requirement_id": "WANDS-000056-quilt-076f7a7d7fc5",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/completion-nursery-v1/WANDS-000056-quilt-076f7a7d7fc5-completion-30ba12565d72.webp",
+    "image_sha256": "ed2bfa8858691e16836274e52da52ed4fa29ca10017717eaf48119232715b9cf",
+    "initial_visual_pass": true
+  },
+  {
+    "asset_requirement_id": "WANDS-017842-dinner-forks-ef5e27011fc0",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/component-image-pilot-v1/WANDS-017842-dinner-forks-ef5e27011fc0-e9fa2386806a.webp",
+    "image_sha256": "ec1f71ecdb39b873e2d5b125e1c4f7d94513bb4b2de7a94d5cbefe8f960c4128",
+    "initial_visual_pass": true
+  },
+  {
+    "asset_requirement_id": "WANDS-035295-floor-lamp-61065fe722ea",
+    "image_path": "/Users/matt/code/rocket-search/.worktrees/wands-merchandising/var/wands/framing-refinement-v1/WANDS-035295-floor-lamp-61065fe722ea-refined-a5c01a22a560.webp",
+    "image_sha256": "df9effe6d4447ebe96aede58299919fcbcdff216d9bb5aeb2dab8ef9d54e4671",
+    "initial_visual_pass": true
+  }
+]

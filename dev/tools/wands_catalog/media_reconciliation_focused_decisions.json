@@ -1,0 +1,122 @@
+[
+  {
+    "root_sku": "WANDS-000056",
+    "selected_sku": "WANDS-000056",
+    "reference_sha256": "0866f06827815ee1dd55c225f873d1f768c3cc171cf9bd6708fdbb196c5b3cc1",
+    "definition_sha256": "49e7965504341c8ac3d5413b6833ed6f58fb5c18b04f041e7e72d56e5444101e",
+    "disposition": "clarify_hero",
+    "evidence": "The stacked textiles do not reveal a quilt, fitted sheet and skirt as three distinct product roles. This does not prove a component is missing.",
+    "direction": "Prepare a separate three-item flat lay with elasticized sheet edges and skirt drop visible. Preserve the original as evidence; no crib or infant-use staging.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-003817",
+    "selected_sku": "WANDS-003817-TODDLER-56FF-BROWN-18F2",
+    "reference_sha256": "068a8692fed407d63b829be5d2fe09fe0a080e2cc1d766bdb7b59ebc980bbd17",
+    "definition_sha256": "f9469c884e4dfc59be055d91b3950f38f436488c5282a8ec4a2e1e7c0e093ea9",
+    "disposition": "clarify_hero",
+    "evidence": "Three padded-looking layers do not communicate the four named nursery items. Brown is mixed with prominent pink surfaces, so the selected design is not clear.",
+    "direction": "Prepare a countable Brown assortment: quilt, rail cover, fitted sheet and skirt, laid out without a crib or mattress. Do not infer an actual missing item from the folded stack.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-004880",
+    "selected_sku": "WANDS-004880-30-IN-5C57-OAK-CFED",
+    "reference_sha256": "026b2d593e2e7fea67f2c7f5a6ef4b5c46bf483cdea67e3db1fd81b123bfb752",
+    "definition_sha256": "090be680d66c9822aee21275c2bfce707d287ad2cc0cd29b423249df5228282b",
+    "disposition": "retain_candidate",
+    "evidence": "The cylinder, two curved drawer fronts and warm wood-look surface plausibly communicate the selected synthetic Oak-finish design. No visible identity or quantity mismatch warrants replacement.",
+    "direction": "Retain the existing image as a candidate for lab use. Keep 45.72 by 45.72 by 60 cm as synthetic metadata, not a measurement claim; no wood-species, physical-size or image-use approval is granted.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-008286",
+    "selected_sku": "WANDS-008286",
+    "reference_sha256": "a72e2bf50552f997253a4d2895b05f8a19febcd011596754d7930f27f3ba88da",
+    "definition_sha256": "d1b8c47e0a82a32eeab4494a6c256a5f1292c9fd5c7a92e7af40350a584251e8",
+    "disposition": "clarify_hero",
+    "evidence": "The pineapple print is clear, but the padded-looking fold stack does not communicate one precut fabric panel.",
+    "direction": "Prepare one unfolded, unfilled panel with continuous fabric and cut edges visible. Use the approved 3:2 width-to-length design proportion; do not imply cushions, multiple cuts or continuous yardage.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-011019",
+    "selected_sku": "WANDS-011019-FULL-008D-BLUE-EC7D",
+    "reference_sha256": "8d4effe78bc26d0eb562875afe477a074f0bc3348a8a2f9e0d6414e60cf55647",
+    "definition_sha256": "0a1b47a085f874b87582afb2444eb9f8a7e0b1cdaee4dd445b4cac9b7833d07b",
+    "disposition": "clarify_hero",
+    "evidence": "The Blue selection is plausible, but the fold conceals the opening needed to distinguish a pillowcase from a sheet.",
+    "direction": "Prepare one empty Blue pillowcase with an exposed opening and a single continuous body. Retain the 3:2 length-to-width design proportion; no insert or extra linen.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-012070",
+    "selected_sku": "WANDS-012070-108-IN-24EA",
+    "reference_sha256": "f19450d2bbbb950d4196c0e5f827fd340fd51dd50a880b256b46c711dd9034fc",
+    "definition_sha256": "02f9d7d20c86cd716f0e6b93b6fd5b73c4df96b21253478ef866244799b71d3c",
+    "disposition": "clarify_hero",
+    "evidence": "The dots motif is clear, but the gathered continuous span conceals the boundary between the two panels.",
+    "direction": "Prepare exactly two separately edged panels with a visible center gap, using each panel's 70 by 114.3 cm synthetic proportions. Display hardware is not included merchandise.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-015548",
+    "selected_sku": "WANDS-015548-36-IN-F0FF",
+    "reference_sha256": "44e5c2a6878c02d715304bafc24b297e9c2c7f9ec09bead810113c4c19b2c1fd",
+    "definition_sha256": "35cb9ded8bad30a578a9daef78964e6622c7779f593a69df4b921aee2d1e8103",
+    "disposition": "retain_candidate",
+    "evidence": "One natural wood-look cabinet with plausible compact nightstand proportions is visible. Neither the sale unit nor the corrected selected option establishes a visible conflict.",
+    "direction": "Retain as a candidate for the synthetic lab design; do not regenerate only to prove 50.8 by 40 by 60 cm from pixels. Preserve material provenance in metadata without claiming the image verifies solid wood.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-019888",
+    "selected_sku": "WANDS-019888-FULL-008D-NATURAL-D6AC",
+    "reference_sha256": "a59e70a1e0144a63cbb0f97421a8e2c2b953e5369114e57c44790bd2029c421a",
+    "definition_sha256": "174411ce4cf819a36eb4b6d1a55e560b10c09c5ef3b6ab26f33ada4ff97f794c",
+    "disposition": "clarify_hero",
+    "evidence": "The pale folded fabric does not reveal a pillowcase opening, and lighting leaves the Natural shade ambiguous.",
+    "direction": "Prepare one empty Natural pillowcase with its opening and single body visible. No insert or extra linens, and no claim that the folds prove multiple existing pieces.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-027653",
+    "selected_sku": "WANDS-027653-30-IN-5C57",
+    "reference_sha256": "afe782ae42ae9dbe9e9f6176782f3c8a23c6bf1d08832489701023ea2c19135f",
+    "definition_sha256": "41b877386eeffa19e144ee04aed290087b702a0f7bfac7eed53159ac4445b81c",
+    "disposition": "retain_candidate",
+    "evidence": "A single modern end table with an open underside and compact upright proportions is visible. Its apparent identity is consistent with the corrected single-table definition.",
+    "direction": "Retain as a lab-image candidate. The synthetic 40.64 by 40 by 55 cm specification remains metadata; no exact measurement, construction certification or material inference is made from the image.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-030143",
+    "selected_sku": "WANDS-030143",
+    "reference_sha256": "b51674075a55c56597493365b0773058fed15da816f2452dc4c46697b8870371",
+    "definition_sha256": "97bbae3e2e7e24505e5bdb3854d473d1da7fb65da4a8e94031c266d878da5a8a",
+    "disposition": "clarify_hero",
+    "evidence": "The penguin pattern is visible, but stacked bedding conceals the roles and count of the five named pieces.",
+    "direction": "Prepare a separated flat lay of quilt, valance, fitted sheet, decorative pillow and skirt. Unlike pillowcase-only products, this manifest includes one decorative pillow; no crib or sleeping setup.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-035175",
+    "selected_sku": "WANDS-035175",
+    "reference_sha256": "1b91708d1f7c41bbe895933b87b74883aec10dc3b9e9548bb33c368da8b6f8bd",
+    "definition_sha256": "87ea1366a59d09df38a307e72157c452ef451e70fe086ab9f43022f3f5763429",
+    "disposition": "clarify_hero",
+    "evidence": "The Green selection is visible, but folds conceal blanket, skirt and fitted-sheet identities and the floral pattern is not clearly communicated.",
+    "direction": "Prepare the three named Green floral textile items separately with blanket edges, skirt drop and elasticized sheet corners visible. No crib, mattress or infant-use staging.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  },
+  {
+    "root_sku": "WANDS-039471",
+    "selected_sku": "WANDS-039471-30-IN-5C57",
+    "reference_sha256": "5caccd3639b5f8241d241253947996020eb17bfe2e120b5f49f6197f14e544ec",
+    "definition_sha256": "106c7eb88618bf2af58d0c17eb65bdb9b977298d77a608d39b95d02c05dd39eb",
+    "disposition": "retain_candidate",
+    "evidence": "One silver-colored cabinet with two drawer fronts is visible. Its upright compact proportions are plausible for the corrected synthetic nightstand design.",
+    "direction": "Retain as a lab-image candidate without regenerating solely to prove the synthetic 40.64 by 40 by 60 cm size. Do not infer metal construction from the silver-colored surface or claim physical measurement validation.",
+    "observation": "Focused visual review on 2026-09-10 against the corrected synthetic lab definition. Proposed next action, not image-use approval or manufacturer validation."
+  }
+]

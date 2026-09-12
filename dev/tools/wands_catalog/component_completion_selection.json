@@ -1,0 +1,252 @@
+[
+  {
+    "batch": "lamps",
+    "asset_requirement_id": "WANDS-035295-table-lamps-5825459d6d4d",
+    "canvas": [
+      832,
+      704
+    ],
+    "visual_instruction": "",
+    "preserve_previous_prompt": true
+  },
+  {
+    "batch": "flatware",
+    "asset_requirement_id": "WANDS-017842-teaspoons-6be6fe422fbc",
+    "canvas": [
+      432,
+      1376
+    ],
+    "visual_instruction": "One silver teaspoon with a small oval bowl and continuous gently flared handle. Head up, handle down. No engraving.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "flatware",
+    "asset_requirement_id": "WANDS-017842-dinner-knives-d2f6272695ec",
+    "canvas": [
+      288,
+      2016
+    ],
+    "visual_instruction": "One silver dinner knife with a rounded dining blade and continuous gently flared handle. Blade up, handle down. No engraving.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "flatware",
+    "asset_requirement_id": "WANDS-017842-salad-forks-4c1bde1e4a09",
+    "canvas": [
+      384,
+      1536
+    ],
+    "visual_instruction": "One silver salad fork with four separated tines and a continuous gently flared handle. Head up, handle down. No engraving.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "flatware",
+    "asset_requirement_id": "WANDS-017842-tablespoons-bd0a34658746",
+    "canvas": [
+      432,
+      1376
+    ],
+    "visual_instruction": "One silver tablespoon with an oval bowl and continuous gently flared handle. Head up, handle down. No engraving.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "flatware",
+    "asset_requirement_id": "WANDS-017842-slotted-spoon-3268a9df493a",
+    "canvas": [
+      432,
+      1376
+    ],
+    "visual_instruction": "One silver slotted serving spoon with elongated openings inside its oval bowl and a continuous gently flared handle. Head up, handle down.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "flatware",
+    "asset_requirement_id": "WANDS-017842-spreader-d094435f7e98",
+    "canvas": [
+      320,
+      1840
+    ],
+    "visual_instruction": "One silver butter spreader with a short blunt rounded blade and continuous gently flared handle. Blade up, handle down. No engraving.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "flatware",
+    "asset_requirement_id": "WANDS-017842-serving-fork-45215d80adb8",
+    "canvas": [
+      384,
+      1536
+    ],
+    "visual_instruction": "One silver serving fork with two clear long tines and a continuous gently flared handle. Head up, handle down. No engraving.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "flatware",
+    "asset_requirement_id": "WANDS-017842-serving-spoon-fde646bec6b4",
+    "canvas": [
+      432,
+      1376
+    ],
+    "visual_instruction": "One silver serving spoon with a broad oval bowl and a continuous gently flared handle. Head up, handle down. No engraving.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "bakeware",
+    "asset_requirement_id": "WANDS-003897-round-pans-f8a847bb5555",
+    "canvas": [
+      768,
+      768
+    ],
+    "visual_instruction": "One circular copper-finish cake pan, empty, low straight sides, continuous round rim, no handles or lid. View straight down into the pan.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "bakeware",
+    "asset_requirement_id": "WANDS-003897-square-pan-abc1ee0c3524",
+    "canvas": [
+      768,
+      768
+    ],
+    "visual_instruction": "One square copper-finish cake pan, empty, low sides, continuous square rim with subtly rounded corners, no handles or lid.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "bakeware",
+    "asset_requirement_id": "WANDS-003897-rectangular-pan-d593e2fd6d0b",
+    "canvas": [
+      928,
+      640
+    ],
+    "visual_instruction": "One rectangular copper-finish cake pan, empty, low sides, continuous rim, no handles or lid. Long side runs horizontally.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "bakeware",
+    "asset_requirement_id": "WANDS-003897-lid-84546534be9a",
+    "canvas": [
+      928,
+      640
+    ],
+    "visual_instruction": "One separate flat rectangular copper-finish pan lid, with a continuous shallow lip, no pan beneath it, no handles or knob. Long side horizontal.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "bakeware",
+    "asset_requirement_id": "WANDS-003897-loaf-pan-db819a143cd3",
+    "canvas": [
+      1088,
+      544
+    ],
+    "visual_instruction": "One rectangular copper-finish loaf pan, empty, deeper straight sides and a continuous rim, no handles or lid. Long side horizontal.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "bakeware",
+    "asset_requirement_id": "WANDS-003897-muffin-pan-767520d9f985",
+    "canvas": [
+      896,
+      656
+    ],
+    "visual_instruction": "One rectangular copper-finish muffin pan with twelve empty circular wells in three rows of four. No muffins, food or separate liners. Long side horizontal.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "bakeware",
+    "asset_requirement_id": "WANDS-003897-rack-691e8b7e9c75",
+    "canvas": [
+      896,
+      656
+    ],
+    "visual_instruction": "One rectangular copper-finish wire cooling rack with continuous perimeter and evenly spaced connected grid wires. No tray beneath it, no food. Long side horizontal.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "bakeware",
+    "asset_requirement_id": "WANDS-003897-sheets-9f5eb75c739a",
+    "canvas": [
+      896,
+      656
+    ],
+    "visual_instruction": "One flat rectangular copper-finish baking sheet with one shallow continuous rim, no handles, pan, rack or food. Long side horizontal.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "nursery",
+    "asset_requirement_id": "WANDS-000056-quilt-076f7a7d7fc5",
+    "canvas": [
+      704,
+      832
+    ],
+    "visual_instruction": "One rectangular polyester nursery quilt laid fully flat, subtle pale blue ocean-themed fabric pattern, visible stitched border. No other bedding, furniture, mattress or infant.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "nursery",
+    "asset_requirement_id": "WANDS-000056-sheets-9663ae29eb99",
+    "canvas": [
+      608,
+      960
+    ],
+    "visual_instruction": "One pale blue polyester fitted crib sheet, empty and laid out lengthwise. Show its connected rectangular central panel and gathered elastic edge; no mattress, crib, pillow, infant or extra fabric.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "nursery",
+    "asset_requirement_id": "WANDS-000056-skirt-3c9f27991ca2",
+    "canvas": [
+      608,
+      960
+    ],
+    "visual_instruction": "One pale blue polyester crib skirt laid out lengthwise, rectangular central panel with attached pleated skirt drops arranged closely beneath its edges. No crib, mattress, infant, quilt or separate sheets.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "outdoor",
+    "asset_requirement_id": "WANDS-030335-sofa-204b2c92b912",
+    "canvas": [
+      1152,
+      512
+    ],
+    "visual_instruction": "One modern outdoor sofa viewed directly overhead. Dark woven frame, fitted neutral gray seat upholstery, back and two arms form one connected sofa. No loose decorative pillows, extra furniture or props. Width runs horizontally.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "outdoor",
+    "asset_requirement_id": "WANDS-030335-chairs-b065305eb79c",
+    "canvas": [
+      736,
+      800
+    ],
+    "visual_instruction": "One modern outdoor lounge chair viewed directly overhead. Dark woven frame, fitted neutral gray seat upholstery, attached back and two arms. No loose decorative pillows, extra furniture or props.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "outdoor",
+    "asset_requirement_id": "WANDS-030335-ottoman-6be1012461a9",
+    "canvas": [
+      832,
+      704
+    ],
+    "visual_instruction": "One modern outdoor ottoman viewed directly overhead. Rectangular dark woven base with fitted neutral gray top cushion. No back, arms, loose pillows or extra furniture. Width runs horizontally.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "outdoor",
+    "asset_requirement_id": "WANDS-030335-table-a2ca892e8cd3",
+    "canvas": [
+      1024,
+      576
+    ],
+    "visual_instruction": "One modern rectangular outdoor coffee table viewed directly overhead. Dark woven frame and plain dark inset top. No chairs, cushions, decor or extra furniture. Long side horizontal.",
+    "preserve_previous_prompt": false
+  },
+  {
+    "batch": "outdoor",
+    "asset_requirement_id": "WANDS-030335-pillows-f005445103c2",
+    "canvas": [
+      768,
+      768
+    ],
+    "visual_instruction": "One square neutral gray decorative pillow, viewed directly overhead, with coherent fabric edges and subtle seams. No furniture or other pillows.",
+    "preserve_previous_prompt": false
+  }
+]

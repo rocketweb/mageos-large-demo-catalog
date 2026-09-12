@@ -1,0 +1,26 @@
+[
+  {
+    "asset_requirement_id": "WANDS-035295-floor-lamp-61065fe722ea",
+    "visual_instruction": "One traditional Bronze floor lamp. Show a complete supported base, long upright stem and properly attached shade. Keep the shade, stem and base coherent and on the same vertical axis.",
+    "purpose": "Test a complete tall lamp assembly.",
+    "max_attempts": 1
+  },
+  {
+    "asset_requirement_id": "WANDS-035295-table-lamps-5825459d6d4d",
+    "visual_instruction": "One traditional Bronze table lamp. Show a complete supported base, short upright stem and properly attached shade. Keep the shade, stem and base coherent and on the same vertical axis.",
+    "purpose": "Test a complete short lamp assembly, to be reused only after acceptance.",
+    "max_attempts": 1
+  },
+  {
+    "asset_requirement_id": "WANDS-017842-dinner-forks-ef5e27011fc0",
+    "visual_instruction": "One dinner fork with a coherent fork head, clearly separated tines and continuous handle. Lay the utensil flat with its head pointing up and handle pointing down.",
+    "purpose": "Test a single place-setting utensil before attempting the remaining flatware types.",
+    "max_attempts": 1
+  },
+  {
+    "asset_requirement_id": "WANDS-017842-cake-server-e8b0f8c3de5c",
+    "visual_instruction": "One cake server with a broad triangular serving blade and continuous handle. Lay the utensil flat with its blade pointing up and handle pointing down. No cake or food.",
+    "purpose": "Test a distinct serving utensil shape.",
+    "max_attempts": 1
+  }
+]

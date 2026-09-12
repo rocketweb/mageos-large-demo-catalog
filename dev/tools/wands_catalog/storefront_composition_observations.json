@@ -1,0 +1,47 @@
+{
+  "compositions_sha256": "415c1f39fb52d9d7c761c172acca37ffb2b50a0eaf2a06daaa6dceb7913edd74",
+  "families": [
+    {
+      "root_sku": "WANDS-000056",
+      "svg_sha256": "ac6b7987a31469d56aa56112ef017c37039a4167332329d33e2cbea2a7b5cb95",
+      "screenshot_sha256": "23161f6180b67519ac0740c9316d6eeda9694b650b33587fdacc8c678e5ae7ff",
+      "verdict": "initial_visual_pass",
+      "finding": "Three complete coordinated textiles; valance unfolded, fitted sheet reverse visible. Tighter two-row presentation without overlap.",
+      "screenshot_path": "var/wands/storefront-composition-evidence-v1/WANDS-000056.png"
+    },
+    {
+      "root_sku": "WANDS-003897",
+      "svg_sha256": "261166c0c00a8eea478a36b9cd512e36ac7468a498f32c4d4eda7ec6bfcac556",
+      "screenshot_sha256": "5cfa98ca86e3fbdc1362bd83b6119190ab9f82502a94508782f51093e0104a6a",
+      "verdict": "initial_visual_pass",
+      "finding": "Ten complete copper-finish pieces, including the lid; twelve muffin wells and open rack retained. Older square pan has a slightly pinker finish.",
+      "screenshot_path": "var/wands/storefront-composition-evidence-v1/WANDS-003897.png"
+    },
+    {
+      "root_sku": "WANDS-017842",
+      "svg_sha256": "3cd9c60d161b2bdc9c32b2b708cd757c06217d6984f5ec07ba89624e7aba9134",
+      "screenshot_sha256": "eddfaed2421d38e580e158ddb2dcec0239929f0b965460d7f5f6114b84bf9b19",
+      "verdict": "initial_visual_pass",
+      "finding": "Forty-five utensils in three aligned rows: eight five-piece settings plus five serving utensils. Real openings and handles retained.",
+      "screenshot_path": "var/wands/storefront-composition-evidence-v1/WANDS-017842.png"
+    },
+    {
+      "root_sku": "WANDS-030335",
+      "svg_sha256": "d86c96950981279c37b4fffbd7c315fe6c8aca919a20eb8e37620804385e43f1",
+      "screenshot_sha256": "1d5f95b96fcea533e7a560586bf76fbb8b0d6c40a89673936cb7f12d5f36cd81",
+      "verdict": "initial_visual_pass",
+      "finding": "Five furniture pieces and two separate decorative pillows in two compact rows. Complete dark frames retained. Overhead inclusion composition, not an outdoor lifestyle scene.",
+      "screenshot_path": "var/wands/storefront-composition-evidence-v1/WANDS-030335.png"
+    },
+    {
+      "root_sku": "WANDS-035295",
+      "svg_sha256": "63c01ebf3fc6d7e4a11f2fc88d93fc9fddaee3219030993f9ba914a969303c76",
+      "screenshot_sha256": "7f8b776a8613c466b933f75f6b1563585caf31e5cac58e211f72fd67d75f02f8",
+      "verdict": "initial_visual_pass",
+      "finding": "One floor lamp and two table lamps, common baseline, coordinated bronze finish. No extra item or clipping.",
+      "screenshot_path": "var/wands/storefront-composition-evidence-v1/WANDS-035295.png"
+    }
+  ],
+  "review_method": "direct_browser_image_inspection",
+  "publication_approved": false
+}

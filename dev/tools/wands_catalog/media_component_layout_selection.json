@@ -1,0 +1,126 @@
+[
+  {
+    "root_sku": "WANDS-000056",
+    "definition_sha256": "49e7965504341c8ac3d5413b6833ed6f58fb5c18b04f041e7e72d56e5444101e",
+    "profile": "flat_lay",
+    "layout_note": "Three separate nursery textiles. Rectangles use the synthetic component envelopes, not fabric cutting patterns or fully unfolded skirt measurements. No crib, mattress, infant or sleeping arrangement.",
+    "component_checks": {
+      "quilt": [
+        "One complete quilt with visible fabric edges and quilted construction; no hidden extra sheets."
+      ],
+      "sheets": [
+        "One empty fitted crib sheet, with elasticized corners visible; no mattress inside it."
+      ],
+      "skirt": [
+        "One crib skirt with a rectangular platform and attached drop panels, not a wearable skirt or dress."
+      ]
+    }
+  },
+  {
+    "root_sku": "WANDS-003897",
+    "definition_sha256": "bd5e1ed70fa8d6878980f0857fe243a2f9e9b000c7559088cee13d1b137d688f",
+    "profile": "flat_lay",
+    "layout_note": "Ten separately countable bakeware pieces, all empty. Keep the lid separate from its rectangular pan and retain two distinct round pans and two distinct baking sheets.",
+    "component_checks": {
+      "round-pans": [
+        "One empty circular cake pan with a coherent raised rim; the accepted component is placed twice."
+      ],
+      "square-pan": [
+        "One empty square cake pan, visibly distinct from the round pans."
+      ],
+      "rectangular-pan": [
+        "One empty rectangular cake pan with a coherent rim; do not attach its separate lid."
+      ],
+      "lid": [
+        "One lid matching the rectangular pan's synthetic footprint; show it separately, without adding another pan."
+      ],
+      "loaf-pan": [
+        "One empty, deep rectangular loaf pan, visibly distinct from the shallow baking sheets."
+      ],
+      "muffin-pan": [
+        "One complete muffin pan with coherent repeated wells; do not invent a certified capacity or cavity-count specification."
+      ],
+      "rack": [
+        "One complete open-grid cooling rack; no baked food."
+      ],
+      "sheets": [
+        "One shallow rectangular baking sheet with a coherent rim; the accepted component is placed twice."
+      ]
+    }
+  },
+  {
+    "root_sku": "WANDS-017842",
+    "definition_sha256": "69a1bdfa969248d58f58a20f07cb735ac71e8b9e293d5d54ce08193dd54df152",
+    "profile": "place_settings",
+    "layout_note": "Eight complete five-piece place settings plus five different serving utensils. All 45 positions use a common synthetic length scale. Each repeated utensil type uses the same accepted component asset.",
+    "component_checks": {
+      "teaspoons": [
+        "One small teaspoon with a coherent bowl and handle, shorter than the tablespoon."
+      ],
+      "dinner-forks": [
+        "One dinner fork with a coherent head, separated tines and handle; longer than the salad fork."
+      ],
+      "dinner-knives": [
+        "One table knife with a coherent blade and handle, not a fork or spoon."
+      ],
+      "salad-forks": [
+        "One salad fork with a coherent head, separated tines and handle; shorter than the dinner fork."
+      ],
+      "tablespoons": [
+        "One tablespoon with a coherent bowl and handle; visibly distinct in scale from the teaspoon."
+      ],
+      "slotted-spoon": [
+        "One serving spoon with visible slots in its bowl; not the solid serving spoon."
+      ],
+      "spreader": [
+        "One short spreader with a coherent broad spreading blade; distinct from the dinner knife."
+      ],
+      "serving-fork": [
+        "One serving fork with a coherent head and handle; distinct from the place-setting forks."
+      ],
+      "cake-server": [
+        "One cake server with a coherent broad serving blade; not a regular knife."
+      ],
+      "serving-spoon": [
+        "One solid-bowl serving spoon with no slots; distinct from the slotted serving spoon."
+      ]
+    }
+  },
+  {
+    "root_sku": "WANDS-030335",
+    "definition_sha256": "6dd4539d683cca1eaa6ea565d06ae12c11721760e73bf0d7c3b83c705cb39f74",
+    "profile": "footprint",
+    "layout_note": "Five furniture pieces plus two separately included decorative pillows. This is a top-view component inventory, not an installed patio arrangement. Fitted seat/back upholstery belongs to its furniture asset and is not another loose pillow.",
+    "component_checks": {
+      "sofa": [
+        "One complete sofa with coherent frame, legs, seats and backs; exclude the separately listed decorative pillows."
+      ],
+      "chairs": [
+        "One complete lounge chair with coherent frame, legs, seat and back; place it twice without adding a third chair."
+      ],
+      "ottoman": [
+        "One complete ottoman with a coherent supported cushion; only one is included."
+      ],
+      "table": [
+        "One complete coffee table with a coherent tabletop and support structure; no accessories."
+      ],
+      "pillows": [
+        "One complete decorative pillow with visible seams; place it twice, separate from fitted seat/back upholstery."
+      ]
+    }
+  },
+  {
+    "root_sku": "WANDS-035295",
+    "definition_sha256": "351d78aa487d0b8d9962d2a3c88835905dcdf1c2de172c8b67ed806a9588a66a",
+    "profile": "shared_floor",
+    "layout_note": "One 165 cm floor-lamp envelope and two 52 cm table-lamp envelopes share a floor line and common scale. Dimensions are synthetic. These are three complete lamps, not three bases or two lamps plus a tray.",
+    "component_checks": {
+      "floor-lamp": [
+        "One complete Bronze floor lamp with a coherent base, stem, socket and shade assembly; no separate loose bulb or accessory."
+      ],
+      "table-lamps": [
+        "One complete Bronze table lamp with a coherent base, stem, socket and shade assembly; no tray or floating shade. Place it twice."
+      ]
+    }
+  }
+]
