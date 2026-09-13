@@ -5,10 +5,20 @@ import sys
 import unittest
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from build_medium_catalog import subset_data, csv_bytes, json_bytes
+from build_medium_catalog import subset_data, csv_bytes, json_bytes, merchandising_phase
 
 
 class MediumCatalogTest(unittest.TestCase):
+    def test_final_merchandising_phase_contains_only_links_and_resolves_all_targets(self):
+        data=self.fixture()
+        result=merchandising_phase(data)
+        self.assertIn(b'sku,related_skus,crosssell_skus',result)
+        self.assertNotIn(b'product_type',result)
+        self.assertIn(b'"B,C"',result)
+        data['data/1-simple.csv']=csv_bytes([{'sku':'A','related_skus':'MISSING'}])
+        with self.assertRaisesRegex(ValueError,'target'):
+            merchandising_phase(data)
+
     def fixture(self):
         a={'sku':'A','product_type':'simple','product_online':'1','related_skus':'B,C'}
         b={'sku':'B','product_type':'simple','product_online':'1','related_skus':'A'}

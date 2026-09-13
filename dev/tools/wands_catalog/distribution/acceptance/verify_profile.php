@@ -114,9 +114,20 @@ if ($enriched) {
         $merchandising[$byId[(int)$link['product_id']]][$linkCodes[$link['link_type_id']]][] = $byId[(int)$link['linked_product_id']];
     }
     $before = $checks;
-    wandsVerifyEnrichment($rows, $normalized, $metadata, $merchandising, $check);
+    $verificationRows = $rows;
+    $productUrl = $objectManager->get(\Magento\Catalog\Model\Product\Url::class);
+    $normalizedUrlKeys = 0;
+    foreach ($verificationRows as &$verificationRow) {
+        if (!empty($verificationRow['url_key'])) {
+            $urlKey = $productUrl->formatUrlKey($verificationRow['url_key']);
+            $normalizedUrlKeys += $urlKey !== $verificationRow['url_key'] ? 1 : 0;
+            $verificationRow['url_key'] = $urlKey;
+        }
+    }
+    unset($verificationRow);
+    wandsVerifyEnrichment($verificationRows, $normalized, $metadata, $merchandising, $check);
     $enrichmentChecks = $checks - $before;
-    unset($normalized, $labels, $merchandising);
+    unset($normalized, $labels, $merchandising, $verificationRows);
 }
 $stock = $connection->fetchAll($connection->select()->from($resource->getTableName('cataloginventory_stock_item')));
 $stocks = [];
@@ -243,6 +254,7 @@ foreach ($media as $sku => $row) {
 }
 $report = ['status' => $failures === [] ? 'passed' : 'failed', 'checks' => $checks, 'product_types' => $types,
     'enrichment_checked' => $enriched, 'enrichment_checks' => $enrichmentChecks,
+    'native_normalized_url_keys' => $normalizedUrlKeys ?? 0,
     'unmanaged_stock_flags_not_treated_as_availability' => true,
     'configurable_links' => count($actualLinks), 'bundle_options' => $bundleOptions, 'bundle_selections' => $bundleSelections,
     'configurable_axes' => count($actualAxes),

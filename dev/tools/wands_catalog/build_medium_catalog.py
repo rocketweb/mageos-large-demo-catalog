@@ -17,6 +17,27 @@ sys.path.insert(0,str(Path(__file__).with_name('distribution')))
 from release import dependencies, closure, write_archive, verify_release
 
 
+def merchandising_phase(data):
+    rows=[r for name in ('data/1-simple.csv','data/2-configurable.csv','data/3-bundle.csv')
+          for r in csv.DictReader(io.StringIO(data[name].decode()))]
+    skus={r['sku'] for r in rows}
+    selected=[]
+    for row in rows:
+        if not row.get('related_skus') and not row.get('crosssell_skus'):
+            continue
+        for code in ('related_skus','crosssell_skus'):
+            targets=set(filter(None,row.get(code,'').split(',')))
+            if targets-skus or row['sku'] in targets:
+                raise ValueError('Invalid merchandising target')
+        selected.append({k:row.get(k,'') for k in ('sku','related_skus','crosssell_skus')})
+    if not selected:
+        return b''
+    output=io.StringIO()
+    writer=csv.DictWriter(output,fieldnames=['sku','related_skus','crosssell_skus'],lineterminator='\n')
+    writer.writeheader(); writer.writerows(selected)
+    return output.getvalue().encode()
+
+
 def subset_data(data, selected):
     selected=set(selected)
     result=dict(data)
@@ -88,6 +109,9 @@ def build(args):
         needed=set(json.loads(data['data/media-inventory.json']))
     else:
         data,stats,needed=subset_data(data,selected)
+    links=merchandising_phase(data)
+    if links:
+        data['data/5-merchandising.csv']=links
     args.output.mkdir(parents=True)
     artifacts=[write_archive(args.output/'catalog.tar',data)]
     module_root=args.repository/'app/code/RocketWeb/LabCatalog'

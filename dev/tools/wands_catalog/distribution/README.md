@@ -150,6 +150,21 @@ from your **Mage-OS root**, as the web filesystem owner. Stop on any nonzero exi
      > var/log/wands-media.log 2>&1
    ```
 
+   Enriched candidates also include `5-merchandising.csv`. Import it last, after
+   every linked SKU exists:
+
+   ```sh
+   if test -f var/wands-lab/data/5-merchandising.csv; then
+     php bin/magento lab:wands:import --file=var/wands-lab/data/5-merchandising.csv \
+       > var/log/wands-merchandising.log 2>&1
+   fi
+   ```
+
+   Use the current module's native `append` behavior. The earlier module used
+   `add_update`, which can remove product links during a later media-only import.
+   The immutable rc2 module does not contain this correction. Retain the original
+   candidates; do not replace their archives or imply they passed enriched testing.
+
    `--validate-only` validates without changing products but writes native import
    staging tables. Dependent parents/bundles cannot be validated as if their
    children already existed. Do not use bundle reconciliation on a fresh install.
