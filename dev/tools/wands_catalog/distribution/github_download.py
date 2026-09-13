@@ -44,7 +44,7 @@ class GitHubAssets:
     def __init__(self, repository, tag, profile, *, token=None, metadata_opener=None, binary_opener=None):
         if (not re.fullmatch(r'[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+', repository)
                 or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*', tag)
-                or profile not in ('starter', 'full', 'toolkit')):
+                or profile not in ('starter', 'medium', 'full', 'toolkit')):
             raise ValueError('Invalid GitHub repository, tag or profile')
         self.api_root = 'https://api.github.com/repos/' + repository
         self.base_url = f'https://github.com/{repository}/releases/download/{tag}/'
@@ -106,7 +106,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--repo', required=True)
     parser.add_argument('--tag', required=True)
-    parser.add_argument('--profile', choices=['starter', 'full', 'toolkit'], required=True)
+    parser.add_argument('--profile', choices=['starter', 'medium', 'full', 'toolkit'], required=True)
     parser.add_argument('--cache-dir', type=Path, required=True)
     parser.add_argument('--manifest-sha256', required=True)
     parser.add_argument('--log-file', type=Path, default=Path('wands-download.log'))

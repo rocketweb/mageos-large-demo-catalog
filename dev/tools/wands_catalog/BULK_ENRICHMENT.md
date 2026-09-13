@@ -176,12 +176,40 @@ no scheduled continuation or unattended deployment was created.
    related products, bundle dependencies and original identifiers.
 2. Exercise the commerce fixtures in that isolated instance and test the gallery
    append against an existing hero/gallery, with a before-state and inverse.
-3. Extend GitHub download/profile publishing support for the medium candidate,
-   rebuild the current recipient toolkit and publish only under new release IDs
-   after approval. The existing rc2 assets remain unchanged.
+3. Publish candidate assets only under a new release ID after runtime acceptance
+   and approval. The September 13 continuation adds medium download support and a
+   separate candidate asset builder with current recipient tools. It does not
+   create a GitHub release. The existing rc2 assets remain unchanged.
 4. Build independent search judgments and a measured comparison. Do not turn the
    generated seed queue into claimed ranking improvement.
 
 Resumable live imports and a broad gallery rollout are not implemented here.
-The current source and artifacts are local and uncommitted; no push, merge,
-release publication or demo deployment is part of this pass.
+The September 12 bulk source was committed as `afc7aa4` on September 13. No push,
+merge, release publication or demo deployment is part of this continuation.
+
+## Candidate release preparation
+
+`distribution/build_candidate_assets.py` accepts explicitly pinned enriched
+medium and full profiles. It verifies every archive before packaging, preserves
+their bytes, copies only declared assets and builds a current recipient toolkit.
+The toolkit includes installation instructions, notices and separately labelled
+historical acceptance evidence. Its README states that the enriched candidate
+has not passed Magento runtime acceptance. The legacy rc2 builder is unchanged.
+
+From the repository root, use a new output directory:
+
+```sh
+python3 dev/tools/wands_catalog/distribution/build_candidate_assets.py \
+  --medium var/wands/lab-medium-enriched-20260912-v1 \
+  --medium-sha256 6e83c128538a3c0bf336c06c4135aa2b19ad01abcd8754d707e9bedc62f6ef68 \
+  --full var/wands/lab-full-enriched-20260912-v1 \
+  --full-sha256 9ad4b9ed1a65d6253db2119f61a11e20eb6e3e1cec55da5a8519fd43d157fe8c \
+  --tag catalog-2026.09.13-enriched-candidate-v1 \
+  --output var/wands/enriched-assets-20260913-v1
+```
+
+Output stays in the adjacent `.log` file. `release-inventory.json` records exact
+asset sizes, hashes and profile pins; `SHA256SUMS` covers the prepared files.
+Recipients still need trusted pins from a separate channel. The companion
+`github_download.py` supports `--profile medium`, but no medium download exists
+on GitHub until the candidate assets are explicitly published.
