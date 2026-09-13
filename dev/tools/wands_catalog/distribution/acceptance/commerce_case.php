@@ -17,6 +17,7 @@ $priceWebsite = (int)$om->get(\Magento\Framework\App\Config\ScopeConfigInterface
     ->getValue('catalog/price/scope') === 0 ? 0 : (int)$store->getWebsiteId();
 $repository = $om->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
 $stockRegistry = $om->get(\Magento\CatalogInventory\Api\StockRegistryInterface::class);
+$attributeAction = $om->get(\Magento\Catalog\Model\ResourceModel\Product\Action::class);
 $indexers = $om->get(\Magento\Framework\Indexer\IndexerRegistry::class);
 $case = json_decode(stream_get_contents(STDIN), true, 512, JSON_THROW_ON_ERROR);
 if (($case['apply_to'] ?? '') !== 'isolated disposable fixture only') {
@@ -36,7 +37,12 @@ foreach ($case['changes'] as $sku => $changes) {
     $product = $repository->get($sku, false, 0, true);
     $stock = $stockRegistry->getStockItemBySku($sku);
     $ids[] = (int)$product->getId();
-    foreach ($changes as $field => $value) {
+    $captureFields = array_keys($changes);
+    // Whole-product saves can default an undated special price, including during a tier-price case.
+    if (array_intersect($captureFields, $productFields)) {
+        $captureFields = array_unique(array_merge($captureFields, $productFields));
+    }
+    foreach ($captureFields as $field) {
         $before[$sku][$field] = in_array($field,$stockFields,true) ? $stock->getData($field)
             : ($field === 'tier_prices' ? $product->getTierPrice() : $product->getData($field));
     }
@@ -63,15 +69,18 @@ $receipt = BP . '/var/commerce/' . $database . '/' . preg_replace('/[^A-Za-z0-9_
 if (!is_dir(dirname($receipt))) { mkdir(dirname($receipt), 0770, true); }
 if (file_exists($receipt)) { throw new RuntimeException('Case already attempted; inspect before-state and recovery'); }
 file_put_contents($receipt, json_encode(['fields'=>$before,'inventory'=>$inventoryBefore], JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR));
-$apply = static function (array $changes, bool $restore) use ($repository,$stockRegistry,$stockFields,$priceWebsite): void {
+$apply = static function (array $changes, bool $restore) use ($repository,$stockRegistry,$stockFields,$priceWebsite,$attributeAction): void {
     foreach ($changes as $sku => $fields) {
         $product = $repository->get($sku, false, 0, true);
         $stock = $stockRegistry->getStockItemBySku($sku);
         $saveProduct = false;
         $saveStock = false;
+        $restoredAttributes = [];
         foreach ($fields as $field => $value) {
             if (in_array($field,$stockFields,true)) {
                 $stock->setData($field,$value); $saveStock=true;
+            } elseif ($restore && $field !== 'tier_prices') {
+                $restoredAttributes[$field] = $value;
             } else {
                 if ($field === 'tier_prices') {
                     $value = $restore ? $value : array_map(static fn(array $tier): array => [
@@ -83,6 +92,11 @@ $apply = static function (array $changes, bool $restore) use ($repository,$stock
             }
         }
         if ($saveProduct) { $repository->save($product); }
+        // Bypass SetSpecialPriceStartDate only for exact restoration of captured EAV values.
+        // Run after tier-price saves so that their product-save observers cannot undo it.
+        if ($restoredAttributes) {
+            $attributeAction->updateAttributes([(int)$product->getId()], $restoredAttributes, 0);
+        }
         if ($saveStock) { $stockRegistry->updateStockItemBySku($sku,$stock); }
     }
 };

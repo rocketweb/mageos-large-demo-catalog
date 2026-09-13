@@ -8,6 +8,12 @@ ROOT = Path(__file__).resolve().parents[1] / 'distribution/acceptance'
 
 
 class EnrichedInstanceTest(unittest.TestCase):
+    def test_restore_preserves_undated_sales_and_observer_side_effects(self):
+        source=(ROOT/'commerce_case.php').read_text()
+        self.assertIn('array_merge($captureFields, $productFields)', source)
+        self.assertIn('$attributeAction->updateAttributes', source)
+        self.assertIn("$restore && $field !== 'tier_prices'", source)
+
     def test_case_receipts_are_isolated_per_database(self):
         source=(ROOT/'commerce_case.php').read_text()
         self.assertIn("'/var/commerce/' . $database . '/'",source)
