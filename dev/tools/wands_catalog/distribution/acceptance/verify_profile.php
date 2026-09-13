@@ -48,14 +48,75 @@ $check(count($entities) === $expected['products'], 'Product count mismatch');
 foreach ($expected['product_types'] as $type => $count) {
     $check(($types[$type] ?? 0) === $count, 'Type count mismatch: ' . $type);
 }
-$attributes = $connection->fetchPairs('SELECT attribute_id, attribute_code FROM ' . $resource->getTableName('eav_attribute') . ' WHERE entity_type_id = 4');
+$entityTypeId = (int)$connection->fetchOne($connection->select()
+    ->from($resource->getTableName('eav_entity_type'), ['entity_type_id'])
+    ->where('entity_type_code = ?', 'catalog_product'));
+$attributes = $connection->fetchPairs($connection->select()
+    ->from($resource->getTableName('eav_attribute'), ['attribute_id', 'attribute_code'])
+    ->where('entity_type_id = ?', $entityTypeId));
+$enriched = is_file($data . '/enrichment-coverage.json');
+foreach ($rows as $row) {
+    foreach (array_keys($row) as $code) {
+        if (str_starts_with($code, 'lab_spec_')) {
+            $enriched = true;
+            break 2;
+        }
+    }
+}
 $values = [];
 foreach (['varchar', 'decimal', 'int', 'text'] as $type) {
     $table = $resource->getTableName('catalog_product_entity_' . $type);
-    $ids = array_keys(array_filter($attributes, static fn(string $code): bool => in_array($code, ['name', 'price', 'special_price', 'status', 'image', 'small_image', 'thumbnail'], true)));
+    $ids = array_keys(array_filter($attributes, static fn(string $code): bool =>
+        in_array($code, ['name', 'price', 'special_price', 'status', 'image', 'small_image', 'thumbnail'], true)
+        || ($enriched && (str_starts_with($code, 'lab_spec_')
+            || in_array($code, ['description', 'short_description', 'url_key'], true)))));
     foreach ($connection->fetchAll($connection->select()->from($table)->where('store_id = 0')->where('attribute_id IN (?)', $ids)) as $value) {
         $values[$byId[(int)$value['entity_id']]][$attributes[$value['attribute_id']]] = $value['value'];
     }
+}
+$enrichmentChecks = 0;
+if ($enriched) {
+    require __DIR__ . '/enrichment_checks.php';
+    $check(is_file($data . '/specification-provenance.jsonl'), 'Missing specification provenance');
+    $metadata = [];
+    foreach ($connection->fetchAll($connection->select()
+        ->from(['a' => $resource->getTableName('eav_attribute')], ['attribute_id', 'attribute_code', 'backend_type', 'frontend_input'])
+        ->joinLeft(['c' => $resource->getTableName('catalog_eav_attribute')], 'c.attribute_id=a.attribute_id', ['is_visible_on_front', 'is_comparable'])
+        ->where('a.entity_type_id = ?', $entityTypeId)) as $attribute) {
+        $metadata[$attribute['attribute_code']] = $attribute;
+    }
+    $labels = [];
+    foreach ($connection->fetchAll($connection->select()
+        ->from(['o' => $resource->getTableName('eav_attribute_option')], ['attribute_id', 'option_id'])
+        ->join(['v' => $resource->getTableName('eav_attribute_option_value')], 'v.option_id=o.option_id', ['value'])
+        ->where('v.store_id = 0')) as $option) {
+        $labels[$option['attribute_id']][$option['option_id']] = $option['value'];
+    }
+    // Keep the original raw values for media/status checks; normalize only spec selects.
+    $normalized = $values;
+    foreach ($normalized as &$productValues) {
+        foreach ($productValues as $code => &$value) {
+            if (str_starts_with($code, 'lab_spec_') && ($metadata[$code]['frontend_input'] ?? '') === 'select') {
+                $value = $value === null || $value === '' ? null
+                    : ($labels[$metadata[$code]['attribute_id']][$value] ?? '__INVALID_OPTION__');
+            }
+        }
+        unset($value);
+    }
+    unset($productValues);
+    $merchandising = [];
+    $linkCodes = [\Magento\Catalog\Model\Product\Link::LINK_TYPE_RELATED => 'related_skus',
+        \Magento\Catalog\Model\Product\Link::LINK_TYPE_CROSSSELL => 'crosssell_skus',
+        \Magento\Catalog\Model\Product\Link::LINK_TYPE_UPSELL => 'upsell_skus'];
+    foreach ($connection->fetchAll($connection->select()
+        ->from($resource->getTableName('catalog_product_link'))
+        ->where('link_type_id IN (?)', array_keys($linkCodes))) as $link) {
+        $merchandising[$byId[(int)$link['product_id']]][$linkCodes[$link['link_type_id']]][] = $byId[(int)$link['linked_product_id']];
+    }
+    $before = $checks;
+    wandsVerifyEnrichment($rows, $normalized, $metadata, $merchandising, $check);
+    $enrichmentChecks = $checks - $before;
+    unset($normalized, $labels, $merchandising);
 }
 $stock = $connection->fetchAll($connection->select()->from($resource->getTableName('cataloginventory_stock_item')));
 $stocks = [];
@@ -181,6 +242,7 @@ foreach ($media as $sku => $row) {
     }
 }
 $report = ['status' => $failures === [] ? 'passed' : 'failed', 'checks' => $checks, 'product_types' => $types,
+    'enrichment_checked' => $enriched, 'enrichment_checks' => $enrichmentChecks,
     'unmanaged_stock_flags_not_treated_as_availability' => true,
     'configurable_links' => count($actualLinks), 'bundle_options' => $bundleOptions, 'bundle_selections' => $bundleSelections,
     'configurable_axes' => count($actualAxes),
