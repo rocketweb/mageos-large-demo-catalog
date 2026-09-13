@@ -18,7 +18,8 @@ DOCS = ['README.md', 'ACCEPTANCE.md', 'HYVA_ACCEPTANCE.md', 'DOWNLOADS.md',
 
 def instructions(profiles, tag):
     lines = ['# Enriched WANDS catalog candidate', '',
-        'This candidate is not yet Magento-runtime-verified. It is local and unpublished.',
+        'This candidate is local and unpublished. Packaging does not establish Magento runtime acceptance.',
+        'Compare the exact pins below with `docs/ENRICHED_ACCEPTANCE.md` in the extracted toolkit.',
         'Older rc2 acceptance results do not qualify these enriched catalog bytes.', '',
         'Choose one profile for a separate empty Mage-OS 3.5 lab:', '']
     for profile, row in sorted(profiles.items()):
@@ -114,7 +115,9 @@ def build_assets(profile_dirs, pins, output, *, tag):
     files['docs/screenshots/README.md'] = (HERE.parent / 'docs/screenshots/README.md').read_bytes().replace(
         b'../../distribution/HYVA_ACCEPTANCE.md', b'../HYVA_ACCEPTANCE.md')
     files['docs/ROCKET-WEB-LICENSE.txt'] = HERE.parent / 'LICENSE.txt'
-    files['docs/BULK_ENRICHMENT.md'] = HERE.parent / 'BULK_ENRICHMENT.md'
+    files['docs/BULK_ENRICHMENT.md'] = (HERE.parent / 'BULK_ENRICHMENT.md').read_bytes().replace(
+        b'(distribution/ENRICHED_ACCEPTANCE.md)', b'(ENRICHED_ACCEPTANCE.md)')
+    files['docs/ENRICHED_ACCEPTANCE.md'] = HERE / 'ENRICHED_ACCEPTANCE.md'
     files['README.md'] = instructions(profiles, tag)
     artifact = write_archive(output / 'toolkit-tools.tar', files)
     artifact['path'] = 'tools.tar'

@@ -281,6 +281,9 @@ The [bulk enrichment work](dev/tools/wands_catalog/BULK_ENRICHMENT.md) describes
 local candidates for structured specifications, merchandising links, commerce
 fixtures, a medium profile and expanded galleries. Those candidates are not yet
 part of the published rc2 download or its Magento acceptance results.
+The corrected enriched profiles have separate
+[Mage-OS 3.5 / Hyvä acceptance results](dev/tools/wands_catalog/distribution/ENRICHED_ACCEPTANCE.md),
+including all 400 commerce scenarios. They remain unpublished candidates.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and test
 commands, [SECURITY.md](SECURITY.md) for private vulnerability reports, and

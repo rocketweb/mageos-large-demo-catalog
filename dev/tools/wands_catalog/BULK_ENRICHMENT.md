@@ -171,16 +171,17 @@ no scheduled continuation or unattended deployment was created.
 
 ## Remaining release work
 
-1. Import the new medium candidate into a separate empty Mage-OS 3.5 instance.
-   Verify stored specification values, disclosure rendering, filters, comparisons,
-   related products, bundle dependencies and original identifiers.
-2. Exercise the commerce fixtures in that isolated instance and test the gallery
-   append against an existing hero/gallery, with a before-state and inverse.
-3. Publish candidate assets only under a new release ID after runtime acceptance
+The isolated medium/full imports, all 400 full commerce cases and the 14-image
+gallery append have now passed their runtime checks. See the exact pins, fixes
+and limits in [enriched acceptance](distribution/ENRICHED_ACCEPTANCE.md). The
+September 12 v1 packages remain unchanged; use the corrected September 13 v2
+profiles and gallery package for further handoff preparation.
+
+1. Publish candidate assets only under a new release ID after runtime acceptance
    and approval. The September 13 continuation adds medium download support and a
    separate candidate asset builder with current recipient tools. It does not
    create a GitHub release. The existing rc2 assets remain unchanged.
-4. Build independent search judgments and a measured comparison. Do not turn the
+2. Build independent search judgments and a measured comparison. Do not turn the
    generated seed queue into claimed ranking improvement.
 
 Resumable live imports and a broad gallery rollout are not implemented here.
@@ -193,19 +194,20 @@ merge, release publication or demo deployment is part of this continuation.
 medium and full profiles. It verifies every archive before packaging, preserves
 their bytes, copies only declared assets and builds a current recipient toolkit.
 The toolkit includes installation instructions, notices and separately labelled
-historical acceptance evidence. Its README states that the enriched candidate
-has not passed Magento runtime acceptance. The legacy rc2 builder is unchanged.
+historical acceptance evidence. Its README requires matching the candidate's
+exact pins to the enclosed enriched acceptance report. Packaging does not
+automatically confer runtime acceptance. The legacy rc2 builder is unchanged.
 
 From the repository root, use a new output directory:
 
 ```sh
 python3 dev/tools/wands_catalog/distribution/build_candidate_assets.py \
-  --medium var/wands/lab-medium-enriched-20260912-v1 \
-  --medium-sha256 6e83c128538a3c0bf336c06c4135aa2b19ad01abcd8754d707e9bedc62f6ef68 \
-  --full var/wands/lab-full-enriched-20260912-v1 \
-  --full-sha256 9ad4b9ed1a65d6253db2119f61a11e20eb6e3e1cec55da5a8519fd43d157fe8c \
-  --tag catalog-2026.09.13-enriched-candidate-v1 \
-  --output var/wands/enriched-assets-20260913-v1
+  --medium var/wands/lab-medium-enriched-20260913-v2 \
+  --medium-sha256 93256f50f6a1e5070eab18dee3e28b2b348b5e92aba0fa35e3a5b22cb4aaa07a \
+  --full var/wands/lab-full-enriched-20260913-v2 \
+  --full-sha256 b525ca0441e7f04858613fdcba4d8e3ae18421240f4c25a757bf34fa5587951b \
+  --tag catalog-2026.09.13-enriched-candidate-v2 \
+  --output var/wands/enriched-assets-20260913-v2
 ```
 
 Output stays in the adjacent `.log` file. `release-inventory.json` records exact

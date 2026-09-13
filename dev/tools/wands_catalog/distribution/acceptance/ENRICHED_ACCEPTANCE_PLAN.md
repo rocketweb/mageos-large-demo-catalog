@@ -1,7 +1,8 @@
-# Enriched catalog acceptance: proposed remote scope
+# Enriched catalog acceptance: approved remote scope
 
-Prepared September 13, 2026. No new instance, import or fixture mutation has run.
-The new remote work below requires approval as a single acceptance batch.
+Prepared and approved September 13, 2026 as a single isolated acceptance batch.
+Execution uses the exact new project and loopback binding below; existing stores
+and release publication remain outside the approved changes.
 
 ## Current evidence
 
@@ -16,7 +17,7 @@ The server had about 776 GiB disk space and 63 GiB available memory at inspectio
 Port 18036 had no listener. Recheck resources and all target collisions immediately
 before provisioning. These observations are not a reservation or a load test.
 
-## Proposed changes
+## Approved changes
 
 - Create `/opt/comtom/wands-lab35-enriched` with Compose project
   `wands-lab35-enriched`, a dedicated network and separate PHP, database, search
