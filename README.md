@@ -277,6 +277,11 @@ If using WANDS in research, retain the upstream citation:
 
 ## Contributing
 
+The [bulk enrichment work](dev/tools/wands_catalog/BULK_ENRICHMENT.md) describes
+local candidates for structured specifications, merchandising links, commerce
+fixtures, a medium profile and expanded galleries. Those candidates are not yet
+part of the published rc2 download or its Magento acceptance results.
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and test
 commands, [SECURITY.md](SECURITY.md) for private vulnerability reports, and
 [SHARING.md](SHARING.md) for the recipient handoff and public-launch checklist.

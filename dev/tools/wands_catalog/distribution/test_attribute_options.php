@@ -12,6 +12,14 @@ namespace {
     require __DIR__ . '/../../../../app/code/RocketWeb/LabCatalog/Setup/Patch/Data/AddMerchandisingAttributes.php';
     $class = new ReflectionClass(\RocketWeb\LabCatalog\Setup\Patch\Data\AddMerchandisingAttributes::class);
     $options = $class->getConstant('ATTRIBUTE_OPTIONS');
+    $schema = json_decode(file_get_contents(
+        __DIR__ . '/../../../../app/code/RocketWeb/LabCatalog/etc/depth_attributes.json'
+    ), true, 512, JSON_THROW_ON_ERROR);
+    foreach ($schema['attributes'] as $code => $definition) {
+        if ($definition['kind'] === 'select') {
+            $options[$code] = $definition['options'];
+        }
+    }
     $packet = json_decode(file_get_contents($argv[1]), true, 512, JSON_THROW_ON_ERROR);
     $expected = $packet['attribute_options'] ?? $packet;
     foreach ($expected as $code => $values) {
