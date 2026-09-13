@@ -1,4 +1,7 @@
 import json
+import csv
+import io
+import re
 from pathlib import Path
 import sys
 import tempfile
@@ -7,9 +10,20 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from prepare_gallery_expansion import build, SUBJECTS
+from finalize_gallery_expansion import gallery_assignment
+from bulk_enrichment import csv_bytes
 
 
 class GalleryExpansionTest(unittest.TestCase):
+    def test_gallery_labels_survive_native_fields_enclosure_parsing(self):
+        views=[('detail','/wands/detail.jpg'),('room','/wands/room.jpg')]
+        row=gallery_assignment('WANDS-000082','rug',views)
+        imported=next(csv.DictReader(io.StringIO(csv_bytes([row]).decode())))
+        labels=re.findall(r'"((?:[^"]|"")*)"',imported['additional_image_labels'])
+        self.assertEqual(labels,['Synthetic detail illustration; styling not included',
+                                 'Synthetic room illustration; styling not included'])
+        self.assertEqual(imported['additional_images'],'/wands/detail.jpg,/wands/room.jpg')
+
     def test_different_bytes_cannot_inherit_visual_approval(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

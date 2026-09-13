@@ -14,6 +14,15 @@ from verify_bulk_enrichment import read_catalog
 REPAIR_EVENTS_SHA256='1cd803827013aa8b872ec60af9e8252e52136d08f8c79e090ffe0f6ef0a6ce69'
 
 
+def gallery_assignment(sku, url_key, views):
+    # ProductImporter enables FIELDS_ENCLOSURE. Native parseMultiselectValues
+    # requires each caption to be quoted inside the already CSV-quoted cell.
+    labels=['Synthetic '+view+' illustration; styling not included' for view,_ in views]
+    return {'sku':sku,'url_key':url_key,'store_view_code':'',
+            'additional_images':','.join(path for _,path in views),
+            'additional_image_labels':','.join('"'+label.replace('"','""')+'"' for label in labels)}
+
+
 def selected_jobs(jobs_path,run_dir,event_pin,first):
     if sha256(run_dir/'generation-events.jsonl')!=event_pin:
         raise ValueError('Visual decisions apply only to the inspected image hashes')
@@ -60,9 +69,7 @@ def build(args):
                      html.escape(path.resolve().as_uri(),quote=True)+'"></article>')
     assignments=[]
     for sku,views in sorted(by_sku.items()):
-        assignments.append({'sku':sku,'url_key':rows[sku]['url_key'],'store_view_code':'',
-            'additional_images':','.join(path for _,path in views),
-            'additional_image_labels':','.join('Synthetic '+view+' illustration; styling not included' for view,_ in views)})
+        assignments.append(gallery_assignment(sku,rows[sku]['url_key'],views))
     media['data/gallery-additions.csv']=csv_bytes(assignments)
     media['data/gallery-provenance.json']=json_bytes(metadata)
     docs=Path(__file__).with_name('distribution')
@@ -72,7 +79,7 @@ def build(args):
     media['docs/GALLERIES.txt']=b'Local candidate. Upload media/wands-lab/galleries under pub/media/import/wands-lab/galleries and validate the seven-row media-only CSV before a separately authorized import. No base/small/thumbnail role is changed. No existing gallery removal is requested. Native gallery append behavior and final storefront display still need isolated Magento acceptance.\n'
     args.output.mkdir(parents=True)
     artifact=write_archive(args.output/'gallery-additions.tar',media)
-    manifest={'schema':1,'release':'2026.09.12-gallery-v1','profile':'gallery-additions','artifacts':[artifact],
+    manifest={'schema':1,'release':'2026.09.13-gallery-v2','profile':'gallery-additions','artifacts':[artifact],
         'images':14,'products':7,'source_images_retained':True,'deployed':False,
         'magento_import_verified':False,'catalog_sha256':sha256(args.catalog)}
     (args.output/'manifest.json').write_bytes(json_bytes(manifest))
