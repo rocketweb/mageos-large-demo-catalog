@@ -46,8 +46,9 @@ returned products with specification filters. The Yarnell Upholstered Dining
 Chair page showed its synthetic-specification disclosure and related chair.
 Selecting Blue/Wool changed the gallery to the matching, successfully loaded
 variant image and displayed the $355.99 variant price. The product page fit a
-390-pixel viewport without horizontal overflow. No cart or order was created by
-these checks.
+390-pixel viewport without horizontal overflow. The Living Room Essentials bundle
+total changed from $1,496.46 to $1,716.46 when the alternative sofa was selected,
+matching the $220 selection difference. No cart or order was created by these checks.
 
 These are sampled storefront checks, not exhaustive visual acceptance. The
 earlier 400 commerce scenarios and full-profile verification remain documented in

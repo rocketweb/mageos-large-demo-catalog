@@ -3,13 +3,22 @@ declare(strict_types=1);
 require '/var/www/html/app/bootstrap.php';
 $om=\Magento\Framework\App\Bootstrap::create(BP,$_SERVER)->getObjectManager();
 $deployment=$om->get(\Magento\Framework\App\DeploymentConfig::class);
-if ($deployment->get('db/connection/default/dbname')!=='lab_enriched_full'
+$demo=($argv[2]??'')==='--demo';
+$working=$demo?BP.'/var/catalog-enriched-20260913-v2':BP.'/var';
+if ($demo) {
+    $config=$om->get(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+    if ($deployment->get('db/connection/default/dbname')!=='magento'
+        || parse_url((string)$config->getValue('web/secure/base_url'),PHP_URL_HOST)!=='relevance.comtom.lab') {
+        throw new RuntimeException('Wrong demo gallery destination');
+    }
+} elseif ($deployment->get('db/connection/default/dbname')!=='lab_enriched_full'
     || $deployment->get('db/connection/default/host')!=='db') {
     throw new RuntimeException('Gallery acceptance requires the isolated full database');
 }
 $phase=$argv[1]??'';
 if (!in_array($phase,['before','after'],true)) { throw new RuntimeException('Choose before or after'); }
-$provenance=json_decode(file_get_contents('/packages/gallery-staged/data/gallery-provenance.json'),true,512,JSON_THROW_ON_ERROR);
+$provenancePath=$demo?$working.'/gallery/data/gallery-provenance.json':'/packages/gallery-staged/data/gallery-provenance.json';
+$provenance=json_decode(file_get_contents($provenancePath),true,512,JSON_THROW_ON_ERROR);
 $expected=[];
 foreach ($provenance as $image) { $expected[$image['sku']][$image['sha256']]=$image['view']; }
 if (count($expected)!==7 || count($provenance)!==14) { throw new RuntimeException('Unexpected gallery scope'); }
@@ -29,7 +38,7 @@ foreach ($expected as $sku=>$images) {
 }
 $report=['phase'=>$phase,'products'=>$products,'checks'=>0,'failures'=>[]];
 if ($phase==='after') {
-    $before=json_decode(file_get_contents(BP.'/var/gallery-before.json'),true,512,JSON_THROW_ON_ERROR)['products'];
+    $before=json_decode(file_get_contents($working.'/gallery-before.json'),true,512,JSON_THROW_ON_ERROR)['products'];
     $check=static function(bool $valid,string $message) use (&$report): void {
         $report['checks']++; if (!$valid) { $report['failures'][]=$message; }
     };
@@ -56,7 +65,7 @@ if ($phase==='after') {
     $check($addedCount===14,'Exactly 14 additions');
 }
 $report['status']=$report['failures']===[]?'passed':'failed';
-$path=BP.'/var/gallery-'.$phase.'.json';
+$path=$working.'/gallery-'.$phase.'.json';
 $stream=fopen($path,'x');
 if (!$stream) { throw new RuntimeException('Gallery receipt already exists'); }
 fwrite($stream,json_encode($report,JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR)); fclose($stream);

@@ -56,6 +56,9 @@ A GPU, API key, Hyvä, Koti and hybrid search are **not required**.
 The enriched profiles passed isolated Mage-OS 3.5/Hyvä checks, including all 400
 full-profile commerce scenarios. See the exact pins, import corrections and
 limits in [enriched acceptance](dev/tools/wands_catalog/distribution/ENRICHED_ACCEPTANCE.md).
+The published medium downloads also passed a fresh, anonymous-download
+[recipient installation](dev/tools/wands_catalog/distribution/PUBLIC_RECIPIENT_ACCEPTANCE.md)
+with 194,287 catalog assertions and no corrective imports.
 Mage-OS 3.4, login, checkout and payments are not qualified.
 
 ## Quick start
