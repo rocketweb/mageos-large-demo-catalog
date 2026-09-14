@@ -11,6 +11,20 @@ from release import digest, verify_release, write_archive
 
 
 class CandidateAssetsTest(unittest.TestCase):
+    def test_optional_gallery_assets_preserve_their_pinned_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            paths,pins=self.profiles(root)
+            gallery=root/'gallery'; gallery.mkdir()
+            artifact=write_archive(gallery/'gallery-additions.tar',{'data/gallery-additions.csv':b'sku\nEXAMPLE\n'})
+            (gallery/'manifest.json').write_text(json.dumps({'schema':1,'profile':'gallery-additions',
+                'release':'gallery-v2','products':7,'images':14,'artifacts':[artifact]}))
+            pin=digest(gallery/'manifest.json')
+            result=build_assets(paths,pins,root/'out',tag='enriched-test',gallery=gallery,gallery_pin=pin)
+            self.assertEqual(result['gallery_pin'],pin)
+            self.assertEqual(digest(root/'out/gallery-manifest.json'),pin)
+            self.assertEqual(digest(root/'out/gallery-gallery-additions.tar'),digest(gallery/'gallery-additions.tar'))
+
     def profiles(self, root):
         paths, pins = {}, {}
         for profile in ('medium', 'full'):

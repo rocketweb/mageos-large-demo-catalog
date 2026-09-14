@@ -19,6 +19,31 @@ class Response(io.BytesIO):
 
 
 class GitHubDownloadTest(unittest.TestCase):
+    def test_anonymous_cli_does_not_resolve_local_credentials(self):
+        from github_download import main
+        with tempfile.TemporaryDirectory() as directory, patch('github_download.GitHubAssets') as client, \
+                patch('github_download.fetch_release'), patch.object(sys,'argv',[
+                    'github_download.py','--repo','example/catalog','--tag','v2','--profile','medium',
+                    '--cache-dir',directory,'--manifest-sha256','a'*64,'--anonymous']):
+            self.assertEqual(main(),0)
+            self.assertEqual(client.call_args.kwargs['token'],'')
+
+    def test_gallery_profile_uses_its_own_asset_namespace(self):
+        def metadata(request, timeout):
+            data = {'id': 11} if '/tags/' in request.full_url else [
+                {'id': 7, 'name': 'gallery-manifest.json'},
+                {'id': 8, 'name': 'gallery-gallery-additions.tar'}]
+            return Response(json.dumps(data).encode())
+        calls=[]
+        def binary(request, timeout):
+            calls.append(request.full_url)
+            return Response(b'gallery')
+        client=GitHubAssets('example/catalog','enriched-v2','gallery',token='',
+                            metadata_opener=metadata,binary_opener=binary)
+        with client(Request(client.base_url+'gallery-additions.tar'),timeout=10) as response:
+            self.assertEqual(response.read(),b'gallery')
+        self.assertEqual(calls,['https://api.github.com/repos/example/catalog/releases/assets/8'])
+
     def test_medium_download_verifies_extracts_and_reuses_pinned_cache(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

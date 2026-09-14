@@ -44,7 +44,7 @@ class GitHubAssets:
     def __init__(self, repository, tag, profile, *, token=None, metadata_opener=None, binary_opener=None):
         if (not re.fullmatch(r'[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+', repository)
                 or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*', tag)
-                or profile not in ('starter', 'medium', 'full', 'toolkit')):
+                or profile not in ('starter', 'medium', 'full', 'toolkit', 'gallery')):
             raise ValueError('Invalid GitHub repository, tag or profile')
         self.api_root = 'https://api.github.com/repos/' + repository
         self.base_url = f'https://github.com/{repository}/releases/download/{tag}/'
@@ -106,16 +106,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--repo', required=True)
     parser.add_argument('--tag', required=True)
-    parser.add_argument('--profile', choices=['starter', 'medium', 'full', 'toolkit'], required=True)
+    parser.add_argument('--profile', choices=['starter', 'medium', 'full', 'toolkit', 'gallery'], required=True)
     parser.add_argument('--cache-dir', type=Path, required=True)
     parser.add_argument('--manifest-sha256', required=True)
     parser.add_argument('--log-file', type=Path, default=Path('wands-download.log'))
     parser.add_argument('--attempts', type=int, default=3)
+    parser.add_argument('--anonymous',action='store_true',help='Do not read environment or gh credentials')
     parser.add_argument('--timeout', type=int, default=30)
     args = parser.parse_args()
     logging.basicConfig(filename=args.log_file, level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
     try:
-        client = GitHubAssets(args.repo, args.tag, args.profile)
+        client = GitHubAssets(args.repo, args.tag, args.profile,token='' if args.anonymous else None)
         fetch_release(client.base_url, args.cache_dir, args.manifest_sha256, opener=client,
                       attempts=args.attempts, timeout=args.timeout)
     except KeyboardInterrupt:

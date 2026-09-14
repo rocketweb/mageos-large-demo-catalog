@@ -1,11 +1,11 @@
 # Sharing the catalog
 
-For an authorized recipient, share the [README](README.md) and its pinned
-[release assets](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.09.12-rc2).
-They need repository access while it remains private. No local image generator,
-GPU or API key is needed to use the prepared catalog.
+Share the [README](README.md) and its pinned
+[enriched v2 release assets](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.09.13-enriched-v2).
+The repository is public. No GitHub account, local image generator, GPU or API
+key is needed to use the prepared catalog. Use the documented anonymous downloader.
 
-Share the starter first when someone wants to check installation. Share the full
+Share medium first when someone wants to check installation. Share the full
 profile for catalog-scale work. Both require their own empty Mage-OS installation.
 Do not send the original demo database, vendor tree, credentials or local working
 directory. Keep the notices, dataset card and manifests with redistributed files.
@@ -39,5 +39,7 @@ directory. Keep the notices, dataset card and manifests with redistributed files
   README, screenshots, license and release downloads. A successful owner download
   does not prove public access.
 
-This checklist is preparation, not a record that these steps have passed. There
-is no need to change visibility to share privately with existing collaborators.
+This checklist is a reusable release gate, not a record that every setting is
+enabled. See [the release audit](dev/tools/wands_catalog/distribution/PUBLIC_RELEASE_AUDIT.md)
+for current findings. Repository visibility was already public before this pass;
+no visibility change was needed.

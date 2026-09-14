@@ -4,11 +4,11 @@ A large, synthetic home-and-furniture catalog for testing search, navigation,
 configurable products, bundles, prices, inventory and product media.
 
 This is a lab prerelease, not an official Mage-OS or Wayfair release.
-Starter and full profiles passed fresh-install testing on Mage-OS 3.5.0
-with the stock Luma theme. See the [acceptance result](ACCEPTANCE.md).
-The full-profile instance subsequently received Hyvä Default 1.5.2; see the
-[Hyvä storefront checks](HYVA_ACCEPTANCE.md). Theme packages remain separate.
-Mage-OS 3.4 was not tested. The current GitHub repository requires access.
+The enriched medium and full profiles were tested on Mage-OS 3.5.0 with Hyvä
+Default 1.5.2 and stock OpenSearch 3.1.0. See the exact profile pins and limits in
+[enriched acceptance](ENRICHED_ACCEPTANCE.md). The older [rc2 acceptance](ACCEPTANCE.md)
+and [Hyvä checks](HYVA_ACCEPTANCE.md) remain historical evidence.
+Theme packages remain separate. Mage-OS 3.4 was not tested. Downloads are public.
 Code and authored data use MIT; generated images use CC0 where rights are held.
 Do not use this candidate in a customer store.
 
@@ -20,8 +20,8 @@ API key, Hyvä theme, Koti sample data and hybrid search are not required.
 
 Choose one profile on a fresh installation:
 
-- **Starter:** selected corrected families plus a living-room bundle, including
-  every child and selection dependency. Counts are in `data/counts.json`.
+- **Medium:** 5,000 records, with complete configurable and bundle dependencies.
+  This is the default for a first installation.
 - **Full:** 53,844 records, including disabled legacy variants. This is a derived
   catalog, not the original 42,994-product WANDS benchmark.
 
@@ -67,7 +67,7 @@ Automatic interrupted-import recovery is not supported in this candidate.
 The following procedure was exercised on a fresh Mage-OS 3.5.0 installation,
 including the ownership and menu steps noted below. Back up the empty installation first.
 Confirm zero products, no existing `wands` website/store and no other sample data.
-Do not install this over an existing WANDS catalog or switch starter to full in
+Do not install this over an existing WANDS catalog or switch medium to full in
 place. On interruption, restore the empty baseline before retrying.
 
 Run the read-only destination preflight from extracted tooling before installing

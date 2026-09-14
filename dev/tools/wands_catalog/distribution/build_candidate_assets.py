@@ -18,7 +18,7 @@ DOCS = ['README.md', 'ACCEPTANCE.md', 'HYVA_ACCEPTANCE.md', 'DOWNLOADS.md',
 
 def instructions(profiles, tag):
     lines = ['# Enriched WANDS catalog candidate', '',
-        'This candidate is local and unpublished. Packaging does not establish Magento runtime acceptance.',
+        'Versioned catalog assets for dedicated labs. Packaging does not establish Magento runtime acceptance.',
         'Compare the exact pins below with `docs/ENRICHED_ACCEPTANCE.md` in the extracted toolkit.',
         'Older rc2 acceptance results do not qualify these enriched catalog bytes.', '',
         'Choose one profile for a separate empty Mage-OS 3.5 lab:', '']
@@ -42,12 +42,12 @@ def instructions(profiles, tag):
         '## Optional GitHub download after publication', '',
         f'The proposed tag is `{tag}`. Building these assets does not create that release.',
         'After a maintainer publishes and supplies trusted hashes, the companion',
-        '`github_download.py` supports `--profile medium`, `full` and `toolkit`.',
+        '`github_download.py` supports `--profile medium`, `full`, `toolkit` and `gallery`.',
         'Keep all three authenticated Python scripts together. Download logs go to',
         '`wands-download.log`; interrupted downloads can resume. Imports cannot.', '',
         '## Installation and acceptance', '',
         'Follow `toolkit/docs/README.md` for the fresh-install procedure only.',
-        'Its rc2 runtime evidence and download pins describe the older release.',
+        'The separate rc2 acceptance documents describe the older release.',
         'Use this candidate\'s pins and module archive, not a published rc2 module.',
         'Run the current `toolkit/tools/preflight.php` before any installation writes.',
         'Retain an empty-baseline backup and restore it before retrying an interrupted import.',
@@ -55,7 +55,8 @@ def instructions(profiles, tag):
         'Check specifications and synthetic disclosures, related products, filters,',
         'configurable choices, bundles, stock, media and search on the installed theme.',
         'Commerce scenario specifications require separate runtime execution.',
-        'Gallery additions are a separate package and are not included in these profiles.',
+        'Gallery additions are a separate optional package, not part of either baseline profile.',
+        'Follow `toolkit/docs/GALLERIES.md` after a successful full-profile import.',
         'No checkout, payment or search-ranking improvement is claimed.', '',
         '## Notices', '',
         'Retain the WANDS license and citation, Rocket Web MIT notice and generated-media',
@@ -64,7 +65,7 @@ def instructions(profiles, tag):
     return '\n'.join(lines).encode()
 
 
-def build_assets(profile_dirs, pins, output, *, tag):
+def build_assets(profile_dirs, pins, output, *, tag, gallery=None, gallery_pin=None):
     output = Path(output)
     if output.exists() or output.is_symlink():
         raise FileExistsError('Asset output must be a new directory')
@@ -89,6 +90,19 @@ def build_assets(profile_dirs, pins, output, *, tag):
             sources[profile + '-' + artifact['path']] = root / artifact['path']
         profiles[profile] = {'manifest_sha256': pins[profile], 'release': manifest['release'],
                              'counts': manifest['counts']}
+    if (gallery is None) != (gallery_pin is None):
+        raise ValueError('Gallery directory and pin must be supplied together')
+    if gallery is not None:
+        gallery=Path(gallery)
+        verify_release(gallery,gallery_pin)
+        manifest=json.loads((gallery/'manifest.json').read_bytes())
+        if manifest.get('profile')!='gallery-additions' or manifest.get('products')!=7 or manifest.get('images')!=14:
+            raise ValueError('Unexpected gallery scope')
+        sources['gallery-manifest.json']=gallery/'manifest.json'
+        for artifact in manifest['artifacts']:
+            if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]*\.tar',artifact['path']) or artifact['bytes']>=2**31:
+                raise ValueError('Invalid gallery release asset')
+            sources['gallery-'+artifact['path']]=gallery/artifact['path']
     output.parent.mkdir(parents=True, exist_ok=True)
     if shutil.disk_usage(output.parent).free < sum(p.stat().st_size for p in sources.values()) + 64 * 1024 ** 2:
         raise ValueError('Insufficient space for candidate assets')
@@ -102,8 +116,8 @@ def build_assets(profile_dirs, pins, output, *, tag):
     for name in DOCS:
         data = (HERE / name).read_bytes()
         if name.endswith('.md'):
-            data = (b'> Historical rc2 documentation: runtime results and download pins do not\n'
-                    b'> qualify the enriched candidate. Start with the toolkit README.\n\n' + data)
+            if name in ('ACCEPTANCE.md','HYVA_ACCEPTANCE.md'):
+                data = (b'> Historical rc2 evidence. These results do not qualify other profile pins.\n\n' + data)
             data = data.replace(b'dev/tools/wands_catalog/distribution/', b'tools/')
             data = data.replace(b'php ./wands-staging/tools/preflight.php', b'php tools/preflight.php')
             data = data.replace(b'../../../../app/code/RocketWeb/LabCatalog/view/frontend/layout/', b'source/')
@@ -118,6 +132,7 @@ def build_assets(profile_dirs, pins, output, *, tag):
     files['docs/BULK_ENRICHMENT.md'] = (HERE.parent / 'BULK_ENRICHMENT.md').read_bytes().replace(
         b'(distribution/ENRICHED_ACCEPTANCE.md)', b'(ENRICHED_ACCEPTANCE.md)')
     files['docs/ENRICHED_ACCEPTANCE.md'] = HERE / 'ENRICHED_ACCEPTANCE.md'
+    files['docs/GALLERIES.md'] = HERE / 'GALLERIES.md'
     files['README.md'] = instructions(profiles, tag)
     artifact = write_archive(output / 'toolkit-tools.tar', files)
     artifact['path'] = 'tools.tar'
@@ -133,6 +148,8 @@ def build_assets(profile_dirs, pins, output, *, tag):
                  'profile_pins': pins, 'profiles': profiles, 'toolkit_pin': toolkit_pin,
                  'status': 'local candidate; not published', 'magento_runtime_verified': False,
                  'assets': assets}
+    if gallery is not None:
+        inventory['gallery_pin']=gallery_pin
     (output / 'release-inventory.json').write_bytes(encoded(inventory))
     (output / 'SHA256SUMS').write_text(''.join(digest(p) + '  ' + p.name + '\n' for p in sorted(output.iterdir())))
     logging.info('COMPLETE inventory_sha256=%s assets=%d toolkit_pin=%s',
@@ -147,13 +164,16 @@ def main():
         parser.add_argument('--' + profile + '-sha256', required=True)
     parser.add_argument('--tag', required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--gallery',type=Path)
+    parser.add_argument('--gallery-sha256')
     args = parser.parse_args()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     logging.basicConfig(filename=args.output.with_suffix('.log'), level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s')
     try:
         build_assets({'medium': args.medium, 'full': args.full},
-                     {'medium': args.medium_sha256, 'full': args.full_sha256}, args.output, tag=args.tag)
+                     {'medium': args.medium_sha256, 'full': args.full_sha256}, args.output, tag=args.tag,
+                     gallery=args.gallery,gallery_pin=args.gallery_sha256)
     except Exception:
         logging.exception('Candidate asset preparation failed')
         return 1

@@ -1,17 +1,18 @@
 # GitHub release assets
 
-Use the assets attached to `catalog-2026.09.12-rc2` in
-`rocketweb/mageos-large-demo-catalog`. The repository is private; recipients need
-repository access. Publishing these assets does not change repository visibility.
+Use the assets attached to `catalog-2026.09.13-enriched-v2` in
+`rocketweb/mageos-large-demo-catalog`. Downloads are public; no account or API key
+is required. This is a lab prerelease, not an official Mage-OS or Wayfair release.
 
-The release contains the unchanged rc2 starter and full catalog archives, with
-`starter-` or `full-` added to asset names to avoid filename collisions. The
+The release contains enriched medium and full catalog archives, with
+`medium-` or `full-` added to asset names to avoid filename collisions. The
 GitHub downloader maps those names back into a profile-specific cache. Original
 catalog manifests and archive bytes keep their tested hashes.
 
 Download `github_download.py`, `download.py`, and `release.py` together. Authenticate
 their hashes against the release notes before running them. Python 3.11+ is
-required. For private access, use an existing `gh auth login` session, or provide
+required. Use `--anonymous` to avoid reading any local credentials. For a private
+fork, omit it and use an existing `gh auth login` session, or provide
 `GH_TOKEN`/`GITHUB_TOKEN` through your credential manager. Do not put tokens in
 commands, files, URLs or logs. Public repositories can be read without a token.
 
@@ -20,15 +21,15 @@ commands, files, URLs or logs. Public repositories can be read without a token.
 From the directory containing the three scripts:
 
 ```sh
-python3 github_download.py --repo rocketweb/mageos-large-demo-catalog \
-  --tag catalog-2026.09.12-rc2 --profile starter --cache-dir ./cache \
-  --manifest-sha256 42bd8400415204b8bc6b8f5ed5cf8adb8156185eca92ff156cd54285bb68b40f
+python3 github_download.py --anonymous --repo rocketweb/mageos-large-demo-catalog \
+  --tag catalog-2026.09.13-enriched-v2 --profile medium --cache-dir ./cache \
+  --manifest-sha256 93256f50f6a1e5070eab18dee3e28b2b348b5e92aba0fa35e3a5b22cb4aaa07a
 ```
 
 For the full catalog, use `--profile full` and this pin:
 
 ```text
-9bf76000f3de8816459638ba2f396af805eaaa83c504886000e1b3c32adcf19d
+b525ca0441e7f04858613fdcba4d8e3ae18421240f4c25a757bf34fa5587951b
 ```
 
 Logs go to `wands-download.log` by default. Watch them with
@@ -53,11 +54,17 @@ An offline alternative is to download all assets through the GitHub UI or
 `gh release download`, verify `SHA256SUMS`, and remove the selected profile prefix
 from filenames in a new profile directory before running the offline verifier.
 
-The release tag anchors the hosting repository's existing main commit. It does
-not claim that GitHub's automatically generated source ZIP contains the current
-catalog tooling. Use the attached toolkit and profile module archives. Each
-contains the actual source used, with hashes and retained license notices.
+The new release tag anchors the integrated source commit. Use the attached
+toolkit and profile module archives for installation, not the root Composer
+project. Each contains the actual packaged source, hashes and retained notices.
+Earlier rc2 assets and their tag stay unchanged. The older 27-product starter
+remains available from rc2 but is not an enriched profile.
+
+The optional [gallery package](GALLERIES.md) uses `--profile gallery`. Its asset
+`gallery-gallery-additions.tar` maps back to `gallery-additions.tar` in the cache,
+using the same prefix rule. Install it only after a successful full-profile import.
 
 This is a lab prerelease. Installation remains fresh-install-only, with an empty
 baseline backup for recovery. Resumable downloads do not imply resumable imports.
-No Mage-OS 3.4, clean-install Hyvä or checkout/payment result is claimed.
+See [enriched acceptance](ENRICHED_ACCEPTANCE.md) for the pinned Mage-OS 3.5/Hyvä
+results. No Mage-OS 3.4, checkout/payment or search-ranking improvement is claimed.
