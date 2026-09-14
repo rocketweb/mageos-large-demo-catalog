@@ -43,6 +43,12 @@ tag and asset bytes must not be replaced. Verify the integrated source commit,
 uploaded asset names/sizes/digests, an anonymous download and a clean recipient
 installation before reporting the release workflow complete.
 
+Publication and the clean medium recipient installation are now verified in
+[public recipient acceptance](PUBLIC_RECIPIENT_ACCEPTANCE.md). All 27 uploaded
+asset digests matched; anonymous helper, toolkit and catalog downloads succeeded.
+The recipient completed all five import phases and 194,287 assertions without a
+corrective import. The archive-aware asset scan found no secrets.
+
 ## Repository settings observed
 
 Issues are enabled. Main-branch protection is disabled, and no active CI check
