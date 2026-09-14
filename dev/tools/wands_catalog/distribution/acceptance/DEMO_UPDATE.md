@@ -48,3 +48,28 @@ search indexes, uploaded image files or other later external changes.
 Do not remove original media. The optional gallery update is a separate phase
 with its own before-state and verification. A failed verification is not a
 completed deployment.
+
+## Recorded stock-side-effect recovery
+
+The native imports changed 139 fields in 90 stock rows: 49 `is_in_stock` flags,
+50 `stock_status_changed_auto` flags and 40 `low_stock_date` values. The original
+quantities and all other protected tables matched. The updater stopped.
+
+`extract_demo_stock.py` reads only the stock table from the exact hash-pinned
+private SQL backup. It accepts numeric/date/null stock literals, including the
+actual multiline dump format, and rejects arbitrary SQL expressions, duplicates,
+wrong counts and truncated statements. Unrelated binary dump bytes are preserved
+by byte-compatible decoding, not interpreted as stock data.
+
+`restore_demo_stock.php` requires the inspected 90-row/139-field scope, locks and
+checks each current value against the recorded after-state, restores only those
+fields in a transaction, and requires the entire stock-table hash to match the
+original plan before committing. This restoration passed. The explicit
+`--finish-after-stock-restoration` continuation preserved the failed receipt,
+repeated canonical verification, reindexed and verified again successfully.
+
+The separate gallery phase passed 71 checks for 14 additions. The final whole-
+catalog comparison excludes only those 14 independently verified new gallery IDs
+from the original-row hashes; every original media row must still match. It also
+requires exact descriptions/specifications and all 65,375 links, with prices,
+stock, relationships, configuration and the extra products preserved.

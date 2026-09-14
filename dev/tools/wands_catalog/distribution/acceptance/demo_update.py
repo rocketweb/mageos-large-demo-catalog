@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 
 ROOT = Path('/opt/comtom/stores/relevance/catalog-enriched-20260913-v2')
 APP = Path('/opt/comtom/stores/relevance/src')
@@ -67,5 +68,30 @@ $o->create($class)->apply();$history->fixPatch($class);
     (ROOT/'update-complete').touch(exist_ok=False)
 
 
+def finish_after_stock_restoration():
+    if Path.cwd().resolve() != ROOT or ROOT.is_symlink() or (ROOT/'update-complete').exists():
+        raise RuntimeError('Wrong target or update already complete')
+    state = json.loads((ROOT/'update-state.json').read_text())
+    assert state == {'stage': 'canonical-verification', 'status': 'failed'}
+    failure = json.loads((WORK/'verify.json').read_text())
+    assert failure['changed_products'] == 0 and failure['links_exact']
+    restoration = json.loads((WORK/'stock-restoration.json').read_text())
+    assert restoration['status'] == 'passed' and restoration['restored_rows'] == 90
+    if (WORK/'verify-initial-failed.json').exists():
+        raise RuntimeError('Continuation already attempted')
+    (WORK/'verify.json').rename(WORK/'verify-initial-failed.json')
+    run('canonical-after-stock-restoration', CLI+[PREFIX+'demo_scope.php', 'verify'])
+    run('reindex', CLI+['bin/magento', 'indexer:reindex'])
+    run('cache-clean', CLI+['bin/magento', 'cache:clean'])
+    (WORK/'verify.json').rename(WORK/'verify-after-stock-restoration.json')
+    run('canonical-after-reindex', CLI+[PREFIX+'demo_scope.php', 'verify'])
+    (ROOT/'update-complete').touch(exist_ok=False)
+
+
 if __name__ == '__main__':
-    main()
+    if sys.argv[1:] == ['--finish-after-stock-restoration']:
+        finish_after_stock_restoration()
+    elif sys.argv[1:]:
+        raise RuntimeError('Unsupported arguments')
+    else:
+        main()

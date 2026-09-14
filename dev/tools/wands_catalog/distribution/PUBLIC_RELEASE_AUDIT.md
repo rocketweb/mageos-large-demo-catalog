@@ -65,3 +65,9 @@ additional test products are not part of the 53,844-record distribution profile.
 Do not replace this store with the stock-search acceptance fixture. Prepare an
 attribute/link-only update, preserve extra products and existing search modules,
 and retain a scoped before-state and database backup before applying changes.
+
+The attribute/link update and separate gallery append are now verified in
+[demo enrichment acceptance](DEMO_ENRICHED_ACCEPTANCE.md). Exact stock drift was
+restored, and all original protected records matched after reindexing and media
+acceptance. Hybrid catch-up remains unresolved; the live search route is native
+fallback, not yet a verified fresh hybrid result.

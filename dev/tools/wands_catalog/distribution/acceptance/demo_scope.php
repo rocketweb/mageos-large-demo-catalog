@@ -16,6 +16,21 @@ $root = BP . '/var/catalog-enriched-20260913-v2';
 if (!in_array($mode, ['plan', 'verify'], true)) {
     throw new RuntimeException('Choose plan or verify');
 }
+$galleryIds=[];
+if (($argv[2]??'')==='--after-gallery') {
+    if ($mode!=='verify') { throw new RuntimeException('Gallery exclusion requires verification'); }
+    $beforeGallery=json_decode(file_get_contents($root.'/gallery-before.json'),true,512,JSON_THROW_ON_ERROR);
+    $afterGallery=json_decode(file_get_contents($root.'/gallery-after.json'),true,512,JSON_THROW_ON_ERROR);
+    if ($afterGallery['status']!=='passed' || $afterGallery['added_images']!==14) {
+        throw new RuntimeException('Gallery acceptance has not passed');
+    }
+    foreach ($afterGallery['products'] as $sku=>$product) {
+        foreach (array_diff_key($product['entries'],$beforeGallery['products'][$sku]['entries']) as $entry) {
+            $galleryIds[]=(int)$entry['id'];
+        }
+    }
+    if (count(array_unique($galleryIds))!==14) { throw new RuntimeException('Unexpected gallery entry scope'); }
+}
 $read = static function (string $path): array {
     $stream = fopen($path, 'r');
     $header = fgetcsv($stream, null, ',', '"', '');
@@ -88,6 +103,12 @@ foreach (['catalog_product_entity', 'cataloginventory_stock_item', 'inventory_so
     'catalog_product_entity_media_gallery_value', 'catalog_product_entity_media_gallery_value_to_entity',
     'core_config_data'] as $table) {
     $records = $db->fetchAll('SELECT * FROM ' . $table . ' ORDER BY 1');
+    if ($galleryIds && in_array($table, ['catalog_product_entity_media_gallery',
+        'catalog_product_entity_media_gallery_value','catalog_product_entity_media_gallery_value_to_entity'],true)) {
+        // Remove only the 14 independently verified new IDs from the comparison.
+        // Every original gallery row across every product must still hash exactly.
+        $records=array_values(array_filter($records,static fn($row)=>!in_array((int)$row['value_id'],$galleryIds,true)));
+    }
     if ($table === 'catalog_product_entity') {
         foreach ($records as &$record) { unset($record['updated_at']); }
         unset($record);
@@ -131,6 +152,7 @@ $report = ['products' => count($entities), 'source_products' => count($rows), 'e
     'attribute_change_count' => array_sum($changes), 'desired_links' => count($expectedLinks),
     'existing_links' => count($actualLinks), 'missing_attributes' => array_values(array_diff($targetCodes, array_keys($metadata))),
     'protected' => $protected, 'search_engine' => $config->getValue('catalog/search/engine')];
+$report['verified_gallery_additions']=count($galleryIds);
 if ($mode === 'plan') {
     if ($actualLinks !== []) { throw new RuntimeException('Expected link-free original demo'); }
     $stream = fopen($root . '/attributes.csv', 'x');
@@ -150,7 +172,7 @@ if ($mode === 'plan') {
         && $report['protected_unchanged'] && $report['links_exact']
         && $report['search_engine'] === $before['search_engine'] ? 'passed' : 'failed';
 }
-$output = fopen($root . '/' . $mode . '.json', 'x');
+$output = fopen($root . '/' . $mode . ($galleryIds?'-gallery':'') . '.json', 'x');
 if (!$output) { throw new RuntimeException('Receipt already exists'); }
 fwrite($output, json_encode($report, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR)); fclose($output);
 echo json_encode(array_diff_key($report, ['protected' => true]), JSON_PRETTY_PRINT) . "\n";
