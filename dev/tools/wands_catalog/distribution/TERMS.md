@@ -1,9 +1,9 @@
 # Distribution terms
 
-Private release candidate. Public sharing has not been authorized.
-
-Matt approved these terms on September 11, 2026. Approval of the license choices
-does not authorize publishing or uploading the candidate.
+Matt approved these license choices on September 11, 2026. The terms below
+describe the material being distributed, independently of repository visibility.
+Repository access and publication state do not add restrictions to the licenses.
+Maintainer approval for uploads and visibility changes is a separate workflow.
 
 The original WANDS material retains its MIT license in `WANDS-LICENSE.txt` and
 requested scholarly citation in `CITATION.bib`.

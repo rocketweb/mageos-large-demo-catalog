@@ -5,6 +5,16 @@
 !/.magebox.yaml
 !/docker-compose.mageos.yaml
 !/README.md
+!/LICENSE
+!/NOTICE.md
+!/CONTRIBUTING.md
+!/SECURITY.md
+!/SHARING.md
+!/.github/
+!/.github/ISSUE_TEMPLATE/
+!/.github/ISSUE_TEMPLATE/bug_report.md
+!/.github/ISSUE_TEMPLATE/catalog_improvement.md
+!/.github/pull_request_template.md
 
 # Composer is the source of truth for Mage-OS, Hyva, and Koti packages
 !/composer.json

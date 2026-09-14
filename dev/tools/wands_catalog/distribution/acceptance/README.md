@@ -48,6 +48,19 @@ checks against the exact staged data. It does not interpret a raw stock flag as
 availability when the product explicitly disables stock management; storefront
 checks separately exercise composite availability and pricing.
 
+For enriched candidates, deploy `enrichment_checks.php` beside
+`verify_profile.php`. The verifier detects specification columns or enrichment
+coverage and additionally compares store-zero descriptions, URL keys, every
+specification value, the synthetic disclosure and exact related/cross-sell links.
+Select labels are resolved through options belonging to the correct attribute.
+Missing values, unexpected populated fields and missing/extra links fail the run.
+The report records `enrichment_checked` and `enrichment_checks`; an older rc2 run
+does not provide evidence for these checks. Frontend rendering still needs browser
+acceptance, including store-view overrides and configurable selections.
+
+The [enriched acceptance plan](ENRICHED_ACCEPTANCE_PLAN.md) proposes a new isolated
+remote fixture. The existing populated fixture is not its import destination.
+
 ## Stop without deleting data
 
 From the exact acceptance root, `docker compose stop` stops only this project.

@@ -2,18 +2,102 @@ import io
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
+from unittest.mock import patch
 from urllib.request import Request
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'distribution'))
 from github_download import GitHubRedirects, GitHubAssets
+from download import fetch_release
+from release import digest, verify_release, write_archive
 
 
 class Response(io.BytesIO):
     status = 200
+    headers = {}
 
 
 class GitHubDownloadTest(unittest.TestCase):
+    def test_anonymous_cli_does_not_resolve_local_credentials(self):
+        from github_download import main
+        with tempfile.TemporaryDirectory() as directory, patch('github_download.GitHubAssets') as client, \
+                patch('github_download.fetch_release'), patch.object(sys,'argv',[
+                    'github_download.py','--repo','example/catalog','--tag','v2','--profile','medium',
+                    '--cache-dir',directory,'--manifest-sha256','a'*64,'--anonymous']):
+            self.assertEqual(main(),0)
+            self.assertEqual(client.call_args.kwargs['token'],'')
+
+    def test_gallery_profile_uses_its_own_asset_namespace(self):
+        def metadata(request, timeout):
+            data = {'id': 11} if '/tags/' in request.full_url else [
+                {'id': 7, 'name': 'gallery-manifest.json'},
+                {'id': 8, 'name': 'gallery-gallery-additions.tar'}]
+            return Response(json.dumps(data).encode())
+        calls=[]
+        def binary(request, timeout):
+            calls.append(request.full_url)
+            return Response(b'gallery')
+        client=GitHubAssets('example/catalog','enriched-v2','gallery',token='',
+                            metadata_opener=metadata,binary_opener=binary)
+        with client(Request(client.base_url+'gallery-additions.tar'),timeout=10) as response:
+            self.assertEqual(response.read(),b'gallery')
+        self.assertEqual(calls,['https://api.github.com/repos/example/catalog/releases/assets/8'])
+
+    def test_medium_download_verifies_extracts_and_reuses_pinned_cache(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            artifact = write_archive(root / 'catalog.tar', {'data/products.csv': b'sku\nMEDIUM-1\n'})
+            (root / 'manifest.json').write_text(json.dumps({'schema': 1, 'profile': 'medium',
+                                                         'artifacts': [artifact]}))
+            pin = digest(root / 'manifest.json')
+            payloads = {7: (root / 'manifest.json').read_bytes(), 8: (root / 'catalog.tar').read_bytes()}
+            def metadata(request, timeout):
+                data = {'id': 11} if '/tags/' in request.full_url else [
+                    {'id': 7, 'name': 'medium-manifest.json'}, {'id': 8, 'name': 'medium-catalog.tar'}]
+                return Response(json.dumps(data).encode())
+            calls = []
+            def binary(request, timeout):
+                asset = int(request.full_url.rsplit('/', 1)[1])
+                calls.append(asset)
+                return Response(payloads[asset])
+            client = GitHubAssets('example/catalog', 'enriched-v1', 'medium', token='',
+                                  metadata_opener=metadata, binary_opener=binary)
+            fetch_release(client.base_url, root / 'cache', pin, opener=client, attempts=1)
+            fetch_release(client.base_url, root / 'cache', pin, opener=client, attempts=1)
+            self.assertEqual(calls, [7, 8])
+            verify_release(root / 'cache' / pin, pin, root / 'staged')
+            self.assertEqual((root / 'staged/data/products.csv').read_bytes(), b'sku\nMEDIUM-1\n')
+
+    def test_cli_accepts_medium_and_remains_quiet(self):
+        from github_download import main
+        with tempfile.TemporaryDirectory() as directory, patch('github_download.GitHubAssets') as client, \
+                patch('github_download.fetch_release') as fetch, patch('sys.stdout', new_callable=io.StringIO) as stdout:
+            client.return_value.base_url = 'https://github.com/example/catalog/releases/download/enriched-v1/'
+            with patch.object(sys, 'argv', ['github_download.py', '--repo', 'example/catalog',
+                    '--tag', 'enriched-v1', '--profile', 'medium', '--cache-dir', directory,
+                    '--manifest-sha256', 'a' * 64, '--log-file', directory + '/download.log']):
+                self.assertEqual(main(), 0)
+            self.assertEqual(stdout.getvalue(), '')
+            self.assertEqual(client.call_args.args[2], 'medium')
+            fetch.assert_called_once()
+
+    def test_medium_profile_maps_only_medium_assets(self):
+        def metadata(request, timeout):
+            data = {'id': 11} if '/tags/' in request.full_url else [
+                {'id': 7, 'name': 'medium-manifest.json'},
+                {'id': 8, 'name': 'full-manifest.json'}]
+            return Response(json.dumps(data).encode())
+        calls = []
+        def binary(request, timeout):
+            calls.append(request.full_url)
+            return Response(b'medium')
+        client = GitHubAssets('example/catalog', 'enriched-v1', 'medium', token='',
+                              metadata_opener=metadata, binary_opener=binary)
+        with client(Request(client.base_url + 'manifest.json'), timeout=10) as response:
+            self.assertEqual(response.read(), b'medium')
+        self.assertEqual(calls, ['https://api.github.com/repos/example/catalog/releases/assets/7'])
+
     def test_allowed_redirect_strips_auth_and_preserves_range(self):
         request = Request('https://api.github.com/repos/example/catalog/releases/assets/7',
                           headers={'Authorization': 'Bearer TEST_ONLY', 'Cookie': 'test', 'Range': 'bytes=123-'})

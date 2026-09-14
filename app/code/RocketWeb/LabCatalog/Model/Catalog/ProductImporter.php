@@ -48,7 +48,7 @@ class ProductImporter
         $import = $this->importFactory->create();
         $import->setData([
             'entity' => 'catalog_product',
-            'behavior' => Import::BEHAVIOR_ADD_UPDATE,
+            'behavior' => Import::BEHAVIOR_APPEND,
             Import::FIELD_NAME_VALIDATION_STRATEGY => 'validation-stop-on-errors',
             Import::FIELD_NAME_ALLOWED_ERROR_COUNT => 100,
             Import::FIELD_FIELD_SEPARATOR => ',',

@@ -6,8 +6,9 @@ configurable products, 50 bundles and 46,602 generated images.** Built from
 variants, assortments and product descriptions.
 
 Use it to develop storefronts, exercise search and filters, test product options,
-or work with a catalog larger than standard sample data. Start with 27 products
-to check your installation, or choose the full catalog for scale testing.
+or work with a catalog larger than standard sample data. Start with the 5,000-product
+medium profile, or choose the full catalog for scale testing. Both include
+structured specifications, synthetic-data disclosures and related-product links.
 
 ![Living-room bundle with Mage-OS branding, Hyvä storefront styling and a calculated price range](dev/tools/wands_catalog/docs/screenshots/bundle-room.jpg)
 
@@ -21,49 +22,47 @@ is included. Hyvä is installed separately; no image-generation service is neede
 
 ## Choose a catalog
 
-| | Starter | Full |
+| | Medium | Full |
 | --- | ---: | ---: |
-| Product records | 27 | 53,844 |
-| Simple products, including variant children | 23 | 51,799 |
-| Configurable parents | 3 | 1,995 |
-| Bundle products | 1 | 50 |
-| Configurable parent-child links | 10 | 10,736 |
-| Bundle options / selections | 4 / 12 | 200 / 600 |
-| Distinct product images | 24 | 46,602 |
-| Catalog, module and media download | About 2.2 MB | About 2.3 GB |
+| Product records | 5,000 | 53,844 |
+| Simple products, including variant children | 4,857 | 51,799 |
+| Configurable parents | 93 | 1,995 |
+| Bundle products | 50 | 50 |
+| Configurable parent-child links | 500 | 10,736 |
+| Bundle options / selections | 200 / 600 | 200 / 600 |
+| Distinct product images | 4,688 | 46,602 |
+| Catalog, module and media download | About 236 MB | About 2.5 GB |
 
-The starter includes complete families and every bundle dependency. The full
+The medium profile includes complete families and every bundle dependency. The full
 profile includes disabled legacy records, so these are database counts, not the
 number of products visible in a storefront.
 
-Choose **one profile per empty installation**. To move from starter to full,
+Choose **one profile per empty installation**. To move from medium to full,
 restore your empty baseline or use a separate database; do not import full over
-starter. Downloads resume, but interrupted imports do not.
+medium. Downloads resume, but interrupted imports do not. The older 27-product
+starter remains available in the unchanged rc2 release.
 
 ## Requirements and tested environment
 
 - A dedicated, empty **Mage-OS 3.5.0** installation, without other sample data.
 - PHP 8.4 in the Mage-OS environment. The recorded installation used MariaDB
-  11.4, OpenSearch 3.1.0 and stock Luma. The screenshot instance now runs Hyvä
-  Default 1.5.2 with the same full catalog.
+  11.4, OpenSearch 3.1.0 and Hyvä Default 1.5.2 for the enriched profiles.
 - Python **3.11+** on macOS or Linux for download and archive verification.
-- GitHub CLI (`gh`) for the quick-start download, or a browser to save the three
-  helper scripts from the release page.
+- `curl` or a browser to save the three helper scripts from the public release.
 - Space for the download cache, extracted files, imported media, image cache,
   database and search index. The download size is not the installed footprint.
 
 A GPU, API key, Hyvä, Koti and hybrid search are **not required**.
-Both profiles were imported and tested on Luma; Hyvä was subsequently installed
-and checked on the full-profile instance. This is not a separate fresh-import
-test under Hyvä. Mage-OS 3.4, login, checkout and payments are not qualified.
-See the [import results](dev/tools/wands_catalog/distribution/ACCEPTANCE.md) and
-[Hyvä storefront checks](dev/tools/wands_catalog/distribution/HYVA_ACCEPTANCE.md).
+The enriched profiles passed isolated Mage-OS 3.5/Hyvä checks, including all 400
+full-profile commerce scenarios. See the exact pins, import corrections and
+limits in [enriched acceptance](dev/tools/wands_catalog/distribution/ENRICHED_ACCEPTANCE.md).
+Mage-OS 3.4, login, checkout and payments are not qualified.
 
 ## Quick start
 
-Current prerelease: [catalog-2026.09.12-rc2](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.09.12-rc2).
-**Access note:** the repository is currently private. You need repository access
-until it is made public. This is community lab test data, not an official
+Current prerelease: [catalog-2026.09.13-enriched-v2](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.09.13-enriched-v2).
+Downloads are public. No GitHub account or API key is required.
+This is community lab test data, not an official
 Mage-OS or Wayfair release.
 
 Use the **attached release assets**, not GitHub's automatic “Source code” ZIP or
@@ -73,18 +72,24 @@ development store; the release includes a separate portable catalog module.
 ### 1. Download and check the helpers
 
 Run these commands in a new working directory, **outside your Magento root**.
-For private access, authenticate with `gh auth login` first. Never paste tokens
-into scripts, URLs or command arguments.
+Never paste tokens into scripts, URLs or command arguments. The commands below
+explicitly use anonymous access.
 
 ```sh
 mkdir wands-demo
 cd wands-demo
 
 WANDS_REPO=rocketweb/mageos-large-demo-catalog
-WANDS_TAG=catalog-2026.09.12-rc2
+WANDS_TAG=catalog-2026.09.13-enriched-v2
 
-gh release download "$WANDS_TAG" --repo "$WANDS_REPO" \
-  --pattern github_download.py --pattern download.py --pattern release.py
+(
+  set -e
+  for file in github_download.py download.py release.py; do
+    curl --silent --show-error --fail --location --proto '=https' --proto-redir '=https' \
+      "https://github.com/$WANDS_REPO/releases/download/$WANDS_TAG/$file" \
+      --output "$file" 2>>wands-download.log
+  done
+)
 
 shasum -a 256 github_download.py download.py release.py
 ```
@@ -93,7 +98,7 @@ shasum -a 256 github_download.py download.py release.py
 release-specific values. Stop if any differs:
 
 ```text
-12a03e589d890704b9a10dc4b5ecaa22d1499a1692eacadf7f914f40edd9e6c5  github_download.py
+40d0f3ad8fd6bc3f61ffe2ba2d25e880e6e6f7cdf899083fc5f4ef3cadb36aff  github_download.py
 1af4c6d081383d0b3401e7ad0630eea69888f6fd8179c73f29ccea3925f63e08  download.py
 9d0d17e2ef4e201e93ef717fee65017f5c83e151df7b73c3d5c1de057460b14b  release.py
 ```
@@ -104,30 +109,30 @@ does not establish its authenticity.
 
 ### 2. Download the tools and your chosen profile
 
-Continue in `wands-demo`. The default below selects the starter:
+Continue in `wands-demo`. The default below selects medium:
 
 ```sh
-WANDS_PROFILE=starter
-WANDS_PIN=42bd8400415204b8bc6b8f5ed5cf8adb8156185eca92ff156cd54285bb68b40f
-WANDS_TOOLKIT_PIN=248adfcb07286bcdcae2459fea38d902e8cb29f53d0e9cb273fdaac2d7709908
+WANDS_PROFILE=medium
+WANDS_PIN=93256f50f6a1e5070eab18dee3e28b2b348b5e92aba0fa35e3a5b22cb4aaa07a
+WANDS_TOOLKIT_PIN=93c3e983328ca2aa97050b4f9b5022eb4fa8d50681a725b167d724c56f156e9f
 ```
 
 For the **full catalog**, replace the first two variables before downloading:
 
 ```sh
 WANDS_PROFILE=full
-WANDS_PIN=9bf76000f3de8816459638ba2f396af805eaaa83c504886000e1b3c32adcf19d
+WANDS_PIN=b525ca0441e7f04858613fdcba4d8e3ae18421240f4c25a757bf34fa5587951b
 ```
 
 Then run each command below. Continue only when the preceding command exits zero:
 
 ```sh
-python3 github_download.py --repo "$WANDS_REPO" --tag "$WANDS_TAG" \
+python3 github_download.py --anonymous --repo "$WANDS_REPO" --tag "$WANDS_TAG" \
   --profile toolkit --cache-dir ./cache --manifest-sha256 "$WANDS_TOOLKIT_PIN"
 python3 release.py "./cache/$WANDS_TOOLKIT_PIN" \
   --manifest-sha256 "$WANDS_TOOLKIT_PIN" --extract ./toolkit
 
-python3 github_download.py --repo "$WANDS_REPO" --tag "$WANDS_TAG" \
+python3 github_download.py --anonymous --repo "$WANDS_REPO" --tag "$WANDS_TAG" \
   --profile "$WANDS_PROFILE" --cache-dir ./cache --manifest-sha256 "$WANDS_PIN"
 python3 release.py "./cache/$WANDS_PIN" \
   --manifest-sha256 "$WANDS_PIN" --extract ./wands-staging
@@ -185,13 +190,16 @@ Then follow the [installation guide](dev/tools/wands_catalog/distribution/README
 2. Provision the WANDS website with your own base URL. Configure your web server
    for website code `wands`; the module does not configure DNS, TLS or routing.
 3. Copy the data and import media, then import **simples → configurables →
-   bundles → media**. Inspect each phase's log before continuing.
+   bundles → media → merchandising links**. Inspect each phase's log before continuing.
 4. Curate the ten-department menu, reindex, clean caches and check the storefront
    against the expected counts in `data/counts.json`.
 
 The guide contains the commands and destination paths. Download verification is
 not proof of a successful Magento import; check options, prices, stock, search
 and images in your installation too.
+
+After a full import, optionally add the [detail and room galleries](dev/tools/wands_catalog/distribution/GALLERIES.md):
+14 additional illustrations across seven products, with original hero images preserved.
 
 ## Screenshots
 
@@ -234,7 +242,7 @@ for the observed behavior and limits.
 ## Data and licensing
 
 - **Tooling, catalog module and authored catalog additions:**
-  [MIT](dev/tools/wands_catalog/LICENSE.txt).
+  [MIT](LICENSE). See [license scope and third-party notices](NOTICE.md).
 - **Original WANDS material:** its [MIT notice](dev/tools/wands_catalog/distribution/WANDS-LICENSE.txt)
   and requested citation are retained.
 - **Generated catalog images:** [CC0 1.0](dev/tools/wands_catalog/distribution/CC0-1.0.txt)
@@ -267,7 +275,7 @@ If using WANDS in research, retain the upstream citation:
 
 | Symptom | What to check |
 | --- | --- |
-| GitHub returns 404 or denies access | Confirm repository access and `gh auth status`. Current assets are private. |
+| GitHub returns 404 or denies access | Check the exact release tag and use the current helpers with `--anonymous`. Downloads are public; API rate limits can require a later retry. |
 | The download seems silent | Tail `wands-download.log`; silence is intentional. Check the exit code. |
 | Extraction refuses a directory | Use a new staging directory. Do not extract over an earlier attempt or into Magento. |
 | Preflight refuses the destination | Use an empty installation without existing WANDS website, store or store-group codes. |
@@ -276,6 +284,16 @@ If using WANDS in research, retain the upstream citation:
 | Products or images are missing | Check all four import logs, file ownership, indexing and the media destination in the installation guide. |
 
 ## Contributing
+
+The [bulk enrichment work](dev/tools/wands_catalog/BULK_ENRICHMENT.md) describes
+structured specifications, merchandising links, commerce fixtures, the medium
+profile and expanded galleries. The corrected enriched profiles have separate
+[Mage-OS 3.5 / Hyvä acceptance results](dev/tools/wands_catalog/distribution/ENRICHED_ACCEPTANCE.md),
+including all 400 commerce scenarios. The older rc2 download remains unchanged.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and test
+commands, [SECURITY.md](SECURITY.md) for private vulnerability reports, and
+[SHARING.md](SHARING.md) for the recipient handoff and public-launch checklist.
 
 Work on the portable module and tooling, not the original development store's
 Composer stack:
