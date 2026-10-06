@@ -1,5 +1,11 @@
 # MariaDB rehearsal checkpoint, 2026-09-11
 
+This database rehearsal tested guarded changes and rollback against a captured schema. It records the isolated fixture and its corrected failures.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The 105-operation pilot definition migration now passes a database-only rehearsal
 on **MariaDB 11.4.12**, matching the observed demo database version. All loaded rows
 across 33 actual-schema tables are restored by the inverse. This is not Magento

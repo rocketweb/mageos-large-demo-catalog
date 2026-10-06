@@ -1,5 +1,11 @@
 # Human correction pass, 2026-10-02
 
+The October 2 and 3 feedback pass corrected 99 exact jobs from human Redo notes and matching patterns. All 99 passed; its overall catalog counts are historical.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Matt requested that the additional review notes be applied to matching, currently
 unapproved images and queued for reprocessing. The pass analyzed 171 Keep and
 44 Redo decisions. It activated 99 exact jobs: all 44 Redos plus 55 matching jobs.

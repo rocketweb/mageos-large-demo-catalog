@@ -1,5 +1,11 @@
 # Catalog corrections and guarded expansion
 
+This earlier recipe corrected product definitions, source facets and proposed media repairs. The saved forward/inverse proposals are evidence for that candidate, not a current-store recovery packet.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The later [remaining-definition resolution batch](DEFINITION_RESOLUTIONS.md)
 supersedes the held-definition counts below. It resolves the 41 remaining
 family findings and eight overlapping holds in a new immutable local packet.

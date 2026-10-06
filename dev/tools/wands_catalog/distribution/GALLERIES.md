@@ -4,6 +4,8 @@ The separate gallery package adds two illustrations to each of seven products.
 Install it only after the full enriched catalog has imported successfully. It
 does not replace hero images. Room furnishings are styling, not included items.
 
+## Detailed installation and verification
+
 From the download directory, with the current verified helper scripts:
 
 ```sh

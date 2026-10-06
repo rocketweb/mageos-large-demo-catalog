@@ -1,5 +1,11 @@
 # Catalog realism review
 
+This CPU-only workflow reviews a local realism proposal while preserving the original benchmark. It neither generates media nor imports a store.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 This workflow prepares a local proposal, not a Magento import. It preserves the
 raw WANDS source, SKUs, URL keys, categories, and the frozen relevance benchmark.
 It does not call an LLM, generate images, assign brands, or change stock remotely.

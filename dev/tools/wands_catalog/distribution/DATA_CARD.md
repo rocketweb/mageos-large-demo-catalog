@@ -1,5 +1,13 @@
 # Dataset card
 
+Synthetic home-and-furniture fixtures for lab testing, derived from Wayfair
+WANDS. Prices, inventory, descriptions, dimensions and images are illustrative;
+original WANDS search judgments do not qualify ranking on the rewritten catalog.
+
+This card's full-profile counts describe the published 53,844-record catalog.
+For the completed 107,688-record expansion and its separate coverage limits, see
+[the expansion guide](../docs/EXPANSION.md) and [coverage audit](../PRODUCT-COVERAGE.md).
+
 ## Purpose and source
 
 Home-and-furniture test fixtures derived from
@@ -33,7 +41,7 @@ geometry or component appearance. Structured definitions are authoritative.
 ## Profiles and reproducibility
 
 The full profile includes 51,799 simple records, 1,995 configurable parents and
-50 bundles. Disabled retired variants remain as test records but are detached
+50 bundles. The published medium profile contains 5,000 records. Disabled retired variants remain as test records but are detached
 from active configurable relationships. Starter selection includes complete
 families and all bundle selections, not arbitrary first-N CSV rows.
 

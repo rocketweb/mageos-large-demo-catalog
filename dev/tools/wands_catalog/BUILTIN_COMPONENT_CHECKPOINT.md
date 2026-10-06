@@ -1,5 +1,11 @@
 # Built-in component repair checkpoint, 2026-09-11
 
+The September 11 pass repaired built-in components and cutouts. Its visual decisions, reproducibility notes and remaining work belong to that component pilot.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 This supersedes the current-status section of `REPAIR_AND_CUTOUT_CHECKPOINT.md`.
 That earlier checkpoint remains unchanged as historical evidence.
 

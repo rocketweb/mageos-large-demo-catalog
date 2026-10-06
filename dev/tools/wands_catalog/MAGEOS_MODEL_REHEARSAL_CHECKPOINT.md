@@ -1,5 +1,11 @@
 # Mage-OS model rehearsal checkpoint, 2026-09-11
 
+The September 11 rehearsal checked Mage-OS pricing and product models in an isolated pilot. Browser, media and checkout checks remained separate.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The approved five-family migration passes actual Mage-OS product-model checks in
 an isolated application root, including a complete forward/inverse cycle. This
 advances the database-only checkpoint, not storefront or deployment acceptance.

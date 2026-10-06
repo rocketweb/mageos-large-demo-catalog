@@ -1,8 +1,15 @@
 # Product coverage audit
 
+The expansion is complete for scale and images, but product-behavior coverage
+is incomplete. Three core types are missing: virtual, downloadable and grouped.
+The proposed next step is a small, named QA collection rather than another large
+generation run. No proposed fixtures below have been implemented.
+
 Audited October 6, 2026 against the accepted expansion CSVs and completed
 installation acceptance for the two existing lab stores. Counts below describe
 WANDS catalog records, excluding unrelated products already in those stores.
+
+[Documentation index](docs/README.md) · [Expansion implementation](docs/EXPANSION.md)
 
 ## Core types
 

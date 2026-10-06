@@ -1,5 +1,10 @@
 # Private Mage-OS 3.5 acceptance instance
 
+The private acceptance instance is a disposable recipient fixture for earlier release verification. Its access and lifecycle notes do not describe either existing expansion store.
+
+> Historical operator record. Use [the documentation index](../../docs/README.md)
+> to choose the current installation or expansion procedure.
+
 This is the operator harness for the explicitly approved test instance on comtom,
 not a portable Mage-OS installer. Its PHP image is a pinned runtime already on that
 server. Community recipients should use the portable module and distribution

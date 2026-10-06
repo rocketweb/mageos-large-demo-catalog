@@ -12,6 +12,21 @@ Theme packages remain separate. Mage-OS 3.4 was not tested. Downloads are public
 Code and authored data use MIT; generated images use CC0 where rights are held.
 Do not use this candidate in a customer store.
 
+## Installation overview
+
+| Before you start | What to expect |
+| --- | --- |
+| Choose a profile | Medium: 5,000 records; full: 53,844 records |
+| Destination | An empty, dedicated Mage-OS lab, backed up before import |
+| Tools | Python 3.11+ for verification; PHP 8.4 in the destination |
+| Procedure | Download, verify, preflight, provision, import, then check the storefront |
+| Recovery | Restore the empty baseline after an interrupted import |
+
+The 107,688-record expansion is a separate existing-store workflow. Its expanded
+media is not published and this guide does not install it. See the
+[documentation index](../docs/README.md) for that implementation and recorded evidence.
+The detailed procedure below applies to the published enriched profiles.
+
 ## What recipients need
 
 A dedicated, empty Mage-OS lab with PHP 8.4, USD currency, the standard product
@@ -196,13 +211,15 @@ as a catalog uninstaller.
 
 ## Known limits
 
-- Separate testing before claiming Mage-OS 3.4 or a fresh import under Hyvä.
-  The recorded Hyvä checks cover a theme installation on the populated 3.5 lab.
+- Mage-OS 3.4 remains unqualified. The enriched profiles have separate
+  [fresh-install Hyvä evidence](ENRICHED_ACCEPTANCE.md) and
+  [public-recipient evidence](PUBLIC_RECIPIENT_ACCEPTANCE.md); the older rc2
+  Hyvä report describes a theme installation on an already populated lab.
 - Import failure/retry behavior and destination-bound
   checkpoints before claiming resumable/idempotent installation.
 - Retention of MIT/WANDS notices, CC0 scope and disclosed media-provenance limits.
-- The current release assets are hosted on GitHub with pinned manifests, but
-  repository access is still required. Download success does not establish
+- The current release assets are public on GitHub with pinned manifests; no
+  account or API key is needed. Download success does not establish
   installation compatibility on another stack.
 
 See `DATA_CARD.md`, `TERMS.md`, `WANDS-LICENSE.txt` and `CITATION.bib`. Original

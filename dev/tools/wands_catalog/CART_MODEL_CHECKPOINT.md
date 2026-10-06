@@ -1,5 +1,11 @@
 # Unsaved guest-cart checkpoint, 2026-09-11
 
+The September 11 pilot passed 21 unsaved cart-model checks and restored its indexed baseline. It did not test persisted checkout or payments.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 All **21 native Magento cart-model cases** pass in the isolated fixture. Each uses
 a new, unsaved guest quote. No quote, reservation or order is persisted, and every
 fixture table has identical hashes before and after the tests.

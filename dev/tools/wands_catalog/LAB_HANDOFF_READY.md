@@ -1,5 +1,11 @@
 # Mage-OS Lab offline handoff
 
+This record describes the accepted offline rc2 handoff and its verification. It is not the current enriched v2 download or an expanded media release.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Subsequent distribution: the same rc2 profiles are now available through
 [private GitHub release assets](GITHUB_RELEASE_PUBLISHED.md). The offline package
 and historical preparation record below remain unchanged.

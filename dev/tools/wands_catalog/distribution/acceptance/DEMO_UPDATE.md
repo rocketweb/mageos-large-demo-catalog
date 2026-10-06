@@ -1,5 +1,10 @@
 # Existing demo enrichment update
 
+This earlier operator procedure changed selected demo descriptions and links while preserving stock and unrelated data. Its recovery journal belongs to that September update.
+
+> Historical operator record. Use [the documentation index](../../docs/README.md)
+> to choose the current installation or expansion procedure.
+
 Internal operator procedure, not the public fresh-install path. Exact target:
 `farm-relevance-php-1`, `/opt/comtom/stores/relevance/src`, database `magento`.
 The operator scripts refuse a different target. This preserves the demo's 1,200

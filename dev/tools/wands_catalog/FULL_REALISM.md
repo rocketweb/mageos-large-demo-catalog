@@ -1,5 +1,11 @@
 # Full-catalog realism workflow
 
+This earlier full-profile recipe builds description, specification and merchandising proposals. Its original input pins and remote-import boundaries differ from the later doubled-catalog workflow.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 This extends the 100-product review to the entire WANDS catalog. It prepares
 changes locally; it does not import into either local Magento or the remote store.
 Existing WANDS SKUs, product types, relationships, URL keys and frozen relevance

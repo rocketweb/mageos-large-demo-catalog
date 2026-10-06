@@ -1,5 +1,11 @@
 # Mage-OS Lab private release candidate
 
+This private candidate record preserves the rc2 scope and integration results. Use current release instructions for installation rather than inferring readiness from a candidate alone.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Subsequent acceptance: Matt selected Mage-OS 3.5, and both profiles passed in the
 [new isolated instance](LAB35_ACCEPTANCE.md). The preparation record below retains
 the original candidate state; 3.4 was not tested and no publication is implied.

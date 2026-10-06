@@ -1,5 +1,11 @@
 # Bulk catalog enrichment
 
+This earlier enrichment pass added specifications, merchandising and selected gallery fixtures. Its candidate preparation and acceptance limits describe the published-profile work.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The September 12 bulk pass prepares new local candidates from the accepted rc2
 catalog. It does not change the demo store, published assets or repository
 visibility. Catalog IDs, URLs, prices, stock, configurable options and bundle

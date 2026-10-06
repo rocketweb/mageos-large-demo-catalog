@@ -1,5 +1,11 @@
 # Bounded corrected-hero repair pilot
 
+This bounded 12-image pilot tested corrected heroes and recorded passes, failures and uncertainty. Its original generation limits and approval boundary are historical.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The complete media-triage checkpoint is `d92d8de`; the bounded proposal is
 committed as `6690e6d`. The proposal remains immutable and non-executable.
 A separately authorized local run is complete, with results below. No image

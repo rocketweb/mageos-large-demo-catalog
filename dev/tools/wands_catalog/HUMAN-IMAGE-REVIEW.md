@@ -1,25 +1,47 @@
 # Human image review
 
-Matt requested a fast review interface with brief product details, Keep / Redo,
-a required correction note for Redo, and source grouping. Automated rejection
-reasons are retained as evidence but are not shown in the interface.
+Review images by source, with the product name, brief and specifications beside
+both attempts. **Keep** saves visual approval. **Redo** requires a note describing
+what to change. Choices save automatically and the interface advances to the
+next image. Automated rejection reasons stay in the evidence, outside the UI.
 
-The local page is at <http://127.0.0.1:8877/>. Its feedback is stored in
-`var/catalog-expansion-20260918/human-image-review/`:
+The usual local address is <http://127.0.0.1:8877/> when the review server is
+running. The completed expansion's generation workers are stopped; opening or
+starting review does not restart generation or change either installed catalog.
 
-- `feedback.sqlite`: exact-image choices and an append-only revision history.
-- `feedback.jsonl`: current choices with product briefs, source/image hashes,
-  generation prompts, seeds, settings, and the original automated review.
-- `feedback-summary.json`: an on-demand snapshot by product type, material,
-  target color and generation lane, plus the exact Redo notes.
-- `server.json` / `server.pid` / `server.log`: current interface receipt and log.
+## Review quickly
 
-The first interface was opened during testing and Matt immediately began using
-it. Its live storage was backed up and moved into this workspace, retaining the
-same URL and all existing decisions. The running process still uses
-`/tmp/wands-human-review-browser-test`, which is a symlink to the durable folder.
-After a reboot, use the durable output path below. Do not discard this dataset
-as test data. The separate unit-test fixtures contain disposable test choices.
+| Action | Control |
+| --- | --- |
+| Keep the current image | **K** or Keep |
+| Request a correction | **R** or Redo, then add a specific note |
+| Save the correction and advance | **Enter**; **Shift+Enter** adds a newline |
+| Skip without deciding | **N** or Skip |
+| Move between images | Arrow keys or navigation buttons |
+| Undo the last choice in this page | **U** or Undo |
+| Inspect image detail | Click either image to open its full-size version |
+| Revisit choices | Filter by department, source, product text or decision |
+
+For corrections, identify the product part and the desired result: “Make the
+riser base terracotta; keep the computer monitor black.” Include missing parts,
+wrong material, geometry or piece count when relevant. Every image must still
+have no visible text, numbers or measurements. Specifications beside the image
+are product data, not instructions to draw measurements.
+
+Source images for standalone repairs are labelled **Previous attempt**. Keep is
+a decision about those exact image bytes. If the image or worker state changes
+before saving, refresh and inspect the new image instead of forcing the old choice.
+
+See [the correction record](FEEDBACK-REPROCESSING.md) for patterns from October 2
+and 3, [the expansion guide](docs/EXPANSION.md) for acceptance contracts, or the
+[documentation index](docs/README.md) for other workflows. Details below are for
+operators and developers.
+
+## Start the local server
+
+Check the saved `server.pid`, actual process command and URL before starting
+another process. A PID receipt can be stale after a restart. Use the durable
+output directory, retaining the existing feedback database:
 
 ```sh
 /Users/matt/code/mageos-latest/.venv-imagegen/bin/python \
@@ -28,51 +50,77 @@ as test data. The separate unit-test fixtures contain disposable test choices.
   --output var/catalog-expansion-20260918/human-image-review --port 8877
 ```
 
-Check `server.pid`, the actual process command and the URL before starting
-another process. The existing page persists choices and note drafts on reload.
+Run from this repository root. The page persists choices and note drafts on
+reload. Stopping the foreground review server does not stop image workers.
+A completed run may have no remaining unreviewed items.
 
-Keyboard: **K** keeps the current image, **R** opens the correction-note field,
-**Enter** saves that note and advances, **Shift+Enter** adds a newline,
-**N** skips, arrow keys navigate, and **U** undoes the last choice in that page.
-Filters allow revisiting kept images and Redo notes. Clicking either photograph
-opens its full-size version. Source images for standalone repairs are explicitly
-labelled "Previous attempt".
+## Feedback storage
 
-The interface reads the generation ledger without writing it. Keep is a saved
-human visual approval; Redo is a saved correction request. Neither action
-silently rewrites automated acceptance, reopens exhausted attempts, changes
-in-flight prompts or deploys a catalog. A subsequent correction pass can use
-the exact choices, with the existing image-text/measurement ban still enforced.
-Image bytes, current job state, and decision revisions are checked at save time;
-stale images and conflicting browser tabs cannot silently overwrite a choice.
+Paths below are relative to
+`var/catalog-expansion-20260918/human-image-review/`, excluded from Git:
 
-To prepare a summary for the next pass:
+| File | Contents |
+| --- | --- |
+| `feedback.sqlite` | Exact-image choices and append-only revision history |
+| `feedback.jsonl` | Current choices, product briefs, source/image hashes, prompts, seeds, settings and original automated review |
+| `feedback-summary.json` | On-demand outcome snapshot by product profile, material, color and generation lane, including exact Redo notes |
+| `server.json`, `server.pid` | Server URL, run, database and process receipt |
+| `server.log` | Launcher output when redirected to this file; the foreground command itself logs to the terminal |
+
+The first UI was opened during testing and immediately used for real reviews.
+Its live storage was backed up and moved into this durable workspace. The earlier
+`/tmp/wands-human-review-browser-test` path was a symlink used by that process;
+it is historical setup, not the restart target. Do not discard the real feedback
+as a disposable test dataset. Unit-test fixtures use separate temporary choices.
+
+## Save semantics and local HTTP boundary
+
+The interface reads the generation ledger without rewriting job acceptance.
+Keep saves a human visual approval; Redo saves a correction request. Neither
+silently reopens exhausted attempts, changes in-flight prompts, accepts a
+candidate or deploys products. A subsequent correction/acceptance tool consumes
+those decisions under its own exact-input checks.
+
+The save handler checks image/source hashes, job state and decision revision.
+Stale images and conflicting browser tabs cannot silently replace another choice.
+Image reads are restricted to allowed paths and recheck byte hashes. The server
+binds to loopback and requires the local Host, Origin and per-process review token
+for writes. It is a local review tool, not a remote multi-user service.
+
+## Summarize and use corrections
+
+This command reads feedback and writes a summary without starting the server or
+changing the generation ledger:
 
 ```sh
 /Users/matt/code/mageos-latest/.venv-imagegen/bin/python \
   dev/tools/wands_catalog/review_rejected_images.py \
-  --run var/catalog-expansion-20260918/run-v3 --summarize
+  --run var/catalog-expansion-20260918/run-v3 \
+  --output var/catalog-expansion-20260918/human-image-review --summarize
 ```
 
-Use the raw feedback to identify concrete recurring correction needs, and compare
-human-kept images with model holds to find candidates for QA calibration.
-Do not assume every human Keep proves a QA false positive. Evaluate proposed
-prompt or reviewer changes on representative Keep / Redo examples under equal
-conditions. Retain exact prior hashes, prompts and attempt histories. This
-dataset supplies feedback; it does not automatically train or change a model.
+Identify recurring concrete defects in Redo notes, and compare human-kept images
+with model holds when evaluating reviewer calibration. Counts alone do not prove
+that automated QA was wrong. Compare changes on representative Keep/Redo examples
+under equal conditions; retain exact hashes, prompts, prior attempts and Keeps.
+The dataset supplies evidence for corrections, not automatic training or a model
+change.
 
-The October 2 correction pass applied the next 44 Redo decisions to 99 matching
-unapproved jobs. See [the correction record](FEEDBACK-REPROCESSING.md) for its
-patterns, queue scope, verification and rollback procedure.
+The October 2 pass applied 44 Redo decisions to 99 matching unapproved jobs. All
+99 were accepted by October 3. The [historical correction record](FEEDBACK-REPROCESSING.md)
+contains immutable admission scope, product patches, evidence and scoped rollback.
+A new feedback pass needs its own reconciled preview; it must not mutate sealed
+packets or restore an older ledger over subsequent progress.
 
-Validation:
+## Verification
 
 ```sh
 /Users/matt/code/mageos-latest/.venv-imagegen/bin/python -m unittest discover \
   -s dev/tools/wands_catalog/tests -p 'test_human_image_review.py' -v
 ```
 
-Eleven tests cover persistence, exact source grouping, required correction notes,
-undo history, stale images/sources, worker-state changes, path restrictions,
-and local HTTP write protections. The live page was also verified with actual
-image loading, Keep/Redo, automatic advance, undo and saved choices on reload.
+The recorded interface verification covered persistence, exact source grouping,
+required notes, undo history, stale images/sources, worker-state changes, path
+restrictions and local HTTP writes. Browser checks also exercised actual images,
+Keep/Redo, automatic advance, undo and saved choices after reload. These are
+recorded results; rerun relevant checks after interface changes.

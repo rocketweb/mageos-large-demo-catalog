@@ -1,5 +1,11 @@
 # Pilot definition update scope
 
+This September 11 proposal defines a narrow product update and inverse operation. The recorded approval boundary and counts apply to that proposal only.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Prepared 2026-09-11 against the relevance catalog snapshot captured at
 `2026-09-11T12:51:33+00:00`. This is a proposal, not deployment approval.
 No catalog records, options, stock, images or product assignments were changed.

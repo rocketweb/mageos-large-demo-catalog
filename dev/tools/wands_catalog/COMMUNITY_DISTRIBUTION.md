@@ -1,5 +1,11 @@
 # Sharing the catalog with Mage-OS Lab
 
+This design record explains the portable catalog boundary, profiles, licenses and packaging checks. Publication later used GitHub assets; current recipient instructions are in the root README.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Original design, September 9, 2026. The September 11 implementation is in
 [distribution/README.md](distribution/README.md): deterministic private candidate
 archives and an offline verifier. Starter/full acceptance on Mage-OS 3.5.0 is

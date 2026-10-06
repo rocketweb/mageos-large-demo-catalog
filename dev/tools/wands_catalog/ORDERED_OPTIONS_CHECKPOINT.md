@@ -1,5 +1,11 @@
 # Ordered configurable options checkpoint, 2026-09-11
 
+The pilot corrected option labels, ordering and price bindings without renumbering shared EAV options. Its exact outdoor SKU and captured theme scope are preserved below.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Both remaining display defects from the [native Hyva pass](HYVA_OPTIONS_CHECKPOINT.md)
 are resolved locally. Outdoor family `WANDS-030335` now displays **Furniture pieces**
 in both the rendered label and embedded JSON, with options **4, 5, 6, 7 Pieces** in

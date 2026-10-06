@@ -1,5 +1,11 @@
 # Corrected-definition media reconciliation
 
+This review triaged all 93 corrected roots against their definitions. The report explains geometry and count defects before generation, with its original pinned packets.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The definition checkpoint is committed as `17c436b`, and the initial media
 reconciliation checkpoint as `cc32066`, and the priority-one triage as `39590bb`.
 The follow-on media work is local

@@ -1,5 +1,11 @@
 # Local single-component image pilot
 
+The four-component pilot tested recognizable single objects before masking or assembly. Its observations are a bounded experiment, not catalog-wide quality evidence.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The component-layout planner is committed as `c9dd1b5`. The next bounded
 development run generated four component candidates on 2026-09-10, using the
 existing local FLUX.2 Klein 4B runtime: 4-bit, 768 by 768, four steps.

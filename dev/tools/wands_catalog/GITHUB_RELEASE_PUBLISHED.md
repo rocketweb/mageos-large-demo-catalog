@@ -1,5 +1,11 @@
 # GitHub catalog release assets
 
+The September 12 rc2 assets were published with approval. This receipt preserves the then-private repository state and original hashes; the enriched v2 release subsequently became publicly downloadable.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Published September 12, 2026, with Matt's approval to use release assets.
 
 [WANDS catalog for Mage-OS Lab: 2026.09.12 rc2](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.09.12-rc2)

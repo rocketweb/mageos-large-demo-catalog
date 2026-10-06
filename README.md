@@ -1,23 +1,38 @@
 # Mage-OS large demo catalog
 
-A home-and-furniture test catalog for Mage-OS: **53,844 product records, 1,995
-configurable products, 50 bundles and 46,602 generated images.** Built from
+A home-and-furniture test catalog for Mage-OS. Built from
 [Wayfair WANDS](https://github.com/wayfair/WANDS), with synthetic prices, inventory,
 variants, assortments and product descriptions.
 
-The repository also includes tooling for the completed **107,688-record
-expansion**, installed and verified on both existing lab stores on October 6,
-2026. Expanded media has not been published as a release asset; the downloads
-and counts below still describe the published 53,844-record profile. See the
-[expansion completion record](dev/tools/wands_catalog/EXPANSION-CHECKPOINT.md)
-and [product coverage audit](dev/tools/wands_catalog/PRODUCT-COVERAGE.md).
-The expanded catalog contains simple, configurable and bundle products; it does
-not yet cover every core product type or commerce configuration.
+| Catalog | Product records | Availability |
+| --- | ---: | --- |
+| Published medium | 5,000 | Prepared release download; best first installation |
+| Published full | 53,844 | Prepared release download for scale testing |
+| Doubled expansion | 107,688 | Installed and verified on the two existing lab stores on October 6, 2026; expanded media is not published |
+
+The published full profile includes 1,995 configurable products, 50 bundles and
+46,602 generated images. The expansion has 3,995 configurable products and the
+same 50 bundles. Both contain simple, configurable and bundle products; they do
+not cover every core product type or commerce configuration. See the
+[coverage audit](dev/tools/wands_catalog/PRODUCT-COVERAGE.md).
 
 Use it to develop storefronts, exercise search and filters, test product options,
 or work with a catalog larger than standard sample data. Start with the 5,000-product
 medium profile, or choose the full catalog for scale testing. Both include
 structured specifications, synthetic-data disclosures and related-product links.
+
+## Start here
+
+| Your goal | Guide |
+| --- | --- |
+| Install a prepared catalog | [Quick start](#quick-start), then [installation](#install-into-mage-os) |
+| Assess what you can test | [Product coverage and missing fixtures](dev/tools/wands_catalog/PRODUCT-COVERAGE.md) |
+| Understand or maintain the expansion | [Completion record](dev/tools/wands_catalog/EXPANSION-CHECKPOINT.md) and [developer guide](dev/tools/wands_catalog/docs/EXPANSION.md) |
+| Review images, contribute or build releases | [Documentation index](dev/tools/wands_catalog/docs/README.md) |
+
+The installation instructions below describe the published profiles. Product
+images are release assets, separate from the source checkout. Installing a
+prepared profile needs no image-generation service or API key.
 
 ![Living-room bundle with Mage-OS branding, Hyvä storefront styling and a calculated price range](dev/tools/wands_catalog/docs/screenshots/bundle-room.jpg)
 
@@ -25,7 +40,7 @@ structured specifications, synthetic-data disclosures and related-product links.
 illustrations; the selected bundle components, not the room styling, define what
 is included. Hyvä is installed separately; no image-generation service is needed.*
 
-[Quick start](#quick-start) · [Installation](#install-into-mage-os) ·
+[Documentation](dev/tools/wands_catalog/docs/README.md) · [Quick start](#quick-start) · [Installation](#install-into-mage-os) ·
 [Screenshots](#screenshots) · [Data and licensing](#data-and-licensing) ·
 [Contributing](#contributing)
 

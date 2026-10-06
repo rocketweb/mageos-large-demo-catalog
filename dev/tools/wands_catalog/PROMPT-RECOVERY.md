@@ -1,5 +1,11 @@
 # Source recolor recovery, October 1, 2026
 
+The October 1 correction replaced generic fabric/chain instructions with product-specific recoloring. The finite admission preserved source hashes and attempt history; reported progress is historical.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The shared variant prompt previously instructed every product to retain fabric,
 chains and rings. Failed variants showed those invented components on tables,
 desks, mugs and bowls. It also forced opaque paint on natural finishes and changed

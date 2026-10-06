@@ -1,5 +1,11 @@
 # Equal-area component framing experiment
 
+This bounded experiment compared square and portrait framing under matched model inputs. Its output is component-pilot evidence, not a throughput or full-catalog acceptance claim.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 This follows the single-component pilot, committed as `df52e2b`. The floor lamp
 and cake server were recognizable but too wide against their explicitly
 synthetic design envelopes. The next experiment tests canvas framing, not a

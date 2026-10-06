@@ -1,5 +1,11 @@
 # Native media rehearsal stage, 2026-09-11
 
+This September 11 stage packaged five reviewed JPEGs for a disposable native-import rehearsal. Staging alone did not prove an installed storefront.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The five reviewed import JPEGs are now staged in a private, hash-locked packet for
 the next disposable Mage-OS importer rehearsal. No importer has been executed and
 no files were uploaded to the demo.

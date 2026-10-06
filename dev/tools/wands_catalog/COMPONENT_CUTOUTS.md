@@ -1,5 +1,11 @@
 # Component cutout handoff
 
+This reference defines masks, cutout geometry and validation for the assortment pilot. Cutout validity is separate from product-image acceptance.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 This is a preparation and validation step, not an executed mask pipeline.
 No background-removal runtime or weights were installed during the completion
 pass. Keep the original RGB WebP candidates and their metadata unchanged.

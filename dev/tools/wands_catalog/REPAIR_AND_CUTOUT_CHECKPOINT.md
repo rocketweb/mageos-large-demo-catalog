@@ -1,5 +1,11 @@
 # Repair and cutout checkpoint, 2026-09-10
 
+The September 10 checkpoint records partial repairs, segmentation and assortment limits. Later reports supersede its remaining-work counts.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 This is partial progress, not completion of all 18 component repairs.
 
 ## Current result

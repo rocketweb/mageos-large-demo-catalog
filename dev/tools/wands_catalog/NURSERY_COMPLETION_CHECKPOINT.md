@@ -1,5 +1,11 @@
 # Nursery completion checkpoint, 2026-09-11
 
+The September 11 nursery pilot completed 28 component types and five local assortments. That result did not establish full-catalog media acceptance.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The remaining valance is repaired. All 28 component types in the five-family pilot
 now have initial visual passes and reviewed cutouts. All five complete assortments
 have initial local visual acceptance, covering 68 physical pieces. This is pilot

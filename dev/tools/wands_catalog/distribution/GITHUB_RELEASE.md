@@ -4,6 +4,19 @@ Use the assets attached to `catalog-2026.09.13-enriched-v2` in
 `rocketweb/mageos-large-demo-catalog`. Downloads are public; no account or API key
 is required. This is a lab prerelease, not an official Mage-OS or Wayfair release.
 
+| Download | Profile |
+| --- | --- |
+| First installation | `medium`: 5,000 records |
+| Scale testing | `full`: 53,844 records |
+| Installation helpers | `toolkit` |
+| Optional seven-product galleries | `gallery`, after the full import |
+
+The 107,688-record expansion is not included in these assets. Start with the
+[root quick start](../../../../README.md#quick-start) for exact helper hashes and
+profile pins, or use the detailed downloader procedure below.
+
+## Downloader setup and artifact identity
+
 The release contains enriched medium and full catalog archives, with
 `medium-` or `full-` added to asset names to avoid filename collisions. The
 GitHub downloader maps those names back into a profile-specific cache. Original

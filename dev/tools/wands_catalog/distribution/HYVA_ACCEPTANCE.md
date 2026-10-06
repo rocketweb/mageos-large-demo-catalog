@@ -1,5 +1,11 @@
 # Mage-OS 3.5 with Hyvä: storefront verification
 
+Hyvä was added to the already populated rc2 full-profile lab on September 12. These captures and option checks are separate from later fresh enriched-profile acceptance.
+
+> Release-specific evidence. Counts and runtime results apply to the pinned
+> profile below, not the 107,688-record expansion. See the
+> [documentation index](../docs/README.md) for current guides and other reports.
+
 On September 12, 2026, Hyvä Default **1.5.2** was installed on the full-profile
 Mage-OS **3.5.0** catalog instance. The README screenshots were captured from this
 running storefront, not generated or restyled browser mockups.

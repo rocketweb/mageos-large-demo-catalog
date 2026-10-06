@@ -1,5 +1,11 @@
 # Complete the component candidate coverage
 
+This component workflow fills missing types for the five-family assortment pilot. Its resume and review procedures need the original pilot packets.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 This fixed selection covers the 24 unattempted types and the one uncertain table
 lamp from `component-readiness-v1`. Existing passed component candidates remain
 untouched. The 25 attempts are split into five batches: lamps (1), flatware (8),

@@ -1,5 +1,11 @@
 # Count-controlled component layout planning
 
+This CPU-only planner arranges exact physical counts for five assortments. Planning diagrams are neither catalog photographs nor approved generation references.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The completed image-pilot tooling is committed as `56dbe81`. Its image review
 remains three initial passes, two uncertainties and seven failures. This next
 stage prepares component layouts for the five failed multi-piece sets. It does

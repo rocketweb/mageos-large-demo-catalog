@@ -1,5 +1,11 @@
 # Remaining product-definition resolutions
 
+This earlier batch resolved 41 family definitions and overlapping holds using source evidence and explicit synthetic choices. Media and store acceptance were separate steps.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The user approved coherent, explicitly synthetic definitions for genuine WANDS
 conflicts, with the conflicting source evidence retained. That approval is for
 local definition work. It does not authorize import, stock transfer, deletion,

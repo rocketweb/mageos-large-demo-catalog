@@ -1,5 +1,10 @@
 # Enriched catalog acceptance: approved remote scope
 
+This September 13 approved plan scoped an isolated enriched-profile acceptance run. It is preserved with its exact targets and boundaries, not as a new installation instruction.
+
+> Historical operator record. Use [the documentation index](../../docs/README.md)
+> to choose the current installation or expansion procedure.
+
 Prepared and approved September 13, 2026 as a single isolated acceptance batch.
 Execution uses the exact new project and loopback binding below; existing stores
 and release publication remain outside the approved changes.

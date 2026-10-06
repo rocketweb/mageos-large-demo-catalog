@@ -1,5 +1,11 @@
 # Existing demo enrichment acceptance
 
+The September 13 update refreshed the existing demo while preserving unrelated data. Hybrid search ranking remained unqualified.
+
+> Release-specific evidence. Counts and runtime results apply to the pinned
+> profile below, not the 107,688-record expansion. See the
+> [documentation index](../docs/README.md) for current guides and other reports.
+
 September 13, 2026, US Eastern. Target: `relevance.comtom.lab`, not the public
 recipient fixture. Mage-OS 3.5.0 and Hyvä Default 1.5.2 were already installed.
 

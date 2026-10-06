@@ -1,5 +1,11 @@
 # Public-download recipient acceptance
 
+The published enriched v2 download passed anonymous transfer, fresh installation and storefront checks. This is the recipient evidence for that exact release.
+
+> Release-specific evidence. Counts and runtime results apply to the pinned
+> profile below, not the 107,688-record expansion. See the
+> [documentation index](../docs/README.md) for current guides and other reports.
+
 Verified September 13, 2026 (US Eastern), using the published
 [`catalog-2026.09.13-enriched-v2` prerelease](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.09.13-enriched-v2).
 PR #2 merged as `256cdf8ad496410c3252445c69700cd1f5650ba6`. All 27 uploaded asset

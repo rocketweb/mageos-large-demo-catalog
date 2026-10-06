@@ -1,5 +1,11 @@
 # Guest price-index lifecycle checkpoint, 2026-09-11
 
+The September 11 fixture verified thirteen price rows against native models and restored indexed state. It did not qualify full checkout or payment flows.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Native stock and price indexing now pass in the isolated five-family fixture.
 All thirteen active product price rows agree with Magento pricing models, and the
 inverse plus the same indexers restores the indexed baseline exactly.

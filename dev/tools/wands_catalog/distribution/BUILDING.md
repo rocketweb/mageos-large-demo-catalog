@@ -1,4 +1,21 @@
-# Building the private candidate
+# Building a catalog release candidate
+
+Builds package existing data and media; they do not generate images or publish
+a release. Use a new output directory for every changed candidate and retain
+the manifest, source pins and acceptance evidence.
+
+| Recipe | Scope |
+| --- | --- |
+| `build_release.py` examples below | Earlier starter/full prepared inputs |
+| Enriched published release | Its exact profile pins and [acceptance record](ENRICHED_ACCEPTANCE.md) |
+| `build_handoff.py` | Wrapper for the unchanged accepted rc2 profiles |
+| Doubled expansion | Separate [accepted export workflow](../docs/EXPANSION.md#files-and-evidence); no expanded public release asset |
+
+These recipes are pinned. Changing a profile flag does not turn an earlier
+recipe into the 107,688-record release. Review the recipe and input manifests
+before choosing a build. See [sharing checks](../../../../SHARING.md) for publication.
+
+## Developer build procedure
 
 Run from the catalog repository, not the OpenSearch module checkout. The builder
 requires Python 3.11+ and Pillow for JPEG header/format verification. Recipients

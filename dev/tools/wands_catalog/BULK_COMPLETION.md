@@ -1,5 +1,11 @@
 # Bulk test-catalog completion
 
+The September bulk pass applied corrections to 667 existing SKUs, 93 media families and 419 new images. This is an earlier demo update, separate from the doubled catalog.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Matt delegated the remaining synthetic product and image decisions on September
 11, 2026. Complete this as bulk test data, not another series of per-product
 approval gates. Retain practical backups and batch checks. Public community

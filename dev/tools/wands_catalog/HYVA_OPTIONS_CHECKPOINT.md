@@ -1,5 +1,11 @@
 # Native Hyva options checkpoint, 2026-09-11
 
+The September 11 pilot exercised native configurable options and identified display corrections. Later ordered-option and browser reports record follow-up acceptance.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The unchanged installed Hyva 1.5.2 configurable template now renders **Furniture
 pieces** for outdoor family `WANDS-030335`. The lamp family still renders **Finish**.
 The shared EAV label remains **Piece Count**. All eight option IDs, child SKUs and

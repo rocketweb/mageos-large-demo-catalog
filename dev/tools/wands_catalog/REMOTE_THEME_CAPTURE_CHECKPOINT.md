@@ -1,5 +1,11 @@
 # Approved remote theme capture, 2026-09-11
 
+The September 11 read-only capture established the actual Hyvä assignment and pilot schema. It collected evidence without changing catalog records.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The approved read-only collector was uploaded to
 `/tmp/wands-schema-rehearsal.jdx7Hi/snapshot_rehearsal_schema.php` inside
 `farm-relevance-php-1` on `37.27.126.105`. It is a fresh temporary file; the prior

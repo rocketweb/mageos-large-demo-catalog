@@ -1,5 +1,11 @@
 # Component readiness after the framing passes
 
+This report consolidated 28 planned component types after early framing passes. Read its missing-type counts as a dated pilot inventory.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Historical v1 snapshot. The completed five-batch pass supersedes these counts;
 see [COMPONENT_COMPLETION_RESULTS.md](COMPONENT_COMPLETION_RESULTS.md) and
 `var/wands/component-readiness-v2/review.html` for the current local inventory.

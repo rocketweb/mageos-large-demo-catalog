@@ -1,5 +1,21 @@
 # Mac mini image worker
 
+The mini was an additional Apple Silicon renderer, working alongside the Studio. The completed run is stopped. The setup and benchmarks below preserve its admitted environment; timings and PIDs are historical.
+
+| Operator detail | Rule |
+| --- | --- |
+| Ownership | One outstanding sealed batch per worker; Studio owns the ledger |
+| Acceptance | Returned images enter central review, never automatic acceptance |
+| Safe stop | Set `REMOTE_STOP` in `run-v3/`; wait for renderer, transfer and import completion |
+| Restart | Verify actual processes, locks and reservations; resume the same packet |
+| Current project | Do not restart completed generation just to inspect status |
+
+See [the expansion guide](docs/EXPANSION.md) for current scope and shared contracts.
+The detailed setup, operation and recovery notes below preserve the original
+worker evidence. Do not use a historical PID as a live process identifier.
+
+## Recorded setup and benchmark context
+
 September 29 update: both workers resumed after adding reference-based variants
 and within-budget product corrections to the mini. The mini no longer exits
 permanently when it must wait for source approvals. Continuous mini batches now

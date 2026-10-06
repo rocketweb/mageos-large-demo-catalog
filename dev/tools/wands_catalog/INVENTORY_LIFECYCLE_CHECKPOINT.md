@@ -1,5 +1,11 @@
 # Inventory lifecycle checkpoint, 2026-09-11
 
+This September 11 fixture exposed stock-index sequencing and verified recovery. Stock processing is a distinct acceptance surface, including on media-only updates.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The approved pilot migration now passes native Magento stock-index and inventory
 service checks in the disposable fixture, including rollback. This follows the
 [product-model rehearsal](MAGEOS_MODEL_REHEARSAL_CHECKPOINT.md). It is not a cart,

@@ -1,5 +1,11 @@
 # Mage-OS 3.5 acceptance result
 
+The rc2 profiles passed isolated Mage-OS 3.5 installation checks. This dated result applies to those pinned archives, not every later source change.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 This records the original Luma acceptance run. The same full-profile instance
 subsequently received Hyvä Default 1.5.2; see the
 [Hyvä storefront verification](distribution/HYVA_ACCEPTANCE.md) for its current

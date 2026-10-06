@@ -1,5 +1,11 @@
 # Repaired references and gated bulk generation
 
+This earlier workflow sealed repaired references into a gated local generation queue. Run paths and frozen packets below belong to that historical recipe.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 Run from `/Users/matt/code/rocket-search/.worktrees/wands-merchandising`.
 This workflow generates local staging media only. It does not import products,
 overwrite original media, push Git commits or deploy to the remote store.

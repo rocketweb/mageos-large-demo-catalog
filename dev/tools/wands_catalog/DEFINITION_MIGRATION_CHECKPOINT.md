@@ -1,5 +1,11 @@
 # Definition migration checkpoint, 2026-09-11
 
+The September 11 migration rehearsal prepared guarded forward/inverse changes and recovery receipts. It did not itself authorize a store deployment.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The user approved the five-family definition scope and the separate nursery
 activation values after commit `65fb8e8`. The approved activation is a 47-unit
 synthetic seed, $74.99 base price, $63.74 special price and weight 1.75 in the

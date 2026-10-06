@@ -1,5 +1,11 @@
 # Enriched catalog acceptance
 
+The enriched medium/full profiles passed isolated Mage-OS 3.5 and Hyvä checks. This report records exact artifact pins, commerce scenarios and unqualified behaviors.
+
+> Release-specific evidence. Counts and runtime results apply to the pinned
+> profile below, not the 107,688-record expansion. See the
+> [documentation index](../docs/README.md) for current guides and other reports.
+
 This is an internal, isolated Mage-OS 3.5.0 acceptance run, not official Mage-OS
 certification. It does not update the public download or the demo store.
 

@@ -1,5 +1,11 @@
 # Enriched v2 public release audit
 
+This September 13 audit checked source, release contents and repository settings. Its settings and SHAs are a dated snapshot, not current configuration claims.
+
+> Release-specific evidence. Counts and runtime results apply to the pinned
+> profile below, not the 107,688-record expansion. See the
+> [documentation index](../docs/README.md) for current guides and other reports.
+
 Audit date: September 13, 2026. Target: `rocketweb/mageos-large-demo-catalog`.
 The repository was already public. The inspected default branch was `1d57fe4`;
 the catalog acceptance baseline was `c427ba4` on `wands-merchandising`.

@@ -1,5 +1,11 @@
 # Mage-OS compatibility evidence
 
+The rc2 starter/full profiles passed isolated Mage-OS 3.5 database and storefront checks. This report identifies their exact scope and limits.
+
+> Release-specific evidence. Counts and runtime results apply to the pinned
+> profile below, not the 107,688-record expansion. See the
+> [documentation index](../docs/README.md) for current guides and other reports.
+
 Candidate `2026.09.11-rc2` was tested on a fresh, isolated Mage-OS 3.5.0 instance
 with PHP 8.4.25, MariaDB 11.4, OpenSearch 3.1.0 and the stock Luma theme.
 The starter and full profiles were installed into separate empty databases.

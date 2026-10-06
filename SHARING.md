@@ -1,5 +1,11 @@
 # Sharing the catalog
 
+| Shareable item | Status |
+| --- | --- |
+| Enriched medium/full profiles | Published assets for empty lab installations |
+| Expansion source and guides | Available in the repository |
+| 107,688-record expansion media | Installed on the two existing stores; no expanded public release asset |
+
 Share the [README](README.md) and its pinned
 [enriched v2 release assets](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.09.13-enriched-v2).
 The repository is public. No GitHub account, local image generator, GPU or API
@@ -41,5 +47,5 @@ directory. Keep the notices, dataset card and manifests with redistributed files
 
 This checklist is a reusable release gate, not a record that every setting is
 enabled. See [the release audit](dev/tools/wands_catalog/distribution/PUBLIC_RELEASE_AUDIT.md)
-for current findings. Repository visibility was already public before this pass;
+for the dated September 13 findings. Repository visibility was already public before that pass;
 no visibility change was needed.

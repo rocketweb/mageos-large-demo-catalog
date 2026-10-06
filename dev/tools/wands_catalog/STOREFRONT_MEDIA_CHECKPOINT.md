@@ -1,5 +1,11 @@
 # Storefront media checkpoint, 2026-09-11
 
+This September 11 checkpoint prepared five-family compositions and identified destination definition drift. Its deployment gates describe the earlier pilot, not current expansion status.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The five-family pilot now has compact, locally reviewed storefront compositions,
 20 raster exports and a five-product media assignment proposal. The remote preflight
 is blocked by product-definition drift. Nothing has been imported or assigned live.

@@ -1,5 +1,11 @@
 # Bounded product-specific framing refinement
 
+This follow-up used silhouette drift to choose product-specific canvases with a bounded area change. Acceptance stayed separate from masking, assembly and publication.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 The equal-area review is committed as `27c6b12`. Both square controls reproduced
 their original bytes. The 4:1 portraits retained coherent objects but did not
 match either synthetic target: the lamp stayed too wide and the cake server

@@ -1,5 +1,11 @@
 # Catalog publication preparation
 
+This earlier publication-preparation guide records artifact checks, destination comparisons and phased deployment boundaries. Use the current expansion guide for the completed two-store installation.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 This tooling prepares and validates release artifacts. It does not authorize a
 commit, push, deployment, data import, media upload or rollback execution.
 The existing bulk image process must retain its current scripts, inputs and

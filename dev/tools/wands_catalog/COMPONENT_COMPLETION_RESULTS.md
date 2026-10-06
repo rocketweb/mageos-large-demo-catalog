@@ -1,5 +1,11 @@
 # Component completion checkpoint, 2026-09-10
 
+The September 10 report inventories component-generation results and remaining repairs. Later pilot and expansion records supersede its unresolved counts.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 All 28 planned component types across five pilot families now have a reviewed
 candidate. This pass generated 25 new images, one attempt per selected component,
 using cached local FLUX.2 Klein 4B, 4-bit, four steps and guidance 1.0. No model

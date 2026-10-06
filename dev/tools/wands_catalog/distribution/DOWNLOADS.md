@@ -5,8 +5,15 @@ Magento connection or SSH access. Use `download.py` and `release.py` from review
 source tooling, kept in the same directory. Never execute a downloader merely
 because it arrived beside an untrusted archive.
 
-No public download location has been selected or published. Once a maintainer
-provides a direct HTTPS directory URL and a separately trusted manifest SHA-256:
+For the published catalog, use the [GitHub asset downloader](GITHUB_RELEASE.md)
+or the [root quick start](../../../../README.md#quick-start). This page documents
+the separate direct-HTTPS mirror tool, whose URL rules differ from GitHub's
+redirect-aware downloader. No independent mirror is specified here.
+
+## Direct mirror procedure
+
+Use this procedure when a maintainer provides a direct HTTPS directory URL and
+a separately trusted manifest SHA-256:
 
 ```sh
 python3 dev/tools/wands_catalog/distribution/download.py \
@@ -72,7 +79,8 @@ the remaining byte range. Redirect refusal, unsafe URLs, corrupt bytes, wrong
 ranges, oversized responses, disk space, cache symlinks, concurrent runs, pin
 mismatches and quiet error logging are covered separately.
 
-Public hosting and CDN behavior remain untested until a destination is selected.
+These mirror checks do not qualify an arbitrary mirror or CDN. Published GitHub
+downloads have separate [recipient acceptance](PUBLIC_RECIPIENT_ACCEPTANCE.md).
 The downloader works with the existing schema-1 rc2 catalog manifests. Those
 immutable archives predate this companion tool; obtain it from reviewed source,
 not by assuming it is already inside rc2.

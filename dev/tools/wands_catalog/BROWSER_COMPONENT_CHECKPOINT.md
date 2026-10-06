@@ -1,5 +1,11 @@
 # Native Hyva browser component checkpoint, 2026-09-11
 
+The five-family pilot passed 24 desktop/mobile browser scenarios, including child selection and price changes. This September 11 result covers that isolated pilot, not the later full expansion.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 All **24 browser scenarios pass** using the installed Hyva dropdown, configurable
 selection JavaScript, price template, price formatting, Alpine 3 and stylesheet.
 These are native components rendered by the isolated Magento runtime, not a

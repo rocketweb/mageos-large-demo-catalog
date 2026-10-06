@@ -1,5 +1,11 @@
 # Catalog depth pilot
 
+This earlier 300-root pilot defines specifications, gallery briefs and recommendation candidates. The commands below reproduce that proposal with its original inputs.
+
+> Earlier workflow or dated evidence. For current scope, see the
+> [documentation index](docs/README.md) and [expansion completion](EXPANSION-CHECKPOINT.md).
+> Recorded paths, process IDs and remaining boundaries below belong to that scope.
+
 This is the next local realism phase, separate from prior catalog releases and
 the frozen September 5 search study. It prepares a review packet. It does not
 import products, install attributes, change the live site, run inference, or
