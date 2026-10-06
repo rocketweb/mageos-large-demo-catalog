@@ -48,8 +48,8 @@ class MediaPilotRunTest(unittest.TestCase):
         text = compile_prompt(c)
         self.assertIn('8 x Dinner fork', text)
         self.assertIn('1 x Serving spoon', text)
-        self.assertIn('L20cm', text)
-        self.assertIn('L25cm', text)
+        self.assertNotIn('L20cm', text)
+        self.assertNotIn('L25cm', text)
 
     def test_token_budget_rejects_truncation_instead_of_silently_slicing(self):
         tokenizer = Mock()

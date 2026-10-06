@@ -118,20 +118,20 @@ class CatalogDepthTest(unittest.TestCase):
     def test_gallery_requires_reference_and_dimension_evidence(self):
         p=product(); p.update(name='Example',reference=None)
         jobs=gallery_briefs(p)
-        self.assertEqual(len(jobs),5)
+        self.assertEqual(len(jobs),4)
         self.assertTrue(all(not j['executable'] for j in jobs))
-        dimension=next(j for j in jobs if j['view']=='dimensions')
-        self.assertIn('missing_explicit_dimensions',dimension['blockers'])
+        self.assertNotIn('dimensions', [j['view'] for j in jobs])
         self.assertTrue(all('missing_reference' in j['blockers'] for j in jobs))
 
     def test_synthetic_gallery_labels_scale_without_claiming_reference_approval(self):
         p=product(cls='Accent Chairs'); p.update(name='Armchair',reference=None,axis_codes=[])
         p=add_dimensions(p)
         jobs=gallery_briefs(p)
-        diagram=next(j for j in jobs if j['view']=='dimensions')
+        diagram=next(j for j in jobs if j['view']=='room')
         room=next(j for j in jobs if j['view']=='room')
         self.assertEqual(diagram['dimension_basis'],'synthetic_lab_design')
-        self.assertIn(LABEL,diagram['prompt'])
+        self.assertEqual(LABEL,diagram['required_disclosure'])
+        self.assertIn('No visible measurements',diagram['prompt'])
         self.assertTrue(diagram['dimension_provenance'])
         self.assertNotIn('missing_explicit_dimensions',diagram['blockers'])
         self.assertNotIn('scale_unverified',room['blockers'])
@@ -140,13 +140,14 @@ class CatalogDepthTest(unittest.TestCase):
     def test_component_gallery_does_not_invent_set_wide_dimensions(self):
         p=product(cls='Kitchen Gadgets'); p.update(name='Mortar And Pestle',reference=None,axis_codes=[])
         p=add_dimensions(p)
-        diagram=next(j for j in gallery_briefs(p) if j['view']=='dimensions')
+        diagram=next(j for j in gallery_briefs(p) if j['view']=='room')
         self.assertEqual(diagram['dimension_basis'],'synthetic_lab_component_design')
         self.assertEqual(diagram['dimensions_cm'],{})
         self.assertEqual(len(diagram['component_dimensions']),2)
         self.assertNotIn('missing_explicit_dimensions',diagram['blockers'])
-        self.assertIn('not an installed span',diagram['prompt'])
-        self.assertIn(LABEL,diagram['prompt'])
+        self.assertNotIn('Dimensions in cm',diagram['prompt'])
+        self.assertEqual(LABEL,diagram['required_disclosure'])
+        self.assertIn('No visible measurements',diagram['prompt'])
         self.assertFalse(diagram['executable'])
 
     def test_source_ratings_do_not_create_fake_reviews_or_child_inheritance(self):

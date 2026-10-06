@@ -15,6 +15,7 @@ import time
 from build_realism_review import write_json
 from catalog_repairs import read_jsonl
 from generate_images import append_event
+from image_policy import GuardedImageModel
 from generate_reference_images import fingerprint, safe_target, completed
 from prepare_catalog import sha256
 from run_catalog_media_pilot import check_token_budget
@@ -85,7 +86,7 @@ def run(args):
         return
     from mflux.models.common.config.model_config import ModelConfig
     from mflux.models.flux2.variants import Flux2Klein
-    model = Flux2Klein(model_config=ModelConfig.from_name(CONFIG['model']), model_path=str(token_config.parent.parent), quantize=CONFIG['quantize'])
+    model = GuardedImageModel(Flux2Klein(model_config=ModelConfig.from_name(CONFIG['model']), model_path=str(token_config.parent.parent), quantize=CONFIG['quantize']))
     failed = 0
     generated = len(jobs)-len(queue)
     for job in queue:

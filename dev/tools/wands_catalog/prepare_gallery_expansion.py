@@ -5,6 +5,7 @@ import json
 import logging
 from pathlib import Path
 
+from image_policy import product_prompt
 from prepare_catalog import sha256
 
 # These references were viewed directly on September 12, 2026. Two mislabeled
@@ -47,7 +48,7 @@ def build(media, output):
                        'scope': 'synthetic gallery reference identity, not manufacturer accuracy',
                        'observation': subject, 'method': 'direct assistant visual inspection, 2026-09-12'})
         for view, instruction in VIEWS.items():
-            prompt = ('Use case: product-mockup. Image 1 is the identity reference. Show ' + subject + '. '
+            prompt = product_prompt('Use case: product-mockup. Image 1 is the identity reference. Show ' + subject + '. '
                       + instruction + ' Preserve the exact silhouette, colors, visible materials and piece count from Image 1. '
                       'Photorealistic product illustration, soft natural lighting. No people, logos, text, dimensions or watermarks. '
                       'Do not redesign the product or imply verified scale or fit.')

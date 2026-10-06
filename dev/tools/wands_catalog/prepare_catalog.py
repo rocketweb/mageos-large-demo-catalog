@@ -12,6 +12,7 @@ import statistics
 from collections import Counter
 from pathlib import Path
 from typing import Any
+from image_policy import product_prompt
 
 SOURCE_REVISION = "3b74dcf4ba29ab8ff3e6a50b5b09fc627cb882b5"
 PRICE_METHOD = "category-class-material-size-rating-deterministic"
@@ -313,7 +314,7 @@ def transform(row: dict[str, str]) -> tuple[dict[str, Any], dict[str, Any]]:
         "lab_price_synthetic": "Yes",
     }
     details = feature_summary(features)
-    prompt = (
+    prompt = product_prompt(
         f"Commercial ecommerce product photography of one {name}. "
         f"Product type: {product_class}. Category: {department(row)}. "
         + (f"Important product details: {'; '.join(details)}. " if details else "")

@@ -17,6 +17,7 @@ import time
 from PIL import Image
 from catalog_repairs import read_jsonl
 from generate_images import append_event
+from image_policy import GuardedImageModel
 from plan_catalog_media_repairs import SETTINGS
 from prepare_catalog import sha256
 from reconcile_catalog_media import digest
@@ -177,7 +178,7 @@ def run(args):
         from mflux.models.common.config.model_config import ModelConfig
         from mflux.models.flux2.variants import Flux2Klein
         logging.info('Loading cached FLUX for %d framing attempts',len(todo))
-        model=Flux2Klein(model_config=ModelConfig.from_name(SETTINGS['model']),model_path=runtime['model_snapshot'],quantize=4)
+        model= GuardedImageModel(Flux2Klein(model_config=ModelConfig.from_name(SETTINGS['model']),model_path=runtime['model_snapshot'],quantize=4))
         return generate(todo,output,model,lambda:verify_pins(pins))
 
 

@@ -17,6 +17,7 @@ from typing import Any
 
 from prepare_catalog import CSV_FIELDS as BASE_CSV_FIELDS
 from prepare_catalog import normalized_text, parse_features, sha256, slug, stable_fraction
+from image_policy import product_prompt
 
 SCHEMA_VERSION = 1
 PLAN_VERSION = "wands-merchandising-v1"
@@ -942,7 +943,7 @@ def image_prompts(plan: dict[str, Any]) -> Iterable[dict[str, Any]]:
                 "value": value,
                 "title": parent["name"],
                 "seed": int(stable_fraction(parent["sku"], f"variant-image:{value}") * (2**31 - 1)),
-                "prompt": (
+                "prompt": product_prompt(
                     f"Commercial ecommerce product photography of one {parent['name']} in {value}. "
                     "Centered three-quarter view on a seamless warm-white studio background, soft natural shadow, "
                     "realistic materials and proportions, sharp catalog photography. No people, no room scene, "
@@ -963,7 +964,7 @@ def bundle_image_prompts(plan: dict[str, Any]) -> Iterable[dict[str, Any]]:
             "theme": bundle["theme"],
             "palette": bundle["palette"],
             "seed": int(stable_fraction(bundle["sku"], f"bundle-image:{PLAN_VERSION}") * (2**31 - 1)),
-            "prompt": (
+            "prompt": product_prompt(
                 f"Commercial ecommerce lifestyle photography of a coordinated {bundle['theme']} room set named "
                 f"{bundle['name']}. Feature one {option_names}. Palette and styling: {bundle['palette']}. "
                 f"Use these catalog products as visual references for form and scale: {reference_items}. "

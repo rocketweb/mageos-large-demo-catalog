@@ -32,6 +32,12 @@ class ImportProductsCommand extends Command
             'Validate the CSV without changing products.'
         );
         $this->addOption(
+            'preserve-existing-stock',
+            null,
+            InputOption::VALUE_NONE,
+            'Preserve stock for existing products assigned only to WANDS; import stock for new products.'
+        );
+        $this->addOption(
             'reconcile-bundles',
             null,
             InputOption::VALUE_NONE,
@@ -53,7 +59,8 @@ class ImportProductsCommand extends Command
             $result = $this->productImporter->execute(
                 $sourceFile,
                 (bool)$input->getOption('validate-only'),
-                (bool)$input->getOption('reconcile-bundles')
+                (bool)$input->getOption('reconcile-bundles'),
+                (bool)$input->getOption('preserve-existing-stock')
             );
             $output->writeln(json_encode($result, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
             return Cli::RETURN_SUCCESS;

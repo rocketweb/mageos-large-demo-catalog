@@ -257,7 +257,7 @@ class ParentTypeConverter
         if ($record['expected_type'] !== ProductType::TYPE_SIMPLE
             || $record['target_type'] !== Configurable::TYPE_CODE
             || !is_array($record['child_skus'])
-            || !in_array(count($record['child_skus']), [4, 6], true)
+            || !in_array(count($record['child_skus']), [2, 4, 6], true)
         ) {
             throw new \RuntimeException(sprintf(
                 'Manifest record %d has an unsupported type conversion.',

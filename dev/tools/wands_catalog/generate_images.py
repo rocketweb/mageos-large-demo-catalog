@@ -8,6 +8,7 @@ import os
 import time
 from pathlib import Path
 from typing import Any, Iterator
+from image_policy import GuardedImageModel, validate_prompt
 
 
 def parse_args() -> argparse.Namespace:
@@ -45,11 +46,11 @@ def load_model(model_name: str, quantize: int):
     if model_name.startswith("z-image"):
         from mflux.models.z_image.variants import ZImage
 
-        return ZImage(model_config=ModelConfig.from_name(model_name), quantize=quantize)
+        return GuardedImageModel(ZImage(model_config=ModelConfig.from_name(model_name), quantize=quantize))
 
     from mflux.models.flux2.variants import Flux2Klein
 
-    return Flux2Klein(model_config=ModelConfig.from_name(model_name), quantize=quantize)
+    return GuardedImageModel(Flux2Klein(model_config=ModelConfig.from_name(model_name), quantize=quantize))
 
 
 def append_event(path: Path, event: dict[str, Any]) -> None:
@@ -79,6 +80,8 @@ def main() -> int:
     arguments.output_dir.mkdir(parents=True, exist_ok=True)
     progress_path = arguments.output_dir / "generation-events.jsonl"
     selected_rows = list(queue_rows(arguments.prompts, arguments.start_index, arguments.limit))
+    for _, row in selected_rows:
+        validate_prompt(row['prompt'], row.get('view'))
     pending_rows = [
         (index, row)
         for index, row in selected_rows

@@ -16,6 +16,7 @@ import tempfile
 import time
 
 from PIL import Image
+from image_policy import GuardedImageModel, product_prompt
 from catalog_repairs import read_jsonl
 from generate_images import append_event
 from plan_catalog_media_repairs import SETTINGS, verify_review_packet
@@ -30,10 +31,6 @@ VISUAL_FACTS = {'lab_spec_color', 'lab_spec_finish', 'lab_spec_material', 'lab_s
 def compile_prompt(case):
     """Keep visual facts in the encoder budget; retain complete provenance in metadata."""
     c = case['acceptance_contract']
-    def size(values):
-        labels = {'lab_spec_length_cm': 'L', 'lab_spec_width_cm': 'W',
-                  'lab_spec_height_cm': 'H', 'lab_spec_depth_cm': 'D'}
-        return ' '.join(labels[k] + f'{v:g}cm' for k, v in values.items() if k in labels)
     lines = ['Photorealistic studio catalog product photograph. Neutral seamless background, soft light, full objects in frame.',
              c['product_name'] + '.', 'Selected: ' + ', '.join(c['selected_options'].values()) + '.',
              'Sale unit: ' + c['sale_unit'] + '.', case['pilot_case']['framing']]
@@ -41,14 +38,12 @@ def compile_prompt(case):
     if facts: lines.append('Appearance: ' + ', '.join(facts) + '.')
     if c['components']:
         lines.append('Every component, separately countable: ' + '; '.join(
-            f"{p['quantity']} x {p['label']} ({size(p['dimensions_cm'])})" for p in c['components']) + '.')
-    else:
-        lines.append('Design proportions: ' + size(c['dimensions_cm']) + '.')
+            f"{p['quantity']} x {p['label']}" for p in c['components']) + '.')
     lines.append('No extra products, people, logos, watermarks, lettering or dimension labels. No invented features. '
                  'Use realistic construction and materials. Do not hide included components behind each other.')
     if 'nursery' in c['product_name'].lower():
         lines.append('Separate textile flat lay only. No crib, mattress, infant or sleeping arrangement.')
-    return '\n'.join(lines)
+    return product_prompt('\n'.join(lines))
 
 
 def check_token_budget(prompt, tokenizer):
@@ -232,7 +227,7 @@ def run(args):
         from mflux.models.common.config.model_config import ModelConfig
         from mflux.models.flux2.variants import Flux2Klein
         logging.info('Loading cached local FLUX model; hosted services disabled')
-        model = Flux2Klein(model_config=ModelConfig.from_name(SETTINGS['model']), model_path=runtime['model_snapshot'], quantize=SETTINGS['quantize'])
+        model = GuardedImageModel(Flux2Klein(model_config=ModelConfig.from_name(SETTINGS['model']), model_path=runtime['model_snapshot'], quantize=SETTINGS['quantize']))
         return generate_cases(pending, output, model, lambda: verify_pins(pins))
 
 

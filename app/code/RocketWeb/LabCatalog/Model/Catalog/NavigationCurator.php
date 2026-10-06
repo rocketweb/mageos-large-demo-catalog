@@ -17,6 +17,7 @@ class NavigationCurator
         'Storage & Organization',
         'Home Improvement',
         'Baby & Kids',
+        'Pet',
     ];
 
     public function __construct(

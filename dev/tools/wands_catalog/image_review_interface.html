@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Catalog image review</title>
+<style>
+:root{--ink:#232a29;--muted:#6c7673;--paper:#f6f5f1;--line:#dddeda;--green:#17664e;--red:#a94232;--soft:#e8ede8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button,a{touch-action:manipulation}button{cursor:pointer;border:1px solid var(--line);border-radius:7px;padding:9px 13px;background:white;color:var(--ink)}button:hover{border-color:#9baaa2}button:disabled{cursor:wait;opacity:.5}button:focus-visible,a:focus-visible{outline:3px solid #67a897;outline-offset:3px}header{padding:20px 26px 16px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:22px;flex-wrap:wrap}h1{font-size:21px;letter-spacing:-.6px;margin:0 0 3px}h2{font-size:19px;line-height:1.3;margin:0 0 9px}.muted{color:var(--muted)}header p{margin:0;font-size:12px}.totals{display:flex;gap:20px;margin-left:auto}.stat strong{font-size:20px;display:block;font-variant-numeric:tabular-nums}.stat span{font-size:11px;color:var(--muted)}.toolbar{display:flex;gap:8px;align-items:center}.download{color:var(--ink);font-size:12px}.workspace{display:grid;grid-template-columns:238px minmax(0,1fr);height:calc(100vh - 98px);min-height:660px}.sidebar{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;background:#efefea}.filters{padding:18px 14px 12px;display:grid;gap:9px}.filters label{font-size:11px;color:var(--muted);display:grid;gap:3px}input,select,textarea{border:1px solid #cdd2cc;border-radius:6px;background:white;padding:9px;color:var(--ink);min-width:0;width:100%}.sources-heading{display:flex;justify-content:space-between;margin:10px 3px 0;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}.sources{overflow:auto;padding:0 10px 15px;flex:1}.source-button{display:block;width:100%;border:1px solid transparent;background:transparent;text-align:left;margin:4px 0;padding:11px 10px;line-height:1.3}.source-button.selected{border-color:#b5c9be;background:white;box-shadow:0 2px 5px #00000005}.source-button strong{display:block;font-size:12px;font-weight:550}.source-button small{display:block;color:var(--muted);font-size:11px;margin-top:5px}.review{min-width:0;overflow:auto;padding:20px 26px;display:flex;flex-direction:column;gap:16px}.breadcrumb{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12px}.counter{white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}.comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}figure{margin:0;min-width:0}figcaption{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;margin-bottom:8px}figcaption span{font-weight:400;color:var(--muted);font-size:11px}.image-frame{height:auto;aspect-ratio:1;max-height:52vh;background:white;border:1px solid var(--line);border-radius:9px;overflow:hidden;display:flex;align-items:center;justify-content:center}.image-frame img{display:block;width:100%;height:100%;object-fit:contain}.image-link{display:block;width:100%;height:100%;cursor:zoom-in}.missing{padding:20px;text-align:center;color:var(--muted)}.brief{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,.6fr);gap:28px}.sku{font:11px ui-monospace,SFMono-Regular,monospace;color:var(--muted);overflow-wrap:anywhere;margin-bottom:9px}.description{font-size:12px;color:#56645c;margin:0}.facts{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.fact{background:#e9ece6;border-radius:4px;padding:4px 7px;font-size:11px}.specs{display:grid;grid-template-columns:90px 1fr;gap:4px 10px;margin:0;font-size:12px}.specs dt{color:var(--muted)}.specs dd{margin:0}.price{font-variant-numeric:tabular-nums}.disclosure{margin-top:10px;font-size:10px;color:var(--muted)}.variants{display:flex;gap:8px;overflow:auto;padding:1px 0 4px;min-height:78px}.variant{padding:4px;min-width:68px;max-width:93px;position:relative}.variant.selected{outline:2px solid var(--green);outline-offset:-1px}.variant img{width:57px;height:50px;object-fit:contain;display:block;margin:auto}.variant small{display:block;font-size:10px;max-width:83px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.variant.kept{background:#e0efe5}.variant.redo{background:#fae8e2}.actions{position:sticky;bottom:0;background:var(--paper);margin-top:auto;display:flex;align-items:center;gap:9px;padding:13px 0 3px;border-top:1px solid var(--line);flex-wrap:wrap}.keep{background:var(--green);border-color:var(--green);color:white;font-weight:600;padding:12px 27px}.redo-action{background:white;border-color:#c58c7e;color:#8e3425;font-weight:600;padding:12px 24px}kbd{font:11px inherit;border:1px solid currentColor;border-radius:3px;padding:1px 4px;margin-left:9px;opacity:.65}.actions .spacer{flex:1}.shortcuts{color:var(--muted);font-size:10px}.saved{font-size:12px;color:var(--green);min-height:18px}.saved.error{color:var(--red)}.decision-note{font-size:12px;padding:8px 11px;border:1px solid #ddd2ca;border-radius:6px;background:#f4e9e2;white-space:pre-wrap}.empty{padding:50px 25px;max-width:600px;color:var(--muted)}.hidden{display:none!important}dialog{border:1px solid #ccd4cc;border-radius:12px;max-width:540px;width:calc(100% - 36px);padding:25px;box-shadow:0 20px 80px #0003}dialog::backdrop{background:#15231e75}dialog h2{margin-bottom:6px}dialog p{font-size:13px;color:var(--muted);margin:0 0 17px}textarea{min-height:120px;resize:vertical;margin-top:6px}.note-label{font-size:12px;font-weight:600}.chips{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0 18px}.chips button{font-size:11px;padding:5px 8px;background:var(--paper)}.dialog-actions{display:flex;justify-content:flex-end;gap:8px}.dialog-actions .redo-action{padding:10px 15px;background:#98412f;color:white;border-color:#98412f}.note-error{font-size:12px;color:var(--red);min-height:19px}#loadError{color:var(--red);padding:25px}
+@media(min-width:1500px){.comparison{max-width:1200px}.image-frame{height:auto}.review{padding:24px 38px}.workspace{grid-template-columns:260px minmax(0,1fr)}}
+@media(max-width:800px){header{padding:14px 16px;gap:12px}.totals{gap:12px}.stat strong{font-size:17px}.toolbar{width:100%;justify-content:flex-end}.workspace{grid-template-columns:178px minmax(0,1fr);height:auto;min-height:calc(100vh - 140px)}.sidebar{max-height:calc(100vh - 140px);position:sticky;top:0}.review{padding:16px}.image-frame{height:230px}.brief{grid-template-columns:1fr;gap:14px}.actions{gap:7px}.keep,.redo-action{padding:10px 16px}.shortcuts{display:none}}
+@media(max-width:560px){.workspace{grid-template-columns:1fr}.sidebar{position:static;max-height:210px}.sources{display:flex;gap:5px;overflow:auto}.source-button{min-width:160px}.filters{grid-template-columns:1fr 1fr;padding:10px}.filters label:first-child{grid-column:1 / -1}.sources-heading{display:none}.image-frame{height:180px}.totals{margin-left:0}.toolbar{width:auto}.comparison{gap:9px}.review{padding:14px}.brief h2{font-size:17px}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Catalog image review</h1><p>Review by source. Keep the good ones, leave a note for the rest.</p></div>
+  <div class="totals" aria-live="polite"><div class="stat"><strong id="remaining">...</strong><span>TO REVIEW</span></div><div class="stat"><strong id="kept">0</strong><span>KEEP</span></div><div class="stat"><strong id="redoCount">0</strong><span>REDO</span></div></div>
+  <div class="toolbar"><button id="refresh" type="button">Refresh queue</button><a class="download" href="/api/feedback" download="catalog-image-feedback.jsonl">Export feedback</a></div>
+</header>
+<div id="loadError" class="hidden" role="alert"></div>
+<div class="workspace">
+  <aside class="sidebar" aria-label="Source groups">
+    <div class="filters">
+      <label>Find a product<input id="search" type="search" placeholder="Name, SKU or material"></label>
+      <label>Department<select id="department"><option value="">All departments</option></select></label>
+      <label>Show<select id="status"><option value="unreviewed">To review</option><option value="all">All images</option><option value="keep">Kept</option><option value="redo">Redo</option></select></label>
+      <div class="sources-heading"><span>Sources</span><span id="groupCount"></span></div>
+    </div>
+    <nav id="sources" class="sources" aria-label="Choose a source"></nav>
+  </aside>
+  <main class="review">
+    <div id="empty" class="empty hidden"><h2>Nothing left in this view.</h2><p>Change the filters to revisit saved choices, or refresh to bring in newly rejected images.</p></div>
+    <div id="content">
+      <div class="breadcrumb"><span id="category"></span><span id="counter" class="counter"></span></div>
+      <div class="comparison">
+        <figure><figcaption><span id="sourceLabel">Source product</span><span>Click to enlarge</span></figcaption><div class="image-frame"><a id="sourceLink" class="image-link" target="_blank" rel="noopener"></a><div id="sourceMissing" class="missing hidden">Standalone product<br>No source photograph</div></div></figure>
+        <figure><figcaption><span>Image to review</span><span id="candidateStatus">Not reviewed</span></figcaption><div class="image-frame"><a id="candidateLink" class="image-link" target="_blank" rel="noopener"></a></div></figure>
+      </div>
+      <div class="brief" style="margin-top:18px">
+        <div><h2 id="name"></h2><div id="sku" class="sku"></div><p id="description" class="description"></p><div id="facts" class="facts"></div><div id="decisionNote" class="decision-note hidden"></div></div>
+        <div><dl id="specs" class="specs"></dl><div class="disclosure">Synthetic catalog specifications. Dimensions are product data, never image annotations.</div></div>
+      </div>
+      <div id="variants" class="variants" aria-label="Images from this source" style="margin-top:15px"></div>
+    </div>
+    <div class="actions">
+      <div id="message" class="saved" role="status" aria-live="polite" style="width:100%">Choices save automatically for the next correction pass.</div>
+      <button id="keep" class="keep" type="button">Keep <kbd>K</kbd></button>
+      <button id="redo" class="redo-action" type="button">Redo <kbd>R</kbd></button>
+      <button id="skip" type="button">Skip <kbd>N</kbd></button>
+      <span class="spacer"></span>
+      <button id="previous" type="button" aria-label="Previous image">←</button><button id="next" type="button" aria-label="Next image">→</button>
+      <button id="undo" type="button" disabled>Undo <kbd>U</kbd></button>
+      <span class="shortcuts">Keep = visual approval · No text or measurements in images</span>
+    </div>
+  </main>
+</div>
+<dialog id="redoDialog" aria-labelledby="redoTitle">
+  <form id="redoForm">
+    <h2 id="redoTitle">What should change?</h2><p id="redoProduct"></p>
+    <label class="note-label" for="note">Correction note</label><textarea id="note" placeholder="For example: Keep the open shelves. Remove the solid back panel." maxlength="4000" required></textarea>
+    <div class="chips"><button type="button" data-note="Match the source shape and construction.">Shape / construction</button><button type="button" data-note="Preserve the source pattern and texture.">Pattern / texture</button><button type="button" data-note="Correct the target color.">Color</button><button type="button" data-note="Fix the missing or extra components.">Parts / count</button><button type="button" data-note="Remove all visible text, numbers and measurements.">Text / measurements</button></div>
+    <div id="noteError" class="note-error" role="alert"></div>
+    <div class="dialog-actions"><button id="cancelRedo" type="button">Cancel</button><button id="saveRedo" class="redo-action" type="submit">Save redo & next <kbd>Enter</kbd></button></div>
+  </form>
+</dialog>
+<script>
+const token='__REVIEW_TOKEN__';
+const $=id=>document.getElementById(id);
+let items=[],currentId=null,busy=false,lastAction=null,summary={};
+function stashGet(key){try{return localStorage.getItem(key)}catch{return null}}
+function stashSet(key,value){try{localStorage.setItem(key,value)}catch{}}
+function stashRemove(key){try{localStorage.removeItem(key)}catch{}}
+function current(){return items.find(i=>i.id===currentId)}
+function groups(){
+  const result=new Map(),query=$('search').value.toLowerCase().trim(),department=$('department').value,filter=$('status').value;
+  for(const item of items){
+    if(department&&item.department!==department)continue;
+    if(filter!=='all'&&(filter==='unreviewed'?!!item.decision.choice:item.decision.choice!==filter))continue;
+    if(query&&!`${item.name} ${item.sku} ${item.source_name} ${item.profile} ${item.material} ${item.color}`.toLowerCase().includes(query))continue;
+    if(!result.has(item.group))result.set(item.group,[]);
+    result.get(item.group).push(item);
+  }
+  return result;
+}
+function tell(message,error=false){$('message').textContent=message;$('message').classList.toggle('error',error)}
+function updateTotals(){for(const [id,key] of [['remaining','unreviewed'],['kept','keep'],['redoCount','redo']])$(id).textContent=(summary[key]||0).toLocaleString()}
+function setImage(id,link,url,alt){
+  let img=$(id);$(link).href=url||'';
+  if(!url){if(img)img.remove();return;}
+  if(!img){img=document.createElement('img');img.id=id;img.src=url;$(link).append(img);}
+  img.alt=alt;if(img.getAttribute('src')!==url)img.src=url;
+}
+function setBusy(value){busy=value;for(const id of ['keep','redo','skip','previous','next','refresh','saveRedo','cancelRedo'])$(id).disabled=value||(!current()&&!['refresh','cancelRedo','saveRedo'].includes(id));$('undo').disabled=value||!lastAction}
+function render(){
+  updateTotals();const filtered=groups();let item=current();
+  if(!item||!filtered.get(item.group)?.some(i=>i.id===item.id)){item=[...filtered.values()][0]?.[0];currentId=item?.id||null;}
+  if(currentId)stashSet('wands-review-current',currentId);
+  $('groupCount').textContent=filtered.size;
+  const sourceNodes=[];
+  for(const [key,batch] of filtered){
+    const button=document.createElement('button');button.type='button';button.className='source-button'+(key===item?.group?' selected':'');
+    const label=document.createElement('strong');label.textContent=batch[0].source_name&&batch[0].source_name!=='Standalone product'?batch[0].source_name:batch[0].name;
+    const count=document.createElement('small');count.textContent=`${batch[0].profile} · ${batch.length} image${batch.length===1?'':'s'}`;
+    button.append(label,count);button.addEventListener('click',()=>{if(busy)return;currentId=batch[0].id;render()});sourceNodes.push(button);
+  }
+  const scroll=$('sources').scrollTop;$('sources').replaceChildren(...sourceNodes);$('sources').scrollTop=scroll;
+  $('empty').classList.toggle('hidden',!!item);$('content').classList.toggle('hidden',!item);
+  if(!item){setBusy(busy);return;}
+  const allBatch=items.filter(i=>i.group===item.group);
+  $('category').textContent=`${item.department} / ${item.profile}`;
+  $('counter').textContent=`${allBatch.findIndex(i=>i.id===item.id)+1} of ${allBatch.length} from this source`;
+  $('name').textContent=item.name;$('sku').textContent=item.sku;$('description').textContent=item.description;
+  $('sourceLabel').textContent=item.source_label;$('candidateStatus').textContent=item.decision.choice==='keep'?'Kept':item.decision.choice==='redo'?'Marked for redo':'Not reviewed';
+  setImage('sourceImage','sourceLink',item.source_url,item.source_name||'Source product');
+  $('sourceLink').classList.toggle('hidden',!item.source_url);$('sourceMissing').classList.toggle('hidden',!!item.source_url);
+  setImage('candidateImage','candidateLink',item.image_url,item.name);
+  const facts=[];
+  for(const text of [item.color,item.material,...Object.entries(item.options||{}).filter(([key])=>!['color','wands_finish'].includes(key)).map(([key,value])=>`${key.replace(/^wands_/,'').replaceAll('_',' ')}: ${value}`)]){
+    if(!text)continue;const span=document.createElement('span');span.className='fact';span.textContent=text;facts.push(span);
+  }
+  $('facts').replaceChildren(...facts);
+  const specs=[];
+  for(const [label,value] of [...Object.entries(item.dimensions||{}).filter(([,value])=>value).map(([key,value])=>[key.replace(/^lab_spec_/,'').replace(/_cm$/,'').replaceAll('_',' '),`${value} cm`]),...(item.price?[['Lab price',`$${item.price}`]]:[])]){
+    const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=label.charAt(0).toUpperCase()+label.slice(1);dd.textContent=value;specs.push(dt,dd);
+  }
+  $('specs').replaceChildren(...specs);$('decisionNote').textContent=item.decision.note;$('decisionNote').classList.toggle('hidden',item.decision.choice!=='redo');
+  const variants=allBatch.map(variant=>{
+    const button=document.createElement('button');button.type='button';button.className=`variant ${variant.id===item.id?'selected':''} ${variant.decision.choice==='keep'?'kept':variant.decision.choice==='redo'?'redo':''}`;
+    button.title=variant.name;button.setAttribute('aria-label',`${variant.color||variant.name}, ${variant.decision.choice||'to review'}`);
+    const img=document.createElement('img');img.src=variant.image_url;img.alt=variant.color||variant.name;img.loading='lazy';
+    const caption=document.createElement('small');caption.textContent=variant.color||variant.profile;button.append(img,caption);
+    button.addEventListener('click',()=>{if(busy)return;currentId=variant.id;if(!groups().get(variant.group)?.some(i=>i.id===variant.id))$('status').value='all';render()});return button;
+  });
+  $('variants').replaceChildren(...variants);setBusy(busy);
+}
+async function api(path,body){
+  const response=await fetch(path,body?{method:'POST',headers:{'Content-Type':'application/json','X-Review-Token':token},body:JSON.stringify(body)}:{});
+  const result=await response.json();if(!response.ok)throw new Error(result.error||'Could not save');return result;
+}
+async function load(refresh=false){
+  if(busy)return;setBusy(true);
+  try{const data=await api(refresh?'/api/refresh':'/api/items',refresh?{}:undefined);items=data.items;summary=data.summary;
+    const departments=[...new Set(items.map(i=>i.department))].sort();const selected=$('department').value;
+    $('department').replaceChildren(new Option('All departments',''),...departments.map(name=>new Option(name,name)));$('department').value=selected;
+    if(!currentId)currentId=stashGet('wands-review-current');setBusy(false);render();$('loadError').classList.add('hidden');
+    if(refresh)tell('Queue refreshed. Your saved choices are retained.');
+  }catch(error){setBusy(false);$('loadError').textContent=error.message;$('loadError').classList.remove('hidden');tell(error.message,true);}
+}
+function advance(direction=1){
+  if(busy)return;const list=[...groups().values()].flat();if(!list.length)return;
+  const index=list.findIndex(i=>i.id===currentId);currentId=list[(index+direction+list.length)%list.length].id;render();
+}
+async function save(choice,note=''){
+  if(busy||!current())return;const item=current();const before={...item.decision};
+  const list=[...groups().values()].flat();const index=list.findIndex(i=>i.id===item.id);const nextId=list[index+1]?.id||list.find(i=>i.id!==item.id)?.id;
+  setBusy(true);tell('Saving...');
+  try{const result=await api('/api/decision',{id:item.id,choice,note,revision:item.decision.revision});
+    item.decision=result.decision;summary=result.summary;lastAction={id:item.id,before,revision:result.decision.revision};
+    stashRemove('wands-review-note-'+item.id);if($('redoDialog').open)$('redoDialog').close();
+    currentId=nextId||item.id;setBusy(false);render();tell(choice==='keep'?'Kept. Saved.':'Redo note saved.');
+  }catch(error){setBusy(false);tell(error.message,true);$('noteError').textContent=error.message;}
+}
+function openRedo(){
+  if(busy||!current())return;const item=current();$('redoProduct').textContent=item.name;
+  $('note').value=stashGet('wands-review-note-'+item.id)||item.decision.note||'';$('noteError').textContent='';$('redoDialog').showModal();$('note').focus();
+}
+async function undo(){
+  if(busy||!lastAction)return;const action=lastAction;const item=items.find(i=>i.id===action.id);setBusy(true);
+  try{const result=await api('/api/decision',{id:action.id,choice:action.before.choice,note:action.before.note,revision:action.revision});
+    item.decision=result.decision;summary=result.summary;currentId=item.id;if(item.decision.choice)$('status').value='all';lastAction=null;setBusy(false);render();tell('Last choice undone.');
+  }catch(error){setBusy(false);tell(error.message,true);}
+}
+$('keep').addEventListener('click',()=>save('keep'));$('redo').addEventListener('click',openRedo);$('skip').addEventListener('click',()=>advance());
+$('next').addEventListener('click',()=>advance());$('previous').addEventListener('click',()=>advance(-1));$('undo').addEventListener('click',undo);
+$('refresh').addEventListener('click',()=>load(true));for(const id of ['search','department','status'])$(id).addEventListener(id==='search'?'input':'change',render);
+$('cancelRedo').addEventListener('click',()=>{if(!busy)$('redoDialog').close()});
+$('redoDialog').addEventListener('cancel',event=>{if(busy)event.preventDefault()});
+$('note').addEventListener('input',()=>{if(current())stashSet('wands-review-note-'+currentId,$('note').value)});
+$('redoForm').addEventListener('submit',event=>{event.preventDefault();if(!$('note').value.trim()){$('noteError').textContent='Add a note about what to redo.';return;}save('redo',$('note').value.trim())});
+$('note').addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();$('redoForm').requestSubmit();}});
+document.querySelectorAll('[data-note]').forEach(button=>button.addEventListener('click',()=>{const currentNote=$('note').value.trim();$('note').value=(currentNote?currentNote+' ':'')+button.dataset.note;stashSet('wands-review-note-'+currentId,$('note').value);$('note').focus()}));
+document.addEventListener('keydown',event=>{
+  if(event.repeat||busy||$('redoDialog').open||event.metaKey||event.ctrlKey||event.altKey||['INPUT','TEXTAREA','SELECT'].includes(event.target.tagName))return;
+  const key=event.key.toLowerCase();if(['k','r','n','u','arrowleft','arrowright'].includes(key))event.preventDefault();
+  if(key==='k')save('keep');if(key==='r')openRedo();if(key==='n'||key==='arrowright')advance();if(key==='arrowleft')advance(-1);if(key==='u')undo();
+});
+load();
+</script>
+</body></html>

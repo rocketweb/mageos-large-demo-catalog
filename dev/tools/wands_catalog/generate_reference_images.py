@@ -13,6 +13,7 @@ from pathlib import Path
 
 from prepare_catalog import sha256
 from generate_images import append_event
+from image_policy import GuardedImageModel
 
 
 def fingerprint(job, config):
@@ -100,7 +101,7 @@ def run(args):
     logging.info("Loading local reference model; %s jobs selected for this run", len(pending))
     from mflux.models.common.config.model_config import ModelConfig
     from mflux.models.flux2.variants import Flux2KleinEdit
-    model = Flux2KleinEdit(model_config=ModelConfig.from_name(config["model"]), quantize=config["quantize"])
+    model = GuardedImageModel(Flux2KleinEdit(model_config=ModelConfig.from_name(config["model"]), quantize=config["quantize"]))
     events = args.output_dir / "generation-events.jsonl"
     for job in pending:
         target = safe_target(args.output_dir, job["output_file"])

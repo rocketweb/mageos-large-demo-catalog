@@ -13,6 +13,7 @@ from pathlib import Path
 
 import audit_reference_images as auditor
 from generate_reference_images import pending_jobs
+from image_policy import product_prompt
 from prepare_catalog import sha256
 from repair_reference_images import CONFIG, prepare
 
@@ -70,7 +71,7 @@ def bundle_prompt(refs):
     groups = [f"Reference {index}: " + reviewed.get(Path(ref["path"]).stem,
               "the complete " + ref.get("role", "product") + " group exactly as pictured, including every piece")
               for index, ref in enumerate(refs, 1)]
-    return ("Photorealistic studio product assortment photograph on a warm white seamless background. "
+    return product_prompt("Photorealistic studio product assortment photograph on a warm white seamless background. "
             "Required contents: " + "; ".join(groups) + ". "
             "Arrange all of these complete product groups together with generous spacing so every object is visible. "
             "Keep the exact shape, color, pattern and construction of every reference product. "

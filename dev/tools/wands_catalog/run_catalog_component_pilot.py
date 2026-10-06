@@ -19,6 +19,7 @@ import time
 from PIL import Image
 from catalog_repairs import read_jsonl
 from generate_images import append_event
+from image_policy import GuardedImageModel, product_prompt
 from plan_catalog_component_layouts import read_review, validate_layout
 from plan_catalog_media_repairs import SETTINGS
 from prepare_catalog import sha256
@@ -45,7 +46,7 @@ def compile_prompt(brief, choice):
     lines += [f'Proportions: visible overall height about {height/width:.2f} times maximum width.',
               'No extra objects, labels, letters, numbers, arrows, dimension graphics, logos, watermarks or people. '
               'No split views, collages, detached pieces or cropped edges. This is one finished object, not a diagram.']
-    return '\n'.join(lines)
+    return product_prompt('\n'.join(lines))
 
 
 def select_cases(briefs, choices):
@@ -227,7 +228,7 @@ def run(args):
         from mflux.models.common.config.model_config import ModelConfig
         from mflux.models.flux2.variants import Flux2Klein
         logging.info('Loading cached local FLUX model for at most %d component attempts',len(pending))
-        model = Flux2Klein(model_config=ModelConfig.from_name(SETTINGS['model']),model_path=runtime['model_snapshot'],quantize=4)
+        model = GuardedImageModel(Flux2Klein(model_config=ModelConfig.from_name(SETTINGS['model']),model_path=runtime['model_snapshot'],quantize=4))
         return generate_assets(pending,output,model,lambda:verify_pins(pins))
 
 

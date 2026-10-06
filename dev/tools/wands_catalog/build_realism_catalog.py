@@ -13,6 +13,7 @@ from statistics import median
 
 from build_realism_review import collect_facts, description_sentences, read_csv, unique_index, variant_prices, write_json, write_jsonl
 from build_merchandising_catalog import BUNDLE_CSV_FIELDS, bundle_csv_row
+from image_policy import product_prompt
 from prepare_catalog import sha256, stable_fraction
 from realism_rules import VERSION, price, brand, stock, title, bundle_eligible, ANCHORS, COLLECTIONS
 
@@ -182,7 +183,7 @@ def image_jobs(families, patches, bundles, media_dir):
             changes = ", ".join(a["label"] + ": " + variant["options"][a["attribute"]] for a in family["axes"])
             jobs.append({"sku": sku, "output_file": sku + "-REALISM.jpg", "seed": int(stable_fraction(sku, VERSION) * 2**31),
                          "reference_images": [{"path": str(reference.resolve()), "sha256": reference_hash}],
-                         "prompt": "Edit this product photograph into the following catalog variant: " + patches[sku]["name"] + ". Change only these option details: " + changes + ". Preserve the underlying product design, pattern, camera, background and lighting. Match the specified material and color. For a piece or light count change, show exactly that count. No labels, logos or added accessories.",
+                         "prompt": product_prompt("Edit this product photograph into the following catalog variant: " + patches[sku]["name"] + ". Change only these option details: " + changes + ". Preserve the underlying product design, pattern, camera, background and lighting. Match the specified material and color. For a piece or light count change, show exactly that count. No labels, logos or added accessories."),
                          "acceptance": "Compare against reference; verify design, option color/material, proportions and component count before publishing"})
     for bundle in bundles:
         refs = []
@@ -194,7 +195,7 @@ def image_jobs(families, patches, bundles, media_dir):
             refs.append({"path": str(reference.resolve()), "sha256": sha256(reference), "role": option["name"]})
         jobs.append({"sku": bundle["sku"], "output_file": bundle["sku"] + "-REALISM.jpg", "seed": int(stable_fraction(bundle["sku"], VERSION) * 2**31),
                      "reference_images": refs,
-                     "prompt": "Create a studio catalog assortment photograph showing exactly the products in the reference images together. Collection: " + bundle["name"] + ". References in order: " + ", ".join(r["role"] for r in refs) + ". Preserve each product's actual shape, color, pattern and construction. Show every referenced item once on a warm white seamless background. No additional products, no labels, no logos. This depicts only the default selections, not every alternative.",
+                     "prompt": product_prompt("Create a studio catalog assortment photograph showing exactly the products in the reference images together. Collection: " + bundle["name"] + ". References in order: " + ", ".join(r["role"] for r in refs) + ". Preserve each product's actual shape, color, pattern and construction. Show every referenced item once on a warm white seamless background. No additional products, no labels, no logos. This depicts only the default selections, not every alternative."),
                      "acceptance": "Every default component appears once and matches its reference; no extras"})
     return jobs
 

@@ -19,15 +19,77 @@ class ProductImporter
         private readonly State $appState,
         private readonly \Magento\Framework\App\ResourceConnection $resourceConnection,
         private readonly BundleAssortmentReconciler $bundleAssortmentReconciler,
+        private readonly \RocketWeb\LabCatalog\Model\Catalog\StockPreservation $stockPreservation,
     ) {
     }
 
-    public function execute(string $sourceFile, bool $validateOnly = false, bool $reconcileBundles = false): array
+    public function execute(
+        string $sourceFile,
+        bool $validateOnly = false,
+        bool $reconcileBundles = false,
+        bool $preserveExistingStock = false,
+    ): array
     {
         return $this->appState->emulateAreaCode(
             Area::AREA_ADMINHTML,
-            fn(): array => $this->import($sourceFile, $validateOnly, $reconcileBundles)
+            fn(): array => $preserveExistingStock
+                ? $this->stockPreservation->execute(
+                    $this->existingWandsSkus($sourceFile),
+                    fn(): array => $this->import($sourceFile, $validateOnly, $reconcileBundles)
+                )
+                : $this->import($sourceFile, $validateOnly, $reconcileBundles)
         );
+    }
+
+    private function existingWandsSkus(string $sourceFile): array
+    {
+        $root = rtrim($this->filesystem->getDirectoryRead(DirectoryList::ROOT)->getAbsolutePath(), '/') . '/';
+        $path = realpath($sourceFile);
+        if ($path === false || !is_file($path) || !str_starts_with($path, $root)) {
+            throw new \RuntimeException('Product import CSV must be inside the Mage-OS project root.');
+        }
+        $stream = fopen($path, 'r');
+        if ($stream === false) {
+            throw new \RuntimeException('Cannot read product import CSV.');
+        }
+        $skus = [];
+        try {
+            $header = fgetcsv($stream, null, ',', '"', '');
+            $column = is_array($header) ? array_search('sku', $header, true) : false;
+            if ($column === false) {
+                throw new \RuntimeException('Product import CSV has no SKU column.');
+            }
+            while (($row = fgetcsv($stream, null, ',', '"', '')) !== false) {
+                if ($row === [null]) {
+                    continue;
+                }
+                $sku = $row[$column] ?? '';
+                if (!str_starts_with($sku, 'WANDS-')) {
+                    throw new \RuntimeException('Stock preservation accepts only WANDS product rows.');
+                }
+                $skus[$sku] = true;
+            }
+        } finally {
+            fclose($stream);
+        }
+        $db = $this->resourceConnection->getConnection();
+        $existing = [];
+        foreach (array_chunk(array_keys($skus), 1000) as $batch) {
+            $select = $db->select()
+                ->from(['p' => $this->resourceConnection->getTableName('catalog_product_entity')], ['sku'])
+                ->joinLeft(['w' => $this->resourceConnection->getTableName('catalog_product_website')],
+                    'w.product_id = p.entity_id', [])
+                ->joinLeft(['s' => $this->resourceConnection->getTableName('store_website')],
+                    's.website_id = w.website_id', ['code'])
+                ->where('p.sku IN (?)', $batch);
+            foreach ($db->fetchAll($select) as $row) {
+                if ($row['code'] !== 'wands') {
+                    throw new \RuntimeException('Existing SKU is unassigned or shared outside the WANDS website.');
+                }
+                $existing[$row['sku']] = true;
+            }
+        }
+        return array_keys($existing);
     }
 
     private function import(string $sourceFile, bool $validateOnly, bool $reconcileBundles): array

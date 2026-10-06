@@ -13,6 +13,7 @@ import tempfile
 from collections import Counter, defaultdict
 from fractions import Fraction
 from pathlib import Path
+from image_policy import product_prompt, VERSION as IMAGE_POLICY_VERSION
 
 from prepare_catalog import department, parse_features, sha256, stable_fraction
 from build_realism_review import DEPARTMENTS, CLAIM_PATTERN, read_csv, unique_index, write_json, write_jsonl
@@ -213,29 +214,18 @@ def gallery_briefs(record):
     views = {'hero':'Audit the existing hero photograph; do not generate a replacement automatically.',
              'angle':'Create a three-quarter view of exactly this product. Do not invent hidden construction details.',
              'detail':'Create a close-up showing only construction or surface texture visible in the approved reference.',
-             'room':'Place exactly this product in a plausible room. Context is not included in the purchase; do not add matching-set claims.',
-             'dimensions':'Prepare a dimension diagram using only the supplied dimensions. Never estimate missing dimensions.'}
+             'room':'Place exactly this product in a plausible room. Context is not included in the purchase; do not add matching-set claims.'}
     jobs = []
     for view, instruction in views.items():
         blockers = ['reference_identity_and_options_unapproved']
         if not record.get('reference'):
             blockers.append('missing_reference')
-        if view == 'dimensions' and not has_dimensions:
-            blockers.append('missing_explicit_dimensions')
         if view == 'room' and not has_dimensions:
             blockers.append('scale_unverified')
         if set(record.get('axis_codes', [])) & GEOMETRY_AXES:
             blockers.append('selected_variant_geometry_requires_review')
         if record.get('dimension_design',{}).get('status') == 'needs_identity_or_component_review':
             blockers.append('dimension_identity_or_component_review_required')
-        dimension_instruction = ''
-        if view in {'dimensions','room'}:
-            dimension_instruction = ' Dimensions in cm: ' + json.dumps(dimensions,sort_keys=True) + '. Dimension scopes: ' + json.dumps(sorted({f['scope'] for f in dimension_provenance.values() if f.get('scope')})) + '.'
-            if components:
-                dimension_instruction += ' Individual component dimensions, not an installed span or a single set-wide dimension: ' + json.dumps([{k:c[k] for k in ('component_id','label','quantity','scope','dimensions_cm')} for c in component_dimensions],sort_keys=True) + '. Show each component and its quantity separately. Never invent an arrangement width or change the assortment.'
-            if synthetic:
-                dimension_instruction += ' These are approved fictional lab-design assumptions, not source-verified scale or fit. '
-                dimension_instruction += ('Include the visible label: ' if view=='dimensions' else 'Keep this disclosure in media metadata: ') + DIMENSION_LABEL + '.'
         jobs.append({'job_id':record['sku'] + ':' + view, 'sku':record['sku'], 'source_product_id':record['source_product_id'],
                      'view':view, 'executable':False, 'reference':record.get('reference'), 'blockers':blockers,
                      'selected_options':record['variant_options'], 'dimensions_cm':dimensions,
@@ -244,7 +234,8 @@ def gallery_briefs(record):
                      'dimension_design':record.get('dimension_design'),
                      'required_disclosure':DIMENSION_LABEL if synthetic else None,
                      'output_file':record['sku'] + '-DEPTH-' + view + '.jpg',
-                     'prompt':instruction + ' Product: ' + record['name'] + '. Selected options: ' + json.dumps(record['variant_options'], sort_keys=True) + '. Preserve shape, finish, pattern and exact piece count. No logos or extra products. Text only for dimension labels and the required synthetic disclosure in an approved diagram.' + dimension_instruction,
+                     'image_policy_version': IMAGE_POLICY_VERSION,
+                     'prompt':product_prompt(instruction + ' Product: ' + record['name'] + '. Selected options: ' + ', '.join(map(str, record['variant_options'].values())) + '. Preserve shape, finish, pattern and exact piece count. No extra products.'),
                      'acceptance':['Same product identity and option values across views','Reference geometry reconciled with source measurements or explicitly synthetic design','Exact sale-unit piece count','No unsupported features or certifications','Synthetic dimensions disclosed; no manufacturer fit or verified-scale claims']})
     return jobs
 

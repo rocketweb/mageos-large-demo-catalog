@@ -5,6 +5,15 @@ configurable products, 50 bundles and 46,602 generated images.** Built from
 [Wayfair WANDS](https://github.com/wayfair/WANDS), with synthetic prices, inventory,
 variants, assortments and product descriptions.
 
+The repository also includes tooling for the completed **107,688-record
+expansion**, installed and verified on both existing lab stores on October 6,
+2026. Expanded media has not been published as a release asset; the downloads
+and counts below still describe the published 53,844-record profile. See the
+[expansion completion record](dev/tools/wands_catalog/EXPANSION-CHECKPOINT.md)
+and [product coverage audit](dev/tools/wands_catalog/PRODUCT-COVERAGE.md).
+The expanded catalog contains simple, configurable and bundle products; it does
+not yet cover every core product type or commerce configuration.
+
 Use it to develop storefronts, exercise search and filters, test product options,
 or work with a catalog larger than standard sample data. Start with the 5,000-product
 medium profile, or choose the full catalog for scale testing. Both include
