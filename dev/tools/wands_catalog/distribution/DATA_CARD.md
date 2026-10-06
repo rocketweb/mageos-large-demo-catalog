@@ -4,9 +4,17 @@ Synthetic home-and-furniture fixtures for lab testing, derived from Wayfair
 WANDS. Prices, inventory, descriptions, dimensions and images are illustrative;
 original WANDS search judgments do not qualify ranking on the rewritten catalog.
 
-This card's full-profile counts describe the published 53,844-record catalog.
-For the completed 107,688-record expansion and its separate coverage limits, see
-[the expansion guide](../docs/EXPANSION.md) and [coverage audit](../PRODUCT-COVERAGE.md).
+Release `catalog-2026.10.06` contains **107,815 records**, including 127 named QA
+fixtures across all six core product types. The [release guide](PRODUCTION_RELEASE.md)
+provides installation, exact runtime acceptance scope and remaining limits.
+
+| Contents | Count |
+| --- | ---: |
+| Simple / configurable / bundle | 103,720 / 4,001 / 62 |
+| Virtual / downloadable / grouped | 14 / 12 / 6 |
+| Distinct accepted JPEG contents | 95,401 |
+| JPEG files, including reused QA copies | 95,417 |
+| Fictional downloadable PDF/ZIP files | 3 |
 
 ## Purpose and source
 
@@ -40,10 +48,14 @@ geometry or component appearance. Structured definitions are authoritative.
 
 ## Profiles and reproducibility
 
-The full profile includes 51,799 simple records, 1,995 configurable parents and
-50 bundles. The published medium profile contains 5,000 records. Disabled retired variants remain as test records but are detached
-from active configurable relationships. Starter selection includes complete
-families and all bundle selections, not arbitrary first-N CSV rows.
+The current full profile combines the 107,688-record accepted expansion with the
+127-product QA suite. September's 5,000-record medium and 53,844-record full
+profiles remain immutable historical prereleases. Disabled retired and quarantined
+products remain test records. Physical variant illustrations follow their accepted
+color/finish; size-only variants may share media. Virtual and downloadable records
+may intentionally have no image. All generated-image prompts prohibit displayed
+measurements, text, numerals, rulers, logos and annotated packaging. Automated
+and human review reduce defects without guaranteeing perfect product geometry.
 
 Archive construction is deterministic for identical files and configuration.
 Source image bytes are preserved. Model revisions were not fully recorded for

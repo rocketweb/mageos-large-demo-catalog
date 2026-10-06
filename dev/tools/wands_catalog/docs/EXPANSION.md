@@ -13,15 +13,15 @@ created and no products were deleted.
 | Media | 95,401 distinct accepted JPEGs; 107,455 product assignments per store |
 | Disabled media exclusions | 213 reviewed quarantined products plus 20 original imageless records |
 | Store verification | Database checks, 15 unsaved cart-model checks and 28 browser checks per store |
-| Public download | Expanded media is not published; the public full profile remains 53,844 records |
-| Testing coverage | Virtual, downloadable, grouped and several configuration cases remain missing |
+| Public download | Stable October full release includes expansion media and 127 QA fixtures: 107,815 records |
+| Testing coverage | The separate installed QA suite adds 127 fixtures and all six core types; each store now has 107,815 WANDS records |
 
 The count includes hidden variant children and disabled records. It is not the
 number of product cards a shopper will see. An image job can cover multiple
 products, and a file can serve multiple roles. Image-job, file, product and role
 counts therefore measure different things.
 
-Read the [product coverage plan](../PRODUCT-COVERAGE.md) for the proposed QA
+Read the [product coverage audit](../PRODUCT-COVERAGE.md) and [installed QA suite](../QA-CATALOG.md) for the separate QA
 collection, the [completion record](../EXPANSION-CHECKPOINT.md) for exact
 acceptance boundaries, or the [documentation index](README.md) for other guides.
 The following sections describe the implementation for developers and operators.
@@ -262,8 +262,10 @@ product pages, variant selections and search results. Media acceptance checks
 
 The completed checks do not qualify checkout, payments, search ranking, every
 variant, every device, every tax/currency setup or every core product type.
-The [coverage audit](../PRODUCT-COVERAGE.md) proposes a small QA collection for
-the missing cases. No such fixtures have been added by the documentation work.
+The [coverage audit](../PRODUCT-COVERAGE.md) identifies the missing cases. A separate
+[127-product QA suite](../QA-CATALOG.md) is installed on both stores and brings
+each WANDS catalog to 107,815 records. The table above preserves the original
+expansion acceptance counts.
 
 For local regression commands, PHP compatibility and fixture requirements, see
 [CONTRIBUTING.md](../../../../CONTRIBUTING.md). For the full recovery chronology,

@@ -9,9 +9,9 @@ claims and commands, with their scope marked at the top.
 
 | Scope | What exists | Where to read |
 | --- | --- | --- |
-| Published catalog | Medium: 5,000 records; full: 53,844 records; enriched v2 assets | [Install a release](../../../../README.md#quick-start) |
-| Completed expansion | 107,688 records on the two existing stores; expanded media not published | [Completion](../EXPANSION-CHECKPOINT.md) |
-| Test coverage | Simple, configurable and bundle; other types and configuration fixtures proposed | [Coverage audit](../PRODUCT-COVERAGE.md) |
+| Stable October catalog | Full: 107,815 records, six types, expansion media and 127 QA fixtures | [Install a release](../../../../README.md#quick-start) |
+| Completed expansion | 107,688 base records on both existing stores; included in the October release | [Completion](../EXPANSION-CHECKPOINT.md) |
+| Test coverage | Both existing stores: 107,815 WANDS records, all six core types and 127 named QA fixtures | [QA suite](../QA-CATALOG.md), [coverage audit](../PRODUCT-COVERAGE.md) |
 | Image work | Completed run stopped; feedback and acceptance evidence retained | [Human review](../HUMAN-IMAGE-REVIEW.md) |
 
 Installation acceptance for the expansion was recorded October 6, 2026. This
@@ -20,10 +20,10 @@ index describes the documented artifact states, not a live process monitor.
 ## Pick a reading path
 
 - **Install and try it:** [root quick start](../../../../README.md#quick-start) →
-  [recipient installation](../distribution/README.md) →
-  [recipient acceptance and limits](../distribution/PUBLIC_RECIPIENT_ACCEPTANCE.md).
+  [recipient installation](../distribution/PRODUCTION_RELEASE.md) →
+  [current acceptance and limits](../distribution/PRODUCTION_RELEASE.md#acceptance-and-practical-limits).
 - **Plan test coverage:** [product audit](../PRODUCT-COVERAGE.md) →
-  [expansion scope](EXPANSION.md#verification-and-remaining-coverage).
+  [QA fixture guide](../QA-CATALOG.md) → [expansion scope](EXPANSION.md#verification-and-remaining-coverage).
 - **Review images:** [review guide](../HUMAN-IMAGE-REVIEW.md) →
   [feedback correction record](../FEEDBACK-REPROCESSING.md).
 - **Change or operate the tooling:** [source map](../README.md#developer-map) →
@@ -54,10 +54,12 @@ submission forms rather than technical guides.
 
 | Document | Purpose and scope |
 | --- | --- |
+| [Current stable release](../distribution/PRODUCTION_RELEASE.md) | October package, installation, acceptance and limits |
 | [WANDS catalog tooling](../README.md) | Tooling entry point and source map |
 | [Catalog expansion completion](../EXPANSION-CHECKPOINT.md) | Completed two-store installation and acceptance limits |
 | [The doubled catalog](EXPANSION.md) | Expansion architecture, artifact contracts and recovery |
-| [Product coverage audit](../PRODUCT-COVERAGE.md) | Implemented types and proposed QA fixtures |
+| [Product coverage audit](../PRODUCT-COVERAGE.md) | Existing store types and remaining behavioral coverage |
+| [QA product suite](../QA-CATALOG.md) | 127 installed fixtures, six types, expected outcomes and verification |
 | [Contributing](../../../../CONTRIBUTING.md) | Development checks and documentation conventions |
 | [Sharing the catalog](../../../../SHARING.md) | Sharing and new-release checklist |
 | [Security reports](../../../../SECURITY.md) | Private vulnerability reporting |

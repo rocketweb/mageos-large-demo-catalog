@@ -2,16 +2,17 @@
 
 These tools build synthetic catalog data, generate and review product images,
 prepare imports, and verify installations. The completed expansion has **107,688
-records on the two existing lab stores**. The published full download contains
-53,844 records; the expanded media archive is not a public release asset.
+records before the separate QA extension**. Both existing lab stores now have
+**107,815 WANDS records**, including the 127-product QA suite. The stable `catalog-2026.10.06` full download contains the same 107,815 records
+and approved expansion media. September profiles remain historical prereleases.
 
 ## Choose your starting point
 
 | You want to | Start here |
 | --- | --- |
-| Install a prepared catalog | [Repository quick start](../../../README.md#quick-start), then [recipient installation](distribution/README.md) |
+| Install a prepared catalog | [Repository quick start](../../../README.md#quick-start), then [recipient installation](distribution/PRODUCTION_RELEASE.md) |
 | Understand the completed expansion | [Completion record](EXPANSION-CHECKPOINT.md) and [implementation guide](docs/EXPANSION.md) |
-| Check product-type and test coverage | [Coverage audit and proposed QA collection](PRODUCT-COVERAGE.md) |
+| Check product-type and test coverage | [Coverage audit](PRODUCT-COVERAGE.md) and [127-product QA suite](QA-CATALOG.md) |
 | Review or correct images | [Human image review](HUMAN-IMAGE-REVIEW.md) |
 | Operate an admitted remote renderer | [Mac mini](MINI-WORKER.md) or [Linux laptop](LAPTOP-WORKER.md) |
 | Build and distribute an immutable release | [Release building](distribution/BUILDING.md) and [sharing checklist](../../../SHARING.md) |
@@ -21,10 +22,10 @@ A prepared catalog needs no GPU or image generator. Running development tools
 requires their pinned inputs and appropriate environment. The root Composer
 project describes the historical development store; it is not a catalog installer.
 
-The catalog provides scale and image variety. It currently has simple,
-configurable and bundle products. Virtual, downloadable, grouped and several
-configuration fixtures remain proposed work. See the coverage audit before using
-catalog size as evidence of complete commerce testing.
+The catalog provides scale and image variety. The installed QA extension adds
+virtual, downloadable and grouped products plus configuration, custom-option,
+pricing and inventory cases. The two stores contain all six core product types.
+See the coverage audit before using catalog size as evidence of complete commerce testing.
 
 ## Developer map
 
@@ -35,6 +36,7 @@ catalog size as evidence of complete commerce testing.
 | `dev/tools/wands_catalog/tests/` | Python regression and native-PHP/HTTPS fixtures |
 | `dev/tools/wands_catalog/distribution/` | Portable release builder, verifier, downloader and fresh-install checks |
 | `dev/tools/wands_catalog/docs/` | Current implementation reference, index and preserved histories |
+| `build_qa_catalog.py`, `install_qa_catalog.php`, `test_qa_store.php` | Pinned additive QA fixtures, guarded installation and unsaved-cart acceptance |
 | `var/`, `pub/media/` | Private runtime evidence and generated media, excluded from Git |
 | `packages/` | Separate Workbench snapshot; not the catalog's source of truth |
 
@@ -73,7 +75,7 @@ WANDS_TEST_PHP=/absolute/path/to/php WANDS_TEST_HTTPS=1 \
 ```
 
 Inspect the exit status, final test totals and skipped checks. The recorded
-October 6 run passed 868 tests, with no skips, and the module suite passed 13
+October 6 QA tooling run passed 882 tests, with no skips. The earlier module suite passed 13
 PHP unit tests with 39 assertions. Those are dated results, not a guarantee about
 later changes. See [contribution checks](../../../CONTRIBUTING.md) for setup and
 module-test commands. Unit tests do not replace native import, stock, media or

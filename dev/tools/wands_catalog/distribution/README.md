@@ -1,4 +1,14 @@
-# WANDS catalog for Mage-OS Lab
+# WANDS catalog installation guides
+
+**Current stable release:** [expanded catalog and QA installation](PRODUCTION_RELEASE.md).
+It contains 107,815 records, all six product types and the approved expansion media.
+Use that guide for `catalog-2026.10.06`.
+
+The September enriched procedure below is retained for the immutable historical
+5,000/53,844-record prereleases. Its counts, pins and acceptance do not qualify
+the October full release.
+
+## September enriched profiles
 
 A large, synthetic home-and-furniture catalog for testing search, navigation,
 configurable products, bundles, prices, inventory and product media.
@@ -22,8 +32,9 @@ Do not use this candidate in a customer store.
 | Procedure | Download, verify, preflight, provision, import, then check the storefront |
 | Recovery | Restore the empty baseline after an interrupted import |
 
-The 107,688-record expansion is a separate existing-store workflow. Its expanded
-media is not published and this guide does not install it. See the
+The 107,688-record expansion originally used a separate existing-store workflow.
+It is now packaged with the QA suite in the October stable release linked above.
+The historical procedure below does not install that package. See the
 [documentation index](../docs/README.md) for that implementation and recorded evidence.
 The detailed procedure below applies to the published enriched profiles.
 

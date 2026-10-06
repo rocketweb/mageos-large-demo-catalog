@@ -18,7 +18,11 @@ final class ExpansionCatalogJournal
         'eav_entity_attribute', 'eav_attribute_group', 'patch_list', 'url_rewrite',
         'catalog_url_rewrite_product_category', 'catalog_product_entity_tier_price', 'catalog_product_entity_group_price',
         'catalog_product_link', 'catalog_product_link_attribute_int', 'catalog_product_link_attribute_decimal',
-        'catalog_product_link_attribute_varchar', 'catalog_product_super_attribute_pricing'];
+        'catalog_product_link_attribute_varchar', 'catalog_product_super_attribute_pricing',
+        'catalog_product_option', 'catalog_product_option_title', 'catalog_product_option_price',
+        'catalog_product_option_type_value', 'catalog_product_option_type_title', 'catalog_product_option_type_price',
+        'downloadable_link', 'downloadable_link_title', 'downloadable_link_price',
+        'downloadable_sample', 'downloadable_sample_title'];
     public const PROTECTED = ['core_config_data', 'customer_entity', 'sales_order', 'sales_order_item',
         'inventory_reservation', 'quote', 'quote_item', 'quote_item_option', 'quote_address',
         'wishlist', 'wishlist_item', 'wishlist_item_option'];

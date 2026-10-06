@@ -1,24 +1,23 @@
 # GitHub release assets
 
-Use the assets attached to `catalog-2026.09.13-enriched-v2` in
-`rocketweb/mageos-large-demo-catalog`. Downloads are public; no account or API key
-is required. This is a lab prerelease, not an official Mage-OS or Wayfair release.
+Use stable [catalog-2026.10.06](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.10.06)
+for the complete 107,815-record catalog, all six core types and 127 QA fixtures.
+Downloads are public; no account or API key is required. Start with the
+[root quick start](../../../../README.md#quick-start) for exact helper hashes and pins.
 
 | Download | Profile |
 | --- | --- |
-| First installation | `medium`: 5,000 records |
-| Scale testing | `full`: 53,844 records |
-| Installation helpers | `toolkit` |
-| Optional seven-product galleries | `gallery`, after the full import |
+| Complete catalog, module and media | `full` |
+| Download/verification tools and installation guide | `toolkit` |
+| Smaller historical alternative | September enriched-v2 `medium`, with its original pin |
 
-The 107,688-record expansion is not included in these assets. Start with the
-[root quick start](../../../../README.md#quick-start) for exact helper hashes and
-profile pins, or use the detailed downloader procedure below.
+The October release has no medium/gallery assets. September assets remain
+immutable historical prereleases and their acceptance applies only to those pins.
 
 ## Downloader setup and artifact identity
 
-The release contains enriched medium and full catalog archives, with
-`medium-` or `full-` added to asset names to avoid filename collisions. The
+The release contains full catalog and toolkit archives, with
+`full-` or `toolkit-` added to asset names to avoid filename collisions. The
 GitHub downloader maps those names back into a profile-specific cache. Original
 catalog manifests and archive bytes keep their tested hashes.
 
@@ -35,14 +34,8 @@ From the directory containing the three scripts:
 
 ```sh
 python3 github_download.py --anonymous --repo rocketweb/mageos-large-demo-catalog \
-  --tag catalog-2026.09.13-enriched-v2 --profile medium --cache-dir ./cache \
-  --manifest-sha256 93256f50f6a1e5070eab18dee3e28b2b348b5e92aba0fa35e3a5b22cb4aaa07a
-```
-
-For the full catalog, use `--profile full` and this pin:
-
-```text
-b525ca0441e7f04858613fdcba4d8e3ae18421240f4c25a757bf34fa5587951b
+  --tag catalog-2026.10.06 --profile full --cache-dir ./cache \
+  --manifest-sha256 ec5c1763aea94535d1bacc44db2d2ac76131c4eca3763e257ebab677accaf958
 ```
 
 Logs go to `wands-download.log` by default. Watch them with
@@ -73,11 +66,8 @@ project. Each contains the actual packaged source, hashes and retained notices.
 Earlier rc2 assets and their tag stay unchanged. The older 27-product starter
 remains available from rc2 but is not an enriched profile.
 
-The optional [gallery package](GALLERIES.md) uses `--profile gallery`. Its asset
-`gallery-gallery-additions.tar` maps back to `gallery-additions.tar` in the cache,
-using the same prefix rule. Install it only after a successful full-profile import.
-
-This is a lab prerelease. Installation remains fresh-install-only, with an empty
-baseline backup for recovery. Resumable downloads do not imply resumable imports.
-See [enriched acceptance](ENRICHED_ACCEPTANCE.md) for the pinned Mage-OS 3.5/Hyvä
-results. No Mage-OS 3.4, checkout/payment or search-ranking improvement is claimed.
+The [historical gallery package](GALLERIES.md) belongs to the September release;
+it was not requalified or attached to the October release. Follow the
+[current installation and acceptance guide](PRODUCTION_RELEASE.md) for this full
+profile. Resumable downloads do not imply resumable imports. Checkout/payment
+and search-ranking improvement are not claimed.

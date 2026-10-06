@@ -1,20 +1,22 @@
 # Sharing the catalog
 
-| Shareable item | Status |
+Share the [root README](README.md) and stable
+[catalog-2026.10.06 assets](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.10.06).
+The release provides 107,815 records, all six core types, approved expansion media
+and 127 named QA fixtures. Public downloads need no account, model, GPU or API key.
+
+| Shareable item | Scope |
 | --- | --- |
-| Enriched medium/full profiles | Published assets for empty lab installations |
-| Expansion source and guides | Available in the repository |
-| 107,688-record expansion media | Installed on the two existing stores; no expanded public release asset |
+| October stable full and toolkit | Current complete catalog, fresh-lab installer, QA definitions and manifests |
+| September medium/full prereleases | Historical 5,000/53,844-record alternatives with their own pins |
+| Source and guides | Portable module, recipes, acceptance limits and contribution tools |
 
-Share the [README](README.md) and its pinned
-[enriched v2 release assets](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.09.13-enriched-v2).
-The repository is public. No GitHub account, local image generator, GPU or API
-key is needed to use the prepared catalog. Use the documented anonymous downloader.
-
-Share medium first when someone wants to check installation. Share the full
-profile for catalog-scale work. Both require their own empty Mage-OS installation.
-Do not send the original demo database, vendor tree, credentials or local working
-directory. Keep the notices, dataset card and manifests with redistributed files.
+Recipients need an empty Mage-OS lab, their own routing and an empty-baseline
+backup. Do not send a live database, vendor tree, credentials or working directory.
+Keep notices, the dataset card and manifests with redistributed files. Share the
+[current acceptance limits](dev/tools/wands_catalog/distribution/PRODUCTION_RELEASE.md#acceptance-and-practical-limits)
+with the catalog: existing-store checks, archive verification and fresh recipient
+installation are separate qualification surfaces.
 
 ## Maintainer checklist before a public launch
 
@@ -31,8 +33,9 @@ directory. Keep the notices, dataset card and manifests with redistributed files
   archives do not include the later Hyvä search-layout correction. Do not replace
   their bytes under existing hashes or move their tag to newer code.
 - [ ] Verify new assets by size, SHA-256 and archive member inventory. Test the
-  documented download from a clean directory, then install the chosen profile
-  into a fresh lab. Retain separate source, import and browser evidence.
+  documented download from a clean directory, qualify recipient installation separately from existing-store acceptance.
+  A new third store was explicitly excluded for this release; disclose that limit
+  and retain source, package-parity, native-import and browser evidence.
 - [ ] Keep the [license scope](NOTICE.md), WANDS citation and generated-media
   provenance limits in the shared package. Do not imply blanket rights clearance
   for third-party UI, marks or historical image references.

@@ -24,7 +24,11 @@ try {
     }
     $counts = json_decode(file_get_contents($data . '/counts.json'), true, 512, JSON_THROW_ON_ERROR);
     $skus = [];
-    foreach (['1-simple.csv', '2-configurable.csv', '3-bundle.csv'] as $file) {
+    $productFiles = ['1-simple.csv', '2-configurable.csv', '3-bundle.csv'];
+    if (is_file($data . '/6-qa.csv')) {
+        $productFiles[] = '6-qa.csv';
+    }
+    foreach ($productFiles as $file) {
         $stream = fopen($data . '/' . $file, 'r');
         if (!$stream) {
             throw new RuntimeException('Missing catalog CSV: ' . $file);

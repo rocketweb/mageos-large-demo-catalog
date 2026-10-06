@@ -3,8 +3,10 @@ import argparse
 import json
 import logging
 from pathlib import Path
+import posixpath
 import re
 import shutil
+from urllib.parse import quote
 
 from build_handoff import encoded
 from release import digest, verify_release, write_archive
@@ -14,6 +16,25 @@ SCRIPTS = ['release.py', 'download.py', 'github_download.py']
 DOCS = ['README.md', 'ACCEPTANCE.md', 'HYVA_ACCEPTANCE.md', 'DOWNLOADS.md',
         'GITHUB_RELEASE.md', 'DATA_CARD.md', 'TERMS.md', 'WANDS-LICENSE.txt',
         'CITATION.bib', 'CC0-1.0.txt']
+
+
+def qualify_document_links(data, source, packaged_path, members, repository):
+    """Keep shipped links local; qualify source-only guides in a relocated toolkit."""
+    def replace(match):
+        target = match.group(1)
+        if ':' in target or target.startswith('#'):
+            return match.group(0)
+        path, separator, fragment = target.partition('#')
+        shipped = posixpath.normpath(posixpath.join(posixpath.dirname(packaged_path), path))
+        if shipped in members:
+            return match.group(0)
+        original = (source.parent / path).resolve()
+        if not original.is_file() or not original.is_relative_to(repository):
+            raise ValueError('Unresolvable packaged documentation link: ' + target)
+        url = 'https://github.com/rocketweb/mageos-large-demo-catalog/blob/main/' + quote(original.relative_to(repository).as_posix())
+        if separator: url += '#' + fragment
+        return '](' + url + ')'
+    return re.sub(r'\]\(([^)]+)\)', replace, data.decode()).encode()
 
 
 def instructions(profiles, tag):
@@ -134,6 +155,14 @@ def build_assets(profile_dirs, pins, output, *, tag, gallery=None, gallery_pin=N
     files['docs/ENRICHED_ACCEPTANCE.md'] = HERE / 'ENRICHED_ACCEPTANCE.md'
     files['docs/GALLERIES.md'] = HERE / 'GALLERIES.md'
     files['README.md'] = instructions(profiles, tag)
+    doc_sources = {'docs/' + name: HERE / name for name in DOCS if name.endswith('.md')}
+    doc_sources.update({'docs/BULK_ENRICHMENT.md': HERE.parent / 'BULK_ENRICHMENT.md',
+                        'docs/screenshots/README.md': HERE.parent / 'docs/screenshots/README.md',
+                        'docs/ENRICHED_ACCEPTANCE.md': HERE / 'ENRICHED_ACCEPTANCE.md',
+                        'docs/GALLERIES.md': HERE / 'GALLERIES.md'})
+    for name, source in doc_sources.items():
+        data = files[name].read_bytes() if isinstance(files[name], Path) else files[name]
+        files[name] = qualify_document_links(data, source, name, files, repository)
     artifact = write_archive(output / 'toolkit-tools.tar', files)
     artifact['path'] = 'tools.tar'
     manifest = {'schema': 1, 'release': tag, 'profile': 'toolkit', 'artifacts': [artifact],

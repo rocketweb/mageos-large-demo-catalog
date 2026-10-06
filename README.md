@@ -1,114 +1,77 @@
 # Mage-OS large demo catalog
 
-A home-and-furniture test catalog for Mage-OS. Built from
-[Wayfair WANDS](https://github.com/wayfair/WANDS), with synthetic prices, inventory,
-variants, assortments and product descriptions.
+A synthetic home-and-furniture catalog for testing Mage-OS storefronts, search,
+filters, product options, prices, inventory and product media. Derived from
+[Wayfair WANDS](https://github.com/wayfair/WANDS).
 
-| Catalog | Product records | Availability |
-| --- | ---: | --- |
-| Published medium | 5,000 | Prepared release download; best first installation |
-| Published full | 53,844 | Prepared release download for scale testing |
-| Doubled expansion | 107,688 | Installed and verified on the two existing lab stores on October 6, 2026; expanded media is not published |
+**Latest stable release:** [catalog-2026.10.06](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.10.06).
+It contains **107,815 records**, all six core product types, the approved doubled
+catalog and **127 named QA fixtures**. Install the prepared assets in an empty
+lab; no image generator, GPU or API key is needed.
 
-The published full profile includes 1,995 configurable products, 50 bundles and
-46,602 generated images. The expansion has 3,995 configurable products and the
-same 50 bundles. Both contain simple, configurable and bundle products; they do
-not cover every core product type or commerce configuration. See the
-[coverage audit](dev/tools/wands_catalog/PRODUCT-COVERAGE.md).
+| Product type | Records |
+| --- | ---: |
+| Simple, including variant children | 103,720 |
+| Configurable | 4,001 |
+| Bundle | 62 |
+| Virtual | 14 |
+| Downloadable | 12 |
+| Grouped | 6 |
+| **Total** | **107,815** |
 
-Use it to develop storefronts, exercise search and filters, test product options,
-or work with a catalog larger than standard sample data. Start with the 5,000-product
-medium profile, or choose the full catalog for scale testing. Both include
-structured specifications, synthetic-data disclosures and related-product links.
+There are **95,401 distinct accepted JPEG contents**, with 16 reused QA copies,
+and three small fictional downloadable files. Structured specifications may
+include dimensions; generated images prohibit displayed measurements, writing,
+numerals, rulers, diagrams, logos and annotated packaging. Product identity,
+construction, variant color and included components are part of image review.
 
-## Start here
-
-| Your goal | Guide |
+| Your goal | Start here |
 | --- | --- |
-| Install a prepared catalog | [Quick start](#quick-start), then [installation](#install-into-mage-os) |
-| Assess what you can test | [Product coverage and missing fixtures](dev/tools/wands_catalog/PRODUCT-COVERAGE.md) |
-| Understand or maintain the expansion | [Completion record](dev/tools/wands_catalog/EXPANSION-CHECKPOINT.md) and [developer guide](dev/tools/wands_catalog/docs/EXPANSION.md) |
-| Review images, contribute or build releases | [Documentation index](dev/tools/wands_catalog/docs/README.md) |
+| Download and install | [Quick start](#quick-start), then [current installation guide](dev/tools/wands_catalog/distribution/PRODUCTION_RELEASE.md) |
+| Choose behavior to test | [127-product QA suite](dev/tools/wands_catalog/QA-CATALOG.md) and [coverage audit](dev/tools/wands_catalog/PRODUCT-COVERAGE.md) |
+| Understand runtime evidence | [Acceptance and limits](dev/tools/wands_catalog/distribution/PRODUCTION_RELEASE.md#acceptance-and-practical-limits) |
+| Maintain or extend the data | [Documentation index](dev/tools/wands_catalog/docs/README.md) and [release builder](dev/tools/wands_catalog/distribution/BUILDING.md) |
 
-The installation instructions below describe the published profiles. Product
-images are release assets, separate from the source checkout. Installing a
-prepared profile needs no image-generation service or API key.
+The two existing Studio and Comtom labs each contain the complete catalog. Each
+passed **934 product checks, 202 unsaved guest-cart cases, four cart compositions,
+97 visible QA pages and 30 hidden/disabled URL exclusions**. Tooling and archive
+verification are separate checks. A third store was not created; a new empty-store
+end-to-end installation of these exact release archives is not claimed.
 
-![Living-room bundle with Mage-OS branding, Hyvä storefront styling and a calculated price range](dev/tools/wands_catalog/docs/screenshots/bundle-room.jpg)
+Checkout, payments, real browser file uploads and post-order download permissions
+remain unqualified. Store configuration determines tax, currency, customer-group,
+price-rule and inventory-source behavior. Stable release status describes the
+lab dataset, not customer-store production safety. Prices, stock, dimensions and
+product descriptions are fictional; illustrations are not geometry or fit evidence.
 
-*The full catalog on Mage-OS 3.5.0 with Hyvä Default 1.5.2. Images are synthetic
-illustrations; the selected bundle components, not the room styling, define what
-is included. Hyvä is installed separately; no image-generation service is needed.*
+September's [5,000-record medium and 53,844-record full profiles](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.09.13-enriched-v2)
+remain unchanged historical prereleases. Their pins and acceptance reports qualify
+those bytes only. The October stable release provides the complete full profile;
+there is no October medium or gallery package.
 
-[Documentation](dev/tools/wands_catalog/docs/README.md) · [Quick start](#quick-start) · [Installation](#install-into-mage-os) ·
-[Screenshots](#screenshots) · [Data and licensing](#data-and-licensing) ·
-[Contributing](#contributing)
+## Requirements
 
-## Choose a catalog
+Use a dedicated, empty **Mage-OS 3.5** lab with PHP 8.4, USD and standard product
+types/tax classes. Python **3.11+** on macOS or Linux handles downloads and offline
+verification. Theme packages, Mage-OS vendor code and search infrastructure are
+installed separately. Hyvä is optional. Allow about 5.5 GB for each download or
+extraction copy, plus imported media, image cache, database and search index.
 
-| | Medium | Full |
-| --- | ---: | ---: |
-| Product records | 5,000 | 53,844 |
-| Simple products, including variant children | 4,857 | 51,799 |
-| Configurable parents | 93 | 1,995 |
-| Bundle products | 50 | 50 |
-| Configurable parent-child links | 500 | 10,736 |
-| Bundle options / selections | 200 / 600 | 200 / 600 |
-| Distinct product images | 4,688 | 46,602 |
-| Catalog, module and media download | About 236 MB | About 2.5 GB |
-
-The medium profile includes complete families and every bundle dependency. The full
-profile includes disabled legacy records, so these are database counts, not the
-number of products visible in a storefront.
-
-Choose **one profile per empty installation**. To move from medium to full,
-restore your empty baseline or use a separate database; do not import full over
-medium. Downloads resume, but interrupted imports do not. The older 27-product
-starter remains available in the unchanged rc2 release.
-
-## Requirements and tested environment
-
-- A dedicated, empty **Mage-OS 3.5.0** installation, without other sample data.
-- PHP 8.4 in the Mage-OS environment. The recorded installation used MariaDB
-  11.4, OpenSearch 3.1.0 and Hyvä Default 1.5.2 for the enriched profiles.
-- Python **3.11+** on macOS or Linux for download and archive verification.
-- `curl` or a browser to save the three helper scripts from the public release.
-- Space for the download cache, extracted files, imported media, image cache,
-  database and search index. The download size is not the installed footprint.
-
-A GPU, API key, Hyvä, Koti and hybrid search are **not required**.
-The enriched profiles passed isolated Mage-OS 3.5/Hyvä checks, including all 400
-full-profile commerce scenarios. See the exact pins, import corrections and
-limits in [enriched acceptance](dev/tools/wands_catalog/distribution/ENRICHED_ACCEPTANCE.md).
-The published medium downloads also passed a fresh, anonymous-download
-[recipient installation](dev/tools/wands_catalog/distribution/PUBLIC_RECIPIENT_ACCEPTANCE.md)
-with 194,287 catalog assertions and no corrective imports.
-Mage-OS 3.4, login, checkout and payments are not qualified.
+Use the **attached release assets**, not the automatic source ZIP or the
+repository's root Composer project. Back up your empty baseline. Downloads resume;
+imports do not. Do not layer the full release over an occupied lab or customer store.
 
 ## Quick start
 
-Current prerelease: [catalog-2026.09.13-enriched-v2](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.09.13-enriched-v2).
-Downloads are public. No GitHub account or API key is required.
-This is community lab test data, not an official
-Mage-OS or Wayfair release.
-
-Use the **attached release assets**, not GitHub's automatic “Source code” ZIP or
-this repository's root `composer.json`. The root project describes the original
-development store; the release includes a separate portable catalog module.
-
-### 1. Download and check the helpers
-
-Run these commands in a new working directory, **outside your Magento root**.
-Never paste tokens into scripts, URLs or command arguments. The commands below
-explicitly use anonymous access.
+Downloads are public. No GitHub account or token is required. This is community
+lab data, not an official Mage-OS or Wayfair release. Run these commands in a new
+directory outside the Magento root:
 
 ```sh
 mkdir wands-demo
 cd wands-demo
-
 WANDS_REPO=rocketweb/mageos-large-demo-catalog
-WANDS_TAG=catalog-2026.09.13-enriched-v2
-
+WANDS_TAG=catalog-2026.10.06
 (
   set -e
   for file in github_download.py download.py release.py; do
@@ -117,12 +80,10 @@ WANDS_TAG=catalog-2026.09.13-enriched-v2
       --output "$file" 2>>wands-download.log
   done
 )
-
 shasum -a 256 github_download.py download.py release.py
 ```
 
-**Before running the downloaded code**, compare all three hashes with these
-release-specific values. Stop if any differs:
+**Before executing code**, compare the helper hashes against these trusted values:
 
 ```text
 40d0f3ad8fd6bc3f61ffe2ba2d25e880e6e6f7cdf899083fc5f4ef3cadb36aff  github_download.py
@@ -130,107 +91,53 @@ release-specific values. Stop if any differs:
 9d0d17e2ef4e201e93ef717fee65017f5c83e151df7b73c3d5c1de057460b14b  release.py
 ```
 
-On Linux, `sha256sum` is an alternative to `shasum -a 256`. Keep trusted pins
-separately from the downloaded files. A checksum downloaded beside a file alone
-does not establish its authenticity.
-
-### 2. Download the tools and your chosen profile
-
-Continue in `wands-demo`. The default below selects medium:
+Linux users can use `sha256sum`. Keep trusted pins separately: checksums downloaded
+beside an archive alone do not authenticate it. The exact manifest pins are:
 
 ```sh
-WANDS_PROFILE=medium
-WANDS_PIN=93256f50f6a1e5070eab18dee3e28b2b348b5e92aba0fa35e3a5b22cb4aaa07a
-WANDS_TOOLKIT_PIN=93c3e983328ca2aa97050b4f9b5022eb4fa8d50681a725b167d724c56f156e9f
+WANDS_FULL_PIN=ec5c1763aea94535d1bacc44db2d2ac76131c4eca3763e257ebab677accaf958
+WANDS_TOOLKIT_PIN=299ed4a97b83b2d796b8310cb2f09e55e6d67187f494dbe8d213f829736f3ac8
 ```
 
-For the **full catalog**, replace the first two variables before downloading:
-
-```sh
-WANDS_PROFILE=full
-WANDS_PIN=b525ca0441e7f04858613fdcba4d8e3ae18421240f4c25a757bf34fa5587951b
-```
-
-Then run each command below. Continue only when the preceding command exits zero:
+Run each command only after the preceding command succeeds:
 
 ```sh
 python3 github_download.py --anonymous --repo "$WANDS_REPO" --tag "$WANDS_TAG" \
   --profile toolkit --cache-dir ./cache --manifest-sha256 "$WANDS_TOOLKIT_PIN"
 python3 release.py "./cache/$WANDS_TOOLKIT_PIN" \
   --manifest-sha256 "$WANDS_TOOLKIT_PIN" --extract ./toolkit
-
 python3 github_download.py --anonymous --repo "$WANDS_REPO" --tag "$WANDS_TAG" \
-  --profile "$WANDS_PROFILE" --cache-dir ./cache --manifest-sha256 "$WANDS_PIN"
-python3 release.py "./cache/$WANDS_PIN" \
-  --manifest-sha256 "$WANDS_PIN" --extract ./wands-staging
+  --profile full --cache-dir ./cache --manifest-sha256 "$WANDS_FULL_PIN"
+python3 release.py "./cache/$WANDS_FULL_PIN" \
+  --manifest-sha256 "$WANDS_FULL_PIN" --extract ./wands-staging
 ```
 
-The terminal stays quiet by default. In a second terminal, from `wands-demo`:
-
-```sh
-tail -f wands-download.log
-```
-
-Rerun the same download command after interruption. Verified files are reused;
-partial transfers resume where supported. Each archive's size, SHA-256 and member
-inventory must pass verification. Extraction always requires a new directory.
-Verification logs are under `cache/<manifest-pin>/verification.log`.
-
-You now have:
-
-```text
-wands-demo/
-├── toolkit/tools/preflight.php    Current destination check
-├── toolkit/docs/                  Installation and license documentation
-└── wands-staging/
-    ├── module/                    RocketWeb_LabCatalog source
-    ├── data/                      Ordered import CSVs and expected counts
-    └── media/wands-lab/            Product images, kept outside Git
-```
-
-For authentication details and offline alternatives, see
-[GitHub release downloads](dev/tools/wands_catalog/distribution/GITHUB_RELEASE.md).
+The terminal is quiet by default; use `tail -f wands-download.log` from another
+terminal. Verified files are reused after interruption. Each archive and member
+must match its SHA-256 and size. Extraction requires a new directory.
 
 ## Install into Mage-OS
 
-Use a fresh lab, not a customer store. Back up the empty database and application
-configuration before installation. Run PHP in the Mage-OS environment as its web
-filesystem owner, not as root. If using containers, make the extracted files
-available inside that environment and use its paths.
+Follow the [current release procedure](dev/tools/wands_catalog/distribution/PRODUCTION_RELEASE.md#install-into-an-empty-lab)
+or extracted `toolkit/docs/PRODUCTION_RELEASE.md`:
 
-From `wands-demo`, run the **current toolkit's** read-only preflight, replacing
-the example Magento root with your actual empty installation:
+1. Back up the empty lab and run the toolkit's read-only destination preflight.
+2. Copy the portable module, enable it, run setup and provision your WANDS website.
+   Configure your own DNS, TLS and web routing for website code `wands`.
+3. Copy data and all three media namespaces to the documented destinations.
+4. Import simples, configurables, bundles, media and merchandising. Curate the
+   base navigation **before** importing phase 6, so QA Fixtures stays visible.
+5. Import the QA phase, reindex, clean caches and compare native counts and
+   storefront behavior with `data/counts.json` and `data/qa/test-matrix.json`.
 
-```sh
-php ./toolkit/tools/preflight.php --magento-root=/path/to/empty/mageos \
-  --data-dir=./wands-staging/data --log-file=./preflight.log
-```
-
-This refuses an occupied catalog or conflicting WANDS store codes and logs the
-proposed record counts. It does not create a backup. Do not use the older
-preflight nested inside the immutable rc2 profile archive.
-
-Then follow the [installation guide](dev/tools/wands_catalog/distribution/README.md#install-into-an-empty-mage-os-instance):
-
-1. Copy `wands-staging/module/` into `app/code/RocketWeb/LabCatalog/`, enable the
-   module and run setup in your Mage-OS root.
-2. Provision the WANDS website with your own base URL. Configure your web server
-   for website code `wands`; the module does not configure DNS, TLS or routing.
-3. Copy the data and import media, then import **simples → configurables →
-   bundles → media → merchandising links**. Inspect each phase's log before continuing.
-4. Curate the ten-department menu, reindex, clean caches and check the storefront
-   against the expected counts in `data/counts.json`.
-
-The guide contains the commands and destination paths. Download verification is
-not proof of a successful Magento import; check options, prices, stock, search
-and images in your installation too.
-
-After a full import, optionally add the [detail and room galleries](dev/tools/wands_catalog/distribution/GALLERIES.md):
-14 additional illustrations across seven products, with original hero images preserved.
+Every phase's log and exit code matter. Native CSV validation can write import
+staging tables and is not the read-only preflight. If an import fails, retain logs
+and restore the empty baseline before retrying. The repository's existing-store
+QA/rollback helpers are operator tools, not general recipient installers.
 
 ## Screenshots
 
-Captured from the full-profile Mage-OS 3.5.0/Hyvä Default 1.5.2 installation. These are
+Historical captures from the September full-profile Mage-OS 3.5.0/Hyvä Default 1.5.2 installation. These are
 actual storefront screenshots, not mockups. Click an image to inspect it.
 
 ### Search and layered navigation
@@ -257,87 +164,46 @@ then select `Hyva/default` for the WANDS website and store view under
 **Content → Design → Configuration**. The screenshots use the default theme,
 not a custom child theme or Koti sample data.
 
-For Mage-OS 3.5.0 with Hyvä 1.5.2, also copy this repository's
-[Hyvä search layout correction](app/code/RocketWeb/LabCatalog/view/frontend/layout/hyva_catalogsearch_result_index.xml)
-into the same module-relative path in your lab. It initializes the lab's Name,
-Price and Relevance sort choices before category defaults can be cached. Clean
-layout and full-page caches afterward and verify the normal search URL.
-This correction is newer than the immutable rc2 module archive; the published
-archive has not been replaced. See the [Hyvä test notes](dev/tools/wands_catalog/distribution/HYVA_ACCEPTANCE.md)
-for the observed behavior and limits.
+The current portable module includes the [Hyvä search layout correction](app/code/RocketWeb/LabCatalog/view/frontend/layout/hyva_catalogsearch_result_index.xml).
+Theme installation remains separate. Check search, filters and sorting on your
+installed theme; the [September Hyvä notes](dev/tools/wands_catalog/distribution/HYVA_ACCEPTANCE.md)
+retain their original scope.
 
 ## Data and licensing
 
-- **Tooling, catalog module and authored catalog additions:**
-  [MIT](LICENSE). See [license scope and third-party notices](NOTICE.md).
-- **Original WANDS material:** its [MIT notice](dev/tools/wands_catalog/distribution/WANDS-LICENSE.txt)
-  and requested citation are retained.
-- **Generated catalog images:** [CC0 1.0](dev/tools/wands_catalog/distribution/CC0-1.0.txt)
-  to the extent Rocket Web holds the rights. Third-party rights are not waived.
-  Historical image-model and reference provenance is incomplete.
+- Tooling, portable module and authored data: [MIT](LICENSE), with [license scope](NOTICE.md).
+- Original WANDS material: retained [MIT notice](dev/tools/wands_catalog/distribution/WANDS-LICENSE.txt) and [citation](dev/tools/wands_catalog/distribution/CITATION.bib).
+- Generated media: [CC0 1.0](dev/tools/wands_catalog/distribution/CC0-1.0.txt) where Rocket Web holds rights. Third-party rights are not waived; historical model/reference provenance is incomplete.
 
-Prices, inventory, dimensions, variants and assortments are explicitly synthetic,
-not retail offers or manufacturer specifications. Images are illustrations, not
-exact geometry or fit evidence. The full profile includes 64 disabled legacy
-variants, 20 disabled records without media and 2,010 children using inherited
-family illustrations. Every enabled product has an image assignment.
+There are no customers, orders, credentials, database dumps, vendor code, model
+weights or theme packages in the release. Virtual/downloadable fixtures may
+intentionally have no image. Disabled/quarantined records remain test data.
+The derived catalog is not the original WANDS benchmark; original relevance
+judgments do not validate ranking on rewritten products. Read the
+[dataset card](dev/tools/wands_catalog/distribution/DATA_CARD.md) and
+[distribution terms](dev/tools/wands_catalog/distribution/TERMS.md).
 
-No customers, orders, credentials, database dump, model weights, Mage-OS vendor
-tree or theme packages are included. This derived catalog is **not the original
-WANDS benchmark**: its relevance judgments do not validate search rankings on
-rewritten products.
+## Contributing and troubleshooting
 
-Read the [dataset card](dev/tools/wands_catalog/distribution/DATA_CARD.md) and
-[distribution terms](dev/tools/wands_catalog/distribution/TERMS.md) for details.
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md),
+[sharing checks](SHARING.md) and the [documentation index](dev/tools/wands_catalog/docs/README.md).
+Work on the portable module and tooling, not the historical root Composer stack.
+Keep images, runtime evidence, database backups and credentials out of Git.
 
-If using WANDS in research, retain the upstream citation:
-
-> Yan Chen, Shujian Liu, Zheng Liu, Weiyi Sun, Linas Baltrunas, and Benjamin
-> Schroeder. 2022. *WANDS: Dataset for Product Search Relevance Assessment.*
-> Proceedings of the 44th European Conference on Information Retrieval.
-
-[BibTeX](dev/tools/wands_catalog/distribution/CITATION.bib)
-
-## Troubleshooting
-
-| Symptom | What to check |
+| Symptom | Check |
 | --- | --- |
-| GitHub returns 404 or denies access | Check the exact release tag and use the current helpers with `--anonymous`. Downloads are public; API rate limits can require a later retry. |
-| The download seems silent | Tail `wands-download.log`; silence is intentional. Check the exit code. |
-| Extraction refuses a directory | Use a new staging directory. Do not extract over an earlier attempt or into Magento. |
-| Preflight refuses the destination | Use an empty installation without existing WANDS website, store or store-group codes. |
-| Import stops partway through | Keep the log, restore the empty baseline and retry. Download resume does not apply to imports. |
-| The default store is empty | Route the storefront to `MAGE_RUN_TYPE=website` and `MAGE_RUN_CODE=wands`. |
-| Products or images are missing | Check all four import logs, file ownership, indexing and the media destination in the installation guide. |
-
-## Contributing
-
-The [bulk enrichment work](dev/tools/wands_catalog/BULK_ENRICHMENT.md) describes
-structured specifications, merchandising links, commerce fixtures, the medium
-profile and expanded galleries. The corrected enriched profiles have separate
-[Mage-OS 3.5 / Hyvä acceptance results](dev/tools/wands_catalog/distribution/ENRICHED_ACCEPTANCE.md),
-including all 400 commerce scenarios. The older rc2 download remains unchanged.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and test
-commands, [SECURITY.md](SECURITY.md) for private vulnerability reports, and
-[SHARING.md](SHARING.md) for the recipient handoff and public-launch checklist.
-
-Work on the portable module and tooling, not the original development store's
-Composer stack:
-
-- [Catalog module](app/code/RocketWeb/LabCatalog/)
-- [Catalog preparation and image tooling](dev/tools/wands_catalog/README.md)
-- [Release builder](dev/tools/wands_catalog/distribution/BUILDING.md)
-- [Tests](dev/tools/wands_catalog/tests/)
-
-From the repository root, run the Python test suite. The log is quiet by default:
+| Download 404 or API limit | Exact stable tag, `--anonymous`, helper hashes and retry log |
+| Preflight refusal | Empty catalog and no conflicting WANDS website/store codes |
+| Missing media/downloads | All import logs, ownership and the three media directories |
+| Empty default storefront | `MAGE_RUN_TYPE=website`, `MAGE_RUN_CODE=wands` routing |
+| Missing QA menu | Curate before phase 6, then refresh block/full-page caches |
+| Failed import | Restore the empty baseline; download resume is not import resume |
 
 ```sh
 python3 -m unittest discover -s dev/tools/wands_catalog/tests -p 'test_*.py' \
   > /tmp/wands-tests.log 2>&1
 ```
 
-Some checks require PHP or opt-in local HTTPS fixtures; skipped checks do not
-establish runtime compatibility. Include the release tag, profile, Mage-OS/PHP
-versions and a redacted failing log when reporting an issue. Keep catalog media,
-credentials, local environment files and database exports out of commits.
+Some checks need the intended native PHP binary or opt-in loopback HTTPS fixtures.
+Skipped tests do not qualify runtime compatibility. Include the exact release
+pin, environment versions and a redacted failing log with reports.

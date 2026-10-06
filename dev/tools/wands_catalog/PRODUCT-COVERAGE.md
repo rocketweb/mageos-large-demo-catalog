@@ -1,13 +1,14 @@
 # Product coverage audit
 
-The expansion is complete for scale and images, but product-behavior coverage
-is incomplete. Three core types are missing: virtual, downloadable and grouped.
-The proposed next step is a small, named QA collection rather than another large
-generation run. No proposed fixtures below have been implemented.
+The two existing lab stores now contain **107,815 WANDS records and all six core
+product types**. The [127-product QA suite](QA-CATALOG.md) adds named fixtures for
+virtual, downloadable, grouped, configuration, custom-option, pricing, inventory
+and visibility behavior. Scale and product coverage are separate test surfaces.
 
-Audited October 6, 2026 against the accepted expansion CSVs and completed
-installation acceptance for the two existing lab stores. Counts below describe
-WANDS catalog records, excluding unrelated products already in those stores.
+Counts below exclude unrelated products already in each store. The original
+107,688-record expansion and September downloads contain only simple, configurable
+and bundle products. The October stable full release includes the QA extension
+as phase 6 and covers all six types.
 
 [Documentation index](docs/README.md) · [Expansion implementation](docs/EXPANSION.md)
 
@@ -15,12 +16,12 @@ WANDS catalog records, excluding unrelated products already in those stores.
 
 | Product type | Records | Coverage |
 | --- | ---: | --- |
-| Simple | 103,643 | Standalone physical products and configurable children |
-| Configurable | 3,995 | One or two variation attributes |
-| Bundle | 50 | Dynamic price, SKU and weight; shipment together |
-| Virtual | 0 | Missing |
-| Downloadable | 0 | Missing |
-| Grouped | 0 | Missing |
+| Simple | 103,720 | Physical products, children, options, pricing and inventory fixtures |
+| Configurable | 4,001 | Up to three axes, sparse combinations and virtual children |
+| Bundle | 62 | Fixed/dynamic price, four control types and physical/virtual components |
+| Virtual | 14 | Services and configurable children |
+| Downloadable | 12 | PDF/ZIP links, previews, selection, sharing and limit settings |
+| Grouped | 6 | Physical, virtual and downloadable associations |
 
 Virtual products cover services and other products without shipping. Downloadable
 products add files, samples, link selection and download permissions. Grouped
@@ -31,30 +32,31 @@ See Adobe's [virtual](https://experienceleague.adobe.com/en/docs/commerce-admin/
 and [grouped](https://experienceleague.adobe.com/en/docs/commerce-admin/catalog/products/types/product-create-grouped)
 product documentation.
 
-## Configuration gaps
+## Original expansion limits
 
-All 50 bundles use dynamic pricing, dynamic SKU and weight, price-range display
+The original 50 bundles use dynamic pricing, dynamic SKU and weight, price-range display
 and shipment together. Their 600 selection entries are required dropdown
 selections with customer quantity changes disabled. Fixed pricing, separate
 shipment, optional options, other selection controls and editable quantities
 are not represented. Configurable products have at most two variation attributes.
 
-The accepted product CSVs contain no custom options, tier/group prices, upsell
+The original accepted expansion CSVs contain no custom options, tier/group prices, upsell
 links, scheduled special-price dates, or explicit quantity increments. Related
 and cross-sell links, special prices and out-of-stock rows are present.
 Backorders are disabled in the stock rows. All products use Taxable Goods.
 Existing store stock was preserved during installation, so export stock values
 are not a claim about every current live quantity or inherited setting.
 
-## Proposed QA collection, not implemented
+## Installed QA collection
 
-Add approximately 100 to 150 clearly named `WANDS-QA-` records, with exact
-fixtures and expected outcomes selected from the matrix below. Count parent and
-child records separately. Reuse suitable approved physical images and create
-small local test files for downloadable products. Keep the fixtures identifiable
-by SKU and category so test suites can address them reliably.
+The reproducible `WANDS-QA-` package contains 77 simple, 14 virtual, 12 downloadable,
+6 configurable, 12 bundle and 6 grouped records. Parent and child records are
+counted separately. It reuses 16 approved images and supplies three local download
+files. [The fixture guide](QA-CATALOG.md) lists exact SKU cases, expected outcomes,
+native and runtime checks, package pins and remaining qualification limits. The matrix below
+also includes store-configuration tests that product creation alone cannot supply.
 
-| Area | Fixtures to add or explicitly verify |
+| Area | Installed fixtures and further behavior to verify |
 | --- | --- |
 | Virtual | Assembly service, design consultation; taxable and non-taxable; standalone and associated service; physical, virtual and mixed carts |
 | Downloadable | Local PDF/ZIP, sample, single and multiple links, selectable links, finite/unlimited downloads and sharing settings; verify access before and after the qualifying order status |
@@ -81,6 +83,6 @@ Gift cards, subscriptions and Commerce/B2B features depend on the installed
 edition or extensions. Include them only in a separately identified extension
 suite. They are not additional default Mage-OS product types.
 
-The expansion is complete for the approved scale and image scope. This audit
-identifies a separate coverage extension; none of the proposed fixtures have
-been imported or deployed.
+The expansion is complete for the approved scale and image scope. The QA suite
+is installed on both existing stores. Checkout, payments and post-order download
+access remain separate qualification work.

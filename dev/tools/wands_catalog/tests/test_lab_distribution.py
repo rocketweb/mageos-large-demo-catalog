@@ -99,6 +99,8 @@ class ReadOnlyConnection {
             (data / 'counts.json').write_text(json.dumps({'products': 1, 'media_roles': 3}))
             for index, kind in enumerate(['simple', 'configurable', 'bundle'], 1):
                 (data / f'{index}-{kind}.csv').write_text('sku\n' + ('example\n' if index == 1 else ''))
+            (data / '6-qa.csv').write_text('sku\nWANDS-QA-VIRTUAL-01\n')
+            (data / 'counts.json').write_text(json.dumps({'products': 2, 'media_roles': 3}))
             for counts in ['0,0,0,0', '7,0,0,0', '0,1,0,0', '0,0,1,0', '0,0,0,1']:
                 log = root / f'{counts}.log'
                 result = subprocess.run([os.environ['WANDS_TEST_PHP'],
@@ -109,6 +111,15 @@ class ReadOnlyConnection {
                     self.assertEqual(result.returncode, 0 if counts == '0,0,0,0' else 1)
                     self.assertEqual(result.stdout + result.stderr, '')
                     self.assertIn('"database_writes": false', log.read_text())
+            # QA SKUs participate in the same uniqueness check as the base phases.
+            (data / '6-qa.csv').write_text('sku\nexample\n')
+            log = root / 'duplicate.log'
+            result = subprocess.run([os.environ['WANDS_TEST_PHP'],
+                str(Path(__file__).resolve().parents[1] / 'distribution/preflight.php'),
+                '--magento-root=' + str(root), '--data-dir=' + str(data), '--log-file=' + str(log)],
+                env={**os.environ, 'WANDS_TEST_COUNTS': '0,0,0,0'}, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn('duplicate SKU', log.read_text())
 
     @unittest.skipUnless(os.environ.get('WANDS_TEST_PHP'), 'Set WANDS_TEST_PHP to the intended native PHP binary')
     def test_missing_preflight_inputs_fail_quietly_before_bootstrap(self):

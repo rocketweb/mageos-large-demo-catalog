@@ -6,16 +6,41 @@ the manifest, source pins and acceptance evidence.
 
 | Recipe | Scope |
 | --- | --- |
+| `build_expanded_release.py` | Current stable full: accepted expansion plus 127 QA fixtures |
 | `build_release.py` examples below | Earlier starter/full prepared inputs |
 | Enriched published release | Its exact profile pins and [acceptance record](ENRICHED_ACCEPTANCE.md) |
 | `build_handoff.py` | Wrapper for the unchanged accepted rc2 profiles |
-| Doubled expansion | Separate [accepted export workflow](../docs/EXPANSION.md#files-and-evidence); no expanded public release asset |
+| Doubled expansion | Pinned accepted export used by the October stable builder |
 
 These recipes are pinned. Changing a profile flag does not turn an earlier
 recipe into the 107,688-record release. Review the recipe and input manifests
 before choosing a build. See [sharing checks](../../../../SHARING.md) for publication.
 
-## Developer build procedure
+## Current expanded release recipe
+
+The new standard-library builder checks both fixed accepted input pins, all
+selected public members, complete product dependencies, six type counts and the
+installation receipt. It keeps all six CSV phases byte-identical to the accepted
+inputs, merges only the count inventory, and packages media in 512 MiB archives.
+Private proposals, backups, row journals and raw operator receipts are excluded.
+A sanitized acceptance summary qualifies existing-store checks and their limits.
+No network, model call, store write or publication occurs during this build.
+
+```sh
+python3 dev/tools/wands_catalog/distribution/build_expanded_release.py \
+  --expansion var/catalog-expansion-20260918/accepted-export-completion-20261003 \
+  --qa var/catalog-qa-20261006/candidate-v5 \
+  --acceptance var/catalog-qa-20261006/install-20261007/installation-acceptance.json \
+  --tag catalog-2026.10.06 --output var/catalog-release-20261006
+```
+
+The ignored inputs are retained operator artifacts, not source-checkout downloads.
+The output contains independently verified `full/` and `toolkit/` profiles plus
+`assets/` for GitHub. Source hashes qualify a build independently of its baseline
+commit. Manifests remain below the downloader's 32 MiB limit; each asset remains
+below GitHub's 2 GiB limit. Only new immutable versioned assets may be published.
+
+## Historical developer build procedure
 
 Run from the catalog repository, not the OpenSearch module checkout. The builder
 requires Python 3.11+ and Pillow for JPEG header/format verification. Recipients

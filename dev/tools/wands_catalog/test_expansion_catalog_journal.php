@@ -7,6 +7,13 @@ $db = new PDO('sqlite::memory:', null, null, [PDO::ATTR_ERRMODE => PDO::ERRMODE_
 $db->exec('CREATE TABLE catalog_product_entity(entity_id INTEGER PRIMARY KEY,sku TEXT,type_id TEXT);
     INSERT INTO catalog_product_entity VALUES(1,"WANDS-000001","configurable"),(2,"other-product","simple"),(3,"WANDS-SYN-TEST","simple")');
 $manager = new ExpansionCatalogJournal($db);
+// QA products need the same exact-row inverse for options and digital assets.
+$db->exec('CREATE TABLE downloadable_link(link_id INTEGER PRIMARY KEY,product_id INTEGER,link_file TEXT);
+    INSERT INTO downloadable_link VALUES(1,3,"/qa.pdf")');
+$digital = ['table' => 'downloadable_link', 'selector' => ['link_id' => '1'], 'before' => null,
+    'after' => ['link_id' => '1', 'product_id' => '3', 'link_file' => '/qa.pdf']];
+$db->beginTransaction(); $manager->compensate($digital); $db->commit();
+must((int)$db->query('SELECT COUNT(*) FROM downloadable_link')->fetchColumn() === 0, 'Digital fixture link not removed');
 $old = ['entity_id' => '1', 'sku' => 'WANDS-000001', 'type_id' => 'simple'];
 $after = [...$old, 'type_id' => 'configurable'];
 $changed = ['table' => 'catalog_product_entity', 'selector' => ['entity_id' => '1'], 'before' => $old, 'after' => $after];
