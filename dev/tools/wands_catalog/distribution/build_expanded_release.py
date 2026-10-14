@@ -14,6 +14,7 @@ from release import dependencies, digest, safe_path, verify_release, write_archi
 from download import MANIFEST_LIMIT
 from build_candidate_assets import qualify_document_links
 from build_installer import build as build_installer
+from navigation import canonical_csv, canonical_json, DEPARTMENTS
 
 HERE = Path(__file__).resolve().parent
 REPOSITORY = HERE.parents[3]
@@ -33,6 +34,18 @@ SCRIPTS = ['release.py', 'download.py', 'github_download.py', 'preflight.php', '
 
 def encoded(value):
     return (json.dumps(value, sort_keys=True, separators=(',', ':')) + '\n').encode()
+
+
+def module_files(module_root):
+    module_root = Path(module_root)
+    files = {'module/LICENSE.txt': module_root / 'LICENSE.txt'}
+    for path in sorted(module_root.rglob('*')):
+        relative = path.relative_to(module_root)
+        if path.is_file() and relative.parts[0] != 'Test' and path.suffix in ('.php', '.xml', '.json', '.css', '.js', '.phtml'):
+            if any(value in path.read_text() for value in ('/Users/', 'relevance.comtom.lab', 'gophersport-com/')):
+                raise ValueError('Private environment reference in module: ' + str(relative))
+            files['module/' + relative.as_posix()] = path
+    return files
 
 
 def pinned_manifest(root, pin):
@@ -172,8 +185,21 @@ def build(expansion, qa, acceptance, output, tag):
     data = {name: path for name, path in sources.items() if name.startswith('data/')}
     data['data/counts.json'] = encoded(counts)
     data['data/6-qa.csv'] = qa_sources['data/products.csv']
+    canonical_sources = {}
+    for name, source in list(data.items()):
+        if name.endswith('.csv') and isinstance(source, Path):
+            destination = output / 'canonical-data' / Path(name).name
+            canonical_csv(source, destination)
+            canonical_sources[name] = source
+            data[name] = destination
     for name in ('fixtures.json', 'test-matrix.json', 'media-lineage.json'):
         data['data/qa/' + name] = qa_sources[name]
+    for name, source in list(data.items()):
+        if name.endswith('.json') and isinstance(source, Path):
+            destination = output / 'canonical-data' / Path(name).relative_to('data')
+            canonical_json(source, destination)
+            canonical_sources[name] = source
+            data[name] = destination
     data['docs/INSTALLATION_ACCEPTANCE.json'] = encoded(summary)
     for name in NOTICES + ['PRODUCTION_RELEASE.md', 'DATA_CARD.md']:
         data['docs/' + name] = HERE / name
@@ -182,13 +208,7 @@ def build(expansion, qa, acceptance, output, tag):
         if name.endswith('.md') and isinstance(path, Path):
             data[name] = qualify_document_links(path.read_bytes(), path, name, data, REPOSITORY)
     module_root = REPOSITORY / 'app/code/RocketWeb/LabCatalog'
-    module = {'module/LICENSE.txt': module_root / 'LICENSE.txt'}
-    for path in sorted(module_root.rglob('*')):
-        relative = path.relative_to(module_root)
-        if path.is_file() and relative.parts[0] != 'Test' and path.suffix in ('.php', '.xml', '.json'):
-            if any(value in path.read_text() for value in ('/Users/', 'relevance.comtom.lab', 'gophersport-com/')):
-                raise ValueError('Private environment reference in module: ' + str(relative))
-            module['module/' + relative.as_posix()] = path
+    module = module_files(module_root)
     images = {name: sources[name] for name in media}
     for name in qa_public:
         if name.startswith('media/import/'):
@@ -204,14 +224,18 @@ def build(expansion, qa, acceptance, output, tag):
             if name == 'data/6-qa.csv': original = qm['files']['data/products.csv']
             elif name.startswith('data/qa/'): original = qm['files'][name.removeprefix('data/qa/')]
             elif name.startswith('media/wands-qa'): original = qm['files']['media/import/' + name.removeprefix('media/')]
-            if original and name != 'data/counts.json' and info['sha256'] != original['sha256']:
+            if name in canonical_sources:
+                if digest(canonical_sources[name]) != original['sha256'] or info['sha256'] != digest(data[name]):
+                    raise ValueError('Canonical source changed during archive write: ' + name)
+            elif original and name != 'data/counts.json' and info['sha256'] != original['sha256']:
                 raise ValueError('Source changed during archive write: ' + name)
     source_files = {str(path.relative_to(REPOSITORY)): digest(path) for path in module.values()}
     source_files.update({str((HERE / name).relative_to(REPOSITORY)): digest(HERE / name)
-                         for name in SCRIPTS + ['build_expanded_release.py', 'build_installer.py']})
+                         for name in SCRIPTS + ['build_expanded_release.py', 'build_installer.py', 'navigation.py']})
     manifest = {'schema': 1, 'release': tag, 'profile': 'full', 'counts': counts,
                 'install_mode': 'Fresh dedicated lab only; no resumable import or live-store update',
                 'inputs': {'accepted_expansion_manifest': EXPANSION_PIN, 'qa_manifest': QA_PIN},
+                'navigation': {'departments': list(DEPARTMENTS), 'category_paths': 'canonical'},
                 'build_baseline_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=REPOSITORY, text=True).strip(),
                 'source_files': source_files, 'artifacts': artifacts,
                 'contains_customers_orders_or_database_dump': False,

@@ -403,6 +403,13 @@ function installerPreserved(): array
         'scope' => 'Native products, options, relationships, gallery rows, stock and categories outside WANDS'];
 }
 
+function installerExpectedCategoryPaths(string $value): array
+{
+    $paths = preg_split('/\||,\s*(?=WANDS Catalog\/)/', $value);
+    $taxonomy = \RocketWeb\LabCatalog\Model\Catalog\NavigationTaxonomy::class;
+    return class_exists($taxonomy) ? array_map([$taxonomy, 'normalizePath'], $paths) : $paths;
+}
+
 function installerVerify(array $request): array
 {
     $db = $GLOBALS['installerDb'];
@@ -503,7 +510,7 @@ function installerVerify(array $request): array
     }
     foreach ($rows as $sku => $row) {
         if (!empty($row['categories'])) {
-            $wanted = array_fill_keys(explode('|', $row['categories']), true);
+            $wanted = array_fill_keys(installerExpectedCategoryPaths($row['categories']), true);
             $found = $assignedCategories[$sku] ?? [];
             $check(array_diff_key($wanted, $found) === [] && array_diff_key($found, $wanted) === [], 'exact category assignments: ' . $sku);
         }

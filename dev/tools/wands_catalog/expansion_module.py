@@ -9,10 +9,13 @@ from hashlib import file_digest
 
 ROOTS={'/Users/matt/code/mageos-latest','/opt/comtom/stores/relevance/src'}
 FILES=(
- 'Console/Command/ImportProductsCommand.php','Model/Catalog/ProductImporter.php',
+ 'Console/Command/ImportProductsCommand.php','Console/Command/CurateNavigationCommand.php','Model/Catalog/ProductImporter.php',
  'Model/Catalog/ParentTypeConverter.php','Model/Catalog/NavigationCurator.php',
+ 'Model/Catalog/NavigationTaxonomy.php','Model/Import/CategoryProcessor.php',
  'Model/Catalog/StockPreservation.php','Model/Catalog/BundleAssortmentReconciler.php',
- 'Plugin/PreserveExistingStock.php','etc/di.xml',
+ 'Plugin/PreserveExistingStock.php','Plugin/PreserveCategoryCommas.php','etc/di.xml',
+ 'Observer/AddNavigationLayout.php','etc/frontend/events.xml',
+ 'view/frontend/layout/wands_catalog_navigation.xml','view/frontend/web/css/navigation.css',
  'Setup/Patch/Data/AddRealismAttributes.php','Setup/Patch/Data/AddDepthAttributes.php',
  'Setup/Patch/Data/AddSpecificationDisclosure.php','etc/depth_attributes.json')
 

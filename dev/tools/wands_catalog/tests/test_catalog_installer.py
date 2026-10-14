@@ -128,6 +128,16 @@ class CatalogInstallerTests(unittest.TestCase):
         self.assertNotEqual(first['confirmation'], second['confirmation'])
         self.assertEqual(second['module_sha256']['registration.php'], catalog.digest(self.stage / 'module/registration.php'))
 
+    @unittest.skipUnless(os.environ.get('WANDS_TEST_PHP'), 'Set the intended native PHP binary')
+    def test_native_category_paths_preserve_commas_and_apply_declared_taxonomy(self):
+        program = (DIST / 'catalog_runtime.php').read_text().removeprefix('<?php').replace('declare(strict_types=1);', '', 1).split('try {\n    $request = json_decode', 1)[0]
+        paths = 'WANDS Catalog/Kitchen & Tabletop/Vases, Urns, Jars & Bottles,WANDS Catalog/Furniture/Chairs'
+        fixture = 'namespace RocketWeb\\LabCatalog\\Model\\Catalog { class NavigationTaxonomy { public static function normalizePath($p) { return str_replace("/Kitchen & Tabletop/", "/Kitchen/", $p); } } } namespace {'
+        code = 'declare(strict_types=1);' + fixture + program + '\necho json_encode(installerExpectedCategoryPaths(' + json.dumps(paths) + ')); }'
+        result = subprocess.run([os.environ['WANDS_TEST_PHP'], '-r', code], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout), ['WANDS Catalog/Kitchen/Vases, Urns, Jars & Bottles', 'WANDS Catalog/Furniture/Chairs'])
+
     def test_platform_and_running_writer_guards(self):
         self.runtime.snapshot['version'] = '3.4.0'
         with self.assertRaisesRegex(ValueError, 'not qualified'):

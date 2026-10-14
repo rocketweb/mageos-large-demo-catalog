@@ -1,0 +1,405 @@
+{
+  "schema": 1,
+  "verified_at": "2026-10-14T22:46:42.846974+00:00",
+  "scope": "Existing dedicated test stores; canonical DIY catalog and desktop navigation",
+  "candidate": {
+    "release": "catalog-2026.10.14-diy-qualification",
+    "manifest_sha256": "96a5c20f84bc2b5d29a235ca9aac5210f70b05534662dce70125748d72a11838",
+    "module_sha256": "6753b01c80a01221a05ad630e9a39f03c9ef1a3a08dd3b6ba9a152583628b5ff",
+    "catalog_sha256": "009640c0227741062cdbc7f7aa3a99497ad966fdc97527effd6ce2a763e098a0",
+    "only_module_change": "view/frontend/web/css/navigation.css",
+    "publicly_published": false
+  },
+  "navigation_order": [
+    "DIY",
+    "Furniture",
+    "Decor",
+    "Bed & Bath",
+    "Kitchen",
+    "Outdoor",
+    "Storage",
+    "Kids",
+    "Pets"
+  ],
+  "workspace_tooling": {
+    "passed": true,
+    "tests": 921,
+    "skipped": 1,
+    "skip": "Optional disposable-store gallery override fixture"
+  },
+  "module_tests": {
+    "passed": true,
+    "tests": 32,
+    "assertions": 148
+  },
+  "stores": {
+    "alpha": {
+      "url": "https://latest.rocketcode.com/",
+      "edition": "mage-os",
+      "version": "3.6.0",
+      "php": "8.4.24",
+      "mode": "production",
+      "products_before": 109855,
+      "removed_other_products": 2040,
+      "products_after": 107815,
+      "removed_empty_sample_categories": 38,
+      "rebuilt_generated_identifiers": 2000,
+      "preserved_product_identities": 105815,
+      "preservation_fingerprints_matched": true,
+      "native_verification": {
+        "checks": 834131,
+        "passed": true,
+        "products": 107815,
+        "scope": "Exact SKU/type inventory, names/status/prices, image roles, configurable links and declared bundle counts; storefront QA remains separate"
+      },
+      "stock": {
+        "checks": 963240,
+        "default_source_quantities_checked": 103746,
+        "failures": [],
+        "legacy_stock_rows": 107815,
+        "normalized_composite_quantities": 2024,
+        "passed": true,
+        "products": 107815,
+        "quantity_types": {
+          "bundle": false,
+          "configurable": false,
+          "downloadable": true,
+          "grouped": false,
+          "simple": true,
+          "virtual": true
+        },
+        "scope": "Every supplied legacy stock field and present default source quantity; no database writes"
+      },
+      "final_artifact_verification": {
+        "passed": true,
+        "case": "alpha",
+        "manifest_sha256": "96a5c20f84bc2b5d29a235ca9aac5210f70b05534662dce70125748d72a11838",
+        "module_sha256": "6753b01c80a01221a05ad630e9a39f03c9ef1a3a08dd3b6ba9a152583628b5ff",
+        "catalog_sha256": "68b1a98a0fa720b288ffe867e0ee4451520cc3f483c6b8738e45e7c752613a9a",
+        "database_catalog_unchanged": true,
+        "unchanged_catalog_archive_sha256": "009640c0227741062cdbc7f7aa3a99497ad966fdc97527effd6ce2a763e098a0",
+        "same_release_update_noop": true,
+        "only_module_change": [
+          "view/frontend/web/css/navigation.css"
+        ],
+        "jobs_stopped_assertion_used": false
+      },
+      "final_catalog_state": {
+        "catalog_product_entity_legacy": 0,
+        "catalog_product_entity_outside_wands": 0,
+        "inventory_source_item_legacy": 0,
+        "inventory_source_item_outside_wands": 0,
+        "inventory_reservation_legacy": 0,
+        "inventory_reservation_outside_wands": 0,
+        "legacy_urls": 0,
+        "legacy_category_values": 0,
+        "legacy_product_values": 0,
+        "indexers": {
+          "cataloginventory_stock": "valid",
+          "design_config_grid": "valid",
+          "customer_grid": "valid",
+          "catalog_category_product": "valid",
+          "catalog_product_category": "valid",
+          "catalogrule_rule": "valid",
+          "catalog_product_attribute": "valid",
+          "inventory": "valid",
+          "catalog_product_price": "valid",
+          "catalogrule_product": "valid",
+          "catalogsearch_fulltext": "valid"
+        },
+        "mode": "production",
+        "maintenance": false
+      },
+      "counts": {
+        "products": 107815,
+        "categories": 2083,
+        "non_catalog_categories": 0,
+        "sitemap_records": 0,
+        "indexers": {
+          "cataloginventory_stock": "valid",
+          "design_config_grid": "valid",
+          "customer_grid": "valid",
+          "catalog_category_product": "valid",
+          "catalog_product_category": "valid",
+          "catalogrule_rule": "valid",
+          "catalog_product_attribute": "valid",
+          "inventory": "valid",
+          "catalog_product_price": "valid",
+          "catalogrule_product": "valid",
+          "catalogsearch_fulltext": "valid"
+        }
+      },
+      "customers_orders_quotes": {
+        "customers": 1,
+        "orders": 2,
+        "quotes": 0
+      },
+      "browser": {
+        "passed": true,
+        "navigation_widths": [
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1920
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1614
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1440
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1280
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1279
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1100
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1024
+          }
+        ],
+        "diy_category": {
+          "heading": "DIY",
+          "products": 12,
+          "url": "https://latest.rocketcode.com/diy.html"
+        },
+        "new_configurable": {
+          "heading": "Alder Arc Cabinet Handle Without Packaging",
+          "images": 2,
+          "url": "https://latest.rocketcode.com/wands-syn-p-diy-00001-alder-arc-cabinet-handle-without-packaging.html"
+        },
+        "selected_variant_options": [
+          "Black",
+          "Small"
+        ],
+        "removed_urls": [
+          {
+            "path": "/home-improvement.html",
+            "redirected": false,
+            "status": 404
+          },
+          {
+            "path": "/wands-syn-p-home-improvement-00001-alder-arc-cabinet-handle-without-packaging.html",
+            "redirected": false,
+            "status": 404
+          }
+        ],
+        "cart_submissions": 0
+      },
+      "recovery": {
+        "full_database_and_files_backup_verified": true,
+        "inverse_restore_preview_validated": true,
+        "retained_privately": true
+      },
+      "maintenance_disabled": true,
+      "cron_restarted": true,
+      "original_container_limits_restored": true
+    },
+    "hyva": {
+      "url": "https://latest-hyva.rocketcode.com/",
+      "edition": "mage-os",
+      "version": "3.6.0",
+      "php": "8.4.24",
+      "mode": "production",
+      "products_before": 158007,
+      "removed_other_products": 50192,
+      "products_after": 107815,
+      "removed_empty_sample_categories": 47,
+      "rebuilt_generated_identifiers": 2000,
+      "preserved_product_identities": 105815,
+      "preservation_fingerprints_matched": true,
+      "native_verification": {
+        "checks": 834131,
+        "passed": true,
+        "products": 107815,
+        "scope": "Exact SKU/type inventory, names/status/prices, image roles, configurable links and declared bundle counts; storefront QA remains separate"
+      },
+      "stock": {
+        "checks": 963240,
+        "default_source_quantities_checked": 103746,
+        "failures": [],
+        "legacy_stock_rows": 107815,
+        "normalized_composite_quantities": 2024,
+        "passed": true,
+        "products": 107815,
+        "quantity_types": {
+          "bundle": false,
+          "configurable": false,
+          "downloadable": true,
+          "grouped": false,
+          "simple": true,
+          "virtual": true
+        },
+        "scope": "Every supplied legacy stock field and present default source quantity; no database writes"
+      },
+      "final_artifact_verification": {
+        "passed": true,
+        "case": "hyva",
+        "manifest_sha256": "96a5c20f84bc2b5d29a235ca9aac5210f70b05534662dce70125748d72a11838",
+        "module_sha256": "6753b01c80a01221a05ad630e9a39f03c9ef1a3a08dd3b6ba9a152583628b5ff",
+        "catalog_sha256": "ac7851ed935bb30a6ab3f656bf25a80d53f4391a747e919dd203edf62b7f9cd6",
+        "database_catalog_unchanged": true,
+        "unchanged_catalog_archive_sha256": "009640c0227741062cdbc7f7aa3a99497ad966fdc97527effd6ce2a763e098a0",
+        "same_release_update_noop": true,
+        "only_module_change": [
+          "view/frontend/web/css/navigation.css"
+        ],
+        "jobs_stopped_assertion_used": false
+      },
+      "final_catalog_state": {
+        "catalog_product_entity_legacy": 0,
+        "catalog_product_entity_outside_wands": 0,
+        "inventory_source_item_legacy": 0,
+        "inventory_source_item_outside_wands": 0,
+        "inventory_reservation_legacy": 0,
+        "inventory_reservation_outside_wands": 0,
+        "legacy_urls": 0,
+        "legacy_category_values": 0,
+        "legacy_product_values": 0,
+        "indexers": {
+          "cataloginventory_stock": "valid",
+          "design_config_grid": "valid",
+          "customer_grid": "valid",
+          "catalog_category_product": "valid",
+          "catalog_product_category": "valid",
+          "catalogrule_rule": "valid",
+          "catalog_product_attribute": "valid",
+          "inventory": "valid",
+          "catalog_product_price": "valid",
+          "catalogrule_product": "valid",
+          "catalogsearch_fulltext": "valid",
+          "async_event": "valid"
+        },
+        "mode": "production",
+        "maintenance": false
+      },
+      "counts": {
+        "products": 107815,
+        "categories": 2084,
+        "non_catalog_categories": 0,
+        "sitemap_records": 0,
+        "indexers": {
+          "cataloginventory_stock": "valid",
+          "design_config_grid": "valid",
+          "customer_grid": "valid",
+          "catalog_category_product": "valid",
+          "catalog_product_category": "valid",
+          "catalogrule_rule": "valid",
+          "catalog_product_attribute": "valid",
+          "inventory": "valid",
+          "catalog_product_price": "valid",
+          "catalogrule_product": "valid",
+          "catalogsearch_fulltext": "valid",
+          "async_event": "valid"
+        }
+      },
+      "customers_orders_quotes": {
+        "customers": 2,
+        "orders": 12,
+        "quotes": 0
+      },
+      "browser": {
+        "passed": true,
+        "navigation_widths": [
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1920
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1614
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1440
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1280
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1279
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1100
+          },
+          {
+            "overflow": false,
+            "rows": 1,
+            "width": 1024
+          }
+        ],
+        "diy_category": {
+          "heading": "DIY",
+          "products": 12,
+          "url": "https://latest-hyva.rocketcode.com/diy.html"
+        },
+        "new_configurable": {
+          "heading": "Alder Arc Cabinet Handle Without Packaging",
+          "images": 2,
+          "url": "https://latest-hyva.rocketcode.com/wands-syn-p-diy-00001-alder-arc-cabinet-handle-without-packaging.html"
+        },
+        "selected_variant_options": [
+          "Black",
+          "Small"
+        ],
+        "removed_urls": [
+          {
+            "path": "/home-improvement.html",
+            "redirected": false,
+            "status": 404
+          },
+          {
+            "path": "/wands-syn-p-home-improvement-00001-alder-arc-cabinet-handle-without-packaging.html",
+            "redirected": false,
+            "status": 404
+          }
+        ],
+        "cart_submissions": 0
+      },
+      "recovery": {
+        "full_database_and_files_backup_verified": true,
+        "inverse_restore_preview_validated": true,
+        "retained_privately": true
+      },
+      "maintenance_disabled": true,
+      "cron_restarted": true,
+      "original_container_limits_restored": true
+    }
+  },
+  "public_release_published": false,
+  "staged_tooling": {
+    "passed": true,
+    "tests": 912,
+    "skipped": 1,
+    "python": "3.14.8",
+    "isolated_checkout": true
+  },
+  "qualified_module_parity": {
+    "passed": true,
+    "files": 35
+  }
+}

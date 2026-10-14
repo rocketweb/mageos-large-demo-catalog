@@ -7,11 +7,29 @@ import tempfile
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'distribution'))
-from build_expanded_release import acceptance_summary, media_archives, product_inventory, verified_files
-from release import digest, verify_release
+from build_expanded_release import acceptance_summary, media_archives, module_files, product_inventory, verified_files
+from release import digest, verify_release, write_archive
 
 
 class ExpandedReleaseTest(unittest.TestCase):
+    def test_module_archive_includes_frontend_assets_and_excludes_tests_and_private_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            public = ['LICENSE.txt', 'registration.php', 'etc/frontend/events.xml',
+                      'view/frontend/web/css/navigation.css', 'view/frontend/web/js/navigation.js',
+                      'view/frontend/templates/navigation.phtml']
+            for name in public + ['Test/Unit/PrivateTest.php', 'private-backup.sql']:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('fixture')
+            files = module_files(root)
+            self.assertEqual(set(files), {'module/' + name for name in public})
+            archive = write_archive(root / 'module.tar', files)
+            self.assertIn('module/view/frontend/web/css/navigation.css', archive['files'])
+            (root / 'view/frontend/web/css/navigation.css').write_text('/Users/private/path')
+            with self.assertRaisesRegex(ValueError, 'Private environment'):
+                module_files(root)
+
     def test_explicit_public_inventory_rejects_changed_and_escaping_sources(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

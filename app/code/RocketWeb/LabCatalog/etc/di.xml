@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\CatalogImportExport\Model\Import\Product\CategoryProcessor"
+                type="RocketWeb\LabCatalog\Model\Import\CategoryProcessor"/>
+    <type name="Magento\CatalogImportExport\Model\Import\Product\CategoryProcessor" shared="false">
+        <plugin name="rocketweb_lab_catalog_preserve_category_commas"
+                type="RocketWeb\LabCatalog\Plugin\PreserveCategoryCommas"/>
+    </type>
     <type name="Magento\CatalogImportExport\Model\StockItemProcessorInterface">
         <plugin name="rocketweb_lab_catalog_preserve_existing_stock"
                 type="RocketWeb\LabCatalog\Plugin\PreserveExistingStock" sortOrder="-1000"/>

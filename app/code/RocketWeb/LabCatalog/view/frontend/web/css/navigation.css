@@ -1,0 +1,41 @@
+/* Hyva shares the desktop header with the logo and account controls. */
+@media (min-width: 1024px) and (max-width: 1535px) {
+    .wands-catalog .navigation > div {
+        padding-inline: 0.5rem;
+    }
+
+    .wands-catalog .navigation nav > ul {
+        column-gap: 0.75rem;
+    }
+
+    .wands-catalog .navigation nav > ul > li > span {
+        font-size: 0.875rem;
+    }
+
+    .wands-catalog .navigation nav > ul > li > span > a {
+        white-space: nowrap;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) and (hover: hover) and (pointer: fine) {
+    .wands-catalog div.navigation {
+        margin-inline-start: 0.5rem;
+    }
+
+    .wands-catalog .navigation > div {
+        padding-inline: 0;
+    }
+
+    .wands-catalog .navigation nav > ul {
+        column-gap: 0.0625rem;
+    }
+
+    .wands-catalog .navigation nav > ul > li > span > a {
+        padding-inline: 0;
+    }
+
+    .wands-catalog .navigation nav > ul > li > span > button > svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}

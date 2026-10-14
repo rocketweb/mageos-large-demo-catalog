@@ -5,12 +5,13 @@ from pathlib import Path
 from datetime import datetime, timezone
 import subprocess
 import time
+from urllib.parse import urljoin
 
 from build_qa_catalog import verify_package, variations, sha
 from verify_expansion_browser import select_configurable
 
 
-def check_store(target, package, output, proxy_port=None):
+def check_store(target, package, output, proxy_port=None, qa_category_path='qa-fixtures.html'):
     manifest = verify_package(package)
     fixtures = json.loads((package / 'fixtures.json').read_text())
     flags = ['--session', 'wands-qa-' + target, '--json']
@@ -86,10 +87,12 @@ def check_store(target, package, output, proxy_port=None):
                 command('screenshot', str(screenshot), '--full'); screenshots.append(str(screenshot))
         (output / 'product-pages.json').write_text(json.dumps({'passed': True, 'target': target, 'verified_at': datetime.now(timezone.utc).isoformat(), 'manifest_sha256': sha(package / 'manifest.json'), 'products_checked': len(results), 'excluded_products_checked': len(excluded), 'excluded_checks': excluded, 'checks': results, 'screenshots': screenshots, 'scope': 'product pages only; category acceptance follows'}, indent=2) + '\n')
         category = evaluate('Array.from(document.querySelectorAll("header a")).find(a=>a.textContent.trim()==="QA Fixtures")?.href')
-        if not category: raise ValueError('QA category navigation missing')
+        if not category: category = urljoin(base, qa_category_path)
         command('open', category)
-        command('wait', '--fn', 'document.querySelectorAll(".product-item,.item.product").length>0')
-        category_result = evaluate('({url:location.href,heading:document.querySelector("h1")?.textContent.trim(),products:document.querySelectorAll(".product-item,.item.product").length})')
+        command('wait', '--load', 'networkidle')
+        command('wait', '--fn', 'document.querySelectorAll("main .product-item,main .item.product").length>0')
+        category_result = evaluate('({url:location.href,heading:document.querySelector("h1")?.textContent.trim(),products:document.querySelectorAll("main .product-item,main .item.product").length})')
+        if category_result['heading'] != 'QA Fixtures': raise ValueError('Wrong QA category rendered')
         report = {'passed': True, 'target': target, 'verified_at': datetime.now(timezone.utc).isoformat(), 'manifest_sha256': sha(package / 'manifest.json'),
                   'products_checked': len(results), 'excluded_products_checked': len(excluded), 'excluded_checks': excluded, 'checks': results, 'category': category_result,
                   'screenshots': screenshots, 'cart_submissions': 0, 'viewport': [1920, 1080], 'local_proxy_port': proxy_port,
@@ -106,6 +109,7 @@ if __name__ == '__main__':
     parser.add_argument('--package', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--proxy-port', type=int, help='Existing localhost SOCKS proxy for Comtom; does not start a tunnel')
+    parser.add_argument('--qa-category-path', default='qa-fixtures.html', help='Direct QA category path when hidden from the main menu')
     args = parser.parse_args()
-    result = check_store(args.target, args.package, args.output, args.proxy_port)
+    result = check_store(args.target, args.package, args.output, args.proxy_port, args.qa_category_path)
     print(json.dumps({'passed': result['passed'], 'products_checked': result['products_checked']}))
