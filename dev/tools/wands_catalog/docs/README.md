@@ -22,6 +22,8 @@ index describes the documented artifact states, not a live process monitor.
 - **Install and try it:** [root quick start](../../../../README.md#quick-start) →
   [recipient installation](../distribution/PRODUCTION_RELEASE.md) →
   [current acceptance and limits](../distribution/PRODUCTION_RELEASE.md#acceptance-and-practical-limits).
+- **Try guided install, reset or update:** [source installer](../distribution/INSTALLER.md) →
+  [October 14 acceptance](INSTALLER_ACCEPTANCE_2026-10-14.md).
 - **Plan test coverage:** [product audit](../PRODUCT-COVERAGE.md) →
   [QA fixture guide](../QA-CATALOG.md) → [expansion scope](EXPANSION.md#verification-and-remaining-coverage).
 - **Review images:** [review guide](../HUMAN-IMAGE-REVIEW.md) →

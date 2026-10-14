@@ -13,6 +13,7 @@ import sys
 from release import dependencies, digest, safe_path, verify_release, write_archive
 from download import MANIFEST_LIMIT
 from build_candidate_assets import qualify_document_links
+from build_installer import build as build_installer
 
 HERE = Path(__file__).resolve().parent
 REPOSITORY = HERE.parents[3]
@@ -27,7 +28,7 @@ DATA_FILES = ['1-simple.csv', '2-configurable.csv', '3-bundle.csv', '4-media.csv
               '5-merchandising.csv', 'attribute-options.json', 'media-inventory.json',
               'media-lineage.json', 'counts.json']
 NOTICES = ['TERMS.md', 'WANDS-LICENSE.txt', 'CC0-1.0.txt', 'CITATION.bib']
-SCRIPTS = ['release.py', 'download.py', 'github_download.py', 'preflight.php']
+SCRIPTS = ['release.py', 'download.py', 'github_download.py', 'preflight.php', 'catalog.py', 'catalog_runtime.php']
 
 
 def encoded(value):
@@ -207,7 +208,7 @@ def build(expansion, qa, acceptance, output, tag):
                 raise ValueError('Source changed during archive write: ' + name)
     source_files = {str(path.relative_to(REPOSITORY)): digest(path) for path in module.values()}
     source_files.update({str((HERE / name).relative_to(REPOSITORY)): digest(HERE / name)
-                         for name in SCRIPTS + ['build_expanded_release.py']})
+                         for name in SCRIPTS + ['build_expanded_release.py', 'build_installer.py']})
     manifest = {'schema': 1, 'release': tag, 'profile': 'full', 'counts': counts,
                 'install_mode': 'Fresh dedicated lab only; no resumable import or live-store update',
                 'inputs': {'accepted_expansion_manifest': EXPANSION_PIN, 'qa_manifest': QA_PIN},
@@ -222,7 +223,7 @@ def build(expansion, qa, acceptance, output, tag):
     full_pin = digest(full / 'manifest.json')
     result = verify_release(full, full_pin)
     toolkit_files = {'tools/' + name: HERE / name for name in SCRIPTS}
-    toolkit_files.update({'docs/' + name: HERE / name for name in NOTICES + ['PRODUCTION_RELEASE.md', 'DATA_CARD.md']})
+    toolkit_files.update({'docs/' + name: HERE / name for name in NOTICES + ['PRODUCTION_RELEASE.md', 'DATA_CARD.md', 'INSTALLER.md']})
     toolkit_files['README.md'] = HERE / 'PRODUCTION_RELEASE.md'
     toolkit_files['docs/ROCKET-WEB-LICENSE.txt'] = HERE.parent / 'LICENSE.txt'
     toolkit_files['docs/INSTALLATION_ACCEPTANCE.json'] = encoded(summary)
@@ -238,6 +239,7 @@ def build(expansion, qa, acceptance, output, tag):
             (assets / (profile + '-' + path.name)).hardlink_to(path)
     for name in SCRIPTS[:3]:
         (assets / name).write_bytes((HERE / name).read_bytes())
+    build_installer(assets / 'wands-catalog.pyz')
     (assets / 'README.md').write_bytes((HERE / 'PRODUCTION_RELEASE.md').read_bytes())
     inventory = {'schema': 1, 'repository': 'rocketweb/mageos-large-demo-catalog', 'tag': tag,
                  'profile_pins': {'full': full_pin, 'toolkit': toolkit_pin}, 'counts': counts,

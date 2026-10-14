@@ -28,6 +28,7 @@ construction, variant color and included components are part of image review.
 | Your goal | Start here |
 | --- | --- |
 | Download and install | [Quick start](#quick-start), then [current installation guide](dev/tools/wands_catalog/distribution/PRODUCTION_RELEASE.md) |
+| Try guided install, reset or update | [Installer prerelease](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/installer-2026.10.14-rc1), then [usage guide](dev/tools/wands_catalog/distribution/INSTALLER.md) |
 | Choose behavior to test | [127-product QA suite](dev/tools/wands_catalog/QA-CATALOG.md) and [coverage audit](dev/tools/wands_catalog/PRODUCT-COVERAGE.md) |
 | Understand runtime evidence | [Acceptance and limits](dev/tools/wands_catalog/distribution/PRODUCTION_RELEASE.md#acceptance-and-practical-limits) |
 | Maintain or extend the data | [Documentation index](dev/tools/wands_catalog/docs/README.md) and [release builder](dev/tools/wands_catalog/distribution/BUILDING.md) |
