@@ -207,3 +207,12 @@ python3 -m unittest discover -s dev/tools/wands_catalog/tests -p 'test_*.py' \
 Some checks need the intended native PHP binary or opt-in loopback HTTPS fixtures.
 Skipped tests do not qualify runtime compatibility. Include the exact release
 pin, environment versions and a redacted failing log with reports.
+
+## Category navigation
+
+The current source importer automatically curates nine departments: Furniture,
+Kitchen, Bed & Bath, Decor, Outdoor, Storage, Home Improvement, Kids and Pets.
+Lighting and Rugs sit under Decor. Legacy import paths reuse the existing
+category IDs, and commas in category names are preserved. See
+[category imports and navigation](dev/tools/wands_catalog/docs/NAVIGATION.md) for
+the migration, dry-run command and full local catalog verification.

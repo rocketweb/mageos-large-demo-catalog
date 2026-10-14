@@ -49,6 +49,12 @@ TLS, uptime, checkout, payment or post-order download access.
 
 [Documentation index](docs/README.md) · [Existing coverage audit](PRODUCT-COVERAGE.md)
 
+The current source importer keeps the nine main departments in navigation after
+every import. QA Fixtures is reached through its direct category URL, normally
+`qa-fixtures.html`. The browser verifier accepts `--qa-category-path` for a different
+category suffix or route. The acceptance results above record the October 6 module,
+which exposed QA Fixtures in the menu. See [category imports and navigation](docs/NAVIGATION.md).
+
 ## Choose a test
 
 | Area | SKU suffix after `WANDS-QA-` | What to exercise |

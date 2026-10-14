@@ -20,6 +20,7 @@ class ProductImporter
         private readonly \Magento\Framework\App\ResourceConnection $resourceConnection,
         private readonly BundleAssortmentReconciler $bundleAssortmentReconciler,
         private readonly \RocketWeb\LabCatalog\Model\Catalog\StockPreservation $stockPreservation,
+        private readonly NavigationCurator $navigationCurator,
     ) {
     }
 
@@ -174,6 +175,7 @@ class ProductImporter
             'errors' => $import->getErrorAggregator()->getErrorsCount(),
             'error_messages' => $this->errorMessages($import),
             'bundle_reconciliation' => $reconciliation,
+            'navigation' => $this->navigationCurator->execute(),
         ];
     }
 

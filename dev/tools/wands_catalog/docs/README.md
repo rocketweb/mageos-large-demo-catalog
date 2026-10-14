@@ -59,6 +59,7 @@ submission forms rather than technical guides.
 | [Catalog expansion completion](../EXPANSION-CHECKPOINT.md) | Completed two-store installation and acceptance limits |
 | [The doubled catalog](EXPANSION.md) | Expansion architecture, artifact contracts and recovery |
 | [Product coverage audit](../PRODUCT-COVERAGE.md) | Existing store types and remaining behavioral coverage |
+| [Category imports and navigation](NAVIGATION.md) | Automatic nine-department menu, existing-tree migration and full local verification |
 | [QA product suite](../QA-CATALOG.md) | 127 installed fixtures, six types, expected outcomes and verification |
 | [Contributing](../../../../CONTRIBUTING.md) | Development checks and documentation conventions |
 | [Sharing the catalog](../../../../SHARING.md) | Sharing and new-release checklist |

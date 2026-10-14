@@ -143,6 +143,11 @@ links. Preserve all three media directories: `wands-expanded`, `wands-qa` and
 Native `--validate-only` writes import staging tables; it is not a read-only
 preflight and cannot validate parents before their children exist.
 
+Those navigation steps describe the published October 6 module. The current source
+module curates after every successful import, including phase 6, and keeps only the
+nine main departments in the menu. Open QA Fixtures through its direct category
+URL when using that module. See [the source change and existing-store limits](../docs/NAVIGATION.md).
+
 Check `data/counts.json` against native records, relationships, media roles and
 visibility. Open the QA Fixtures category, check custom-option controls, sparse
 configurable combinations, variant images/prices, bundle selections, grouped

@@ -1,0 +1,18 @@
+/* Hyva's header shares the first desktop width with the logo and account controls. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .wands-catalog .navigation > div {
+        padding-inline: 0.5rem;
+    }
+
+    .wands-catalog .navigation nav > ul {
+        column-gap: 0.75rem;
+    }
+
+    .wands-catalog .navigation nav > ul > li > span {
+        font-size: 0.875rem;
+    }
+
+    .wands-catalog .navigation nav > ul > li > span > a {
+        white-space: nowrap;
+    }
+}
