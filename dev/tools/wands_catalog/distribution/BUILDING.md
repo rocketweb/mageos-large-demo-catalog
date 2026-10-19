@@ -137,3 +137,23 @@ profile archives, selected profile contents, and the recipient's installation.
 No hosting service is required for offline handover. Resumable HTTPS downloads
 remain an alternative for recipients who only need one profile after hosting is
 approved. Product archives stay outside Git and Git LFS.
+
+## Approved white-background catalog release
+
+`build_clean_media_release.py` combines a fully verified image snapshot with the
+approved catalog projection. It verifies the published base, the exact exclusion
+and text policies, every retained CSV row, media references, archive members and
+checksums. It retains the published module and download helpers. Private image
+reviews, source originals, backups and machine state stay outside public assets.
+
+```sh
+python3 dev/tools/wands_catalog/distribution/build_clean_media_release.py \
+  --base /path/to/pinned/catalog-2026.10.06 \
+  --selection /path/to/verified/image-selection \
+  --job /path/to/approved/catalog-job \
+  --output /path/to/new/catalog-release \
+  --tag catalog-2026.10.19
+```
+
+Builds do not deploy a storefront or publish a GitHub release. Use the private
+publication plan to bind the final source commit, notes and asset hashes.

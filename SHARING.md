@@ -1,8 +1,8 @@
 # Sharing the catalog
 
 Share the [root README](README.md) and stable
-[catalog-2026.10.06 assets](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.10.06).
-The release provides 107,815 records, all six core types, approved expansion media
+[catalog-2026.10.19 assets](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.10.19).
+The release provides 107,738 records, all six core types, approved expansion media
 and 127 named QA fixtures. Public downloads need no account, model, GPU or API key.
 
 | Shareable item | Scope |

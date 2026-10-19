@@ -4,26 +4,30 @@ A synthetic home-and-furniture catalog for testing Mage-OS storefronts, search,
 filters, product options, prices, inventory and product media. Derived from
 [Wayfair WANDS](https://github.com/wayfair/WANDS).
 
-**Latest stable release:** [catalog-2026.10.06](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.10.06).
-It contains **107,815 records**, all six core product types, the approved doubled
+**Latest stable release:** [catalog-2026.10.19](https://github.com/rocketweb/mageos-large-demo-catalog/releases/tag/catalog-2026.10.19).
+It contains **107,738 records**, all six core product types, the approved doubled
 catalog and **127 named QA fixtures**. Install the prepared assets in an empty
 lab; no image generator, GPU or API key is needed.
 
 | Product type | Records |
 | --- | ---: |
-| Simple, including variant children | 103,720 |
-| Configurable | 4,001 |
+| Simple, including variant children | 103,643 |
+| Configurable | 4001 |
 | Bundle | 62 |
 | Virtual | 14 |
 | Downloadable | 12 |
 | Grouped | 6 |
-| **Total** | **107,815** |
+| **Total** | **107,738** |
 
-There are **95,401 distinct accepted JPEG contents**, with 16 reused QA copies,
-and three small fictional downloadable files. Structured specifications may
-include dimensions; generated images prohibit displayed measurements, writing,
-numerals, rulers, diagrams, logos and annotated packaging. Product identity,
-construction, variant color and included components are part of image review.
+The release uses **92,500 white-background images** and **2825 original images**
+across 95,325 catalog image selections. It includes 16 unchanged QA images and
+three small fictional downloadable files. Generated photos avoid added dimensions,
+rulers and annotations. Artwork and lettering intrinsic to a product may remain.
+Minor cutout changes and lost shadows are accepted; scenes and uncertain results
+retain originals. Source images remain intact in the operator archive.
+
+This release excludes 77 Star Wars products and replaces Disney with Datney in
+catalog data. All 127 QA fixtures remain.
 
 | Your goal | Start here |
 | --- | --- |
@@ -33,7 +37,8 @@ construction, variant color and included components are part of image review.
 | Understand runtime evidence | [Acceptance and limits](dev/tools/wands_catalog/distribution/PRODUCTION_RELEASE.md#acceptance-and-practical-limits) |
 | Maintain or extend the data | [Documentation index](dev/tools/wands_catalog/docs/README.md) and [release builder](dev/tools/wands_catalog/distribution/BUILDING.md) |
 
-The two existing Studio and Comtom labs each contain the complete catalog. Each
+The previous catalog received the following existing-store acceptance. The new
+media and catalog cleanup have separate verification described in the release notes. Each
 passed **934 product checks, 202 unsaved guest-cart cases, four cart compositions,
 97 visible QA pages and 30 hidden/disabled URL exclusions**. Tooling and archive
 verification are separate checks. A third store was not created; a new empty-store
@@ -72,7 +77,7 @@ directory outside the Magento root:
 mkdir wands-demo
 cd wands-demo
 WANDS_REPO=rocketweb/mageos-large-demo-catalog
-WANDS_TAG=catalog-2026.10.06
+WANDS_TAG=catalog-2026.10.19
 (
   set -e
   for file in github_download.py download.py release.py; do
@@ -96,8 +101,8 @@ Linux users can use `sha256sum`. Keep trusted pins separately: checksums downloa
 beside an archive alone do not authenticate it. The exact manifest pins are:
 
 ```sh
-WANDS_FULL_PIN=ec5c1763aea94535d1bacc44db2d2ac76131c4eca3763e257ebab677accaf958
-WANDS_TOOLKIT_PIN=299ed4a97b83b2d796b8310cb2f09e55e6d67187f494dbe8d213f829736f3ac8
+WANDS_FULL_PIN=559a66990b8391ef2bb55507c0d932889a5c4ae128e1b498cd0227d4f7ab5f06
+WANDS_TOOLKIT_PIN=134b14fe71b5601637d54b0bbcf4ce64bfcc453f8f80797b59b00c54326a75fa
 ```
 
 Run each command only after the preceding command succeeds:
